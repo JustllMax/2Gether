@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingOffensiveStatistics : BuildingStatistics
+public enum BuildingType
 {
-  
+    Offensive,
+    Defensive,
+    Utility,
+    Economy
 }
