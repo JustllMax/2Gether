@@ -2,24 +2,32 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public float panSpeed = 30f;
-    public float panBorderThickness = 10f;
+    [SerializeField]
+    private float panSpeed = 100f;
+    [SerializeField]
+    private float panBorderThickness = 10f;
+    [SerializeField]
+    private float scrollSpeed = 10f;
+    [SerializeField]
+    private float smoothSpeed = 0.5f;
 
-    public float scrollSpeed = 5f;
-    public float minY = 30f;
-    public float maxY = 90f;
-    //public float maxY = 70f;
 
-    public float minX = -55f;
-    //public float minX = -40f;
-    public float maxX = 25f;
-    //public float maxX = 40f;
-    public float minZ = -55f;
-    //public float minZ = -60f;
-    public float maxZ = 20f;
+    [SerializeField]
+    private float minDepth = 50f;
+    [SerializeField]
+    private float maxDepth = 200f;
 
-    // Update is called once per frame
-    void Update()
+    //Variables can be adjusted, but it's important to maintain equal values for 'Left' and 'Backward', as well as for 'Right' and 'Forward' to ensure a consistent and balanced isometric camera movement boundary.
+    [SerializeField]
+    private float cameraLeft = -100f;
+    [SerializeField]
+    private float cameraRight = 55f;
+    [SerializeField]
+    private float cameraBackward = -100f;
+    [SerializeField]
+    private float cameraForward = 55f;
+
+    void LateUpdate()
     {
         Vector3 pos = transform.position;
 
@@ -28,9 +36,6 @@ public class CameraController : MonoBehaviour
 
         forward.y = 0;
         right.y = 0;
-
-        forward.Normalize();
-        right.Normalize();
 
         if (Input.mousePosition.y >= Screen.height - panBorderThickness)
         {
@@ -51,12 +56,12 @@ public class CameraController : MonoBehaviour
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         pos.y -= scroll * 1000 * scrollSpeed * Time.deltaTime;
-        pos.y = Mathf.Clamp(pos.y, minY, maxY);
+        pos.y = Mathf.Clamp(pos.y, minDepth, maxDepth);
 
-        // Stosujemy granice dla X i Z
-        pos.x = Mathf.Clamp(pos.x, minX, maxX);
-        pos.z = Mathf.Clamp(pos.z, minZ, maxZ);
+        // Nowe ograniczenia dla X i Z z wykorzystaniem struktury CameraBounds
+        pos.x = Mathf.Clamp(pos.x, cameraLeft, cameraRight);
+        pos.z = Mathf.Clamp(pos.z, cameraBackward, cameraForward);
 
-        transform.position = pos;
+        transform.position = Vector3.Lerp(transform.position, pos, smoothSpeed);
     }
 }
