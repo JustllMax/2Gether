@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,20 +35,27 @@ public class CameraBuildController : MonoBehaviour
         if (input.x == 0 && input.y == 0)
             return;
 
-        Vector3 movement = new Vector3(transform.position.x + (input.x * moveSpeed), transform.position.y, transform.position.z + (input.y * moveSpeed));
-        Debug.Log("Movement" + movement);
-        transform.position = Vector3.Lerp(transform.position, movement , Time.deltaTime * smoothSpeed);
+        Vector3 moveDir = transform.forward * input.y + transform.right * input.x;
+        Vector3 pos = transform.position;
+        transform.position = Vector3.Lerp(transform.position, pos + (moveDir * moveSpeed), Time.deltaTime * smoothSpeed);
     }
 
 
     private void Zoom()
     {
         float input = playerInputAction.BuilderController.Zoom.ReadValue<float>();
-        if(input == 0) 
+        //mouse has scroll has different value than keyboard
+        //cant clamp(-1, 1) because holding button is easier than scrolling
+        if (input > 1)
+            input = 10;
+        if(input < -1)
+            input = -10;
+        
+        if (input == 0) 
             return;
 
-        Vector3 movement = new Vector3(transform.position.x, transform.position.y + input * zoomSpeed, transform.position.z);
-        Debug.Log("Zoom" + movement);
+        Vector3 movement = new Vector3(transform.position.x, transform.position.y + (input * zoomSpeed), transform.position.z);
+
 
         transform.position = Vector3.Lerp(transform.position, movement, Time.deltaTime * smoothSpeed);
 
@@ -57,8 +65,10 @@ public class CameraBuildController : MonoBehaviour
     public void Rotate(InputAction.CallbackContext context)
     {
         float input = context.ReadValue<float>();
-        Debug.Log("Zoom" + input);
+        Debug.Log("Rotate" + input);
+
 
         transform.eulerAngles += new Vector3(0, input * rotateSpeed, 0);
+
     }
 }
