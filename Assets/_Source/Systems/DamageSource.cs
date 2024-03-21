@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageSource : MonoBehaviour
+public abstract class DamageSource : MonoBehaviour
 {
     [SerializeField]
-    private Damage _damage = new Damage(DamageType.Kinetic, 10f);
+    private Damage _damage = new Damage(10f);
 
     [SerializeField]
     private float _damageInterval = 0.25f;
@@ -14,22 +14,16 @@ public class DamageSource : MonoBehaviour
 
     [SerializeField]
     private float _lifeTime = 1f;
-    private float _spawnTime;
 
-    private BoxCollider _bCollider;
-    private SphereCollider _sCollider;
+    [SerializeField]
+    protected Vector3 _center;
 
-    public event Action<GameObject> onDespawn;
+    //public event Action<GameObject> onDespawn;
 
-    void Start()
-    {
-        _bCollider = GetComponent<BoxCollider>();
-        _sCollider = GetComponent<SphereCollider>();
-        _spawnTime = Time.time;
-    }
 
     private void FixedUpdate()
     {
+        _lifeTime -= Time.fixedDeltaTime;
         if (Time.time < _damageIntervalTime)
         {
             return;
@@ -37,7 +31,7 @@ public class DamageSource : MonoBehaviour
 
         _damageIntervalTime = Time.time + _damageInterval;
 
-        Collider[] colliders = GetCollidersType();
+        Collider[] colliders = GetNearColliders();
         foreach (Collider collider in colliders)
         {
             if (collider.gameObject == gameObject)
@@ -45,40 +39,31 @@ public class DamageSource : MonoBehaviour
                 continue;
             }
 
-            DamageReceiver receiver = collider.GetComponent<DamageReceiver>();
+            IDamagable receiver = collider.GetComponent<IDamagable>();
             if (receiver != null)
             {
                 receiver.ApplyDamage(_damage);
             }
         }
 
-        if (_lifeTime >= 0 && Time.time > _spawnTime + _lifeTime)
+        if (_lifeTime <= 0)
         {
             Despawn();
         }
     }
-
-    private Collider[] GetCollidersType()
+    protected virtual void OnDrawGizmos()
     {
-        if (_bCollider != null)
-        {
-            return Physics.OverlapBox(transform.TransformPoint(_bCollider.center), Vector3.Scale(transform.localScale, _bCollider.size / 2), transform.rotation);
-        }
-        else if (_sCollider != null)
-        {
-            Vector3 scale = transform.localScale;
-            float maxScale = Mathf.Max(scale.x, scale.y, scale.z);
-            return Physics.OverlapSphere(transform.TransformPoint(_sCollider.center), maxScale * _sCollider.radius);
-        }
-        else
-        {
-             return new Collider[0];
-        }
+        Gizmos.color = Color.red;
+        DrawGizmos();
     }
 
     private void Despawn()
     {
-        onDespawn?.Invoke(gameObject);
+        //onDespawn?.Invoke(gameObject);
         Destroy(gameObject);
     }
+
+    protected abstract Collider[] GetNearColliders();
+    protected abstract void DrawGizmos();
+
 }
