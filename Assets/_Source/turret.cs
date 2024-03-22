@@ -1,7 +1,6 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class Turret : MonoBehaviour
+public class Turret : Building
 {
     private float range = 15f;
     public GameObject bulletPrefab;
@@ -57,27 +56,48 @@ public class Turret : MonoBehaviour
 
        if(fireCountDown <= 0)
         {
-            Fire();
+            OnAttack();
             fireCountDown = 1f / fireRate;
         }
 
         fireCountDown -= Time.deltaTime;
     }
 
-    void Fire()
-    {
-        GameObject bulletGO = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        Bullet bullet = bulletGO.GetComponent<Bullet>();
-        if(bullet != null)
-        {
-            bullet.setTarget(target);
-        }
-        
-    }
+    
 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, range);
+    }
+
+    public override void OnCreate()
+    {
+        // Implement turret creation logic
+    }
+
+    public override void OnAttack()
+    {
+        GameObject bulletGO = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Bullet bullet = bulletGO.GetComponent<Bullet>();
+        if (bullet != null)
+        {
+            bullet.setTarget(target);
+        }
+    }
+
+    public override void OnTakeDamage()
+    {
+        // Implement turret take damage logic
+    }
+
+    public override void OnUpgrade()
+    {
+        // Implement turret upgrade logic
+    }
+
+    public override void OnSell()
+    {
+        // Implement turret selling logic
     }
 }
