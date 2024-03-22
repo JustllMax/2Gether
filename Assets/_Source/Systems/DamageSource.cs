@@ -42,7 +42,7 @@ public abstract class DamageSource : MonoBehaviour
             IDamagable receiver = collider.GetComponent<IDamagable>();
             if (receiver != null)
             {
-                receiver.ApplyDamage(_damage);
+                receiver.TakeDamage(_damage);
             }
         }
 

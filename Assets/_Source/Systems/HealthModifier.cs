@@ -14,14 +14,14 @@ public class HealthModifier : ScriptableObject
     public float _damageCooldown = 0.25f;
     public float[] damageModifiers = Enumerable.Repeat(1f, 7).ToArray();
 
-    public float ApplyDamage(IDamagable target, Damage damage)
+    public float ApplyDamage(IDamagable target, ref float damageCooldownTime, Damage damage)
     {
-        if (Time.time < target.DamageCooldownTime)
+        if (Time.time < damageCooldownTime)
         {
             return 0f;
         }
 
-        target.DamageCooldownTime = Time.time + _damageCooldown;
+        damageCooldownTime = Time.time + _damageCooldown;
         float finalDmg = ApplyModifiers(damage);
         target.Health -= finalDmg;
         return finalDmg;

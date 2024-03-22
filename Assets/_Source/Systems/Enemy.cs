@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
-public abstract class Entity : MonoBehaviour, IDamagable
+public abstract class Enemy : MonoBehaviour, IDamagable
 {
     [SerializeField]
     protected HealthModifier _healthModifier;
@@ -33,11 +33,10 @@ public abstract class Entity : MonoBehaviour, IDamagable
     }
 
     protected float _damageCooldownTime;
-    public float DamageCooldownTime { get => _damageCooldownTime; set => _damageCooldownTime = value; }
 
-    public virtual float ApplyDamage(Damage damage)
+    public virtual float TakeDamage(Damage damage)
     {
-        return _healthModifier.ApplyDamage(this, damage);
+        return _healthModifier.ApplyDamage(this, ref _damageCooldownTime, damage);
     }
 
     public virtual void Kill()

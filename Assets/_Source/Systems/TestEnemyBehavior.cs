@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestEnemyBehavior : Entity
+public class TestEnemyBehavior : Enemy
 {
-    public override float ApplyDamage(Damage damage)
+    public override float TakeDamage(Damage damage)
     {
-        float tmp = base.ApplyDamage(damage);
+        float tmp = base.TakeDamage(damage);
         Debug.Log("Enemy took " + tmp + " damage. Now: " + _health);
         return tmp;
     }
