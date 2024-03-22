@@ -4,14 +4,12 @@ using UnityEngine;
 
 abstract public class Card : ScriptableObject
 {
+    public string CardName;
 
-    public Sprite sprite;
-    public GameObject P_GhostObject;
-    public CardStatistics SO_cardStatistics;
-  
+    public Sprite CardSprite;
+    public string CardDescription;
 
-    public abstract void Use();
-    public abstract void Update();
-    public abstract void Destroy();
+    public CardStatistics CardStatisticsData;
 
+    public abstract void OnSubmitCard(GameContext ctx);
 }
