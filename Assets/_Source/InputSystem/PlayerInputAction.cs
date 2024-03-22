@@ -149,7 +149,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""id"": ""9b8717a1-0623-4b35-ba0a-c7a17f8c27fa"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Normalize(min=-1,max=1)"",
                     ""groups"": """",
                     ""action"": ""Zoom"",
                     ""isComposite"": true,
