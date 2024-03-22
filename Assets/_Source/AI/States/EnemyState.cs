@@ -14,7 +14,7 @@ public enum StateWeight
 
 public abstract class EnemyState : ScriptableObject
 {
-    StateWeight weight;
+    public StateWeight weight;
     public abstract void Enter(AIController controller);
     public abstract void Exit(AIController controller);
     public abstract void OnUpdate(AIController controller);

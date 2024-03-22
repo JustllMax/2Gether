@@ -17,9 +17,12 @@ public class AIController : MonoBehaviour
     }
 
 
-    //EnemyState TryChangingState()
+    //*EnemyState TryChangingState()
     //{
-
+    //    for (int i = 0; i < states.Count; i++)
+    //    {
+    //        
+    //    }
     //}
    
     

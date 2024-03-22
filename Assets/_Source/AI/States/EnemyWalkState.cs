@@ -12,7 +12,8 @@ public class EnemyWalkState : EnemyState
 
     public override bool CanChangeToState(AIController controller)
     {
-        return this;
+        //if(AttackRange > distance to target)
+        return true;
     }
 
 
@@ -35,7 +36,7 @@ public class EnemyWalkState : EnemyState
 
         if (Vector3.Distance(controller.transform.position, position) < 0.001f)
         {
-            //AIController.ChangeState();
+            
         }
     }
 
