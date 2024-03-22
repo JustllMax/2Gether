@@ -283,6 +283,34 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Mouse"",
+            ""id"": ""3be91e59-0bd6-44b7-b111-6e5a0662f7bc"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""82e4349a-6253-4303-8fb4-71333571bfe1"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3fad4e86-7c24-42f1-ba1d-806eba46ca10"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -318,6 +346,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         // FPSController
         m_FPSController = asset.FindActionMap("FPSController", throwIfNotFound: true);
         m_FPSController_Movement = m_FPSController.FindAction("Movement", throwIfNotFound: true);
+        // Mouse
+        m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
+        m_Mouse_Newaction = m_Mouse.FindAction("New action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -483,6 +514,52 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         }
     }
     public FPSControllerActions @FPSController => new FPSControllerActions(this);
+
+    // Mouse
+    private readonly InputActionMap m_Mouse;
+    private List<IMouseActions> m_MouseActionsCallbackInterfaces = new List<IMouseActions>();
+    private readonly InputAction m_Mouse_Newaction;
+    public struct MouseActions
+    {
+        private @PlayerInputAction m_Wrapper;
+        public MouseActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_Mouse_Newaction;
+        public InputActionMap Get() { return m_Wrapper.m_Mouse; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MouseActions set) { return set.Get(); }
+        public void AddCallbacks(IMouseActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MouseActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MouseActionsCallbackInterfaces.Add(instance);
+            @Newaction.started += instance.OnNewaction;
+            @Newaction.performed += instance.OnNewaction;
+            @Newaction.canceled += instance.OnNewaction;
+        }
+
+        private void UnregisterCallbacks(IMouseActions instance)
+        {
+            @Newaction.started -= instance.OnNewaction;
+            @Newaction.performed -= instance.OnNewaction;
+            @Newaction.canceled -= instance.OnNewaction;
+        }
+
+        public void RemoveCallbacks(IMouseActions instance)
+        {
+            if (m_Wrapper.m_MouseActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMouseActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MouseActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MouseActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MouseActions @Mouse => new MouseActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -510,5 +587,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     public interface IFPSControllerActions
     {
         void OnMovement(InputAction.CallbackContext context);
+    }
+    public interface IMouseActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }

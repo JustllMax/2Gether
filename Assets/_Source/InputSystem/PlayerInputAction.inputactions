@@ -261,6 +261,34 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "Mouse",
+            "id": "3be91e59-0bd6-44b7-b111-6e5a0662f7bc",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "PassThrough",
+                    "id": "82e4349a-6253-4303-8fb4-71333571bfe1",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3fad4e86-7c24-42f1-ba1d-806eba46ca10",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
