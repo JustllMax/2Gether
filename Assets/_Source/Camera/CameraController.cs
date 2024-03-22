@@ -27,6 +27,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float cameraForward = 55f;
 
+    //Controll for day camera
     void LateUpdate()
     {
         Vector3 pos = transform.position;

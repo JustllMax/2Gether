@@ -289,7 +289,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             ""id"": ""3be91e59-0bd6-44b7-b111-6e5a0662f7bc"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""MouseLook"",
                     ""type"": ""PassThrough"",
                     ""id"": ""82e4349a-6253-4303-8fb4-71333571bfe1"",
                     ""expectedControlType"": ""Vector2"",
@@ -306,7 +306,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""MouseLook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -348,7 +348,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_FPSController_Movement = m_FPSController.FindAction("Movement", throwIfNotFound: true);
         // Mouse
         m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
-        m_Mouse_Newaction = m_Mouse.FindAction("New action", throwIfNotFound: true);
+        m_Mouse_MouseLook = m_Mouse.FindAction("MouseLook", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -518,12 +518,12 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     // Mouse
     private readonly InputActionMap m_Mouse;
     private List<IMouseActions> m_MouseActionsCallbackInterfaces = new List<IMouseActions>();
-    private readonly InputAction m_Mouse_Newaction;
+    private readonly InputAction m_Mouse_MouseLook;
     public struct MouseActions
     {
         private @PlayerInputAction m_Wrapper;
         public MouseActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Mouse_Newaction;
+        public InputAction @MouseLook => m_Wrapper.m_Mouse_MouseLook;
         public InputActionMap Get() { return m_Wrapper.m_Mouse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -533,16 +533,16 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_MouseActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_MouseActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
+            @MouseLook.started += instance.OnMouseLook;
+            @MouseLook.performed += instance.OnMouseLook;
+            @MouseLook.canceled += instance.OnMouseLook;
         }
 
         private void UnregisterCallbacks(IMouseActions instance)
         {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
+            @MouseLook.started -= instance.OnMouseLook;
+            @MouseLook.performed -= instance.OnMouseLook;
+            @MouseLook.canceled -= instance.OnMouseLook;
         }
 
         public void RemoveCallbacks(IMouseActions instance)
@@ -590,6 +590,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     }
     public interface IMouseActions
     {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnMouseLook(InputAction.CallbackContext context);
     }
 }

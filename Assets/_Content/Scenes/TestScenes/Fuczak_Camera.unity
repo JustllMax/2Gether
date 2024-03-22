@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 58189383}
   - component: {fileID: 58189382}
   - component: {fileID: 58189384}
+  - component: {fileID: 58189385}
   m_Layer: 0
   m_Name: NightCamera
   m_TagString: Untagged
@@ -162,7 +163,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 878322177}
   m_Lens:
-    FieldOfView: 80
+    FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -212,6 +213,21 @@ MonoBehaviour:
   AutoEnableInputs: 1
   XYAxis: {fileID: -3902851160869954953, guid: 18eab0966ec6aaa409e42f5517e57eee, type: 3}
   ZAxis: {fileID: 0}
+--- !u!114 &58189385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58189381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece13041b0496154880b755c509cd0d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nightCamera: {fileID: 58189382}
+  dayCamera: {fileID: 653542221}
+  crosshairUI: {fileID: 122988832}
 --- !u!1 &122988832
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,8 +240,9 @@ GameObject:
   - component: {fileID: 122988835}
   - component: {fileID: 122988834}
   - component: {fileID: 122988833}
+  - component: {fileID: 122988837}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: crosshairUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -314,6 +331,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &122988837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122988832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece13041b0496154880b755c509cd0d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nightCamera: {fileID: 58189382}
+  dayCamera: {fileID: 653542221}
+  crosshairUI: {fileID: 122988832}
 --- !u!1 &126778960
 GameObject:
   m_ObjectHideFlags: 3
@@ -745,6 +777,7 @@ GameObject:
   - component: {fileID: 653542222}
   - component: {fileID: 653542221}
   - component: {fileID: 653542223}
+  - component: {fileID: 653542224}
   m_Layer: 0
   m_Name: DayCamera
   m_TagString: Untagged
@@ -832,6 +865,21 @@ MonoBehaviour:
   cameraRight: 55
   cameraBackward: -100
   cameraForward: 55
+--- !u!114 &653542224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653542220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece13041b0496154880b755c509cd0d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nightCamera: {fileID: 58189382}
+  dayCamera: {fileID: 653542221}
+  crosshairUI: {fileID: 122988832}
 --- !u!1 &699674499
 GameObject:
   m_ObjectHideFlags: 3
@@ -1869,7 +1917,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 60, y: 50}
+  m_SizeDelta: {x: 40, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1552451359
 MonoBehaviour:

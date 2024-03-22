@@ -267,7 +267,7 @@
             "id": "3be91e59-0bd6-44b7-b111-6e5a0662f7bc",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "MouseLook",
                     "type": "PassThrough",
                     "id": "82e4349a-6253-4303-8fb4-71333571bfe1",
                     "expectedControlType": "Vector2",
@@ -284,7 +284,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "MouseLook",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
