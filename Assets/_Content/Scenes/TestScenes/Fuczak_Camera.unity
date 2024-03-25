@@ -190,7 +190,7 @@ Transform:
   m_GameObject: {fileID: 58189381}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 15, z: 0}
+  m_LocalPosition: {x: 0, y: 19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -776,8 +776,8 @@ GameObject:
   m_Component:
   - component: {fileID: 653542222}
   - component: {fileID: 653542221}
-  - component: {fileID: 653542223}
   - component: {fileID: 653542224}
+  - component: {fileID: 653542225}
   m_Layer: 0
   m_Name: DayCamera
   m_TagString: Untagged
@@ -843,28 +843,6 @@ Transform:
   - {fileID: 1132133561}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 65, y: 45, z: 0}
---- !u!114 &653542223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 653542220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3fa2170c3627604eb22f76758f66219, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panSpeed: 100
-  panBorderThickness: 10
-  scrollSpeed: 10
-  smoothSpeed: 0.5
-  minDepth: 50
-  maxDepth: 200
-  cameraLeft: -100
-  cameraRight: 55
-  cameraBackward: -100
-  cameraForward: 55
 --- !u!114 &653542224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -880,6 +858,27 @@ MonoBehaviour:
   nightCamera: {fileID: 58189382}
   dayCamera: {fileID: 653542221}
   crosshairUI: {fileID: 122988832}
+--- !u!114 &653542225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653542220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ccbceae9b7bab44fae09e2bf6aa2367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panSpeed: 100
+  panBorderThickness: 10
+  zoomSpeed: 10
+  smoothSpeed: 0.5
+  rotateSpeed: 90
+  minDepth: 1
+  maxDepth: 200
+  LeftRightDistance: -100
+  TopDownMovement: 55
 --- !u!1 &699674499
 GameObject:
   m_ObjectHideFlags: 3
@@ -1167,7 +1166,7 @@ Transform:
   m_GameObject: {fileID: 878322176}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 15, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1771,8 +1770,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1484424754}
   - component: {fileID: 1484424756}
-  - component: {fileID: 1484424757}
   - component: {fileID: 1484424758}
+  - component: {fileID: 1484424759}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -1807,19 +1806,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1484424757
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1484424753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36d1163fa822e8b418a0a603ec078d5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Damping: 0
 --- !u!114 &1484424758
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1835,15 +1821,15 @@ MonoBehaviour:
   m_RecenterTarget: 0
   m_VerticalAxis:
     Value: 0
-    m_SpeedMode: 0
-    m_MaxSpeed: 300
-    m_AccelTime: 1
+    m_SpeedMode: 1
+    m_MaxSpeed: 0.2
+    m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse Y
     m_InputAxisValue: 0
     m_InvertInput: 1
-    m_MinValue: -70
-    m_MaxValue: 70
+    m_MinValue: -90
+    m_MaxValue: 90
     m_Wrap: 0
     m_Recentering:
       m_enabled: 0
@@ -1859,9 +1845,9 @@ MonoBehaviour:
     m_LegacyVelocityFilterStrength: -1
   m_HorizontalAxis:
     Value: 0
-    m_SpeedMode: 0
-    m_MaxSpeed: 300
-    m_AccelTime: 1
+    m_SpeedMode: 1
+    m_MaxSpeed: 0.2
+    m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
     m_InputAxisValue: 0
@@ -1882,6 +1868,28 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_ApplyBeforeBody: 0
+--- !u!114 &1484424759
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484424753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BindingMode: 1
+  m_FollowOffset: {x: 0, y: 9, z: 0}
+  m_XDamping: 1
+  m_YDamping: 1
+  m_ZDamping: 1
+  m_AngularDampingMode: 0
+  m_PitchDamping: 0
+  m_YawDamping: 0
+  m_RollDamping: 0
+  m_AngularDamping: 0
 --- !u!1 &1552451357
 GameObject:
   m_ObjectHideFlags: 0
