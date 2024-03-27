@@ -7,5 +7,4 @@ using UnityEngine;
 public class BuildingUtilityStatistics : BuildingStatistics
 {
     public float AreaRange;
-    public float AcivationSpeed;
 }
