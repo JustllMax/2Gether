@@ -236,6 +236,33 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""3216a34f-3efe-450d-ba38-6d7168dde656"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""05bf6855-ad98-4fb8-a876-1f2f980c794c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""df62fe77-9893-4934-96c8-52d018f266ab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -403,60 +430,37 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""SwitchToLastWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Mouse"",
-            ""id"": ""3be91e59-0bd6-44b7-b111-6e5a0662f7bc"",
-            ""actions"": [
-                {
-                    ""name"": ""MouseLook"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""82e4349a-6253-4303-8fb4-71333571bfe1"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""3fad4e86-7c24-42f1-ba1d-806eba46ca10"",
+                    ""id"": ""218582ab-4f9b-4d65-95cd-632501df1054"",
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MouseLook"",
+                    ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""New action map"",
-            ""id"": ""a264367f-d230-42e9-ba30-715a554c1fbd"",
-            ""actions"": [
-                {
-                    ""name"": ""New action"",
-                    ""type"": ""Button"",
-                    ""id"": ""e56915d0-210b-4990-a7eb-77c3c6afaf66"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""d260b45a-a971-4aa8-a0f2-98bd1c4e26ad"",
-                    ""path"": """",
+                    ""id"": ""87b58fbe-d8c6-4e11-b261-770a14877032"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""New action"",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""34127494-33e8-4f37-9c15-8bdb773f5921"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -501,12 +505,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_FPSController_Scroll = m_FPSController.FindAction("Scroll", throwIfNotFound: true);
         m_FPSController_SwitchToLastWeapon = m_FPSController.FindAction("SwitchToLastWeapon", throwIfNotFound: true);
         m_FPSController_WeaponSwitch = m_FPSController.FindAction("WeaponSwitch", throwIfNotFound: true);
-        // Mouse
-        m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
-        m_Mouse_MouseLook = m_Mouse.FindAction("MouseLook", throwIfNotFound: true);
-        // New action map
-        m_Newactionmap = asset.FindActionMap("New action map", throwIfNotFound: true);
-        m_Newactionmap_Newaction = m_Newactionmap.FindAction("New action", throwIfNotFound: true);
+        m_FPSController_Look = m_FPSController.FindAction("Look", throwIfNotFound: true);
+        m_FPSController_Jump = m_FPSController.FindAction("Jump", throwIfNotFound: true);
+        m_FPSController_Dash = m_FPSController.FindAction("Dash", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -636,6 +637,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_FPSController_Scroll;
     private readonly InputAction m_FPSController_SwitchToLastWeapon;
     private readonly InputAction m_FPSController_WeaponSwitch;
+    private readonly InputAction m_FPSController_Look;
+    private readonly InputAction m_FPSController_Jump;
+    private readonly InputAction m_FPSController_Dash;
     public struct FPSControllerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -646,6 +650,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @Scroll => m_Wrapper.m_FPSController_Scroll;
         public InputAction @SwitchToLastWeapon => m_Wrapper.m_FPSController_SwitchToLastWeapon;
         public InputAction @WeaponSwitch => m_Wrapper.m_FPSController_WeaponSwitch;
+        public InputAction @Look => m_Wrapper.m_FPSController_Look;
+        public InputAction @Jump => m_Wrapper.m_FPSController_Jump;
+        public InputAction @Dash => m_Wrapper.m_FPSController_Dash;
         public InputActionMap Get() { return m_Wrapper.m_FPSController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -673,6 +680,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @WeaponSwitch.started += instance.OnWeaponSwitch;
             @WeaponSwitch.performed += instance.OnWeaponSwitch;
             @WeaponSwitch.canceled += instance.OnWeaponSwitch;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
         }
 
         private void UnregisterCallbacks(IFPSControllerActions instance)
@@ -695,6 +711,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @WeaponSwitch.started -= instance.OnWeaponSwitch;
             @WeaponSwitch.performed -= instance.OnWeaponSwitch;
             @WeaponSwitch.canceled -= instance.OnWeaponSwitch;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
         }
 
         public void RemoveCallbacks(IFPSControllerActions instance)
@@ -712,98 +737,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         }
     }
     public FPSControllerActions @FPSController => new FPSControllerActions(this);
-
-    // Mouse
-    private readonly InputActionMap m_Mouse;
-    private List<IMouseActions> m_MouseActionsCallbackInterfaces = new List<IMouseActions>();
-    private readonly InputAction m_Mouse_MouseLook;
-    public struct MouseActions
-    {
-        private @PlayerInputAction m_Wrapper;
-        public MouseActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
-        public InputAction @MouseLook => m_Wrapper.m_Mouse_MouseLook;
-        public InputActionMap Get() { return m_Wrapper.m_Mouse; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MouseActions set) { return set.Get(); }
-        public void AddCallbacks(IMouseActions instance)
-        {
-            if (instance == null || m_Wrapper.m_MouseActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_MouseActionsCallbackInterfaces.Add(instance);
-            @MouseLook.started += instance.OnMouseLook;
-            @MouseLook.performed += instance.OnMouseLook;
-            @MouseLook.canceled += instance.OnMouseLook;
-        }
-
-        private void UnregisterCallbacks(IMouseActions instance)
-        {
-            @MouseLook.started -= instance.OnMouseLook;
-            @MouseLook.performed -= instance.OnMouseLook;
-            @MouseLook.canceled -= instance.OnMouseLook;
-        }
-
-        public void RemoveCallbacks(IMouseActions instance)
-        {
-            if (m_Wrapper.m_MouseActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IMouseActions instance)
-        {
-            foreach (var item in m_Wrapper.m_MouseActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_MouseActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public MouseActions @Mouse => new MouseActions(this);
-
-    // New action map
-    private readonly InputActionMap m_Newactionmap;
-    private List<INewactionmapActions> m_NewactionmapActionsCallbackInterfaces = new List<INewactionmapActions>();
-    private readonly InputAction m_Newactionmap_Newaction;
-    public struct NewactionmapActions
-    {
-        private @PlayerInputAction m_Wrapper;
-        public NewactionmapActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Newactionmap_Newaction;
-        public InputActionMap Get() { return m_Wrapper.m_Newactionmap; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(NewactionmapActions set) { return set.Get(); }
-        public void AddCallbacks(INewactionmapActions instance)
-        {
-            if (instance == null || m_Wrapper.m_NewactionmapActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_NewactionmapActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
-        }
-
-        private void UnregisterCallbacks(INewactionmapActions instance)
-        {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
-        }
-
-        public void RemoveCallbacks(INewactionmapActions instance)
-        {
-            if (m_Wrapper.m_NewactionmapActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(INewactionmapActions instance)
-        {
-            foreach (var item in m_Wrapper.m_NewactionmapActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_NewactionmapActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public NewactionmapActions @Newactionmap => new NewactionmapActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -836,13 +769,8 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnScroll(InputAction.CallbackContext context);
         void OnSwitchToLastWeapon(InputAction.CallbackContext context);
         void OnWeaponSwitch(InputAction.CallbackContext context);
-    }
-    public interface IMouseActions
-    {
-        void OnMouseLook(InputAction.CallbackContext context);
-    }
-    public interface INewactionmapActions
-    {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
     }
 }

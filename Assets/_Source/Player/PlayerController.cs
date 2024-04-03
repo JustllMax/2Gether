@@ -1,0 +1,166 @@
+using System.Collections;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class PlayerController : MonoBehaviour
+{
+    [SerializeField]
+    private Transform _camera;
+
+    [SerializeField]
+    private float _cameraSensitivity = 0.1f;
+
+    [SerializeField]
+    private float _movementSpeed = 1.0f;
+
+    [SerializeField]
+    private float _jumpStrength = 1.0f;
+
+
+    private Rigidbody _objectRigidbody;
+
+    private PlayerInputAction.FPSControllerActions FPSController;
+
+
+    private bool _doubleJump = true;
+    private bool _onGround = false;
+    private bool _isDashing = false;
+    private short _dashCount = 2;
+    private Vector3 _lastMovement;
+    private CharacterController _characterController;
+    private AudioSource _audioSource;
+
+    private Vector3 playerVelocity;
+    private float gravityValue = -9.81f;
+
+    private void Awake()
+    {
+        
+        _characterController = GetComponent<CharacterController>();
+        _audioSource = GetComponent<AudioSource>();
+    }
+
+    void Start()
+    {
+        FPSController = InputManager.Instance.GetPlayerInputAction().FPSController;
+
+
+
+        //Controls
+
+        //FPSController.Fire.performed += OnFire;
+
+        FPSController.Jump.performed += OnJump;
+        FPSController.Dash.performed += OnDash;
+    }
+
+
+    private void FixedUpdate()
+    {
+        //On ground check
+        _onGround = _characterController.isGrounded;
+
+        //Reset jump & dash
+        if (_onGround)
+        {
+            _doubleJump = true;
+            _dashCount = 2;
+            if(playerVelocity.y < 0)
+                playerVelocity.y = 0f;
+        }
+        //Movement
+        Vector2 input = FPSController.Movement.ReadValue<Vector2>();
+
+
+        if (_onGround && playerVelocity.y < 0)
+        {
+            playerVelocity.y = 0f;
+        }
+
+        Vector3 move = new Vector3(input.x, 0f, input.y);
+        move = _camera.forward * move.z + _camera.right * move.x;
+        _lastMovement = move;
+        //_lastMovement.y = 0f;
+
+        _characterController.Move(move * _movementSpeed);
+       
+        playerVelocity.y += gravityValue;
+
+        _characterController.Move(playerVelocity * Time.deltaTime);
+    }
+
+    private void OnJump(InputAction.CallbackContext context)
+    {
+
+
+        if (_onGround)
+        {
+            _doubleJump = true;
+        }
+        if (_doubleJump)
+        {
+            _doubleJump = false;
+        }
+        else
+        {
+            return;
+        }
+
+        playerVelocity.y += Mathf.Sqrt(_jumpStrength * -3.0f * gravityValue);
+        _characterController.Move(playerVelocity);
+
+
+    }
+
+    private void OnDash(InputAction.CallbackContext context)
+    {
+        if (_dashCount > 0 && !_isDashing)
+        {
+            StartCoroutine("Dash");
+            _dashCount--;
+        }
+    }
+
+    private IEnumerator Dash()
+    {
+        _isDashing = true;
+        Vector3 movement = _lastMovement;
+        if (movement == Vector3.zero)
+        {
+            movement = _camera.transform.forward;
+            movement.y = 0f;
+        }
+
+        //_audioSource.Play();
+
+
+        //Camera cam = _camera.GetComponent<Camera>();
+        //float fov = cam.fieldOfView;
+
+        float time = Time.time + 0.15f;
+        while (Time.time < time)
+        {
+            float signal = Mathf.Sin((Time.time - time) / 0.15f * Mathf.PI) * 7.5f;
+            //cam.fieldOfView = fov - signal;
+
+            _characterController.Move(movement * 12f * Time.deltaTime);
+            //_objectRigidbody.MovePosition(_objectRigidbody.position + movement * 12f * Time.deltaTime);
+            yield return null;
+        }
+
+
+       // cam.fieldOfView = fov;
+        _isDashing = false;
+    }
+
+    private bool IsGrounded()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position - new Vector3(0f, 0.6f, 0f), 0.35f);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.gameObject != gameObject)
+                return true;
+        }
+        return false;
+    }
+}
