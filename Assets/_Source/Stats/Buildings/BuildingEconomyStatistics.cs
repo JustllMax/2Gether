@@ -7,5 +7,4 @@ using UnityEngine;
 public class BuildingEconomyStatistics : BuildingStatistics
 {
     public int AmountOfCoinsGenerated;
-    public float ActivationTime;
 }

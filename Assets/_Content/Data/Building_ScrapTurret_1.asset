@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5884ba9f708c78c448b3600ede4ef302, type: 3}
+  m_Name: Building_ScrapTurret_1
+  m_EditorClassIdentifier: 
+  CardType: 0
+  Rarity: 0
+  Name: ScrapTurret
+  Description: ab
+  BuildingType: 0
+  ActivationTime: 5
+  BaseHealthPoints: 12
+  BaseSellCost: 10
+  Level: 1
+  AttackDamage: 10
+  AttackRange: 1
+  IsAOE: 0
+  P_AOE: {fileID: 0}
+  AOERange: 0
+  AOEDamage: 0
+  IsKnockback: 0
+  AttackKnockback: 5
