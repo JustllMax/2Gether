@@ -14,13 +14,4 @@ public class Way : MonoBehaviour
         get => _pos;
         set { _pos = value; }
     }
-
-    
-
-    public Way(Way newWay)
-    {
-        this.id = newWay.id;
-        this.pos = newWay.pos;
-        this.wayAnchors = newWay.wayAnchors;
-    }
 }

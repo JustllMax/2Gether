@@ -80,6 +80,7 @@ public class WayPlacer : MonoBehaviour
             {
                 if (wayToConnect.wayAnchors[1].IsWay)
                 {
+                    wayToConnect.gameObject.transform.Rotate(Vector3.up, 45f, Space.World);
                     SetNewWayAnchors(Add, false, newPos, wayToConnect, newWay, 3, 1);
                     CheckWay(newWay, i, 1);
                     PlaceOneWay(newWay);
