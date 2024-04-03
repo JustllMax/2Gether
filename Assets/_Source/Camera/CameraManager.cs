@@ -1,20 +1,32 @@
 using UnityEngine;
 using Cinemachine;
 
-public class CameraPriorityController : MonoBehaviour
+public class CameraManager : MonoBehaviour
 {
-    [SerializeField] 
-    private CinemachineVirtualCamera nightCamera;
+
     [SerializeField]
     private CinemachineVirtualCamera dayCamera;
+    [SerializeField] 
+    private CinemachineVirtualCamera nightCamera;
     [SerializeField] 
     private GameObject crosshairUI;
 
 
     private void Start()
     {
-        // Sets starting state of crosshair UI depending on the initial camera priority
         UpdateCrosshairVisibility();
+    }
+
+    private void OnEnable()
+    {
+        DayNightCycleManager.DayBegin += StartDayCycle;
+        DayNightCycleManager.NightBegin += StartNightCycle;
+    }
+
+    private void OnDisable()
+    {
+        DayNightCycleManager.DayBegin -= StartDayCycle;
+        DayNightCycleManager.NightBegin -= StartNightCycle;
     }
 
     private void Update()
@@ -33,6 +45,17 @@ public class CameraPriorityController : MonoBehaviour
         }
     }
 
+    private void StartDayCycle()
+    {
+        SwitchCameraPriority(dayCamera, 20);
+        SwitchCameraPriority(nightCamera, 10);
+    }
+    private void StartNightCycle()
+    {
+        SwitchCameraPriority(dayCamera, 10);
+        SwitchCameraPriority(nightCamera, 20);
+    }
+
     private void SwitchCameraPriority(CinemachineVirtualCamera camera, int priority)
     {
         if (camera != null)
@@ -44,7 +67,7 @@ public class CameraPriorityController : MonoBehaviour
 
     private void UpdateCrosshairVisibility()
     {
-        // We assume that the night camera has a higher priority to hide the crosshair
+        // We assume that the night camera has a higher priority to hide the cursor
         bool isNightCameraActive = nightCamera != null && nightCamera.Priority > dayCamera.Priority;
 
         if (isNightCameraActive)

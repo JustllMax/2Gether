@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.PlayerSettings;
 
 public class CameraDayController : MonoBehaviour
 {
@@ -30,11 +29,16 @@ public class CameraDayController : MonoBehaviour
     private void Awake()
     {
 
-        playerInputAction = new PlayerInputAction();
-        playerInputAction.BuilderController.Enable();
-        playerInputAction.BuilderController.Rotate.performed += Rotate;
+        
     }
 
+    private void Start()
+    {
+
+        playerInputAction = InputManager.Instance.GetPlayerInputAction();
+        playerInputAction.BuilderController.Rotate.performed += Rotate;
+
+    }
 
     void LateUpdate()
     {
@@ -85,6 +89,9 @@ public class CameraDayController : MonoBehaviour
     }
     private void MoveByKeyboard()
     {
+        if(playerInputAction.BuilderController.enabled == false){
+            return;
+        }
         Vector2 input = playerInputAction.BuilderController.Movement.ReadValue<Vector2>();
         if (input.x == 0 && input.y == 0)
             return;
