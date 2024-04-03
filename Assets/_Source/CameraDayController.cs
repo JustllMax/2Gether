@@ -1,3 +1,7 @@
+using Cinemachine;
+using DG.Tweening;
+using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.PlayerSettings;
@@ -26,9 +30,12 @@ public class CameraDayController : MonoBehaviour
     [SerializeField] private float TopDownMovement = 55f;
 
 
+    private Vector3 _rotatePivot;
+    private Camera _mainCamera;
 
     private void Awake()
     {
+        _mainCamera = Camera.main;
 
         playerInputAction = new PlayerInputAction();
         playerInputAction.BuilderController.Enable();
@@ -38,13 +45,28 @@ public class CameraDayController : MonoBehaviour
 
     void LateUpdate()
     {
-
         MoveByMouse();
         MoveByKeyboard();
         Zoom();
-           
+        UpdateRotatePivot();
+    }
 
+    private void UpdateRotatePivot()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(_mainCamera.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2)), out hit, 1000.0f))
+        {
+            _rotatePivot = hit.point;
+        }
+    }
 
+    private void OnDrawGizmos()
+    {
+        if (Application.isPlaying)
+        {
+            Gizmos.DrawLine(_mainCamera.transform.position, _rotatePivot);
+            Handles.Label(_rotatePivot, "Pivot rotation origin");
+        }
     }
 
     private void MoveByMouse()
@@ -138,16 +160,6 @@ public class CameraDayController : MonoBehaviour
         float input = context.ReadValue<float>();
         Debug.Log("Rotate" + input);
 
-        if(transform.eulerAngles.y > 360)
-        {
-            transform.eulerAngles -= new Vector3(0, 360, 0);
-        }
-        else if(transform.eulerAngles.y < -360)
-        {
-            transform.eulerAngles += new Vector3(0, 360, 0);
-        }
-
-        transform.eulerAngles += new Vector3(0, input * rotateSpeed, 0);
-
+        transform.RotateAround(_rotatePivot, Vector3.up, input * 90);
     }
 }
