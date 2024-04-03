@@ -27,4 +27,10 @@ public class GridController : MonoBehaviour
         else
             _instance = this;
     }
+
+    public bool TryPlace(Vector2 pos, Building b)
+    {
+        // actually place the thing
+        return true;
+    }
 }
