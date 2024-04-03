@@ -68,7 +68,7 @@ public class CameraManager : MonoBehaviour
     private void UpdateCrosshairVisibility()
     {
         // We assume that the night camera has a higher priority to hide the cursor
-        bool isNightCameraActive = nightCamera != null && nightCamera.Priority > dayCamera.Priority;
+        bool isNightCameraActive = nightCamera != null && dayCamera != null  && nightCamera.Priority > dayCamera.Priority;
 
         if (isNightCameraActive)
         {
