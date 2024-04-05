@@ -5,6 +5,13 @@ using UnityEngine;
 public abstract class Building : MonoBehaviour
 {
 
+    protected float AttackCoolDownTimer = 5f;
+
+    public virtual void AttackCooldown()
+    {
+        AttackCoolDownTimer -= Time.deltaTime;
+    }
+
     public abstract void OnCreate();
     public abstract void OnAttack();
     
