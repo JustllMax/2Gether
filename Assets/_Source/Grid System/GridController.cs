@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class GridController : MonoBehaviour
@@ -9,12 +10,9 @@ public class GridController : MonoBehaviour
 
     public static GridController Instance { get { return _instance; } }
 
+    [SerializeField] private Vector2Int _gridSize = new Vector2Int(12, 12);
+    public Vector2Int gridSize { get => _gridSize; set {; } }
     private GridSlot[,] _grid;
-
-    public Vector2Int GridSize
-    {
-        get { return new Vector2Int(_grid.GetLength(0), _grid.GetLength(1)); }
-    }
 
     public GridSlot[,] Grid
     {
@@ -24,46 +22,46 @@ public class GridController : MonoBehaviour
             _grid = value;
         }
     }
-
     private void Awake()
     {
         if (_instance != null && _instance != this)
             Destroy(this.gameObject);
         else
-            _instance = this;
-    }
-
-
-    private bool IsPlaceTaken(int x, int y)
-    {
-        if (Grid[x, y] != null)
         {
+            _instance = this;
+        }
+
+        _grid = new GridSlot[_gridSize.x, _gridSize.y];
+        for (int x = 0; x < _gridSize.x; x++)
+        {
+            for (int y = 0; y < _gridSize.y; y++)
+            {
+                _grid[x, y] = new GridSlot();
+            }
+        }
+    }
+    public bool TryPlace(Vector2Int position, Building building)
+    {
+        if (!IsPlaceTaken(position.x, position.y))
+        {
+            GameObject newBuilding = Instantiate(building.gameObject, new Vector3(position.x, 0, position.y) * 10, Quaternion.identity);
+            _grid[position.x, position.y].IsTaken = true;
+            _grid[position.x, position.y].gridBuilding = newBuilding.GetComponent<Building>();
             return true;
         }
         return false;
     }
-
-    public bool TryPlace(Vector2Int pos, Building b)
+    public void SetGridSlot(Vector2Int position, GameObject terrain)
     {
-        var slot = Grid[pos.x, pos.y];
-
-        bool _isAvailableToBuild = false;
-
-        if (x < -5 || x > GridSize.x * 10 - slot.gridBuilding.BuildingSize.x)
-            _isAvailableToBuild = false;
-        else if (z < -5 || z > GridSize.y * 10 - slot.gridBuilding.BuildingSize.z)
-            _isAvailableToBuild = false;
-        else
-            _isAvailableToBuild = true;
-
-        if (_isAvailableToBuild && IsPlaceTaken((int)_draggingBuilding.transform.position.x / 10, (int)_draggingBuilding.transform.position.z / 10))
+        _grid[position.x, position.y].slotPosition = position;
+        _grid[position.x, position.y].terrain = terrain;
+    }
+    public bool IsPlaceTaken(int x, int y)
+    {
+        if (_grid[x, y].IsTaken)
         {
-            Debug.Log($"Drag X: {(int)_draggingBuilding.transform.position.x / 10}, Z:{(int)_draggingBuilding.transform.position.z / 10}");
-            _isAvailableToBuild = false;
+            return true;
         }
-
-
-        // actually place the thing
-        return true;
+        return false;
     }
 }

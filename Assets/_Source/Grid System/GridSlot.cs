@@ -5,6 +5,7 @@ using UnityEngine;
 public class GridSlot
 {
     public Building gridBuilding;
+    public GameObject terrain;
     public Vector2Int slotPosition = new Vector2Int();
     private bool _isTaken = false;
     public bool IsTaken
@@ -12,16 +13,17 @@ public class GridSlot
         get => _isTaken;
         set {_isTaken = value;}
     }
-
-    public GridSlot(Building building, Vector2Int slotPosition, bool isTaken)
+    public GridSlot()
+    {
+        gridBuilding = null;
+        terrain = null;
+        slotPosition = new Vector2Int();
+        _isTaken = false;
+    }
+    public void SetGridSlot(Building building, Vector2Int slotPosition, bool isTaken)
     {
         this.gridBuilding = building;
         this.slotPosition = slotPosition;
         this._isTaken = isTaken;
-    }
-    public GridSlot()
-    {
-        this.slotPosition = new Vector2Int();
-        this._isTaken = false;
     }
 }

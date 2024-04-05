@@ -146,5 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5cdfafce35dd2543a95f038891bdfba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _upgradeTiers: {fileID: 11400000, guid: 502ef1a912de18c42b003dd34d422445, type: 2}
   _buildingSize: {x: 3, y: 1.5, z: 3}
   _renderer: {fileID: 1447220479681022197}

@@ -17,6 +17,7 @@ public class BuildCardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, 
     #region Buildings
     private GameObject _draggingBuilding;
     private float y;
+    private  GameObject _terrain;
     #endregion
 
     #region Grid
@@ -58,7 +59,7 @@ public class BuildCardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, 
             {
                 if (hit.collider.gameObject.CompareTag("Terrain"))
                 {
-                    GameObject terrain = hit.collider.gameObject;
+                    _terrain = hit.collider.gameObject;
                     rayPosition.x = Mathf.RoundToInt(hit.point.x);
                     rayPosition.y = Mathf.RoundToInt(hit.point.z);
 
@@ -71,7 +72,7 @@ public class BuildCardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, 
                     else
                         _isAvailableToBuild = true;
 
-                    _draggingBuilding.transform.position = new Vector3(terrain.gameObject.transform.position.x, y, terrain.gameObject.transform.position.z);
+                    _draggingBuilding.transform.position = new Vector3(_terrain.gameObject.transform.position.x, y, _terrain.gameObject.transform.position.z);
                     _draggingBuilding.GetComponent<GridBuilding>().SetColor(_isAvailableToBuild);
                 }
             }
@@ -82,10 +83,10 @@ public class BuildCardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, 
     {
         if(_isAvailableToBuild)
         {
+            Vector2Int pos = new Vector2Int((int)_draggingBuilding.transform.position.x / 10, (int)_draggingBuilding.transform.position.z / 10);
              _draggingBuilding.GetComponent<GridBuilding>().ResetColor();
-
-            _gridController.TryPlace(new Vector2Int((int)_draggingBuilding.transform.position.x / 10, (int)_draggingBuilding.transform.position.z / 10),
-                  _draggingBuilding.GetComponent<Building>());
+            _gridController.SetGridSlot(pos, _terrain);
+            _gridController.TryPlace(pos, _draggingBuilding.GetComponent<Building>());
         }
         Destroy(_draggingBuilding);
     }
