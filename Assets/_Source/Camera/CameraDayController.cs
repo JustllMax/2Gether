@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 public class CameraDayController : MonoBehaviour
 {
 
-    PlayerInputAction playerInputAction;
+    PlayerInputAction.BuilderControllerActions builderController;
 
     [Header("Camera Settings")]
 
@@ -42,8 +42,8 @@ public class CameraDayController : MonoBehaviour
     private void Start()
     {
 
-        playerInputAction = InputManager.Instance.GetPlayerInputAction();
-        playerInputAction.BuilderController.Rotate.performed += Rotate;
+        builderController = InputManager.Instance.GetPlayerInputAction().BuilderController;
+        builderController.Rotate.performed += Rotate;
 
     }
 
@@ -111,10 +111,10 @@ public class CameraDayController : MonoBehaviour
     }
     private void MoveByKeyboard()
     {
-        if(playerInputAction.BuilderController.enabled == false){
+        if(builderController.enabled == false){
             return;
         }
-        Vector2 input = playerInputAction.BuilderController.Movement.ReadValue<Vector2>();
+        Vector2 input = builderController.Movement.ReadValue<Vector2>();
         if (input.x == 0 && input.y == 0)
             return;
 
@@ -139,7 +139,7 @@ public class CameraDayController : MonoBehaviour
 
     private void Zoom()
     {
-        float input = playerInputAction.BuilderController.Zoom.ReadValue<float>();
+        float input = builderController.Zoom.ReadValue<float>();
         //mouse has scroll has different value than keyboard
         //cant clamp(-1, 1) because holding button is easier than scrolling
 

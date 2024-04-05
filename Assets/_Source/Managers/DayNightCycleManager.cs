@@ -40,6 +40,12 @@ public class DayNightCycleManager : MonoBehaviour
             EndNightCycle();
 
         }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            EndDayCycle();
+
+        }
     }
 
 

@@ -15,9 +15,13 @@ public class InputManager : MonoBehaviour
         if(_instance != null && _instance != this)
         {
             Destroy(this);
-            return;
+           
         }
-        _instance = this;
+        else
+        {
+            _instance = this;
+
+        }
         playerInputAction = new PlayerInputAction();
     }
 
@@ -53,5 +57,6 @@ public class InputManager : MonoBehaviour
     {
         playerInputAction.BuilderController.Disable();
         playerInputAction.FPSController.Enable();
+        Debug.Log(this + " fps enabled");
     }
 }
