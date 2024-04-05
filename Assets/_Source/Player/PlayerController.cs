@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -31,7 +33,11 @@ public class PlayerController : MonoBehaviour
     private AudioSource _audioSource;
 
     private Vector3 playerVelocity;
+
+    [SerializeField]
     private float gravityValue = -9.81f;
+
+    private float _cameraAngleX;
 
     private void Awake()
     {
@@ -44,16 +50,9 @@ public class PlayerController : MonoBehaviour
     {
         FPSController = InputManager.Instance.GetPlayerInputAction().FPSController;
 
-
-
-        //Controls
-
-        //FPSController.Fire.performed += OnFire;
-
         FPSController.Jump.performed += OnJump;
         FPSController.Dash.performed += OnDash;
     }
-
 
     private void FixedUpdate()
     {
@@ -68,35 +67,38 @@ public class PlayerController : MonoBehaviour
             if(playerVelocity.y < 0)
                 playerVelocity.y = 0f;
         }
+
         //Movement
         Vector2 input = FPSController.Movement.ReadValue<Vector2>();
-
-
-        if (_onGround && playerVelocity.y < 0)
-        {
-            playerVelocity.y = 0f;
-        }
-
         Vector3 move = new Vector3(input.x, 0f, input.y);
-        move = _camera.forward * move.z + _camera.right * move.x;
+        move = transform.forward * move.z + transform.right * move.x;
         _lastMovement = move;
-        //_lastMovement.y = 0f;
+
+        playerVelocity.y += gravityValue * Time.deltaTime;
 
         _characterController.Move(move * _movementSpeed);
-       
-        playerVelocity.y += gravityValue;
-
         _characterController.Move(playerVelocity * Time.deltaTime);
+        RotateCharacter();
+    }
+
+    private void RotateCharacter()
+    {
+        var mouseInput = FPSController.Look.ReadValue<Vector2>();
+        transform.Rotate(new Vector3(0, mouseInput.x, 0));
+
+        _cameraAngleX += mouseInput.y;
+        _cameraAngleX = Mathf.Clamp(_cameraAngleX, -90, 90);
+
+        _camera.localRotation = Quaternion.Euler(new Vector3(-_cameraAngleX, 0, 0));
     }
 
     private void OnJump(InputAction.CallbackContext context)
     {
-
-
         if (_onGround)
         {
             _doubleJump = true;
         }
+
         if (_doubleJump)
         {
             _doubleJump = false;
@@ -106,22 +108,19 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        playerVelocity.y += Mathf.Sqrt(_jumpStrength * -3.0f * gravityValue);
-        _characterController.Move(playerVelocity);
-
-
+        playerVelocity.y = Mathf.Sqrt(_jumpStrength * -3.0f * gravityValue);
     }
 
     private void OnDash(InputAction.CallbackContext context)
     {
         if (_dashCount > 0 && !_isDashing)
         {
-            StartCoroutine("Dash");
+            _ = Dash();
             _dashCount--;
         }
     }
 
-    private IEnumerator Dash()
+    private async UniTaskVoid Dash()
     {
         _isDashing = true;
         Vector3 movement = _lastMovement;
@@ -145,7 +144,7 @@ public class PlayerController : MonoBehaviour
 
             _characterController.Move(movement * 12f * Time.deltaTime);
             //_objectRigidbody.MovePosition(_objectRigidbody.position + movement * 12f * Time.deltaTime);
-            yield return null;
+            await UniTask.Yield();
         }
 
 
