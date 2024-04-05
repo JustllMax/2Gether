@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridBuilding : MonoBehaviour
+public class GridBuilding : Building
 {
     [SerializeField] private Vector3 _buildingSize;
     [SerializeField] private Renderer _renderer;
 
-    public Vector3 BuildingSize {get => _buildingSize; set{;}}
+    public Vector3 buildingSize {get => _buildingSize; set{;}}
 
     public void SetColor(bool isAvailableToBuild)
     {
@@ -24,5 +24,20 @@ public class GridBuilding : MonoBehaviour
     public void ResetColor()
     {
         _renderer.material.color = Color.white;
+    }
+
+    public override void OnCreate()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnAttack()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnTakeDamage()
+    {
+        throw new System.NotImplementedException();
     }
 }

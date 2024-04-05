@@ -9,9 +9,9 @@ public class BuildingCard : Card
 
     public override void OnSubmitCard(GameContext ctx)
     {
-        if (GridController.Instance.TryPlace(ctx.cardUi.GetSelectedTileCoords(), BuildingPrefab))
+        /*if (GridController.Instance.TryPlace(ctx.cardUi.GetSelectedTileCoords(), BuildingPrefab))
         {
             // place building
-        }
+        }*/
     }
 }
