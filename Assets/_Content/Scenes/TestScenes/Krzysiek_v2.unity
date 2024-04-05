@@ -610,7 +610,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.48571238, y: 0.32552993, z: -0.20118867, w: 0.78589875}
+  m_LocalRotation: {x: 0.4857124, y: 0.32552996, z: -0.20118868, w: 0.78589875}
   m_LocalPosition: {x: -93.43553, y: 88, z: -89.13553}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -918,7 +918,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fb78e9471933c4882ebe248c34a9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunList: []
+  GunList:
+  - {fileID: 1664893228}
+  - {fileID: 838451512}
+  - {fileID: 1002350833}
+  - {fileID: 997418507}
   _currentGun: {fileID: 1664893228}
   _lastHeldGun: {fileID: 0}
   ARAmmo: 60
@@ -2250,17 +2254,17 @@ PrefabInstance:
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.48571238
+      value: 0.4857124
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.32552993
+      value: 0.32552996
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.20118867
+      value: -0.20118868
       objectReference: {fileID: 0}
     - target: {fileID: 5830323962992596256, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
