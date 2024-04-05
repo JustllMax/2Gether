@@ -6,30 +6,29 @@ abstract public class Gun : MonoBehaviour
 {
     [SerializeField] GunData _SO_Stats;
 
-    protected int ammoInMagazine;
 
     protected AudioClip firingSound;
     protected AudioClip reloadSound;
+    protected bool isAiming;
 
-    public abstract void Fire();
+    protected int ammoInMagazine;
+
+    public abstract void Fire(bool isSameButtonPress);
     public abstract void Aim();
-    public abstract void Reload();
 
-    public bool CanFire()
+    public abstract bool CanFire();
+
+    public abstract bool CanAim();
+    public int GetAmmoInMagazine()
     {
-        return true;
+        return ammoInMagazine;
     }
 
-    public bool CanAim()
+    public void SetAmmoInMagazine(int value)
     {
-        return true;
+        ammoInMagazine = value;
+        return;
     }
-
-    public bool CanReload()
-    {
-        return true;
-    }
-
 
     public GunData GetGunData()
     {

@@ -8,10 +8,15 @@ public class PlayerGunController : MonoBehaviour
 
     PlayerInputAction.FPSControllerActions _FPScontroller;
     PlayerEquipment _equipment;
+
+    private void Awake()
+    {
+        _equipment = GetComponent<PlayerEquipment>();
+    }
+
     void Start()
     {
 
-        _equipment = GetComponent<PlayerEquipment>();
         _FPScontroller = InputManager.Instance.GetPlayerInputAction().FPSController;
 
         _FPScontroller.Fire.performed += FireWeapon;
@@ -23,12 +28,15 @@ public class PlayerGunController : MonoBehaviour
 
     public void FireWeapon(InputAction.CallbackContext context)
     {
-        
+
+        bool isSameButton = false;
+        //TODO: check probly with context.time start time if same button press holding
+
         if(_equipment != null)
         {
             if (_equipment.CanFire())
             {
-                _equipment.GetCurrentGun().Fire();
+                _equipment.GetCurrentGun().Fire(isSameButton);
             }
         }
         
@@ -54,7 +62,7 @@ public class PlayerGunController : MonoBehaviour
         {
             if (_equipment.CanReload())
             {
-                _equipment.GetCurrentGun().Reload();
+                _equipment.Reload();
             }
         }
         
