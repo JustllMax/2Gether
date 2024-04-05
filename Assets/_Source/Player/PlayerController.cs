@@ -151,15 +151,4 @@ public class PlayerController : MonoBehaviour
        // cam.fieldOfView = fov;
         _isDashing = false;
     }
-
-    private bool IsGrounded()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position - new Vector3(0f, 0.6f, 0f), 0.35f);
-        foreach (Collider collider in colliders)
-        {
-            if (collider.gameObject != gameObject)
-                return true;
-        }
-        return false;
-    }
 }
