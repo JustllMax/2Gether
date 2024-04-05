@@ -21,6 +21,11 @@ public class InputManager : MonoBehaviour
         playerInputAction = new PlayerInputAction();
     }
 
+    private void Start()
+    {
+        StartNightCycle();
+    }
+
     private void OnEnable()
     {
         DayNightCycleManager.DayBegin += StartDayCycle;
