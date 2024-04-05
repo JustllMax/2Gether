@@ -28,7 +28,7 @@ public class PlayerGunController : MonoBehaviour
         {
             if (_equipment.CanFire())
             {
-                //_equipment.GetCurrentGun().Shoot();
+                _equipment.GetCurrentGun().Fire();
             }
         }
         
@@ -41,7 +41,7 @@ public class PlayerGunController : MonoBehaviour
         {
             if (_equipment.CanAim())
             {
-                //_equipment.GetCurrentGun().Aim();
+                _equipment.GetCurrentGun().Aim();
             }
         }
         
@@ -54,7 +54,7 @@ public class PlayerGunController : MonoBehaviour
         {
             if (_equipment.CanReload())
             {
-                //_equipment.GetCurrentGun().Reload();
+                _equipment.GetCurrentGun().Reload();
             }
         }
         

@@ -2,17 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gun : MonoBehaviour
+abstract public class Gun : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] GunData _SO_Stats;
+
+    protected int ammoInMagazine;
+
+    protected AudioClip firingSound;
+    protected AudioClip reloadSound;
+
+    public abstract void Fire();
+    public abstract void Aim();
+    public abstract void Reload();
+
+    public bool CanFire()
     {
-        
+        return true;
     }
 
-    // Update is called once per frame
-    void Update()
+    public bool CanAim()
     {
-        
+        return true;
+    }
+
+    public bool CanReload()
+    {
+        return true;
+    }
+
+
+    public GunData GetGunData()
+    {
+        return _SO_Stats;
     }
 }
