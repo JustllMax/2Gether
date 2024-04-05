@@ -263,6 +263,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""592bb9c0-6661-4d90-abc6-d53c12602165"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -463,6 +472,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9217eedf-c43f-4ef5-a8db-bc6c0ff483de"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -508,6 +528,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_FPSController_Look = m_FPSController.FindAction("Look", throwIfNotFound: true);
         m_FPSController_Jump = m_FPSController.FindAction("Jump", throwIfNotFound: true);
         m_FPSController_Dash = m_FPSController.FindAction("Dash", throwIfNotFound: true);
+        m_FPSController_Reload = m_FPSController.FindAction("Reload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -640,6 +661,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_FPSController_Look;
     private readonly InputAction m_FPSController_Jump;
     private readonly InputAction m_FPSController_Dash;
+    private readonly InputAction m_FPSController_Reload;
     public struct FPSControllerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -653,6 +675,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_FPSController_Look;
         public InputAction @Jump => m_Wrapper.m_FPSController_Jump;
         public InputAction @Dash => m_Wrapper.m_FPSController_Dash;
+        public InputAction @Reload => m_Wrapper.m_FPSController_Reload;
         public InputActionMap Get() { return m_Wrapper.m_FPSController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -689,6 +712,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
         }
 
         private void UnregisterCallbacks(IFPSControllerActions instance)
@@ -720,6 +746,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
         }
 
         public void RemoveCallbacks(IFPSControllerActions instance)
@@ -772,5 +801,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }
