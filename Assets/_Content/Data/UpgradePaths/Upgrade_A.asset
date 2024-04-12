@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b3e054fa4bcce94684bdc93a62a070b, type: 3}
   m_Name: Upgrade_A
   m_EditorClassIdentifier: 
-  UpgradePairs: []
+  UpgradePairs:
+  - Level: 0
+    Statistics: {fileID: 11400000, guid: 615624948bc27ec4d89d861b304cf2a0, type: 2}
+  - Level: 1
+    Statistics: {fileID: 0}
+  - Level: 2
+    Statistics: {fileID: 0}
