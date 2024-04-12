@@ -14,6 +14,14 @@
       "dependencies": {},
       "hash": "8a8fa5a9659a6d63f196391c71e06c4286c8acd7"
     },
+    "com.occasoftware.buto": {
+      "version": "file:C:/Users/banan/Downloads/OccaSoftware-buto-ab30e95ee6950f86fe6b72feceb70fc2435f8b62",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "14.0.7"
+      }
+    },
     "com.singularitygroup.hotreload": {
       "version": "git+https://gitlab.hotreload.net/root/hot-reload-releases.git#1.12.9",
       "depth": 0,
