@@ -6,13 +6,13 @@ using JetBrains.Annotations;
 using UniRx.Triggers;
 using UnityEngine;
 
-public class WayPlacer : MonoBehaviour
+public class SlotPlacer : MonoBehaviour
 {
-    [SerializeField] private GameObject[] WayPrefabs;
-    [SerializeField] private Way StartingWay;
+    [SerializeField] private GameObject[] SlotPrefabs;
+    [SerializeField] private Slot StartingSlot;
 
-    private Way[,] _spawnedWays;
-    private bool _isWayDone;
+    private Slot[,] _spawnedSlots;
+    private bool _isSlotDone;
 
     HashSet<Vector2Int> _vacantPlaces = new HashSet<Vector2Int>();
 
@@ -33,143 +33,146 @@ public class WayPlacer : MonoBehaviour
     }
     private void GenerateMap()
     {
-        _spawnedWays = new Way[MapSize.x, MapSize.y];
+        _spawnedSlots = new Slot[MapSize.x, MapSize.y];
 
-        Way centerWay = Instantiate(StartingWay);
-        centerWay.pos = MapCenter;
+        Slot centerSlot = Instantiate(StartingSlot);
+        centerSlot.pos = MapCenter;
 
-        centerWay.transform.position = new Vector3(centerWay.pos.x, 0, centerWay.pos.y) * 30;
+        centerSlot.transform.position = new Vector3(centerSlot.pos.x, 0, centerSlot.pos.y) * 30;
 
-        _spawnedWays[MapCenter.x, MapCenter.y] = StartingWay;
-        
+        _spawnedSlots[MapCenter.x, MapCenter.y] = StartingSlot;
+
         for (int i = 0; i < 4; i++)
-            CheckWay(centerWay, i, 0);
-        
+            CheckSlot(centerSlot, i, 0);
+
     }
     //[Obsolete]
-    private void CheckWay(Way wayToConnect, int i, int w)
+    private void CheckSlot(Slot SlotToConnect, int i, int w)
     {
-        if (wayToConnect.pos.x == 0 || wayToConnect.pos.y == 0 || wayToConnect.pos.x == MapSize.x-1 || wayToConnect.pos.y == MapSize.y-1)
+        if (SlotToConnect.pos.x == 0 || SlotToConnect.pos.y == 0 || SlotToConnect.pos.x == MapSize.x - 1 || SlotToConnect.pos.y == MapSize.y - 1)
             return;
-        
+
         int id = (UnityEngine.Random.Range(0, 20) == 0) ? 4 : 1;
         //id = 4;
-        GameObject newWayObject = Instantiate(WayPrefabs[id]);
 
-        Way newWay = newWayObject.GetComponent<Way>();
+        Slot newSlot = Instantiate(SlotPrefabs[id]).GetComponent<Slot>();
 
-        newWay.pos = wayToConnect.pos;
+        newSlot.pos = SlotToConnect.pos;
 
-        Vector2Int newPos = wayToConnect.pos;
+        Vector2Int newPos = SlotToConnect.pos;
 
-        Debug.Log($"[{i}][{w}] [{wayToConnect.gameObject.GetInstanceID().ToString()}] wayToPlace pos:{wayToConnect.pos.x}; {wayToConnect.pos.y}\nAnchors to connect: {wayToConnect.wayAnchors[0].IsWay}; {wayToConnect.wayAnchors[1].IsWay}; {wayToConnect.wayAnchors[2].IsWay}; {wayToConnect.wayAnchors[3].IsWay}\nAnchors new connect: {newWay.wayAnchors[0].IsWay}; {newWay.wayAnchors[1].IsWay}; {newWay.wayAnchors[2].IsWay}; {newWay.wayAnchors[3].IsWay}");
+        //Debug.Log($"[{i}][{w}] [{SlotToConnect.gameObject.GetInstanceID().ToString()}] SlotToPlace pos:{SlotToConnect.pos.x}; {SlotToConnect.pos.y}\nAnchors to connect: {SlotToConnect.SlotAnchors[0].IsSlot}; {SlotToConnect.SlotAnchors[1].IsSlot}; {SlotToConnect.SlotAnchors[2].IsSlot}; {SlotToConnect.SlotAnchors[3].IsSlot}\nAnchors new connect: {newSlot.SlotAnchors[0].IsSlot}; {newSlot.SlotAnchors[1].IsSlot}; {newSlot.SlotAnchors[2].IsSlot}; {newSlot.SlotAnchors[3].IsSlot}");
 
 
         if (id == 1)
         {
             if (i == 0)
             {
-                if (wayToConnect.wayAnchors[0].IsWay)
+                if (SlotToConnect.slotAnchors[0].IsWay)
                 {
-                    SetNewWayAnchors(Subtract, true, newPos, wayToConnect, newWay, 2, 0);
-                    CheckWay(newWay, i, 0);
-                    PlaceOneWay(newWay);
+                    SetNewSlotAnchors(Subtract, true, newPos, SlotToConnect, newSlot, 2, 0);
+                    if (_spawnedSlots[newSlot.pos.x, newSlot.pos.y] != null) return;
+                    CheckSlot(newSlot, i, 0);
+                    PlaceOneSlot(newSlot);
                 }
             }
             if (i == 1)
             {
-                if (wayToConnect.wayAnchors[1].IsWay)
+                if (SlotToConnect.slotAnchors[1].IsWay)
                 {
-                    newWay.RotateWay(Vector3.up, 90f);
-                    SetNewWayAnchors(Add, false, newPos, wayToConnect, newWay, 3, 1);
-                    CheckWay(newWay, i, 1);
-                    PlaceOneWay(newWay);
+                    newSlot.RotateWay(Vector3.up, 90f);
+                    SetNewSlotAnchors(Add, false, newPos, SlotToConnect, newSlot, 3, 1);
+                    if (_spawnedSlots[newSlot.pos.x, newSlot.pos.y] != null) return;
+                    CheckSlot(newSlot, i, 1);
+                    PlaceOneSlot(newSlot);
                 }
             }
             if (i == 2)
             {
-                if (wayToConnect.wayAnchors[2].IsWay)
+                if (SlotToConnect.slotAnchors[2].IsWay)
                 {
-                    SetNewWayAnchors(Add, true, newPos, wayToConnect, newWay, 3, 2);
-                    CheckWay(newWay, i, 2);
-                    PlaceOneWay(newWay);
+                    SetNewSlotAnchors(Add, true, newPos, SlotToConnect, newSlot, 0, 2);
+                    if (_spawnedSlots[newSlot.pos.x, newSlot.pos.y] != null) return;
+                    CheckSlot(newSlot, i, 2);
+                    PlaceOneSlot(newSlot);
                 }
             }
             if (i == 3)
             {
-                if (wayToConnect.wayAnchors[3].IsWay)
+                if (SlotToConnect.slotAnchors[3].IsWay)
                 {
-                    newWay.RotateWay(Vector3.up, 90f);
-                    SetNewWayAnchors(Subtract, false, newPos, wayToConnect, newWay, 1, 3);
-                    CheckWay(newWay, i, 3);
-                    PlaceOneWay(newWay);
+                    newSlot.RotateWay(Vector3.up, 90f);
+                    SetNewSlotAnchors(Subtract, false, newPos, SlotToConnect, newSlot, 1, 3);
+                    if (_spawnedSlots[newSlot.pos.x, newSlot.pos.y] != null) return;
+                    CheckSlot(newSlot, i, 3);
+                    PlaceOneSlot(newSlot);
                 }
             }
         }
         /*if (id == 2)
         {
-            if (wayToConnect.wayAnchors[0].IsWay)
+            if (SlotToConnect.SlotAnchors[0].IsSlot)
             {
                 //TODO Rotation
             }
-            if (wayToConnect.wayAnchors[1].IsWay)
+            if (SlotToConnect.SlotAnchors[1].IsSlot)
             {
                 //TODO Rotation
             }
-            if (wayToConnect.wayAnchors[2].IsWay)
+            if (SlotToConnect.SlotAnchors[2].IsSlot)
             {
-                x = wayToConnect.pos.x + 1;
-                newWay.wayAnchors[0].IsWay = false;
+                x = SlotToConnect.pos.x + 1;
+                newSlot.SlotAnchors[0].IsSlot = false;
                 
-                wayToConnect.wayAnchors[2].IsWay = false;
+                SlotToConnect.SlotAnchors[2].IsSlot = false;
 
-                CheckWay(newWay);
-                PlaceOneWay(x, wayToConnect.pos.y, newWay);
+                CheckSlot(newSlot);
+                PlaceOneSlot(x, SlotToConnect.pos.y, newSlot);
             }
-            if (wayToConnect.wayAnchors[3].IsWay)
+            if (SlotToConnect.SlotAnchors[3].IsSlot)
             {
-                y = wayToConnect.pos.y - 1;
-                newWay.wayAnchors[1].IsWay = false;
+                y = SlotToConnect.pos.y - 1;
+                newSlot.SlotAnchors[1].IsSlot = false;
                 
-                wayToConnect.wayAnchors[1].IsWay = false;
+                SlotToConnect.SlotAnchors[1].IsSlot = false;
 
-                CheckWay(newWay);
-                PlaceOneWay(x, wayToConnect.pos.y, newWay);
+                CheckSlot(newSlot);
+                PlaceOneSlot(x, SlotToConnect.pos.y, newSlot);
             }
         }
         /*if (id == 3)
         {
-            if (wayToConnect.wayAnchors[0].IsWay)
+            if (SlotToConnect.SlotAnchors[0].IsSlot)
             {
-                x = wayToConnect.pos.x - 1;
+                x = SlotToConnect.pos.x - 1;
 
-                newWay.wayAnchors[2].IsWay = false;
+                newSlot.SlotAnchors[2].IsSlot = false;
 
-                wayToConnect.wayAnchors[0].IsWay = false;
+                SlotToConnect.SlotAnchors[0].IsSlot = false;
             }
-            if (wayToConnect.wayAnchors[1].IsWay)
+            if (SlotToConnect.SlotAnchors[1].IsSlot)
             {
-                y = wayToConnect.pos.y + 1;
+                y = SlotToConnect.pos.y + 1;
 
-                newWay.wayAnchors[3].IsWay = false;
+                newSlot.SlotAnchors[3].IsSlot = false;
 
-                wayToConnect.wayAnchors[1].IsWay = false;
+                SlotToConnect.SlotAnchors[1].IsSlot = false;
             }
-            if (wayToConnect.wayAnchors[2].IsWay)
+            if (SlotToConnect.SlotAnchors[2].IsSlot)
             {
-                x = wayToConnect.pos.x + 1;
+                x = SlotToConnect.pos.x + 1;
 
-                newWay.wayAnchors[3].IsWay = false;
+                newSlot.SlotAnchors[3].IsSlot = false;
                 
-                wayToConnect.wayAnchors[2].IsWay = false;
+                SlotToConnect.SlotAnchors[2].IsSlot = false;
             }
-            if (wayToConnect.wayAnchors[3].IsWay)
+            if (SlotToConnect.SlotAnchors[3].IsSlot)
             {
-                y = wayToConnect.pos.y - 1;
+                y = SlotToConnect.pos.y - 1;
 
-                newWay.wayAnchors[3].IsWay = false;
+                newSlot.SlotAnchors[3].IsSlot = false;
                 
-                wayToConnect.wayAnchors[1].IsWay = false;
+                SlotToConnect.SlotAnchors[1].IsSlot = false;
             }
         }
         */
@@ -177,95 +180,91 @@ public class WayPlacer : MonoBehaviour
         {
             if (i == 0)
             {
-                if (wayToConnect.wayAnchors[0].IsWay)
+                if (SlotToConnect.slotAnchors[0].IsWay)
                 {
-                    SetNewWayAnchors(Subtract, true, newPos, wayToConnect, newWay, 2, 0);
-                    for(int j = 0; j < 4; j++)
-                        CheckWay(newWay, j, 0);
-                    PlaceOneWay(newWay);
+                    SetNewSlotAnchors(Subtract, true, newPos, SlotToConnect, newSlot, 2, 0);
+                    if (_spawnedSlots[newSlot.pos.x, newSlot.pos.y] != null) return;
+                    for (int j = 0; j < 4; j++)
+                        CheckSlot(newSlot, j, 0);
+                    PlaceOneSlot(newSlot);
                 }
             }
             if (i == 1)
             {
-                if (wayToConnect.wayAnchors[1].IsWay)
+                if (SlotToConnect.slotAnchors[1].IsWay)
                 {
-                    SetNewWayAnchors(Add, false, newPos, wayToConnect, newWay, 3, 1);
-                    for(int j = 0; j < 4; j++)
-                        CheckWay(newWay, j, 1);
-                    PlaceOneWay(newWay);
+                    SetNewSlotAnchors(Add, false, newPos, SlotToConnect, newSlot, 3, 1);
+                    if (_spawnedSlots[newSlot.pos.x, newSlot.pos.y] != null) return;
+                    for (int j = 0; j < 4; j++)
+                        CheckSlot(newSlot, j, 1);
+                    PlaceOneSlot(newSlot);
                 }
             }
             if (i == 2)
             {
-                if (wayToConnect.wayAnchors[2].IsWay)
+                if (SlotToConnect.slotAnchors[2].IsWay)
                 {
-                    SetNewWayAnchors(Add, true, newPos, wayToConnect, newWay, 3, 2);
-                    for(int j = 0; j < 4; j++)
-                        CheckWay(newWay, j, 2);
-                    PlaceOneWay(newWay);
+                    SetNewSlotAnchors(Add, true, newPos, SlotToConnect, newSlot, 0, 2);
+                    if (_spawnedSlots[newSlot.pos.x, newSlot.pos.y] != null) return;
+                    for (int j = 0; j < 4; j++)
+                        CheckSlot(newSlot, j, 2);
+                    PlaceOneSlot(newSlot);
                 }
             }
             if (i == 3)
             {
-                if (wayToConnect.wayAnchors[3].IsWay)
+                if (SlotToConnect.slotAnchors[3].IsWay)
                 {
-                    newWay.RotateWay(Vector3.up, 90f);
-                    SetNewWayAnchors(Subtract, false, newPos, wayToConnect, newWay, 1, 3);
-                    for(int j = 0; j < 4; j++)
-                        CheckWay(newWay, j, 3);
-                    PlaceOneWay(newWay);
+                    SetNewSlotAnchors(Subtract, false, newPos, SlotToConnect, newSlot, 1, 3);
+                    if (_spawnedSlots[newSlot.pos.x, newSlot.pos.y] != null) return;
+                    for (int j = 0; j < 4; j++)
+                        CheckSlot(newSlot, j, 3);
+                    PlaceOneSlot(newSlot);
                 }
             }
         }
-        
+
     }
     // axis true = x
     // axis false = z
-    private void SetNewWayAnchors(Operation operation, bool axis, Vector2Int newPos, Way wayToConnect, Way newWay, int newWayAnchor, int wayToConnectAnchor)
+    private void SetNewSlotAnchors(Operation operation, bool axis, Vector2Int newPos, Slot SlotToConnect, Slot newSlot, int newSlotAnchor, int SlotToConnectAnchor)
     {
-        if (axis)
-            newPos.x = operation(wayToConnect.pos.x, 1);
-        if (!axis)
-            newPos.y = operation(wayToConnect.pos.y, 1);
+        Debug.Log($"[1]new pos x:{newPos.x} y:{newPos.y}");
+        if (axis == true)
+            newPos.x = operation(SlotToConnect.pos.x, 1);
+        if (axis == false)
+            newPos.y = operation(SlotToConnect.pos.y, 1);
+        Debug.Log($"[2]new pos x:{newPos.x} y:{newPos.y}");
 
-        newWay.wayAnchors[newWayAnchor].IsWay = false;
-        wayToConnect.wayAnchors[wayToConnectAnchor].IsWay = false;
+        newSlot.slotAnchors[newSlotAnchor].IsWay = false;
+        SlotToConnect.slotAnchors[SlotToConnectAnchor].IsWay = false;
 
-        newWay.pos = newPos;
+        newSlot.pos = newPos;
     }
-    private void PlaceOneWay(Way wayToPlace)
+    private void PlaceOneSlot(Slot SlotToPlace)
     {
-        wayToPlace.transform.position = new Vector3(wayToPlace.pos.x, 0, wayToPlace.pos.y) * 30;
-        Debug.Log($"{wayToPlace.transform.position.x}; {wayToPlace.transform.position.y}; {wayToPlace.transform.position.z};");
-        _spawnedWays[wayToPlace.pos.x, wayToPlace.pos.y] = wayToPlace;
+
+        SlotToPlace.transform.position = new Vector3(SlotToPlace.pos.x, 0, SlotToPlace.pos.y) * 30;
+        //Debug.Log($"{SlotToPlace.transform.position.x}; {SlotToPlace.transform.position.y}; {SlotToPlace.transform.position.z};");
+        _spawnedSlots[SlotToPlace.pos.x, SlotToPlace.pos.y] = SlotToPlace;
     }
 
-    private void PlaceOneEmptyWay()
+    private void PlaceOneEmptySlot()
     {
-        for (int x = 0; x < _spawnedWays.GetLength(0); x++)
+        for (int x = 0; x < _spawnedSlots.GetLength(0); x++)
         {
-            for (int y = 0; y < _spawnedWays.GetLength(1); y++)
+            for (int y = 0; y < _spawnedSlots.GetLength(1); y++)
             {
-                if (_spawnedWays[x, y] == null) continue;
+                if (_spawnedSlots[x, y] == null) continue;
 
-                int maxX = _spawnedWays.GetLength(0) - 1;
-                int maxY = _spawnedWays.GetLength(1) - 1;
-
-                if (x > 0 && _spawnedWays[x - 1, y] == null) _vacantPlaces.Add(new Vector2Int(x - 1, y));
-                if (y > 0 && _spawnedWays[x, y - 1] == null) _vacantPlaces.Add(new Vector2Int(x, y - 1));
-                if (x < maxX && _spawnedWays[x + 1, y] == null) _vacantPlaces.Add(new Vector2Int(x + 1, y));
-                if (y < maxY && _spawnedWays[x, y + 1] == null) _vacantPlaces.Add(new Vector2Int(x, y + 1));
+                Slot newSlot = Instantiate(SlotPrefabs[0].GetComponent<Slot>());
+                newSlot.transform.position = new Vector3(newSlot.pos.x, 0, newSlot.pos.y) * 30;
+                _spawnedSlots[newSlot.pos.x, newSlot.pos.y] = newSlot;
             }
         }
-
-        Way newWay = Instantiate(WayPrefabs[0].GetComponent<Way>());
         Vector2Int position = _vacantPlaces.ElementAt(UnityEngine.Random.Range(0, _vacantPlaces.Count));
-        newWay.transform.position = new Vector3(position.x, 0, position.y) * 30;
-
-        _spawnedWays[position.x, position.y] = newWay;
     }
 
-    // Update is called once per frame
     void Update()
     {
 

@@ -4,12 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 
-public class Way : MonoBehaviour
+public class Slot : MonoBehaviour
 {
     [SerializeField] public int id;
-    [SerializeField] public WayAnchor[] wayAnchors;
+    [SerializeField] public WayAnchor[] slotAnchors;
     private Vector2Int _pos;
-    private GameObject[] WayAnchorsObjects;
     public Vector2Int pos
     {
         get => _pos;
@@ -24,7 +23,7 @@ public class Way : MonoBehaviour
         {
             if (angle == 0f || angle == 180f)
             {
-                Debug.Log("ANGLE!");
+               
                 anchors.transform.GetChild(0).GetComponent<WayAnchor>().IsWay = true;
                 anchors.transform.GetChild(1).GetComponent<WayAnchor>().IsWay = false;
                 anchors.transform.GetChild(2).GetComponent<WayAnchor>().IsWay = true;
@@ -32,7 +31,6 @@ public class Way : MonoBehaviour
             }
             if (angle == 90f || angle == 270f)
             {
-                Debug.Log("ANGLE!");
                 anchors.transform.GetChild(0).GetComponent<WayAnchor>().IsWay = false;
                 anchors.transform.GetChild(1).GetComponent<WayAnchor>().IsWay = true;
                 anchors.transform.GetChild(2).GetComponent<WayAnchor>().IsWay = false;
