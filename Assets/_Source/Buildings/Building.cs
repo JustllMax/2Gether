@@ -27,11 +27,12 @@ public abstract class Building : MonoBehaviour
 
     public virtual void Update()
     {
+        /*
         if(attackTimer < _buildingStatistics.ActivationTime) 
         {
             attackTimer += Time.deltaTime;
         }
-
+        */
     }
 
     public abstract void OnCreate();
