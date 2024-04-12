@@ -12,7 +12,7 @@ abstract public class Gun : MonoBehaviour
     [SerializeField] protected bool isAiming;
     [SerializeField] protected int ammoInMagazine;
 
-    public abstract void Fire(bool isSameButtonPress);
+    public abstract void Fire(bool isSameButtonPress, Transform firePoint);
     public abstract void Aim();
 
     public abstract bool CanFire();

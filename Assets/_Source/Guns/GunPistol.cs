@@ -8,6 +8,7 @@ public class GunPistol : Gun
     bool isParryOnCD = false;
     float firingCooldown = 0;
     float firingCooldownTimer = 0;
+    [SerializeField] Transform firePoint;
     void Start()
     {
         ammoInMagazine = GetMagazineSize();
@@ -21,7 +22,7 @@ public class GunPistol : Gun
             firingCooldownTimer -= Time.deltaTime; 
         }
     }
-    public override void Fire(bool isSameButtonPress)
+    public override void Fire(bool isSameButtonPress, Transform firePoint)
     {
         if (firingCooldownTimer <= 0f)
         {
@@ -31,14 +32,24 @@ public class GunPistol : Gun
             }
             ammoInMagazine -= 1;
             firingCooldownTimer = firingCooldown;
-            CalculateFire();
+            CalculateFire(firePoint);
         }
 
     }
 
-    private void CalculateFire()
+    private void CalculateFire(Transform firePoint)
     {
         Debug.Log(this + " Fire " + (ammoInMagazine - 1));
+
+        RaycastHit hit;
+
+        if(Physics.Raycast(firePoint.position, firePoint.forward, out hit, GetGunData().Range))
+        {
+            
+            Debug.Log( hit.transform.gameObject + " Hit!");
+            hit.transform.GetComponent<Renderer>().enabled = false;
+        }
+
     }
 
     public override void Aim()
@@ -51,7 +62,11 @@ public class GunPistol : Gun
 
     }
 
+    private void OnDrawGizmos()
+    {
 
+        Debug.DrawRay(firePoint.position, firePoint.forward * GetGunData().Range, Color.green);
+    }
     public override bool CanAim()
     {
        if(isParryOnCD)

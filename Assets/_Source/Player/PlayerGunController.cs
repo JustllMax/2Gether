@@ -6,11 +6,15 @@ using UnityEngine.InputSystem;
 public class PlayerGunController : MonoBehaviour
 {
 
-    [SerializeField]PlayerInputAction.FPSControllerActions _FPScontroller;
+    [SerializeField] Transform FirePoint;
+    PlayerInputAction.FPSControllerActions _FPScontroller;
     PlayerEquipment _equipment;
+
     bool firedButtonHeld = false;
     float buttonHeldTimer = 0;
     bool isHoldingFire = false;
+
+
     private void Awake()
     {
         _equipment = GetComponent<PlayerEquipment>();
@@ -41,7 +45,7 @@ public class PlayerGunController : MonoBehaviour
             {
                 if (_equipment.CanFire())
                 {
-                    _equipment.GetCurrentGun().Fire(isHoldingFire);
+                    _equipment.GetCurrentGun().Fire(isHoldingFire, FirePoint);
                 }
 
             }
