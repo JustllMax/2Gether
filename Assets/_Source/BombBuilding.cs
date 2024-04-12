@@ -12,6 +12,9 @@ public class BombBuilding : Building
     private float HealthPoint = 700f;
     private int price = 200;
 
+    public float fireContDown = 0f;
+    public float fireRate = .3f;
+
 
     void Start()
     {
@@ -22,6 +25,14 @@ public class BombBuilding : Building
     {
         if (target == null)
             return;
+
+        if(fireContDown <= 0f)
+        {
+            OnAttack();
+            Debug.Log("bam");
+            fireContDown = 1f / fireRate;
+        }
+        fireContDown -= Time.deltaTime;
     }
 
     public override void OnAttack()
@@ -30,12 +41,32 @@ public class BombBuilding : Building
         {
             GameObject bombGO = Instantiate(bombPrefab, firePoint.position, firePoint.rotation);
             Bomb bomb = bombGO.GetComponent<Bomb>();
-            if (bomb != null)
+            if(bomb != null)
             {
-                bomb.SetTargetPosition(target.position);
+                bomb.SeekTarget(target);
             }
+
         }
     }
+    private void UpdateTarget()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+        float shortestDistance = Mathf.Infinity;
+        Transform nearestEnemy = null;
+
+        foreach (GameObject enemy in enemies)
+        {
+            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distanceToEnemy < shortestDistance && distanceToEnemy <= range)
+            {
+                shortestDistance = distanceToEnemy;
+                nearestEnemy = enemy.transform;
+            }
+        }
+
+        target = nearestEnemy;
+    }
+
 
     public override void OnCreate()
     {
@@ -62,14 +93,16 @@ public class BombBuilding : Building
         if (other.CompareTag(enemyTag))
         {
             UnityEngine.Debug.Log("Enemy entered zone");
-            target = other.transform;
-            OnAttack();
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        
+        if (other.CompareTag(enemyTag))
+        {
+            target = other.transform;
+        }
+
     }
 
     void OnDrawGizmosSelected()

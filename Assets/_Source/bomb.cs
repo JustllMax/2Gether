@@ -2,53 +2,54 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    public float pushForce = 10f;
+    public Transform target;
+    private float speed = 4f;
+    private float animationTime = 0f;
 
-    private Vector3 targetPos;
-    private bool isPushed = false;
-
-    private void Start()
+    public void SeekTarget(Transform _target)
     {
-       
-        
+        target = _target;
     }
 
     private void Update()
     {
-        if (!isPushed)
+        if (target == null)
         {
-            Vector3 direction = (targetPos - transform.position).normalized;
-            transform.Translate(direction * pushForce * Time.deltaTime);
+            Destroy(gameObject);
+            return;
+        }
+        
+        Vector3 direction = target.position - transform.position;
+        float distance = speed * Time.deltaTime;
+        transform.Translate(direction.normalized * distance, Space.World);
+
+        /*
+
+        animationTime += Time.deltaTime;
+        animationTime = animationTime % 5f; 
+
+        Vector3 direction = MathParabola.Parabola(transform.position, target.position, 5f, animationTime / 5f);
+
+        float distance = speed * Time.deltaTime;
+        transform.Translate(direction.normalized * distance, Space.World);
+        */
 
 
-            if (Vector3.Distance(transform.position, targetPos) < 0.1f)
-            {
-                isPushed = true;
-            }
-        }
-        else
-        {
- 
-            
-        }
     }
 
-    public void SetTargetPosition(Vector3 pos)
-    {
 
-        if (!isPushed)
-        {
-            targetPos = pos;
-        }
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("ground");
+            Debug.Log("Hit Ground");
             Destroy(gameObject);
         }
-
+        else if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Hit Enemy");
+            Destroy(gameObject);
+        }
     }
 }

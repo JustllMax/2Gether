@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1430561729187527813}
   - component: {fileID: 8608680444450265463}
   - component: {fileID: 2618699486462112981}
+  - component: {fileID: 1791263649752045110}
   - component: {fileID: 5671813942061316346}
   - component: {fileID: -7822436095491385947}
   m_Layer: 0
@@ -107,6 +108,27 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &1791263649752045110
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558628129676915701}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5671813942061316346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,8 +141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d80046ef730c6f408c63a6cbebcb87a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 10
-  fallSpeed: 5
+  target: {fileID: 0}
+  speed: 9
+  gravity: -9.8
 --- !u!54 &-7822436095491385947
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -143,7 +166,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
