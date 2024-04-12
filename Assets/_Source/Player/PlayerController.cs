@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private float _groundControlFactor = 0.35f;
 
     [SerializeField]
-    private float _airControlFactor = 0.2f;
+    private float _airControlFactor = 0.1f;
 
     [SerializeField]
     private float _movementSpeed = 1.0f;
@@ -68,7 +68,6 @@ public class PlayerController : MonoBehaviour
         FPSController = InputManager.Instance.GetPlayerInputAction().FPSController;
 
         FPSController.Jump.performed += OnJump;
-        FPSController.Dash.performed += OnDash;
     }
 
     private void FixedUpdate()
@@ -84,7 +83,7 @@ public class PlayerController : MonoBehaviour
         _velocity += _gravityAcceleration * Time.deltaTime;
 
         //Dash cooldown
-        if (_dashCount < _maxDashCount && _dashCooldownTime < _dashCooldown)
+        if (!_isDashing && _dashCount < _maxDashCount && _dashCooldownTime < _dashCooldown)
         {
             _dashCooldownTime += Time.deltaTime;
         }
@@ -103,24 +102,31 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        //Movement
-        Vector2 input = FPSController.Movement.ReadValue<Vector2>();
-        _lastMovementDir = transform.forward * input.y + transform.right * input.x;
-
-        if (input != Vector2.zero)
+        if (FPSController.Dash.IsPressed())
+            OnDash();
+        
+        if (!_isDashing)
         {
-            Vector3 movement = _lastMovementDir * _movementSpeed;
-            movement.y = _velocity.y;
+            //Movement
+            Vector2 input = FPSController.Movement.ReadValue<Vector2>();
+            _lastMovementDir = (transform.forward * input.y + transform.right * input.x).normalized;
 
-            if (_onGround)
-                _velocity = Vector3.Lerp(_velocity, movement, Time.deltaTime * 50 * _groundControlFactor);
-            else
-                _velocity = Vector3.Lerp(_velocity, movement, Time.deltaTime * 50 * _airControlFactor);
-        } else if (_onGround)
-        {
-            //Ground drag
-            _velocity.x = Mathf.Lerp(_velocity.x, 0, Time.deltaTime * 50 * _groundDrag);
-            _velocity.z = Mathf.Lerp(_velocity.z, 0, Time.deltaTime * 50 * _groundDrag);
+            if (input != Vector2.zero)
+            {
+                Vector3 movement = _lastMovementDir * _movementSpeed;
+                movement.y = _velocity.y;
+
+                if (_onGround)
+                    _velocity = Vector3.Lerp(_velocity, movement, Time.deltaTime * 50 * _groundControlFactor);
+                else
+                    _velocity = Vector3.Lerp(_velocity, movement, Time.deltaTime * 50 * _airControlFactor);
+            }
+            else if (_onGround)
+            {
+                //Ground drag
+                _velocity.x = Mathf.Lerp(_velocity.x, 0, Time.deltaTime * 50 * _groundDrag);
+                _velocity.z = Mathf.Lerp(_velocity.z, 0, Time.deltaTime * 50 * _groundDrag);
+            }
         }
 
         _characterController.Move((_velocity - new Vector3(0,0.01f,0)) * Time.deltaTime);
@@ -158,7 +164,7 @@ public class PlayerController : MonoBehaviour
         _velocity += _gravityAcceleration.normalized * -1 * jumpSpeed;
     }
 
-    private void OnDash(InputAction.CallbackContext context)
+    private void OnDash()
     {
         if (_dashCount > 0 && !_isDashing)
         {
@@ -187,6 +193,12 @@ public class PlayerController : MonoBehaviour
         }
 
         _velocity = new Vector3(0,0,0);
+
+        time = Time.time + 0.025f;
+        while (Time.time < time)
+        {
+            yield return null;
+        }
         _isDashing = false;
     }
 }
