@@ -22,5 +22,10 @@ public class CardSystem : MonoBehaviour
         {
             Resources.Load<Card>("Cards/BuffCard").OnSubmitCard(new GameContext());
         }
+
+        if (GUI.Button(new Rect(170, 10, 150, 100), "Use Sample Building Card"))
+        {
+            Resources.Load<Card>("Cards/BuildingCard").OnSubmitCard(new GameContext());
+        }
     }
 }

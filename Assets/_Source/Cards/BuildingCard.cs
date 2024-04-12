@@ -1,17 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BuffCard", menuName = "2Gether/Cards/BuffCard")]
+[CreateAssetMenu(fileName = "Building Card", menuName = "2Gether/Cards/Building Card")]
 public class BuildingCard : Card
 {
-    public Building BuildingPrefab;
+    public GameObject BuildingPrefab;
 
     public override void OnSubmitCard(GameContext ctx)
     {
-        /*if (GridController.Instance.TryPlace(ctx.cardUi.GetSelectedTileCoords(), BuildingPrefab))
+        if (GridController.Instance.TryPlace(new Vector2Int(0,0), BuildingPrefab.GetComponent<Building>()))
         {
             // place building
-        }*/
+        }
+    }
+
+    private void OnValidate()
+    {
+        if (BuildingPrefab != null)
+        {
+            if (BuildingPrefab.GetComponent<Building>() == null)
+            {
+                BuildingPrefab = null;
+#if UNITY_EDITOR
+                EditorUtility.DisplayDialog("Niew³aœciwy prefab!", "Na prefabie brakuje komponentu Building!!", "Ok");
+#endif
+            }
+        }
     }
 }
