@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        
+        Application.targetFrameRate = 300;
         _characterController = GetComponent<CharacterController>();
         _audioSource = GetComponent<AudioSource>();
     }
@@ -78,15 +78,19 @@ public class PlayerController : MonoBehaviour
 
         _characterController.Move(move * _movementSpeed);
         _characterController.Move(playerVelocity * Time.deltaTime);
+    }
+
+    public void Update()
+    {
         RotateCharacter();
     }
 
     private void RotateCharacter()
     {
         var mouseInput = FPSController.Look.ReadValue<Vector2>();
-        transform.Rotate(new Vector3(0, mouseInput.x, 0));
+        transform.Rotate(new Vector3(0, mouseInput.x * _cameraSensitivity, 0));
 
-        _cameraAngleX += mouseInput.y;
+        _cameraAngleX += mouseInput.y * _cameraSensitivity;
         _cameraAngleX = Mathf.Clamp(_cameraAngleX, -90, 90);
 
         _camera.localRotation = Quaternion.Euler(new Vector3(-_cameraAngleX, 0, 0));
