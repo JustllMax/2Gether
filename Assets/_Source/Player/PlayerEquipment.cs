@@ -21,15 +21,24 @@ public class PlayerEquipment : MonoBehaviour
 
     private bool isSwitchingGun;
     private bool isReloading;
-    private bool isFiring;
+
 
     void Start()
     {
+
+        foreach (Gun gun in GunList)
+        {
+            gun.gameObject.SetActive(false);
+        }
+        GunList[0].gameObject.SetActive(true);
+
+
         _FPSController = InputManager.Instance.GetPlayerInputAction().FPSController;
 
 
         _FPSController.WeaponSwitch.performed += SwitchWeaponByHotkeys;
         _FPSController.SwitchToLastWeapon.performed += SwitchToLastHeldWeapon;
+        
     }
 
 
@@ -86,14 +95,15 @@ public class PlayerEquipment : MonoBehaviour
         int currentGunIndex = GetGunIndexByRef(_currentGun);
         int indexToSwitchTo = currentGunIndex;
         indexToSwitchTo += input;
+        Debug.Log("current gun index: " + currentGunIndex + " input: " + input + " calculated index: " + indexToSwitchTo);
 
-        if(indexToSwitchTo >= GunList.Count)
+        if (indexToSwitchTo >= GunList.Count)
         {
             indexToSwitchTo = 0;
         }
         else if(indexToSwitchTo < 0) 
         {
-            indexToSwitchTo = 0;
+            indexToSwitchTo = GunList.Count-1;
         }
         
         if(indexToSwitchTo != currentGunIndex)
@@ -115,6 +125,8 @@ public class PlayerEquipment : MonoBehaviour
         //Fire event that those 2 can subscribe to
         _lastHeldGun = _currentGun;
         _currentGun = gun;
+        _lastHeldGun.gameObject.SetActive(false);
+        _currentGun.gameObject.SetActive(true);
         isSwitchingGun = false;
 
     }
