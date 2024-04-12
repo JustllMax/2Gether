@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7912393878703066804}
   - component: {fileID: 8557710449905625067}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: P_Way_Anchor
-  m_TagString: Untagged
+  m_TagString: Way_Anchor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2db101c9ad8f31343836241de7a1de0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsWay: 0
+  Id: 0

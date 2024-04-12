@@ -21,7 +21,6 @@ public class WayPlacer : MonoBehaviour
 
 
     private int Add(int x, int y) => x + y;
-
     private int Subtract(int x, int y) => x - y;
     private delegate int Operation(int x, int y);
 
@@ -42,18 +41,19 @@ public class WayPlacer : MonoBehaviour
         centerWay.transform.position = new Vector3(centerWay.pos.x, 0, centerWay.pos.y) * 30;
 
         _spawnedWays[MapCenter.x, MapCenter.y] = StartingWay;
-
+        
         for (int i = 0; i < 4; i++)
             CheckWay(centerWay, i, 0);
+        
     }
     //[Obsolete]
     private void CheckWay(Way wayToConnect, int i, int w)
     {
-        if (wayToConnect.pos.x == 0 || wayToConnect.pos.y == 0 || wayToConnect.pos.x == MapSize.x - 1 || wayToConnect.pos.y == MapSize.y - 1)
+        if (wayToConnect.pos.x == 0 || wayToConnect.pos.y == 0 || wayToConnect.pos.x == MapSize.x-1 || wayToConnect.pos.y == MapSize.y-1)
             return;
-
-        int id = 1;
-
+        
+        int id = (UnityEngine.Random.Range(0, 20) == 0) ? 4 : 1;
+        //id = 4;
         GameObject newWayObject = Instantiate(WayPrefabs[id]);
 
         Way newWay = newWayObject.GetComponent<Way>();
@@ -80,7 +80,7 @@ public class WayPlacer : MonoBehaviour
             {
                 if (wayToConnect.wayAnchors[1].IsWay)
                 {
-                    wayToConnect.gameObject.transform.Rotate(Vector3.up, 45f, Space.World);
+                    newWay.RotateWay(Vector3.up, 90f);
                     SetNewWayAnchors(Add, false, newPos, wayToConnect, newWay, 3, 1);
                     CheckWay(newWay, i, 1);
                     PlaceOneWay(newWay);
@@ -99,10 +99,10 @@ public class WayPlacer : MonoBehaviour
             {
                 if (wayToConnect.wayAnchors[3].IsWay)
                 {
+                    newWay.RotateWay(Vector3.up, 90f);
                     SetNewWayAnchors(Subtract, false, newPos, wayToConnect, newWay, 1, 3);
                     CheckWay(newWay, i, 3);
-                    newWay.transform.position = new Vector3(newWay.pos.x, 0, newWay.pos.y) * 30;
-                    _spawnedWays[newWay.pos.x, newWay.pos.y] = newWay;
+                    PlaceOneWay(newWay);
                 }
             }
         }
@@ -137,7 +137,7 @@ public class WayPlacer : MonoBehaviour
                 PlaceOneWay(x, wayToConnect.pos.y, newWay);
             }
         }
-        if (id == 3)
+        /*if (id == 3)
         {
             if (wayToConnect.wayAnchors[0].IsWay)
             {
@@ -172,20 +172,60 @@ public class WayPlacer : MonoBehaviour
                 wayToConnect.wayAnchors[1].IsWay = false;
             }
         }
+        */
         if (id == 4)
         {
-            if (wayToConnect.wayAnchors[0].IsWay)
+            if (i == 0)
             {
-
+                if (wayToConnect.wayAnchors[0].IsWay)
+                {
+                    SetNewWayAnchors(Subtract, true, newPos, wayToConnect, newWay, 2, 0);
+                    for(int j = 0; j < 4; j++)
+                        CheckWay(newWay, j, 0);
+                    PlaceOneWay(newWay);
+                }
+            }
+            if (i == 1)
+            {
+                if (wayToConnect.wayAnchors[1].IsWay)
+                {
+                    SetNewWayAnchors(Add, false, newPos, wayToConnect, newWay, 3, 1);
+                    for(int j = 0; j < 4; j++)
+                        CheckWay(newWay, j, 1);
+                    PlaceOneWay(newWay);
+                }
+            }
+            if (i == 2)
+            {
+                if (wayToConnect.wayAnchors[2].IsWay)
+                {
+                    SetNewWayAnchors(Add, true, newPos, wayToConnect, newWay, 3, 2);
+                    for(int j = 0; j < 4; j++)
+                        CheckWay(newWay, j, 2);
+                    PlaceOneWay(newWay);
+                }
+            }
+            if (i == 3)
+            {
+                if (wayToConnect.wayAnchors[3].IsWay)
+                {
+                    newWay.RotateWay(Vector3.up, 90f);
+                    SetNewWayAnchors(Subtract, false, newPos, wayToConnect, newWay, 1, 3);
+                    for(int j = 0; j < 4; j++)
+                        CheckWay(newWay, j, 3);
+                    PlaceOneWay(newWay);
+                }
             }
         }
-        */
+        
     }
+    // axis true = x
+    // axis false = z
     private void SetNewWayAnchors(Operation operation, bool axis, Vector2Int newPos, Way wayToConnect, Way newWay, int newWayAnchor, int wayToConnectAnchor)
     {
         if (axis)
             newPos.x = operation(wayToConnect.pos.x, 1);
-        else
+        if (!axis)
             newPos.y = operation(wayToConnect.pos.y, 1);
 
         newWay.wayAnchors[newWayAnchor].IsWay = false;

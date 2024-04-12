@@ -153,12 +153,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WayPrefabs:
-  - {fileID: 3717407551342494934, guid: ba15a6fd7200c86418f973b08e278dab, type: 3}
-  - {fileID: 6574627606451302761, guid: 271ad4ef3f70e2449915f2bc08827e93, type: 3}
-  - {fileID: 678100984499092552, guid: d7090e2eec0ae864380abbbbbd5ad41c, type: 3}
-  - {fileID: 5935150240289264957, guid: 4605183f71cb23347b4ea408d14195bf, type: 3}
-  - {fileID: 566391345172832559, guid: f80c9ac19e29b474898b7947f17015aa, type: 3}
-  StartingWay: {fileID: 288124800793673999, guid: 671189130e55aa04fb09384e40ef2954,
+  - {fileID: 2921056365862328451, guid: efbb994236c1fdb4881d72c0bb9345b6, type: 3}
+  - {fileID: 1245027202219669942, guid: 34b2b36e7dc7fa24c855b9e288e9b32f, type: 3}
+  - {fileID: 1245027202219669942, guid: 9e2e81003956054488282ea90422df5e, type: 3}
+  - {fileID: 1245027202219669942, guid: c00fc4b72e3fe5e498ac8895ddf8f631, type: 3}
+  - {fileID: 1245027202219669942, guid: 440da7e4c06890d49af4400266af4282, type: 3}
+  StartingWay: {fileID: 2578851966878924248, guid: 27093c5f5d5bb8f4bbf11a4a777c6404,
     type: 3}
   MapSize: {x: 13, y: 13}
   MapCenter: {x: 6, y: 6}
@@ -171,7 +171,7 @@ Transform:
   m_GameObject: {fileID: 1121353185}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 67.55682, y: 5.8821373, z: 69.95609}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
