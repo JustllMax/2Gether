@@ -7,11 +7,10 @@ abstract public class Gun : MonoBehaviour
     [SerializeField] GunData _SO_Stats;
 
 
-    protected AudioClip firingSound;
-    protected AudioClip reloadSound;
-    protected bool isAiming;
-
-    protected int ammoInMagazine;
+    [SerializeField]protected AudioClip firingSound;
+    [SerializeField] protected AudioClip reloadSound;
+    [SerializeField] protected bool isAiming;
+    [SerializeField] protected int ammoInMagazine;
 
     public abstract void Fire(bool isSameButtonPress);
     public abstract void Aim();
@@ -19,6 +18,12 @@ abstract public class Gun : MonoBehaviour
     public abstract bool CanFire();
 
     public abstract bool CanAim();
+
+    public int GetMagazineSize()
+    {
+        return _SO_Stats.MagazineSize;
+    }
+
     public int GetAmmoInMagazine()
     {
         return ammoInMagazine;

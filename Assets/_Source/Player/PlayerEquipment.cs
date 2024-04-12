@@ -197,6 +197,7 @@ public class PlayerEquipment : MonoBehaviour
         int currentAmmo = _currentGun.GetAmmoInMagazine();
         int amountToReload = magSize - currentAmmo;
 
+        //_currentGun.PlayReloadAnim()
 
         switch (_currentGun.GetGunData().GunType) {
             case GunType.Pistol:

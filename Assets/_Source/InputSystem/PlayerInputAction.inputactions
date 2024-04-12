@@ -321,7 +321,7 @@
                     "name": "",
                     "id": "1d3feae8-0625-4806-b833-6c304d455e45",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "Hold(duration=0.3)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Mouse",
                     "action": "Fire",

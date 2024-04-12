@@ -6,9 +6,11 @@ using UnityEngine.InputSystem;
 public class PlayerGunController : MonoBehaviour
 {
 
-    PlayerInputAction.FPSControllerActions _FPScontroller;
+    [SerializeField]PlayerInputAction.FPSControllerActions _FPScontroller;
     PlayerEquipment _equipment;
-
+    bool firedButtonHeld = false;
+    float buttonHeldTimer = 0;
+    bool isHoldingFire = false;
     private void Awake()
     {
         _equipment = GetComponent<PlayerEquipment>();
@@ -19,30 +21,54 @@ public class PlayerGunController : MonoBehaviour
 
         _FPScontroller = InputManager.Instance.GetPlayerInputAction().FPSController;
 
-        _FPScontroller.Fire.performed += FireWeapon;
+        _FPScontroller.Fire.performed += PerformFireWeapon;
+        _FPScontroller.Fire.canceled += CancelFireWeapon;
         _FPScontroller.Aim.performed += AimWeapon;
         _FPScontroller.Reload.performed += ReloadWeapon;
 
     }
 
-
-    public void FireWeapon(InputAction.CallbackContext context)
+    private void Update()
     {
-
-        bool isSameButton = false;
-        //TODO: check probly with context.time start time if same button press holding
-
-        if(_equipment != null)
+        if(firedButtonHeld)
         {
-            if (_equipment.CanFire())
+            buttonHeldTimer += Time.deltaTime;
+            if(buttonHeldTimer > 0.01)
             {
-                _equipment.GetCurrentGun().Fire(isSameButton);
+                isHoldingFire = true;
+            }
+            if (_equipment != null)
+            {
+                if (_equipment.CanFire())
+                {
+                    _equipment.GetCurrentGun().Fire(isHoldingFire);
+                }
+
             }
         }
-        
     }
 
-    public void AimWeapon(InputAction.CallbackContext context)
+    private void PerformFireWeapon(InputAction.CallbackContext context)
+    {
+        if (context.performed) // the key has been pressed
+        {
+           
+            firedButtonHeld = true;
+        }        
+    }
+
+    private void CancelFireWeapon(InputAction.CallbackContext context)
+    {
+        if (context.canceled) //the key has been released
+        {
+
+            firedButtonHeld = false;
+            buttonHeldTimer = 0f;
+            isHoldingFire = false;
+        }
+    }
+
+    private void AimWeapon(InputAction.CallbackContext context)
     {
         
         if(_equipment != null)
