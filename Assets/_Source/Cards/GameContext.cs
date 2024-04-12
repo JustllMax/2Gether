@@ -7,4 +7,5 @@ public struct GameContext
     // BuildingSystem buildingSystem;
     // RaidSystem raidSystem;
     // CardSystem cardSystem;
+    public UICardManager cardUi;
 }
