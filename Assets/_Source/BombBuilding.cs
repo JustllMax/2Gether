@@ -29,7 +29,6 @@ public class BombBuilding : Building
         if(fireContDown <= 0f)
         {
             OnAttack();
-            Debug.Log("bam");
             fireContDown = 1f / fireRate;
         }
         fireContDown -= Time.deltaTime;

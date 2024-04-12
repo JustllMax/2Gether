@@ -11,23 +11,46 @@ public class Turret : Building
 
     private float HealthPoint = 1000f;
     private int price = 100;
+    public float fireContDown = 0f;
+    public float fireRate = 3f;
+
+    //for laser
+    [Header("For Laser")]
+    public bool useLaser = false;
+    public LineRenderer lineRenderer;
+
 
     void Start()
     {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
     }
 
+   
+        
+
     private void Update()
     {
+        LockOnTarget();
+        if(target == null && useLaser && lineRenderer.enabled == true)
+            lineRenderer.enabled = false;
+
         if (target == null)
-            return;
+                return;
+        if (useLaser)
+        {
+            Laser();
+        }
+        else
+        {
+            if (fireContDown <= 0f)
+            {
+                OnAttack();
+                Debug.Log("bam");
 
-
-        Vector3 direction = target.position - transform.position;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        Vector3 rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 10f).eulerAngles;
-        transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
-
+                fireContDown = 1f / fireRate;
+            }
+            fireContDown -= Time.deltaTime;
+        }
 
     }
 
@@ -38,11 +61,14 @@ public class Turret : Building
 
     public override void OnAttack()
     {
-        GameObject bulletGO = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        Bullet bullet = bulletGO.GetComponent<Bullet>();
-        if (bullet != null)
+        if (target != null)
         {
-            bullet.setTarget(target);
+            GameObject bulletGO = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            Bullet bullet = bulletGO.GetComponent<Bullet>();
+            if (bullet != null)
+            {
+                bullet.setTarget(target);
+            }
         }
     }
 
@@ -63,6 +89,26 @@ public class Turret : Building
 
     //
 
+
+    private void LockOnTarget()
+    {
+        if (target != null)
+        {
+            Vector3 direction = target.position - transform.position;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            Vector3 rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 10f).eulerAngles;
+            transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        }
+
+    }
+
+    private void Laser()
+    {
+        lineRenderer.enabled = true;
+        lineRenderer.SetPosition(0, firePoint.position);
+        lineRenderer.SetPosition(1, target.position);
+
+    }
    
 
     void UpdateTarget()
