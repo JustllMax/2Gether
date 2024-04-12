@@ -255,6 +255,11 @@ PrefabInstance:
       propertyPath: IsWay
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2227414551446844787, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: id
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2921056365862328451, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}
       propertyPath: m_Name

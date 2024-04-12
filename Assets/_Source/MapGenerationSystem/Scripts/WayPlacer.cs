@@ -9,9 +9,9 @@ using UnityEngine;
 public class SlotPlacer : MonoBehaviour
 {
     [SerializeField] private GameObject[] SlotPrefabs;
-    [SerializeField] private Slot StartingSlot;
+    [SerializeField] private WaySlot StartingSlot;
 
-    private Slot[,] _spawnedSlots;
+    private WaySlot[,] _spawnedSlots;
     private bool _isSlotDone;
 
     HashSet<Vector2Int> _vacantPlaces = new HashSet<Vector2Int>();
@@ -24,29 +24,27 @@ public class SlotPlacer : MonoBehaviour
     private int Subtract(int x, int y) => x - y;
     private delegate int Operation(int x, int y);
 
-
-    // Start is called before the first frame update
-    [Obsolete]
     void Start()
     {
         GenerateMap();
     }
+
     private void GenerateMap()
     {
-        _spawnedSlots = new Slot[MapSize.x, MapSize.y];
+        _spawnedSlots = new WaySlot[MapSize.x, MapSize.y];
 
-        Slot centerSlot = Instantiate(StartingSlot);
-        centerSlot.pos = MapCenter;
+        WaySlot centerSlot = Instantiate(StartingSlot);
+        centerSlot.slot.pos = MapCenter;
 
-        centerSlot.transform.position = new Vector3(centerSlot.pos.x, 0, centerSlot.pos.y) * 30;
+        centerSlot.transform.position = new Vector3(centerSlot.slot.pos.x, 0, centerSlot.slot.pos.y) * 30;
 
         _spawnedSlots[MapCenter.x, MapCenter.y] = StartingSlot;
 
         for (int i = 0; i < 4; i++)
-            CheckSlot(centerSlot, i, 0);
+            CheckSlot(centerSlot.slot, i, 0);
 
     }
-    //[Obsolete]
+
     private void CheckSlot(Slot SlotToConnect, int i, int w)
     {
         if (SlotToConnect.pos.x == 0 || SlotToConnect.pos.y == 0 || SlotToConnect.pos.x == MapSize.x - 1 || SlotToConnect.pos.y == MapSize.y - 1)
@@ -55,15 +53,12 @@ public class SlotPlacer : MonoBehaviour
         int id = (UnityEngine.Random.Range(0, 20) == 0) ? 4 : 1;
         //id = 4;
 
-        Slot newSlot = Instantiate(SlotPrefabs[id]).GetComponent<Slot>();
+        Slot newSlot = new Slot(SlotPrefabs[id].GetComponent<WaySlot>().slot);  
 
         newSlot.pos = SlotToConnect.pos;
-
         Vector2Int newPos = SlotToConnect.pos;
 
         //Debug.Log($"[{i}][{w}] [{SlotToConnect.gameObject.GetInstanceID().ToString()}] SlotToPlace pos:{SlotToConnect.pos.x}; {SlotToConnect.pos.y}\nAnchors to connect: {SlotToConnect.SlotAnchors[0].IsSlot}; {SlotToConnect.SlotAnchors[1].IsSlot}; {SlotToConnect.SlotAnchors[2].IsSlot}; {SlotToConnect.SlotAnchors[3].IsSlot}\nAnchors new connect: {newSlot.SlotAnchors[0].IsSlot}; {newSlot.SlotAnchors[1].IsSlot}; {newSlot.SlotAnchors[2].IsSlot}; {newSlot.SlotAnchors[3].IsSlot}");
-
-
         if (id == 1)
         {
             if (i == 0)
@@ -80,11 +75,11 @@ public class SlotPlacer : MonoBehaviour
             {
                 if (SlotToConnect.slotAnchors[1].IsWay)
                 {
-                    newSlot.RotateWay(Vector3.up, 90f);
+                    newSlot.RotateAnchors(90f);
                     SetNewSlotAnchors(Add, false, newPos, SlotToConnect, newSlot, 3, 1);
                     if (_spawnedSlots[newSlot.pos.x, newSlot.pos.y] != null) return;
                     CheckSlot(newSlot, i, 1);
-                    PlaceOneSlot(newSlot);
+                    PlaceOneSlot(newSlot).RotateWays(Vector3.up, 90f);;
                 }
             }
             if (i == 2)
@@ -101,11 +96,11 @@ public class SlotPlacer : MonoBehaviour
             {
                 if (SlotToConnect.slotAnchors[3].IsWay)
                 {
-                    newSlot.RotateWay(Vector3.up, 90f);
+                    newSlot.RotateAnchors(90f);
                     SetNewSlotAnchors(Subtract, false, newPos, SlotToConnect, newSlot, 1, 3);
                     if (_spawnedSlots[newSlot.pos.x, newSlot.pos.y] != null) return;
                     CheckSlot(newSlot, i, 3);
-                    PlaceOneSlot(newSlot);
+                    PlaceOneSlot(newSlot).RotateWays(Vector3.up, 90f);;
                 }
             }
         }
@@ -241,14 +236,17 @@ public class SlotPlacer : MonoBehaviour
 
         newSlot.pos = newPos;
     }
-    private void PlaceOneSlot(Slot SlotToPlace)
-    {
-
-        SlotToPlace.transform.position = new Vector3(SlotToPlace.pos.x, 0, SlotToPlace.pos.y) * 30;
+    private WaySlot PlaceOneSlot(Slot slot)
+    {  
+        WaySlot SlotToPlace = Instantiate(SlotPrefabs[slot.id]).GetComponent<WaySlot>();
+        SlotToPlace.slot = slot;
+        SlotToPlace.transform.position = new Vector3(slot.pos.x, 0, slot.pos.y) * 30;
         //Debug.Log($"{SlotToPlace.transform.position.x}; {SlotToPlace.transform.position.y}; {SlotToPlace.transform.position.z};");
-        _spawnedSlots[SlotToPlace.pos.x, SlotToPlace.pos.y] = SlotToPlace;
+        _spawnedSlots[slot.pos.x, slot.pos.y] = SlotToPlace;
+        return SlotToPlace;
     }
 
+    /*
     private void PlaceOneEmptySlot()
     {
         for (int x = 0; x < _spawnedSlots.GetLength(0); x++)
@@ -257,14 +255,14 @@ public class SlotPlacer : MonoBehaviour
             {
                 if (_spawnedSlots[x, y] == null) continue;
 
-                Slot newSlot = Instantiate(SlotPrefabs[0].GetComponent<Slot>());
+                WaySlot newSlot = Instantiate(SlotPrefabs[0].GetComponent<WaySlot>());
                 newSlot.transform.position = new Vector3(newSlot.pos.x, 0, newSlot.pos.y) * 30;
                 _spawnedSlots[newSlot.pos.x, newSlot.pos.y] = newSlot;
             }
         }
         Vector2Int position = _vacantPlaces.ElementAt(UnityEngine.Random.Range(0, _vacantPlaces.Count));
     }
-
+    */
     void Update()
     {
 
