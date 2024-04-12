@@ -32,6 +32,10 @@ public class PlayerController : MonoBehaviour
     private CharacterController _characterController;
     private AudioSource _audioSource;
 
+    [SerializeField]
+    private float _loseVelocitySpeed;
+
+    [SerializeField]
     private Vector3 playerVelocity;
 
     [SerializeField]
@@ -68,6 +72,12 @@ public class PlayerController : MonoBehaviour
                 playerVelocity.y = 0f;
         }
 
+     
+        playerVelocity.x = Mathf.Lerp(playerVelocity.x, 0, _loseVelocitySpeed *  Time.deltaTime);
+        playerVelocity.z = Mathf.Lerp(playerVelocity.z, 0, _loseVelocitySpeed * Time.deltaTime);
+     
+
+
         //Movement
         Vector2 input = FPSController.Movement.ReadValue<Vector2>();
         Vector3 move = new Vector3(input.x, 0f, input.y);
@@ -76,7 +86,10 @@ public class PlayerController : MonoBehaviour
 
         playerVelocity.y += gravityValue * Time.deltaTime;
 
-        _characterController.Move(move * _movementSpeed);
+        //_characterController.Move(move * _movementSpeed);
+
+        playerVelocity += move * _movementSpeed;
+
         _characterController.Move(playerVelocity * Time.deltaTime);
     }
 
@@ -117,11 +130,24 @@ public class PlayerController : MonoBehaviour
 
     private void OnDash(InputAction.CallbackContext context)
     {
-        if (_dashCount > 0 && !_isDashing)
-        {
-            _ = Dash();
-            _dashCount--;
-        }
+        Debug.Log("Dashing");
+        _isDashing = true;
+        var movement = _camera.transform.forward.normalized;
+        movement.y = 0f;
+
+        Debug.Log(movement);
+
+        //_audioSource.Play();
+
+
+        //Camera cam = _camera.GetComponent<Camera>();
+        //float fov = cam.fieldOfView;
+
+        float time = Time.time + 0.15f;
+
+        //_characterController.Move(movement * 12f * Time.deltaTime);
+        playerVelocity += movement * 12f;
+
     }
 
     private async UniTaskVoid Dash()
@@ -141,15 +167,9 @@ public class PlayerController : MonoBehaviour
         //float fov = cam.fieldOfView;
 
         float time = Time.time + 0.15f;
-        while (Time.time < time)
-        {
-            float signal = Mathf.Sin((Time.time - time) / 0.15f * Mathf.PI) * 7.5f;
-            //cam.fieldOfView = fov - signal;
-
-            _characterController.Move(movement * 12f * Time.deltaTime);
-            //_objectRigidbody.MovePosition(_objectRigidbody.position + movement * 12f * Time.deltaTime);
-            await UniTask.Yield();
-        }
+   
+        //_characterController.Move(movement * 12f * Time.deltaTime);
+        playerVelocity += movement * 12f;
 
 
        // cam.fieldOfView = fov;
