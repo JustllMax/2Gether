@@ -3,7 +3,8 @@ using Cinemachine;
 
 public class CameraManager : MonoBehaviour
 {
-
+    [SerializeField]
+    private GameObject GunCameraObj;
     [SerializeField]
     private CinemachineVirtualCamera dayCamera;
     [SerializeField] 
@@ -70,17 +71,23 @@ public class CameraManager : MonoBehaviour
         // We assume that the night camera has a higher priority to hide the cursor
         bool isNightCameraActive = nightCamera != null && dayCamera != null  && nightCamera.Priority > dayCamera.Priority;
 
-        if (isNightCameraActive)
+        if (isNightCameraActive) //Night Camera
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             crosshairUI.SetActive(true);
+            GunCameraObj.SetActive(true);
+            //Fire event that camera changed to night
+
         }
-        else
+        else //Day Camera
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             crosshairUI.SetActive(false);
+            
+            GunCameraObj.SetActive(false);
+            //Fire event that camera changed to day
         }
     }
 }
