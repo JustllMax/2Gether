@@ -91,7 +91,7 @@ public class BombBuilding : Building
     {
         if (other.CompareTag(enemyTag))
         {
-            UnityEngine.Debug.Log("Enemy entered zone");
+            Debug.Log("Enemy entered zone");
         }
     }
 

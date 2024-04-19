@@ -1,10 +1,9 @@
-using System.Diagnostics;
 using UnityEngine;
 
 public class Healing : Building
 {
   
-    private float rangePlayer = 10f;
+    private float rangePlayer = 5f;
     public int price = 200;
 
     private string playerTag = "Player";
@@ -12,12 +11,19 @@ public class Healing : Building
 
     private GameObject PlayerObject;
     private GameObject BuildingObject;
+    public ParticleSystem particles;
 
 
+    void Start()
+    {
+  
+        
+
+    }
 
     void Update()
     {
-       AttackCooldown();
+       
     }
 
 
@@ -28,10 +34,13 @@ public class Healing : Building
 
     public override void OnAttack()
     {
-        if(AttackCoolDownTimer < 0 )
+        if (particles != null)
         {
-            //
+            particles.Play();
+            
         }
+            
+        
     }
 
     public override void OnTakeDamage()
@@ -64,20 +73,30 @@ public class Healing : Building
     {
         if (collision.CompareTag(playerTag))
         {
-            UnityEngine.Debug.Log("player entered zone");
+            Debug.Log("player entered zone");
             OnAttack();
 
         }
         if (collision.CompareTag(buildingTag))
         {
-            UnityEngine.Debug.Log("building in the zone");
+            Debug.Log("building in the zone");
 
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-            OnAttack();
+        if (other.CompareTag(playerTag))
+        {
+            Debug.Log("Player left zone");
+            if (particles != null)
+                particles.Stop();
+        }
+    }
 
+    private void OnTriggerStay(Collider collision)
+    {
+        if (collision.CompareTag(playerTag))
+            OnAttack();
     }
 }
