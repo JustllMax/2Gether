@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 90
     OrthographicSize: 5
-    NearClipPlane: 0.3
+    NearClipPlane: 0.01
     FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 2
@@ -610,7 +610,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4857124, y: 0.32552984, z: -0.20118861, w: 0.7858988}
+  m_LocalRotation: {x: 0.48571238, y: 0.32552993, z: -0.20118867, w: 0.78589875}
   m_LocalPosition: {x: -93.43553, y: 88, z: -89.13553}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -862,10 +862,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 58189383}
   _cameraSensitivity: 0.1
-  _movementSpeed: 0.16
-  _jumpStrength: 1.83
-  _loseVelocitySpeed: 5
-  gravityValue: -35.37
+  _velocity: {x: 0, y: 0, z: 0}
+  _gravityAcceleration: {x: 0, y: -9.81, z: 0}
+  _groundDrag: 0.3
+  _groundControlFactor: 0.35
+  _airControlFactor: 0.1
+  _movementSpeed: 6
+  _jumpHeight: 1.5
+  _dashSpeed: 20
+  _dashCooldown: 1
+  _maxDashCount: 2
+  _isMoving: 0
 --- !u!143 &665947408
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1997,22 +2004,22 @@ PrefabInstance:
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7858988
+      value: 0.78589875
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.4857124
+      value: 0.48571238
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.32552984
+      value: 0.32552993
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.20118861
+      value: -0.20118867
       objectReference: {fileID: 0}
     - target: {fileID: 5830323962992596256, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
