@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class PlayerGunController : MonoBehaviour
 {
@@ -9,15 +10,17 @@ public class PlayerGunController : MonoBehaviour
     [SerializeField] Transform FirePoint;
     PlayerInputAction.FPSControllerActions _FPScontroller;
     PlayerEquipment _equipment;
-
+    Animator _animator;
     bool firedButtonHeld = false;
     float buttonHeldTimer = 0;
     bool isHoldingFire = false;
-
+    [SerializeField]
+    bool isDuringAnimation = false;
 
     private void Awake()
     {
         _equipment = GetComponent<PlayerEquipment>();
+        _animator = GetComponent<Animator>();
     }
 
     void Start()
@@ -34,7 +37,16 @@ public class PlayerGunController : MonoBehaviour
 
     private void Update()
     {
-        if(firedButtonHeld)
+        if ( _animator.GetCurrentAnimatorStateInfo(0).ToString().ToUpper().Equals(AnimNames.IDLE) == false)
+        {
+            isDuringAnimation = true;
+        }
+        else
+        {
+            isDuringAnimation = false;
+        }
+
+        if (firedButtonHeld )
         {
             buttonHeldTimer += Time.deltaTime;
             if(buttonHeldTimer > 0.01)
@@ -50,11 +62,12 @@ public class PlayerGunController : MonoBehaviour
 
             }
         }
+
     }
 
     private void PerformFireWeapon(InputAction.CallbackContext context)
     {
-        if (context.performed) // the key has been pressed
+        if (context.performed && !isDuringAnimation) // the key has been pressed
         {
            
             firedButtonHeld = true;
@@ -65,7 +78,6 @@ public class PlayerGunController : MonoBehaviour
     {
         if (context.canceled) //the key has been released
         {
-
             firedButtonHeld = false;
             buttonHeldTimer = 0f;
             isHoldingFire = false;
@@ -90,11 +102,16 @@ public class PlayerGunController : MonoBehaviour
         
         if(_equipment != null)
         {
-            if (_equipment.CanReload())
+            if (_equipment.CanReload() && !isDuringAnimation)
             {
-                _equipment.Reload();
+                if (!_animator.GetNextAnimatorStateInfo(0).IsName(AnimNames.RELOADDOWN.ToString()))
+                {
+                    _animator.CrossFade(AnimNames.RELOADDOWN.ToString(), 0.1f);
+                }
+
             }
         }
         
     }
+
 }

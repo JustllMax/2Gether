@@ -5,7 +5,7 @@ using UnityEngine;
 abstract public class Gun : MonoBehaviour
 {
     [SerializeField] GunData _SO_Stats;
-
+    [SerializeField] GameObject _Model;
 
     [SerializeField]protected AudioClip firingSound;
     [SerializeField] protected AudioClip reloadSound;
@@ -38,5 +38,10 @@ abstract public class Gun : MonoBehaviour
     public GunData GetGunData()
     {
         return _SO_Stats;
+    }
+
+    public GameObject GetGunModel()
+    {
+        return _Model;
     }
 }

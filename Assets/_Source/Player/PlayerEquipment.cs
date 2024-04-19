@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,28 +12,35 @@ public class PlayerEquipment : MonoBehaviour
     PlayerInputAction.FPSControllerActions _FPSController;
 
     [SerializeField]List<Gun> GunList = new List<Gun>();
+    [SerializeField] Animator _animator;
+    [SerializeField] List<GunAmmoStore> AmmoStore;
 
+    public Dictionary<GunType, int> AmmoStorage;
     public Gun _currentGun;
     public Gun _lastHeldGun;
 
-    public int ARAmmo = 60;
-    public int ShotgunAmmo;
-    public int SniperAmmo;
     public int GrenadesLeft;
 
     private bool isSwitchingGun;
     private bool isReloading;
+    private float reloadTimer;
 
+    [Serializable]
+    struct GunAmmoStore
+    {
+        public GunType type;
+        public int amount;
+    }
 
+    private void Awake()
+    {
+        AmmoStorage = new Dictionary<GunType, int>();
+        foreach(GunAmmoStore gun in AmmoStore) {
+            AmmoStorage.Add(gun.type, gun.amount);
+        }
+    }
     void Start()
     {
-
-        foreach (Gun gun in GunList)
-        {
-            gun.gameObject.SetActive(false);
-        }
-        GunList[0].gameObject.SetActive(true);
-
 
         _FPSController = InputManager.Instance.GetPlayerInputAction().FPSController;
 
@@ -39,27 +48,37 @@ public class PlayerEquipment : MonoBehaviour
         _FPSController.WeaponSwitch.performed += SwitchWeaponByHotkeys;
         _FPSController.SwitchToLastWeapon.performed += SwitchToLastHeldWeapon;
         
+        
     }
 
 
     private void Update()
     {
+
         SwitchByScrolling();
+        if (isReloading)
+        {
+            reloadTimer += Time.deltaTime;
+            if(reloadTimer >= _currentGun.GetGunData().ReloadTime)
+            {
+
+                ResetReloadTimer();
+                if (!_animator.GetNextAnimatorStateInfo(0).IsName(AnimNames.RELOADUP.ToString()))
+                {
+                    _animator.CrossFade(AnimNames.RELOADUP.ToString(), 0.1f);
+                }
+            }
+        }
     }
+
+    #region SwitchGun
 
     public void SwitchWeaponByHotkeys(InputAction.CallbackContext context)
     {
-        // if (isSwitchingGun) return;
         int index = (int)context.ReadValue<float>() - 1;
 
-        if (GetGunIndexByRef(_currentGun) == index)
+        if (GetGunIndexByRef(_currentGun) == index || index > GunList.Count - 1)
             return;
-
-        
-
-        if(index > GunList.Count-1) {
-            return;
-        }
 
         SwitchCurrentGun(GunList[index]);
 
@@ -67,19 +86,13 @@ public class PlayerEquipment : MonoBehaviour
 
     public void SwitchToLastHeldWeapon(InputAction.CallbackContext context)
     {
-        // if (isSwitchingGun) return;
-
         if (_lastHeldGun == null) return;
 
         SwitchCurrentGun(_lastHeldGun);
-
-
     }
 
     public void SwitchByScrolling()
     {
-        // if (isSwitchingGun) return;
-
 
         //TODO scroll is scrolling too fast
         //Also might have to change to press to confirm weapon selection, not instantly changing
@@ -95,7 +108,7 @@ public class PlayerEquipment : MonoBehaviour
         int currentGunIndex = GetGunIndexByRef(_currentGun);
         int indexToSwitchTo = currentGunIndex;
         indexToSwitchTo += input;
-        Debug.Log("current gun index: " + currentGunIndex + " input: " + input + " calculated index: " + indexToSwitchTo);
+
 
         if (indexToSwitchTo >= GunList.Count)
         {
@@ -112,24 +125,109 @@ public class PlayerEquipment : MonoBehaviour
             SwitchCurrentGun(GunList[indexToSwitchTo]);
         }
             
-
     }
+
+
+
 
 
     private void SwitchCurrentGun(Gun gun)
     {
+        ResetReloadTimer();
         isSwitchingGun = true;
 
-        //PlayAnimation
-        //Show on UI
-        //Fire event that those 2 can subscribe to
+
+        if ( !_animator.GetNextAnimatorStateInfo(0).IsName(AnimNames.SWITCHDOWN.ToString()))
+        {
+            _animator.CrossFade(AnimNames.SWITCHDOWN.ToString(), 0.1f);
+        }
+        
         _lastHeldGun = _currentGun;
         _currentGun = gun;
-        _lastHeldGun.gameObject.SetActive(false);
-        _currentGun.gameObject.SetActive(true);
+        
+    }
+
+    public void SwitchDownEndAnimEvent()
+    {
+        Debug.Log(this + " anim down");
+        foreach (Gun gun in GunList)
+        {
+            gun.GetGunModel().SetActive(false);
+        }
+        _currentGun.GetGunModel().SetActive(true); 
+    }
+    public void SwitchUpEndAnimEvent()
+    {
         isSwitchingGun = false;
+        Debug.Log(this + " anim up");
+
 
     }
+    #endregion SwitchGun
+
+
+    #region Reload
+
+    public void ReloadDownStartAnimEvent()
+    {
+        isReloading = true;
+
+    }
+
+    public void ReloadUpStartAnimEvent()
+    {
+        ResetReloadTimer();
+        Reload();
+    }
+
+    private bool Reload()
+    {
+        GunType gunType = _currentGun.GetGunData().GunType;
+        int magSize = _currentGun.GetGunData().MagazineSize;
+        int currentAmmo = _currentGun.GetAmmoInMagazine();
+        int amountToReload = magSize - currentAmmo;
+
+        switch (gunType)
+        {
+            case GunType.Pistol:
+                _currentGun.SetAmmoInMagazine(magSize);
+                return true;
+
+            default:
+
+                if (AmmoStorage[gunType] > 0)
+                {
+                    if (amountToReload > AmmoStorage[gunType])
+                    {
+                        _currentGun.SetAmmoInMagazine(currentAmmo + AmmoStorage[gunType]);
+                        AmmoStorage[gunType] = 0;
+                        return true;
+                    }
+                    else
+                    {
+                        _currentGun.SetAmmoInMagazine(currentAmmo + amountToReload);
+                        AmmoStorage[gunType] -= amountToReload;
+                        return true;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+
+
+        }
+    }
+
+    private void ResetReloadTimer()
+    {
+        isReloading = false;
+        reloadTimer = 0f;
+    }
+
+    #endregion Reload
+
+    #region Utils
     private int GetGunIndexByRef(Gun gun)
     {
         for(int i = 0; i < GunList.Count; i++ )
@@ -141,6 +239,11 @@ public class PlayerEquipment : MonoBehaviour
         }
         return -1;
     }
+
+    #endregion Utils
+
+
+    #region GetSet
 
     public Gun GetCurrentGun()
     {
@@ -189,88 +292,7 @@ public class PlayerEquipment : MonoBehaviour
         return true;
 
     }
-
-    public bool Reload()
-    {
-
-        int magSize = _currentGun.GetGunData().MagazineSize;
-        int currentAmmo = _currentGun.GetAmmoInMagazine();
-        int amountToReload = magSize - currentAmmo;
-
-        //_currentGun.PlayReloadAnim()
-
-        switch (_currentGun.GetGunData().GunType) {
-            case GunType.Pistol:
-                _currentGun.SetAmmoInMagazine(magSize);
-                return true;
-
-            case GunType.AR:
-                if(ARAmmo > 0)
-                {
-                    if(amountToReload > ARAmmo)
-                    {
-                        _currentGun.SetAmmoInMagazine(currentAmmo + ARAmmo);
-                        ARAmmo -= ARAmmo;
-                        return true;
-                    }
-                    else
-                    {
-                        _currentGun.SetAmmoInMagazine(currentAmmo + amountToReload);
-                        ARAmmo -= amountToReload;
-                        return true;
-
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-            case GunType.Shotgun:
-                if (ShotgunAmmo > 0)
-                {
-                    if (amountToReload > ShotgunAmmo)
-                    {
-                        _currentGun.SetAmmoInMagazine(currentAmmo + ShotgunAmmo);
-                        ShotgunAmmo -= ShotgunAmmo;
-                        return true;
-                    }
-                    else
-                    {
-                        _currentGun.SetAmmoInMagazine( currentAmmo + amountToReload);
-                        ShotgunAmmo -= amountToReload;
-                        return true;
-
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-
-            case GunType.Sniper:
-                if (SniperAmmo > 0)
-                {
-                    if (amountToReload > SniperAmmo)
-                    {
-                        _currentGun.SetAmmoInMagazine(currentAmmo + SniperAmmo);
-                        SniperAmmo -= SniperAmmo;
-                        return true;
-                    }
-                    else
-                    {
-                        _currentGun.SetAmmoInMagazine(currentAmmo + amountToReload);
-                        SniperAmmo -= amountToReload;
-                        return true;
-
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-        }
-
-        return false;
-    }
+    #endregion GetSet
+    
 
 }
