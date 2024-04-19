@@ -102,20 +102,41 @@ PrefabInstance:
       propertyPath: id
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2828241274687339861, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: slot
+      value: 
+      objectReference: {fileID: 11400000, guid: 4569db91545334349b267f5d44fc4bf7,
+        type: 2}
     - target: {fileID: 2921056365862328451, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}
       propertyPath: m_Name
       value: Way_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998354637041353703, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: IsWay
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3149474931060601811, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}
       propertyPath: IsWay
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3526543326923642104, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: IsWay
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3620127542206580059, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}
       propertyPath: IsWay
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841796509038513655, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: IsWay
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5332334040792125830, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}
@@ -166,6 +187,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8186905267378485978, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: IsWay
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

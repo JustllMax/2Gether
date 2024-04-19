@@ -6,16 +6,14 @@ using UnityEngine.InputSystem.EnhancedTouch;
 
 public class WaySlot : MonoBehaviour
 {
-    [SerializeField] public Slot slot;
-
+    public Slot slot;
     public void RotateWays(Vector3 axis, float rotationAngle)
     {
-        gameObject.transform.GetChild(0).Rotate(axis, rotationAngle);
-        //float angle = gameObject.transform.GetChild(0).eulerAngles.y;
+        gameObject.transform.GetChild(0).Rotate(axis, rotationAngle);;
     }
     public void RotateSlot(Vector3 axis, float rotationAngle)
     {
-        gameObject.transform.GetChild(0).Rotate(axis, rotationAngle);
+        gameObject.transform.GetChild(1).Rotate(axis, rotationAngle);
         float angle = gameObject.transform.GetChild(0).eulerAngles.y;
         slot.RotateAnchors(angle);
     }

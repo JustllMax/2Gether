@@ -33,10 +33,21 @@ PrefabInstance:
       propertyPath: id
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2828241274687339861, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: slot
+      value: 
+      objectReference: {fileID: 11400000, guid: 30d3334994077b44a8b6764fe8ad05d9,
+        type: 2}
     - target: {fileID: 2921056365862328451, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}
       propertyPath: m_Name
       value: Way_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998354637041353703, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: IsWay
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3149474931060601811, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}
@@ -127,6 +138,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8186905267378485978, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: IsWay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8331014638279883391, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: IsWay
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

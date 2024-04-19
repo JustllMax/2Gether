@@ -2,16 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
+//[CreateAssetMenu(menuName = "Slot/new slot", fileName = "New slot", order = 52)]
 public class Slot
 {
+    #region Variables
     [SerializeField] public int id;
-    [SerializeField] public SlotAnchor[] slotAnchors;
+    private List<SlotAnchor> _slotAnchors = new List<SlotAnchor>();
     private Vector2Int _pos;
+
+    #region Getters and setters
+    public List<SlotAnchor> slotAnchors
+    {
+        get => _slotAnchors;
+        set { _slotAnchors = value; }
+    }
     public Vector2Int pos
     {
         get => _pos;
         set { _pos = value; }
+    }
+    #endregion
+    
+    #endregion
+
+    #region Constructors
+    public Slot()
+    {
+        id = -1;
+        _slotAnchors = new List<SlotAnchor>();
+        _pos = new Vector2Int(0,0);
     }
     public Slot(Slot slot)
     {
@@ -19,14 +38,35 @@ public class Slot
         slotAnchors = slot.slotAnchors;
         _pos = slot.pos;
     }
+    public Slot(int id, Vector2Int pos, GameObject slots)
+    {
+        this.id = id;
+        this._pos = pos;
+        
+        _slotAnchors.Clear();
+        for (int i = 0; i < slots.transform.childCount; i++)
+        {
+            _slotAnchors.Add(slots.transform.GetChild(i).GetComponent<SlotAnchor>());
+        }
+    }
+    #endregion
 
+    #region Public Methods
+    public void SetSlotAnchors(GameObject slots)
+    {
+        _slotAnchors.Clear();
+        for (int i = 0; i < slots.transform.childCount; i++)
+        {
+            _slotAnchors.Add(slots.transform.GetChild(i).GetComponent<SlotAnchor>());
+        }
+    }
     public void RotateAnchors(float angle)
     {
         if (id == 1)
         {
             if (angle == 0f || angle == 180f)
             {
-               
+
                 slotAnchors[0].IsWay = true;
                 slotAnchors[1].IsWay = false;
                 slotAnchors[2].IsWay = true;
@@ -103,4 +143,5 @@ public class Slot
             }
         }
     }
+    #endregion
 }

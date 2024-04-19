@@ -102,10 +102,21 @@ PrefabInstance:
       propertyPath: id
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2828241274687339861, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: slot
+      value: 
+      objectReference: {fileID: 11400000, guid: b917c3ae369f4f24c8e3564b3927e192,
+        type: 2}
     - target: {fileID: 2921056365862328451, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}
       propertyPath: m_Name
       value: Way_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998354637041353703, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: IsWay
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3526543326923642104, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}
@@ -138,6 +149,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3620127542206580059, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: IsWay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625665802768668050, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}
       propertyPath: IsWay
       value: 1
