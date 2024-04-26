@@ -43,6 +43,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private ushort _maxDashCount = 2;
 
+    [SerializeField]
+    private bool _isMoving;
+
     private PlayerInputAction.FPSControllerActions FPSController;
     private CharacterController _characterController;
     private AudioSource _audioSource;
@@ -104,12 +107,14 @@ public class PlayerController : MonoBehaviour
 
         if (FPSController.Dash.IsPressed())
             OnDash();
-        
+
         if (!_isDashing)
         {
             //Movement
             Vector2 input = FPSController.Movement.ReadValue<Vector2>();
             _lastMovementDir = (transform.forward * input.y + transform.right * input.x).normalized;
+
+            _isMoving = input == Vector2.zero ? false : true;
 
             if (input != Vector2.zero)
             {
@@ -168,12 +173,12 @@ public class PlayerController : MonoBehaviour
     {
         if (_dashCount > 0 && !_isDashing)
         {
-            StartCoroutine("Dash");
+            _ = Dash();
             _dashCount--;
         }
     }
 
-    private IEnumerator Dash()
+    private async UniTaskVoid Dash()
     {
         _isDashing = true;
 
@@ -188,16 +193,19 @@ public class PlayerController : MonoBehaviour
         float time = Time.time + 0.15f;
         while (Time.time < time)
         {
-            _velocity = movement * _dashSpeed;
-            yield return null;
+            _velocity.x = movement.x * _dashSpeed;
+            _velocity.z = movement.z * _dashSpeed;
+            await UniTask.Yield();
         }
+        _isDashing = false;
+        return;
 
         _velocity = new Vector3(0,0,0);
 
         time = Time.time + 0.025f;
         while (Time.time < time)
         {
-            yield return null;
+            await UniTask.Yield();
         }
         _isDashing = false;
     }
