@@ -7,11 +7,12 @@ public class CameraManager : MonoBehaviour
     private GameObject GunCameraObj;
     [SerializeField]
     private CinemachineVirtualCamera dayCamera;
-    [SerializeField] 
+    [SerializeField]
     private CinemachineVirtualCamera nightCamera;
-    [SerializeField] 
+    [SerializeField]
     private GameObject crosshairUI;
-
+    [SerializeField]
+    private GameObject groundFog;
 
     private void Start()
     {
@@ -63,13 +64,14 @@ public class CameraManager : MonoBehaviour
         {
             camera.Priority = priority;
             UpdateCrosshairVisibility();
+            UpdateFogSystemVisibility();
         }
     }
 
     private void UpdateCrosshairVisibility()
     {
         // We assume that the night camera has a higher priority to hide the cursor
-        bool isNightCameraActive = nightCamera != null && dayCamera != null  && nightCamera.Priority > dayCamera.Priority;
+        bool isNightCameraActive = nightCamera != null && dayCamera != null && nightCamera.Priority > dayCamera.Priority;
 
         if (isNightCameraActive) //Night Camera
         {
@@ -88,6 +90,14 @@ public class CameraManager : MonoBehaviour
             
             GunCameraObj.SetActive(false);
             //Fire event that camera changed to day
+        }
+    }
+    private void UpdateFogSystemVisibility()
+    {
+        // Fog only active in night
+        if (groundFog != null)
+        {
+            groundFog.SetActive(nightCamera.Priority > dayCamera.Priority);
         }
     }
 }

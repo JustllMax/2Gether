@@ -173,13 +173,16 @@ public class PlayerController : MonoBehaviour
     {
         if (_dashCount > 0 && !_isDashing)
         {
-            _ = Dash();
+            Dash();
             _dashCount--;
         }
     }
 
     private async UniTaskVoid Dash()
     {
+        if (!_isMoving)
+            return;
+
         _isDashing = true;
 
         Vector3 movement = _lastMovementDir;
