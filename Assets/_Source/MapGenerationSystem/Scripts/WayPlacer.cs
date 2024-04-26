@@ -44,10 +44,10 @@ public class SlotPlacer : MonoBehaviour
         _spawnedSlots[MapCenter.x, MapCenter.y] = StartingSlot;
 
         for (int i = 0; i < 4; i++)
-            CheckSlot(centerSlot, i);
+            CheckSlot(centerSlot, i, i);
     }
 
-    private void CheckSlot(WaySlot slotToConnect, int direction)
+    private void CheckSlot(WaySlot slotToConnect, int direction, int lastDirection)
     {
         int reverseDirection = (direction + 2) % 4;
 
@@ -57,13 +57,13 @@ public class SlotPlacer : MonoBehaviour
         {
             WaySlot lastSlot = Instantiate(SlotPrefabs[5]).GetComponent<WaySlot>();
 
-            lastSlot.RotateSlot(Vector3.up, angles[ (direction + 2) % 4 ]);
+            lastSlot.RotateSlot(Vector3.up, angles[(direction + 2) % 4]);
 
-            SetSlot(newPos, lastSlot, slotToConnect, direction, reverseDirection);
+            SetSlot(newPos, ref lastSlot, ref slotToConnect, direction, reverseDirection);
             return;
         }
 
-        if(_spawnedSlots[newPos.x, newPos.y] != null)
+        if (_spawnedSlots[newPos.x, newPos.y] != null)
         {
             return;
         }
@@ -77,8 +77,8 @@ public class SlotPlacer : MonoBehaviour
             newSlot.RotateSlot(Vector3.up, angles[direction]);
             if (newSlot.slotAnchors[direction])
             {
-                SetSlot(newPos, newSlot, slotToConnect, reverseDirection, direction);
-                CheckSlot(newSlot, direction);
+                SetSlot(newPos, ref newSlot, ref slotToConnect, reverseDirection, direction);
+                CheckSlot(newSlot, direction, direction);
             }
             //Debug.Log(@$"direction:{direction} id:{newSlot.slot.id} x:{newPos.x} z:{newPos.y} angle:{angles[direction]} 
             //{newSlot.slotAnchors[0]}; {newSlot.slotAnchors[1]}; {newSlot.slotAnchors[2]}; {newSlot.slotAnchors[3]}");
@@ -86,78 +86,95 @@ public class SlotPlacer : MonoBehaviour
 
         if (randomId == 2)
         {
-            int newDirection = CheckAnchors(newSlot, slotToConnect, direction);
+            int newDirection = CheckAnchors(newPos, newSlot, slotToConnect, direction, lastDirection);
 
             Debug.Log($"newDir:{newDirection}, dir:{direction}, reverseDir::{reverseDirection}");
-            if (newSlot.slotAnchors[direction])
+            if (newSlot.slotAnchors[newDirection])
             {
-                SetSlot(newPos, newSlot, slotToConnect, reverseDirection, direction);
-                CheckSlot(newSlot, newDirection);
+                SetSlot(newPos, ref newSlot, ref slotToConnect, reverseDirection, direction);
+                CheckSlot(newSlot, newDirection, direction);
             }
 
-            
+
         }
-        //Debug.Log(@$"direction:{direction} id:{newSlot.slot.id} x:{newPos.x} z:{newPos.y} angle:{angles[direction]} 
-        //{newSlot.slotAnchors[0]}; {newSlot.slotAnchors[1]}; {newSlot.slotAnchors[2]}; {newSlot.slotAnchors[3]}");
+        Debug.Log(@$"direction:{direction} id:{newSlot.slot.id} x:{newPos.x} z:{newPos.y} angle:{angles[direction]} 
+        {newSlot.slotAnchors[0]}; {newSlot.slotAnchors[1]}; {newSlot.slotAnchors[2]}; {newSlot.slotAnchors[3]}");
 
-        if (randomId == 3)
-        {
-            newSlot.RotateSlot(Vector3.up, angles[direction]);
-            if (newSlot.slotAnchors[direction])
-            {
-                SetSlot(newPos, newSlot, slotToConnect, direction, reverseDirection);
-
-                _spawnedSlots[newPos.x, newPos.y] = newSlot;
-
-                CheckSlot(newSlot, direction);
-            }
-            Debug.Log(@$"direction:{direction} id:{newSlot.slot.id} x:{newPos.x} z:{newPos.y} angle:{angles[direction]} 
-            {newSlot.slotAnchors[0]}; {newSlot.slotAnchors[1]}; {newSlot.slotAnchors[2]}; {newSlot.slotAnchors[3]}");
-        }
-
-        if (randomId == 4)
         {
             //newSlot.RotateSlot(Vector3.up, angles[direction]);
             if (newSlot.slotAnchors[direction])
             {
-                SetSlot(newPos, newSlot, slotToConnect, direction, reverseDirection);
+                SetSlot(newPos, ref newSlot, ref slotToConnect, direction, reverseDirection);
 
                 _spawnedSlots[newPos.x, newPos.y] = newSlot;
-                for(int i = 0; i < 4; i++)
-                    CheckSlot(newSlot, i);
+                for (int i = 0; i < 4; i++)
+                    CheckSlot(newSlot, i, i);
             }
             Debug.Log(@$"direction:{direction} id:{newSlot.slot.id} x:{newPos.x} z:{newPos.y} angle:{angles[direction]} 
             {newSlot.slotAnchors[0]}; {newSlot.slotAnchors[1]}; {newSlot.slotAnchors[2]}; {newSlot.slotAnchors[3]}");
         }
     }
 
-    private int CheckAnchors(WaySlot newSlot, WaySlot slotToConnect, int direction)
-    {   
-        //Debug.Log($"Enter");
-        for(int i = 0; i < 4; i++)
+    private int CheckAnchors(Vector2Int newPos, WaySlot newSlot, WaySlot slotToConnect, int direction, int lastDirection)
+    {
+        int dir= 0;
+        if (newSlot.slot.id == 2)
+        {
+            if (lastDirection == 0)
+            {
+                dir = (UnityEngine.Random.Range(0, 20) % 2 == 0) ? 1 : 3;
+                
+                newPos = slotToConnect.slot.pos + directions[dir];
+                if(_spawnedSlots[newPos.x, newPos.y] != null)
+                {
+                    Destroy(newSlot);
+                }
+                else
+                    newSlot.RotateSlot(Vector3.up, angles[dir]);
+            }
+            if (lastDirection == 0 && direction == 1)
+            {
+                dir = 0;
+                newSlot.RotateSlot(Vector3.up, angles[dir]);
+            }
+            if (lastDirection == 1)
+            {
+                dir = (UnityEngine.Random.Range(0, 20) % 2 == 0) ? 1 : 3;
+                newSlot.RotateSlot(Vector3.up, angles[dir]);
+            }
+            if (lastDirection == 1)
+            {
+                dir = (UnityEngine.Random.Range(0, 20) % 2 == 0) ? 1 : 3;
+                newSlot.RotateSlot(Vector3.up, angles[dir]);
+            }
+        }
+        return direction;
+        for (int i = 0; i < 4; i++)
         {
             newSlot.RotateSlot(Vector3.up, angles[i]);
 
             Debug.Log($@"i:{i} Dir:{direction} RevDir:{(i + 2) % 4} Angle:{angles[i]}
-            {direction}:{slotToConnect.slotAnchors[direction]} {(direction + 2) % 4}:{newSlot.slotAnchors[(direction + 2) % 4]}");
+            {direction}:{slotToConnect.slotAnchors[direction]} {(direction + 2) % 4}:{newSlot.slotAnchors[(direction + 2) % 4]}
+            {newSlot.slotAnchors[0]}; {newSlot.slotAnchors[1]}; {newSlot.slotAnchors[2]}; {newSlot.slotAnchors[3]}");
 
-            if(slotToConnect.slotAnchors[direction] && newSlot.slotAnchors[(direction + 2) % 4])
+            if (slotToConnect.slotAnchors[direction] && newSlot.slotAnchors[(direction + 2) % 4])
             {
                 return i;
             }
         }
-        newSlot.RotateSlot(Vector3.up, angles[direction]);
+        //newSlot.RotateSlot(Vector3.up, angles[direction]);
         return direction;
+        
     }
 
     private int RandomId()
     {
-        int id = (UnityEngine.Random.Range(0, 20) > 3) ? 2 : 1;
+        int id = (UnityEngine.Random.Range(0, 20) < 7) ? 2 : 1;
 
         return id;
     }
-    
-    private void SetSlot(Vector2Int newPos, WaySlot newSlot, WaySlot slotToConnect, int newSlotAnchorId, int slotToConnectAnchorId)
+
+    private void SetSlot(Vector2Int newPos, ref WaySlot newSlot, ref WaySlot slotToConnect, int newSlotAnchorId, int slotToConnectAnchorId)
     {
         newSlot.slot.pos = newPos;
         newSlot.transform.position = new Vector3(newPos.x, 0, newPos.y) * 30;

@@ -42,7 +42,7 @@ public class WaySlot : MonoBehaviour
                 slotAnchors[0] = true;
                 slotAnchors[1] = true;
                 slotAnchors[2] = false;
-                slotAnchors[3] = true;
+                slotAnchors[3] = false;
             }
             if (angle == 90)
             {

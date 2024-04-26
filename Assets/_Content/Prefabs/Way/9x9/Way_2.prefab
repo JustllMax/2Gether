@@ -123,6 +123,11 @@ PrefabInstance:
       propertyPath: slotAnchors.Array.data[2]
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2828241274687339861, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: slotAnchors.Array.data[3]
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2921056365862328451, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}
       propertyPath: m_Name
