@@ -272,6 +272,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Grenade"",
+                    ""type"": ""Button"",
+                    ""id"": ""4ed356ae-398a-4bda-9f10-8c24c3438866"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -357,7 +366,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""id"": ""678e7a3b-9258-4b82-84a1-fb954f59fb08"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Normalize(min=-1,max=1)"",
                     ""groups"": """",
                     ""action"": ""Scroll"",
                     ""isComposite"": true,
@@ -483,6 +492,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ac49a3c-ad30-452e-ba16-47ccb058ca80"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Grenade"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -529,6 +549,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_FPSController_Jump = m_FPSController.FindAction("Jump", throwIfNotFound: true);
         m_FPSController_Dash = m_FPSController.FindAction("Dash", throwIfNotFound: true);
         m_FPSController_Reload = m_FPSController.FindAction("Reload", throwIfNotFound: true);
+        m_FPSController_Grenade = m_FPSController.FindAction("Grenade", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -662,6 +683,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_FPSController_Jump;
     private readonly InputAction m_FPSController_Dash;
     private readonly InputAction m_FPSController_Reload;
+    private readonly InputAction m_FPSController_Grenade;
     public struct FPSControllerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -676,6 +698,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_FPSController_Jump;
         public InputAction @Dash => m_Wrapper.m_FPSController_Dash;
         public InputAction @Reload => m_Wrapper.m_FPSController_Reload;
+        public InputAction @Grenade => m_Wrapper.m_FPSController_Grenade;
         public InputActionMap Get() { return m_Wrapper.m_FPSController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -715,6 +738,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @Grenade.started += instance.OnGrenade;
+            @Grenade.performed += instance.OnGrenade;
+            @Grenade.canceled += instance.OnGrenade;
         }
 
         private void UnregisterCallbacks(IFPSControllerActions instance)
@@ -749,6 +775,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @Grenade.started -= instance.OnGrenade;
+            @Grenade.performed -= instance.OnGrenade;
+            @Grenade.canceled -= instance.OnGrenade;
         }
 
         public void RemoveCallbacks(IFPSControllerActions instance)
@@ -802,5 +831,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnGrenade(InputAction.CallbackContext context);
     }
 }
