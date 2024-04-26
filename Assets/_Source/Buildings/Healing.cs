@@ -17,8 +17,7 @@ public class Healing : Building
     void Start()
     {
   
-        
-
+     
     }
 
     void Update()
@@ -37,10 +36,14 @@ public class Healing : Building
         if (particles != null)
         {
             particles.Play();
-            
+            Debug.Log("++++");
         }
-            
-        
+        else
+        {
+            Debug.Log("particle system not detected");
+        }
+
+
     }
 
     public override void OnTakeDamage()
@@ -94,9 +97,4 @@ public class Healing : Building
         }
     }
 
-    private void OnTriggerStay(Collider collision)
-    {
-        if (collision.CompareTag(playerTag))
-            OnAttack();
-    }
 }

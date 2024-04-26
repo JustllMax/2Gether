@@ -18,11 +18,11 @@ public class BombBuilding : Building
 
     void Start()
     {
-        InvokeRepeating("UpdateTarget", 0f, 0.5f);
     }
 
     private void Update()
     {
+        UpdateTarget();
         if (target == null)
             return;
 
@@ -32,6 +32,7 @@ public class BombBuilding : Building
             fireContDown = 1f / fireRate;
         }
         fireContDown -= Time.deltaTime;
+        
     }
 
     public override void OnAttack()
@@ -87,22 +88,8 @@ public class BombBuilding : Building
         GoldManager.Instance.GoldAdd(price);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag(enemyTag))
-        {
-            Debug.Log("Enemy entered zone");
-        }
-    }
+    
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag(enemyTag))
-        {
-            target = other.transform;
-        }
-
-    }
 
     void OnDrawGizmosSelected()
     {
