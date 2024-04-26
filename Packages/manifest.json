@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.cratesmith.assetui": "https://github.com/Cratesmith/Cratesmith.AssetUI.git",
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.dbrizov.naughtyattributes": "https://github.com/dbrizov/NaughtyAttributes.git#upm",
     "com.singularitygroup.hotreload": "git+https://gitlab.hotreload.net/root/hot-reload-releases.git#1.12.9",

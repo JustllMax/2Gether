@@ -1,25 +1,40 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneTemplate;
 using UnityEngine;
-using static UnityEditor.VersionControl.Asset;
-
+using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 public class AIController : MonoBehaviour
 {
+    [Header("Enemy Statistics")]
+    [SerializeField] EnemyStatistics stats;
+
+    [Header("AI States")]
+    [SerializeField] List<AIState> _AIStates;
     AIState previousState;
     AIState nextState;
     AIState currentState;
 
-    [SerializeField] List<AIState> _AIStates;
+
+    [Header("Audio")]
     [SerializeField] AudioClip hurtSound;
     [SerializeField] AudioClip attackSound;
     [SerializeField] AudioClip deathSound;
 
-    private EnemyStatistics stats;
 
+    Animator _animator;
+    NavMeshAgent _navMeshAgent;
     Vector3 lastPosition;
     Transform currentTarget;
+    bool isStunned = false;
+    bool canAttack = false;
+
+    float distanceToTarget;
+    public float attackTimer = 0f;
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+    }
 
     private void Start()
     {
@@ -30,6 +45,7 @@ public class AIController : MonoBehaviour
 
     public void Update()
     {
+        attackTimer += Time.deltaTime;
         if (currentState != null)
         {
             currentState.OnUpdate(this);
@@ -102,11 +118,47 @@ public class AIController : MonoBehaviour
 
 
     }
+
+    public void AttackPerformed()
+    {
+        attackTimer = 0f;
+    }
     
     #region GetSet
     public EnemyStatistics GetEnemyStats()
     {
         return stats;
+    }
+
+    public Animator GetAnimator()
+    {
+        return _animator;
+    }
+
+    public bool IsStunned()
+    {
+        return isStunned;
+    }
+
+    public void SetAttack(bool val)
+    {
+        canAttack = val;
+    }
+
+    public bool CanAttack()
+    {
+        return canAttack;
+    }
+
+    public void SetStun(bool val)
+    {
+        isStunned = val;
+    }
+
+
+    public NavMeshAgent GetNavMeshAgent()
+    {
+        return _navMeshAgent;
     }
 
     #endregion GetSet

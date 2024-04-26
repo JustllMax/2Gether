@@ -63,9 +63,9 @@ public class PlayerEquipment : MonoBehaviour
             {
 
                 ResetReloadTimer();
-                if (!_animator.GetNextAnimatorStateInfo(0).IsName(AnimNames.RELOADUP.ToString()))
+                if (!_animator.GetNextAnimatorStateInfo(0).IsName(PlayerAnimNames.RELOADUP.ToString()))
                 {
-                    _animator.CrossFade(AnimNames.RELOADUP.ToString(), 0.1f);
+                    _animator.CrossFade(PlayerAnimNames.RELOADUP.ToString(), 0.1f);
                 }
             }
         }
@@ -137,9 +137,9 @@ public class PlayerEquipment : MonoBehaviour
         isSwitchingGun = true;
 
 
-        if ( !_animator.GetNextAnimatorStateInfo(0).IsName(AnimNames.SWITCHDOWN.ToString()))
+        if ( !_animator.GetNextAnimatorStateInfo(0).IsName(PlayerAnimNames.SWITCHDOWN.ToString()))
         {
-            _animator.CrossFade(AnimNames.SWITCHDOWN.ToString(), 0.1f);
+            _animator.CrossFade(PlayerAnimNames.SWITCHDOWN.ToString(), 0.1f);
         }
         
         _lastHeldGun = _currentGun;
