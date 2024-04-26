@@ -26,6 +26,6 @@ public class RangedAttackState : AIState
 
     public override bool CanChangeToState(AIController controller)
     {
-        return true;
+        return  controller.distanceToTarget <= controller.GetEnemyStats().AttackRange && controller.CanAttack();
     }
 }

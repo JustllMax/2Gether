@@ -24,12 +24,12 @@ public class AIController : MonoBehaviour
     Animator _animator;
     NavMeshAgent _navMeshAgent;
     Vector3 lastPosition;
-    Transform currentTarget;
     bool isStunned = false;
-    bool canAttack = false;
 
-    float distanceToTarget;
-    public float attackTimer = 0f;
+ 
+    Transform currentTarget;
+    public float distanceToTarget;
+    float attackTimer = 0f;
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -45,7 +45,11 @@ public class AIController : MonoBehaviour
 
     public void Update()
     {
-        attackTimer += Time.deltaTime;
+        if(attackTimer < stats.AttackCooldown)
+        {
+            attackTimer += Time.deltaTime;
+
+        }
         if (currentState != null)
         {
             currentState.OnUpdate(this);
@@ -81,10 +85,11 @@ public class AIController : MonoBehaviour
         }
     }
 
+
     private AIState GetNextState()
     {
         List<AIState> states = new List<AIState>();
-        StateWeight highestWeight = StateWeight.Low;
+        StateWeight highestWeight = StateWeight.Lowest;
 
         // Find the highest state weight
         foreach (var state in _AIStates)
@@ -139,27 +144,43 @@ public class AIController : MonoBehaviour
     {
         return isStunned;
     }
-
-    public void SetAttack(bool val)
-    {
-        canAttack = val;
-    }
-
-    public bool CanAttack()
-    {
-        return canAttack;
-    }
-
     public void SetStun(bool val)
     {
         isStunned = val;
     }
+    public bool CanAttack()
+    {
+        if (currentTarget != null)
+        {
+            if(currentTarget.GetComponent<ITargetable>().IsTargetable && attackTimer >= stats.AttackCooldown)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
+    public void SetCurrentTarget(Transform target)
+    {
+        currentTarget = target;
+    }
+
+    public Transform GetCurrentTarget()
+    {
+        return currentTarget;
+    }
+
+    public Vector3 GetCurrentPosition()
+    {
+        return transform.position;
+    }
     public NavMeshAgent GetNavMeshAgent()
     {
         return _navMeshAgent;
     }
+
+
 
     #endregion GetSet
 

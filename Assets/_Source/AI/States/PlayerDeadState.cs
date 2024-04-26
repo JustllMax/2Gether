@@ -5,15 +5,16 @@ using UnityEditorInternal;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "WalkState", menuName = ("2Gether/AI/States/Walk"))]
-public class WalkOnPathState : AIState
+[CreateAssetMenu(fileName = "PlayerDeadState", menuName = ("2Gether/AI/States/PlayerDeadState"))]
+public class PlayerDeadState : AIState
 {
 
     public override void OnStart(AIController controller)
     {
-        //DO NOT SET TARGET AS MAIN BASE
         controller.GetNavMeshAgent().SetDestination(GameManager.Instance.GetMainBaseTransform().position);
-        Debug.Log("WalkStateOnStarted");
+        controller.SetCurrentTarget(GameManager.Instance.GetMainBaseTransform());
+
+        
 
         if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
         {
@@ -23,13 +24,6 @@ public class WalkOnPathState : AIState
 
     public override void OnUpdate(AIController controller)
     {
-        if (ShouldSearchForTarget(controller))
-        {
-            SearchForTarget(controller);
-            controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().position);
-        }
-
-        controller.distanceToTarget = controller.GetNavMeshAgent().remainingDistance;
 
     }
 
@@ -42,7 +36,7 @@ public class WalkOnPathState : AIState
     public override bool CanChangeToState(AIController controller)
     {
         
-        return true;
+        return !GameManager.Instance.IsPlayerAlive() && !controller.CanAttack();
     }
 
     private bool ShouldSearchForTarget(AIController controller)
