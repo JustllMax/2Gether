@@ -2,55 +2,114 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneTemplate;
 using UnityEngine;
+using static UnityEditor.VersionControl.Asset;
 
 
 public class AIController : MonoBehaviour
 {
-    public List<EnemyState> states;
-    private EnemyStats stats;
+    AIState previousState;
+    AIState nextState;
+    AIState currentState;
 
-    public EnemyState CurrentState { get; private set; }
-    public void SetInitialState(List<EnemyState>states) 
-    { 
-        CurrentState = states[0];
-        CurrentState.Enter(this);
+    [SerializeField] List<AIState> _AIStates;
+    [SerializeField] AudioClip hurtSound;
+    [SerializeField] AudioClip attackSound;
+    [SerializeField] AudioClip deathSound;
+
+    private EnemyStatistics stats;
+
+    Vector3 lastPosition;
+    Transform currentTarget;
+
+    private void Start()
+    {
+        currentState = _AIStates[0];
+        currentState.OnStart(this);
     }
 
 
-    //*EnemyState TryChangingState()
-    //{
-    //    for (int i = 0; i < states.Count; i++)
-    //    {
-    //        
-    //    }
-    //}
-   
-    
-
-    public void ChangeState(EnemyState states)
+    public void Update()
     {
-        if (CurrentState == states || states == null)
+        if (currentState != null)
+        {
+            currentState.OnUpdate(this);
+            ChangeState();
+        }
+    }
+
+    public void ChangeState()
+    {
+        nextState = GetNextState();
+
+        if (nextState == null) { return; }
+        if (currentState != null && !currentState.CanChangeToState(this))
         {
             return;
         }
-        CurrentState.Exit(this);
-        CurrentState = states;
-        CurrentState.Enter(this);
+        if (nextState == currentState)
+        {
+            return;
+        }
+
+        if (currentState != null)
+        {
+            currentState.OnExit(this);
+        }
+
+        if (nextState != null && nextState != currentState)
+        {
+            previousState = currentState;
+            nextState.OnStart(this);
+            currentState = nextState;
+
+        }
+    }
+
+    private AIState GetNextState()
+    {
+        List<AIState> states = new List<AIState>();
+        StateWeight highestWeight = StateWeight.Low;
+
+        // Find the highest state weight
+        foreach (var state in _AIStates)
+        {
+            if (state.CanChangeToState(this))
+            {
+                if (state.weight > highestWeight)
+                {
+                    highestWeight = state.weight;
+                }
+            }
+        }
+
+        // Collect all states with the highest weight
+        foreach (var state in _AIStates)
+        {
+            if (state.CanChangeToState(this) && state.weight == highestWeight)
+            {
+                states.Add(state);
+            }
+        }
+
+        // Choose a random state from the collected states
+        if (states.Count > 0)
+        {
+            int randomIndex = Random.Range(0, states.Count);
+            return states[randomIndex];
+        }
+
+        return null; // Return null if no state is found
+
 
     }
-    public void Update()
-    {
-        CurrentState.OnUpdate(this);
-    }
-    public void FixedUpdate()
-    {
-        CurrentState.OnFixedUpdate(this);
-    }
-
-    public EnemyStats GetEnemyStats()
+    
+    #region GetSet
+    public EnemyStatistics GetEnemyStats()
     {
         return stats;
     }
+
+    #endregion GetSet
 
 
 

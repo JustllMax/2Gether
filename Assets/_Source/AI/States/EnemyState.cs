@@ -12,12 +12,11 @@ public enum StateWeight
 }
 
 
-public abstract class EnemyState : ScriptableObject
+public abstract class AIState : ScriptableObject
 {
     public StateWeight weight;
-    public abstract void Enter(AIController controller);
-    public abstract void Exit(AIController controller);
+    public abstract void OnStart(AIController controller);
+    public abstract void OnExit(AIController controller);
     public abstract void OnUpdate(AIController controller);
-    public abstract void OnFixedUpdate(AIController controller);
     public abstract bool CanChangeToState(AIController controller);
 }

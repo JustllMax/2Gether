@@ -4,7 +4,7 @@ using UnityEditorInternal;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "IdleState_", menuName = ("2Gether/AI/States/IdleState"))]
-public class EnemyIdleState : EnemyState
+public class EnemyIdleState : AIState
 {
   
 
@@ -15,17 +15,12 @@ public class EnemyIdleState : EnemyState
 
     
 
-    public override void Enter(AIController controller)
+    public override void OnStart(AIController controller)
     {
-        Debug.Log("IdleStateEntered");
+        Debug.Log("IdleStateOnStarted");
     }
 
-    public override void Exit(AIController controller)
-    {
-       
-    }
-
-    public override void OnFixedUpdate(AIController controller)
+    public override void OnExit(AIController controller)
     {
        
     }
