@@ -83,8 +83,8 @@ Material:
     - _BlendOp: 0
     - _BumpScale: 1
     - _CameraDepthFadeDistance: 1
-    - _CameraDepthFadeOffset: 0
-    - _CameraDepthFadeRange: 0
+    - _CameraDepthFadeOffset: 1
+    - _CameraDepthFadeRange: 2
     - _CameraDepthFadeStart: 0
     - _CameraFadingEnabled: 1
     - _CameraFarFadeDistance: 2
@@ -113,7 +113,7 @@ Material:
     - _QueueControl: -1
     - _QueueOffset: 0
     - _SimpleNoiseAmount: 1
-    - _SimpleNoiseRemap: 0.42
+    - _SimpleNoiseRemap: 0.291
     - _SimpleNoiseScale: 20
     - _SimplexNoiseAmount: 0
     - _SimplexNoiseRemap: 0.5
@@ -124,7 +124,7 @@ Material:
     - _SoftParticlesNearFadeDistance: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 5
-    - _SurfaceDepthFade: 0
+    - _SurfaceDepthFade: 0.66
     - _UVSec: 0
     - _VoronoiNoiseAmount: 0
     - _VoronoiNoiseRemap: 1
@@ -136,7 +136,7 @@ Material:
     - _CameraFadeParams: {r: 1, g: 1, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SimpleNoiseAnimation: {r: 0.05, g: 0.01, b: 0, a: 0}
+    - _SimpleNoiseAnimation: {r: 0.1, g: 0.01, b: 0, a: 0}
     - _SimplexNoiseAnimation: {r: 0, g: 0, b: 0, a: 0}
     - _SoftParticleFadeParams: {r: 0, g: 1, b: 0, a: 0}
     - _VoronoiNoiseAnimation: {r: 0, g: 0, b: 0, a: 0}
