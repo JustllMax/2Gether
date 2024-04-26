@@ -250,6 +250,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Grenade",
+                    "type": "Button",
+                    "id": "4ed356ae-398a-4bda-9f10-8c24c3438866",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -335,7 +344,7 @@
                     "id": "678e7a3b-9258-4b82-84a1-fb954f59fb08",
                     "path": "1DAxis",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "Normalize(min=-1,max=1)",
                     "groups": "",
                     "action": "Scroll",
                     "isComposite": true,
@@ -459,6 +468,17 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5ac49a3c-ad30-452e-ba16-47ccb058ca80",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Grenade",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
