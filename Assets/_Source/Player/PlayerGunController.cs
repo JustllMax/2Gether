@@ -37,7 +37,7 @@ public class PlayerGunController : MonoBehaviour
 
     private void Update()
     {
-        if ( _animator.GetCurrentAnimatorStateInfo(0).ToString().ToUpper().Equals(AnimNames.IDLE) == false)
+        if ( _animator.GetCurrentAnimatorStateInfo(0).ToString().ToUpper().Equals(PlayerAnimNames.IDLE) == false)
         {
             isDuringAnimation = true;
         }
@@ -104,9 +104,9 @@ public class PlayerGunController : MonoBehaviour
         {
             if (_equipment.CanReload() && !isDuringAnimation)
             {
-                if (!_animator.GetNextAnimatorStateInfo(0).IsName(AnimNames.RELOADDOWN.ToString()))
+                if (!_animator.GetNextAnimatorStateInfo(0).IsName(PlayerAnimNames.RELOADDOWN.ToString()))
                 {
-                    _animator.CrossFade(AnimNames.RELOADDOWN.ToString(), 0.1f);
+                    _animator.CrossFade(PlayerAnimNames.RELOADDOWN.ToString(), 0.1f);
                 }
 
             }
