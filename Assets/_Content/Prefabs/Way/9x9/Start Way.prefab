@@ -360,6 +360,32 @@ PrefabInstance:
       propertyPath: IsWay
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2828241274687339861, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: slot
+      value: 
+      objectReference: {fileID: 11400000, guid: c2bd572f62a0c79498244fea0c3e3141,
+        type: 2}
+    - target: {fileID: 2828241274687339861, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: slotAnchors.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2828241274687339861, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: slotAnchors.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2828241274687339861, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: slotAnchors.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2828241274687339861, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: slotAnchors.Array.data[3]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2921056365862328451, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}
       propertyPath: m_Name
@@ -462,6 +488,7 @@ PrefabInstance:
     - {fileID: 7993466132672153135, guid: efbb994236c1fdb4881d72c0bb9345b6, type: 3}
     - {fileID: 8377961003367370763, guid: efbb994236c1fdb4881d72c0bb9345b6, type: 3}
     - {fileID: 4959361278777736911, guid: efbb994236c1fdb4881d72c0bb9345b6, type: 3}
+    - {fileID: 6554268611161148008, guid: efbb994236c1fdb4881d72c0bb9345b6, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5332334040792125830, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}

@@ -106,8 +106,18 @@ PrefabInstance:
         type: 3}
       propertyPath: slot
       value: 
-      objectReference: {fileID: 11400000, guid: 4569db91545334349b267f5d44fc4bf7,
+      objectReference: {fileID: 11400000, guid: ff313314c3cdac74b91eb0d88721a490,
         type: 2}
+    - target: {fileID: 2828241274687339861, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: slotAnchors.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2828241274687339861, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: slotAnchors.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2921056365862328451, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}
       propertyPath: m_Name
@@ -126,6 +136,31 @@ PrefabInstance:
     - target: {fileID: 3526543326923642104, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}
       propertyPath: IsWay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3601044265702472526, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3601044265702472526, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3601044265702472526, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3601044265702472526, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3601044265702472526, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3620127542206580059, guid: efbb994236c1fdb4881d72c0bb9345b6,

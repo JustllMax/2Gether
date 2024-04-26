@@ -106,8 +106,23 @@ PrefabInstance:
         type: 3}
       propertyPath: slot
       value: 
-      objectReference: {fileID: 11400000, guid: b917c3ae369f4f24c8e3564b3927e192,
+      objectReference: {fileID: 11400000, guid: 95dfcb02b1fd07046aa6831bf55db7e5,
         type: 2}
+    - target: {fileID: 2828241274687339861, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: slotAnchors.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2828241274687339861, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: slotAnchors.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2828241274687339861, guid: efbb994236c1fdb4881d72c0bb9345b6,
+        type: 3}
+      propertyPath: slotAnchors.Array.data[2]
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2921056365862328451, guid: efbb994236c1fdb4881d72c0bb9345b6,
         type: 3}
       propertyPath: m_Name
