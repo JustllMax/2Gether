@@ -7,7 +7,7 @@ using UnityEngine;
 public class WeaponAnimation : MonoBehaviour
 {
     private PlayerInputAction.FPSControllerActions _fps;
-
+    private CharacterController _cc;
 
     private Vector2 _lookInput;
     private Vector2 _moveInput;
@@ -31,12 +31,46 @@ public class WeaponAnimation : MonoBehaviour
     private float _smoothRot = 12f;
 
 
+    [Header("Bobbing")]
+    public float speedCurve;
+    float _curveSin { get => Mathf.Sin(speedCurve); }
+    float _curveCos { get => Mathf.Cos(speedCurve); }
+
+    public Vector3 travelLimit = Vector3.one * 0.025f;
+    public Vector3 bobLimit = Vector3.one * 0.01f;
+    Vector3 _bobPosition;
+
+    public float bobExaggeration;
+
+    [Header("Bob Rotation")]
+    public Vector3 multiplier;
+    Vector3 _bobEulerRotation;
+
     // Start is called before the first frame update
     void Start()
     {
         _fps = InputManager.Instance.GetPlayerInputAction().FPSController;
+        _cc = GetComponentInParent<CharacterController>();
     }
 
+    void Bobbing()
+    {
+        // pos
+        speedCurve += Time.deltaTime * (_cc.isGrounded ? (_lookInput.x + _lookInput.y) * bobExaggeration : 1f) + 0.01f;
+
+        _bobPosition.x = 
+            (_curveCos * bobLimit.x * (_cc.isGrounded ? 1 : 0)) - (_moveInput.x * travelLimit.x);
+
+        _bobPosition.y = (_curveSin * bobLimit.y) - (_lookInput.y * travelLimit.y);
+        _bobPosition.z = -(_moveInput.y * travelLimit.z);
+
+        //rot 
+
+        _bobEulerRotation.x = (_moveInput != Vector2.zero ? multiplier.x * (Mathf.Sin(2 * speedCurve)) : multiplier.x * Mathf.Sin(2 * speedCurve) / 2);
+        _bobEulerRotation.y = (_moveInput != Vector2.zero ? multiplier.y * _curveCos : 0);
+        _bobEulerRotation.z = (_moveInput != Vector2.zero ? multiplier.z * _curveCos * _moveInput.x : 0);
+
+    }
 
     // Update is called once per frame
     void Update()
@@ -49,6 +83,8 @@ public class WeaponAnimation : MonoBehaviour
         _moveInput.Normalize();
 
         Sway();
+        Bobbing();
+
         ApplyTransform();
     }
 
@@ -56,9 +92,11 @@ public class WeaponAnimation : MonoBehaviour
     {
         transform.localPosition = Vector3.Lerp(
             transform.localPosition,
-            _swayPos, Time.deltaTime * _smooth);
+            _swayPos + _bobPosition, Time.deltaTime * _smooth);
 
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(_swayRot), Time.deltaTime * _smooth);
+
+
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(_swayRot) * Quaternion.Euler(_bobEulerRotation), Time.deltaTime * _smooth);
     }
 
     private void Sway()
