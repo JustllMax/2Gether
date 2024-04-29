@@ -125,7 +125,7 @@ public class UIFlow : MonoBehaviour
     {
         for (int i = 0; i < 5; i++)
         {
-            GameObject card = Instantiate(cardPrefab, cardpackOpenPanel.transform); // U¿ycie transform do rodzica
+            GameObject card = Instantiate(cardPrefab, cardpackOpenPanel.transform);
             card.name = "Card " + (i + 1);
         }
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IDeselectHandler
 {
     private Vector3 upOffset = new Vector3(0f, 200f, 0f);
     private Vector3 originalScale;
@@ -41,6 +41,15 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
             }
             isClicked = true;
             currentClickedCard = this;
+        }
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        if (currentClickedCard != null)
+        {
+            currentClickedCard.ResetPosition();
+            currentClickedCard = null;
         }
     }
 
