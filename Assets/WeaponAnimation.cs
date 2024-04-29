@@ -46,6 +46,10 @@ public class WeaponAnimation : MonoBehaviour
     public Vector3 multiplier;
     Vector3 _bobEulerRotation;
 
+    [Header("Customization")]
+    [SerializeField]
+    private Vector3 _rotationOffsetEuler;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,7 +63,7 @@ public class WeaponAnimation : MonoBehaviour
         speedCurve += Time.deltaTime * (_cc.isGrounded ? (_lookInput.x + _lookInput.y) * bobExaggeration : 1f) + 0.01f;
 
         _bobPosition.x = 
-            (_curveCos * bobLimit.x * (_cc.isGrounded ? 1 : 0)) - (_moveInput.x * travelLimit.x);
+            (_curveCos * bobLimit.x - (_moveInput.x * travelLimit.x));
 
         _bobPosition.y = (_curveSin * bobLimit.y) - (_lookInput.y * travelLimit.y);
         _bobPosition.z = -(_moveInput.y * travelLimit.z);
@@ -96,7 +100,9 @@ public class WeaponAnimation : MonoBehaviour
 
 
 
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(_swayRot) * Quaternion.Euler(_bobEulerRotation), Time.deltaTime * _smooth);
+        transform.localRotation = 
+            Quaternion.Slerp(transform.localRotation, 
+            Quaternion.Euler(_rotationOffsetEuler) * Quaternion.Euler(_swayRot) * Quaternion.Euler(_bobEulerRotation), Time.deltaTime * _smooth);
     }
 
     private void Sway()
