@@ -152,17 +152,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14348e7af86b90d4685b1b3c2525333b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlotPrefabs:
+  slotPrefabs:
   - {fileID: 2921056365862328451, guid: efbb994236c1fdb4881d72c0bb9345b6, type: 3}
+  - {fileID: 1245027202219669942, guid: c8b16af095ce2314494fee32dc440593, type: 3}
   - {fileID: 1245027202219669942, guid: 34b2b36e7dc7fa24c855b9e288e9b32f, type: 3}
-  - {fileID: 1245027202219669942, guid: 9e2e81003956054488282ea90422df5e, type: 3}
   - {fileID: 1245027202219669942, guid: c00fc4b72e3fe5e498ac8895ddf8f631, type: 3}
   - {fileID: 1245027202219669942, guid: 440da7e4c06890d49af4400266af4282, type: 3}
-  - {fileID: 1245027202219669942, guid: c8b16af095ce2314494fee32dc440593, type: 3}
-  StartingSlot: {fileID: 2229698089831652448, guid: 27093c5f5d5bb8f4bbf11a4a777c6404,
+  - {fileID: 1245027202219669942, guid: 9e2e81003956054488282ea90422df5e, type: 3}
+  startingSlot: {fileID: 2229698089831652448, guid: 27093c5f5d5bb8f4bbf11a4a777c6404,
     type: 3}
-  MapSize: {x: 13, y: 13}
-  MapCenter: {x: 6, y: 6}
+  mapSize: {x: 13, y: 13}
+  startPos: {x: 6, y: 6}
 --- !u!4 &1121353187
 Transform:
   m_ObjectHideFlags: 0

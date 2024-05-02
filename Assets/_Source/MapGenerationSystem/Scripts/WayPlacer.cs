@@ -1,209 +1,248 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using JetBrains.Annotations;
-using UniRx.Triggers;
+using System.Data;
+using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.PlayerLoop;
 
 public class SlotPlacer : MonoBehaviour
 {
-    [SerializeField] private GameObject[] SlotPrefabs;
-    [SerializeField] private WaySlot StartingSlot;
+    [SerializeField] private GameObject[] slotPrefabs;
+    [SerializeField] private WaySlot startingSlot;
+    [SerializeField] private Vector2Int mapSize = new Vector2Int(13, 13);
+    [SerializeField] private Vector2Int startPos = new Vector2Int(7, 7);
 
-    private Vector2Int[] directions = { Vector2Int.left, Vector2Int.up, Vector2Int.right, Vector2Int.down };
-    private float[] angles = { 0f, 90f, 180f, 270f };
+    private Vector2Int[] _directions = { Vector2Int.left, Vector2Int.up, Vector2Int.right, Vector2Int.down };
+    private float[] _angles = { 0f, 90f, 180f, 270f };
+    private int[,] _map;
+    private Vector2Int newPos;
 
-    private WaySlot[,] _spawnedSlots;
-
-    HashSet<Vector2Int> _vacantPlaces = new HashSet<Vector2Int>();
-
-    [SerializeField] private Vector2Int MapSize = new Vector2Int(13, 13);
-    [SerializeField] private Vector2Int MapCenter = new Vector2Int(7, 7);
-
-
-    private int Add(int x, int y) => x + y;
-    private int Subtract(int x, int y) => x - y;
-    private delegate int Operation(int x, int y);
-
-    private void Start()
+    void Start()
     {
         GenerateMap();
-        //yield return new WaitForSecondsRealtime(0.5f);
+        PrintMap();
     }
 
-    private void GenerateMap()
+    void GenerateMap()
     {
-        _spawnedSlots = new WaySlot[MapSize.x, MapSize.y];
+        _map = new int[mapSize.x, mapSize.y];
 
-        WaySlot centerSlot = Instantiate(StartingSlot);
-        centerSlot.slot.pos = MapCenter;
-        centerSlot.transform.position = new Vector3(centerSlot.slot.pos.x, 0, centerSlot.slot.pos.y) * 30;
-
-        _spawnedSlots[MapCenter.x, MapCenter.y] = StartingSlot;
+        _map[startPos.x, startPos.y] = 4;
 
         for (int i = 0; i < 4; i++)
-            CheckSlot(centerSlot, i, i);
-    }
-
-    private void CheckSlot(WaySlot slotToConnect, int direction, int lastDirection)
-    {
-        int reverseDirection = (direction + 2) % 4;
-
-        Vector2Int newPos = slotToConnect.slot.pos + directions[direction];
-
-        if (newPos.x < 1 || newPos.x >= MapSize.x - 1 || newPos.y < 1 || newPos.y >= MapSize.y - 1)
         {
-            WaySlot lastSlot = Instantiate(SlotPrefabs[5]).GetComponent<WaySlot>();
-
-            lastSlot.RotateSlot(Vector3.up, angles[(direction + 2) % 4]);
-
-            SetSlot(newPos, ref lastSlot, ref slotToConnect, direction, reverseDirection);
-            return;
+            GeneratePath(startPos, i, i);
         }
 
-        if (_spawnedSlots[newPos.x, newPos.y] != null)
+        int neighborDir = 0;
+        for (int i = 0; i < mapSize.x; i++)
         {
-            return;
-        }
-
-        int randomId = RandomId();
-
-        WaySlot newSlot = Instantiate(SlotPrefabs[randomId]).GetComponent<WaySlot>();
-
-        if (randomId == 1)
-        {
-            newSlot.RotateSlot(Vector3.up, angles[direction]);
-            if (newSlot.slotAnchors[direction])
+            for (int j = 0; j < mapSize.y; j++)
             {
-                SetSlot(newPos, ref newSlot, ref slotToConnect, reverseDirection, direction);
-                CheckSlot(newSlot, direction, direction);
-            }
-            //Debug.Log(@$"direction:{direction} id:{newSlot.slot.id} x:{newPos.x} z:{newPos.y} angle:{angles[direction]} 
-            //{newSlot.slotAnchors[0]}; {newSlot.slotAnchors[1]}; {newSlot.slotAnchors[2]}; {newSlot.slotAnchors[3]}");
-        }
-
-        if (randomId == 2)
-        {
-            int newDirection = CheckAnchors(newPos, newSlot, slotToConnect, direction, lastDirection);
-
-            Debug.Log($"newDir:{newDirection}, dir:{direction}, reverseDir::{reverseDirection}");
-            if (newSlot.slotAnchors[newDirection])
-            {
-                SetSlot(newPos, ref newSlot, ref slotToConnect, reverseDirection, direction);
-                CheckSlot(newSlot, newDirection, direction);
-            }
-
-
-        }
-        Debug.Log(@$"direction:{direction} id:{newSlot.slot.id} x:{newPos.x} z:{newPos.y} angle:{angles[direction]} 
-        {newSlot.slotAnchors[0]}; {newSlot.slotAnchors[1]}; {newSlot.slotAnchors[2]}; {newSlot.slotAnchors[3]}");
-
-        {
-            //newSlot.RotateSlot(Vector3.up, angles[direction]);
-            if (newSlot.slotAnchors[direction])
-            {
-                SetSlot(newPos, ref newSlot, ref slotToConnect, direction, reverseDirection);
-
-                _spawnedSlots[newPos.x, newPos.y] = newSlot;
-                for (int i = 0; i < 4; i++)
-                    CheckSlot(newSlot, i, i);
-            }
-            Debug.Log(@$"direction:{direction} id:{newSlot.slot.id} x:{newPos.x} z:{newPos.y} angle:{angles[direction]} 
-            {newSlot.slotAnchors[0]}; {newSlot.slotAnchors[1]}; {newSlot.slotAnchors[2]}; {newSlot.slotAnchors[3]}");
-        }
-    }
-
-    private int CheckAnchors(Vector2Int newPos, WaySlot newSlot, WaySlot slotToConnect, int direction, int lastDirection)
-    {
-        int dir= 0;
-        if (newSlot.slot.id == 2)
-        {
-            if (lastDirection == 0)
-            {
-                dir = (UnityEngine.Random.Range(0, 20) % 2 == 0) ? 1 : 3;
-                
-                newPos = slotToConnect.slot.pos + directions[dir];
-                if(_spawnedSlots[newPos.x, newPos.y] != null)
+                if (i == startPos.x && j == startPos.y)
                 {
-                    Destroy(newSlot);
+                    WaySlot path = Instantiate(startingSlot).GetComponent<WaySlot>();
+                    path.gameObject.transform.position = new Vector3(i, 0, j) * 30;
+                    path.slot.pos = new Vector2Int(i, j);
                 }
                 else
-                    newSlot.RotateSlot(Vector3.up, angles[dir]);
+                {
+                    WaySlot path;
+                    if (_map[i, j] == 2)
+                    {
+                        if (isCurved(i, j))
+                            path = Instantiate(slotPrefabs[5]).GetComponent<WaySlot>();
+                        else
+                            path = Instantiate(slotPrefabs[2]).GetComponent<WaySlot>();
+                    }
+
+                    else
+                        path = Instantiate(slotPrefabs[_map[i, j]]).GetComponent<WaySlot>();
+
+                    path.gameObject.transform.position = new Vector3(i, 0, j) * 30;
+                    path.slot.pos = new Vector2Int(i, j);
+
+                    if (HasNeighbors(i, j, out neighborDir))
+                    {
+                        //if (_map[i, j] == 2)
+                        {
+                            if (neighborDir == 0)
+                            {
+
+                            }
+                            if (neighborDir == 1)
+                            {
+
+                            }
+                            if (neighborDir == 2)
+                            {
+
+                            }
+                            if (neighborDir == 3)
+                            {
+
+                            }
+                        }
+                        path.RotateSlot(Vector3.up, _angles[neighborDir]);
+                    }
+                }
             }
-            if (lastDirection == 0 && direction == 1)
+        }
+    }
+
+
+    void GeneratePath(Vector2Int pos, int curDirection, int direction)
+    {
+        Vector2Int newPos = pos + _directions[curDirection];
+        curDirection = GetRandomDirection(direction, newPos);
+        if (newPos.x >= 0 && newPos.x < mapSize.x && newPos.y >= 0 && newPos.y < mapSize.y)
+        {
+
+            if (newPos.x < 0 || newPos.y < 0 || newPos.x >= mapSize.x || newPos.y >= mapSize.y)
             {
-                dir = 0;
-                newSlot.RotateSlot(Vector3.up, angles[dir]);
+                _map[newPos.x, newPos.y] = 1;
+                return;
             }
-            if (lastDirection == 1)
+
+            _map[newPos.x, newPos.y] = GetNeighborsCount(newPos.x, newPos.y);
+            _map[pos.x, pos.y] = GetNeighborsCount(pos.x, pos.y);
+
+            Debug.Log($"Pos:[{pos.x},{pos.y}] new:[{newPos.x},{newPos.y}] dir:{curDirection} value:{_map[pos.x, pos.y]}");
+            GeneratePath(newPos, curDirection, direction);
+        }
+        else
+            return;
+    }
+    bool isCurved(int x, int y)
+    {
+        if (x > 0 && x < mapSize.x - 1 && y > 0 && y < mapSize.y - 1)
+        {
+            if (_map[x - 1, y] != 0 && _map[x + 1, y] != 0)
             {
-                dir = (UnityEngine.Random.Range(0, 20) % 2 == 0) ? 1 : 3;
-                newSlot.RotateSlot(Vector3.up, angles[dir]);
+                return false;
             }
-            if (lastDirection == 1)
+
+            if (_map[x, y - 1] != 0 && _map[x, y + 1] != 0)
             {
-                dir = (UnityEngine.Random.Range(0, 20) % 2 == 0) ? 1 : 3;
-                newSlot.RotateSlot(Vector3.up, angles[dir]);
+                return false;
             }
+        }
+        return true;
+    }
+    bool HasNeighbors(int x, int y, out int neighborDir)
+    {
+        int numRows = _map.GetLength(0);
+        int numCols = _map.GetLength(1);
+        if (x > 0 && _map[x - 1, y] != 0)
+        {
+            neighborDir = 0;
+            return true;
+        }
+        if (x < numRows - 1 && _map[x + 1, y] != 0)
+        {
+            neighborDir = 1;
+            return true;
+        }
+
+        if (y > 0 && _map[x, y - 1] != 0)
+        {
+            neighborDir = 2;
+            return true;
+        }
+        if (y < numCols - 1 && _map[x, y + 1] != 0)
+        {
+            neighborDir = 3;
+            return true;
+        }
+        neighborDir = -1;
+        return false;
+    }
+
+    private int GetNeighborsCount(int x, int y)
+    {
+        int count = 0;
+
+        if (x - 1 >= 0 && _map[x - 1, y] > 0) // Влево
+            count++;
+        if (x + 1 < mapSize.x && _map[x + 1, y] > 0) // Вправо
+            count++;
+        if (y - 1 >= 0 && _map[x, y - 1] > 0) // Вниз
+            count++;
+        if (y + 1 < mapSize.y && _map[x, y + 1] > 0) // Вверх
+            count++;
+
+        return count;
+    }
+
+    int GetRandomDirection(int direction, Vector2Int pos)
+    {
+        //(direction + 2) % 4
+        int randomDirection = Random.Range(0, 4);
+        Vector2Int newPos = pos + _directions[randomDirection];
+        //int neighborDirection = 0;
+        bool flag = false;
+        if (randomDirection == (direction + 2) % 4)
+            return direction;
+        while (flag == false)
+        {
+            if (newPos.x >= 0 && newPos.x < mapSize.x && newPos.y >= 0 && newPos.y < newPos.y)
+            {
+                if (direction == 0)
+                {
+                    if ((newPos.x >= 0 && newPos.x < startPos.x && newPos.y >= 0 && newPos.y < startPos.y) &&
+                        (_map[newPos.x, newPos.y] > 0))
+                    {
+                        flag = true;
+                    }
+                }
+                if (direction == 1)
+                {
+                    if (newPos.x >= startPos.x && newPos.x < mapSize.x && newPos.y >= 0 && newPos.y < startPos.y &&
+                        (_map[newPos.x, newPos.y] > 0))
+                    {
+                        flag = true;
+                    }
+                }
+                if (direction == 2)
+                {
+                    if (newPos.x >= startPos.x && newPos.x < mapSize.x && newPos.y >= startPos.y && newPos.y < mapSize.y &&
+                        (_map[newPos.x, newPos.y] > 0))
+                    {
+                        flag = true;
+                    }
+                }
+                if (direction == 3)
+                {
+                    if (newPos.x >= 0 && newPos.x < startPos.x && newPos.y >= startPos.y && newPos.y < mapSize.y &&
+                        (_map[newPos.x, newPos.y] > 0))
+                    {
+                        flag = true;
+                    }
+                }
+            }
+            ++randomDirection;
+            newPos = pos + _directions[randomDirection];
+        }
+
+        if(flag)
+        {
+            return randomDirection;
         }
         return direction;
-        for (int i = 0; i < 4; i++)
+    }
+
+
+
+    void PrintMap()
+    {
+        string line = "";
+        for (int y = 0; y < mapSize.x; y++)
         {
-            newSlot.RotateSlot(Vector3.up, angles[i]);
-
-            Debug.Log($@"i:{i} Dir:{direction} RevDir:{(i + 2) % 4} Angle:{angles[i]}
-            {direction}:{slotToConnect.slotAnchors[direction]} {(direction + 2) % 4}:{newSlot.slotAnchors[(direction + 2) % 4]}
-            {newSlot.slotAnchors[0]}; {newSlot.slotAnchors[1]}; {newSlot.slotAnchors[2]}; {newSlot.slotAnchors[3]}");
-
-            if (slotToConnect.slotAnchors[direction] && newSlot.slotAnchors[(direction + 2) % 4])
+            for (int x = 0; x < mapSize.y; x++)
             {
-                return i;
+                line += _map[x, y] + "\t";
             }
+            line += "\n\n";
         }
-        //newSlot.RotateSlot(Vector3.up, angles[direction]);
-        return direction;
-        
-    }
-
-    private int RandomId()
-    {
-        int id = (UnityEngine.Random.Range(0, 20) < 7) ? 2 : 1;
-
-        return id;
-    }
-
-    private void SetSlot(Vector2Int newPos, ref WaySlot newSlot, ref WaySlot slotToConnect, int newSlotAnchorId, int slotToConnectAnchorId)
-    {
-        newSlot.slot.pos = newPos;
-        newSlot.transform.position = new Vector3(newPos.x, 0, newPos.y) * 30;
-
-        newSlot.slotAnchors[newSlotAnchorId] = false;
-        slotToConnect.slotAnchors[slotToConnectAnchorId] = false;
-
-        _spawnedSlots[newPos.x, newPos.y] = newSlot;
-    }
-
-    /*
-    private void PlaceOneEmptySlot()
-    {
-        for (int x = 0; x < _spawnedSlots.GetLength(0); x++)
-        {
-            for (int y = 0; y < _spawnedSlots.GetLength(1); y++)
-            {
-                if (_spawnedSlots[x, y] == null) continue;
-
-                WaySlot newSlot = Instantiate(SlotPrefabs[0].GetComponent<WaySlot>());
-                newSlot.transform.position = new Vector3(newSlot.pos.x, 0, newSlot.pos.y) * 30;
-                _spawnedSlots[newSlot.pos.x, newSlot.pos.y] = newSlot;
-            }
-        }
-        Vector2Int position = _vacantPlaces.ElementAt(UnityEngine.Random.Range(0, _vacantPlaces.Count));
-    }
-    */
-    void Update()
-    {
-
+        Debug.Log(line);
     }
 }

@@ -8,13 +8,13 @@ using UnityEngine.Android;
 public class WaySlot : MonoBehaviour
 {
     [SerializeField] public Slot slot;
-    [SerializeField] public bool[] slotAnchors = new bool[4];
+    //[SerializeField] public bool[] slotAnchors = new bool[4];
 
     public void RotateWays(Vector3 axis, float rotationAngle)
     {
         gameObject.transform.GetChild(0).Rotate(axis, rotationAngle); ;
     }
-
+    /*
     public void RotateAnchors(float angle)
     {
         if (slot.id == 1)
@@ -98,9 +98,10 @@ public class WaySlot : MonoBehaviour
             }
         }
     }
+    */
     public void RotateSlot(Vector3 axis, float rotationAngle)
     {
         this.RotateWays(axis, rotationAngle);
-        this.RotateAnchors(rotationAngle);
+        //this.RotateAnchors(rotationAngle);
     }
 }
