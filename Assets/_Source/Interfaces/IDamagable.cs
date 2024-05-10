@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IDamagable
 {
-    public float TakeDamage(Damage damage);
+    public float TakeDamage(float damage);
     public void Kill();
     public float Health { get; set; }
 }

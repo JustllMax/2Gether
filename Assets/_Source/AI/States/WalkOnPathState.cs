@@ -8,10 +8,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "WalkState", menuName = ("2Gether/AI/States/Walk"))]
 public class WalkOnPathState : AIState
 {
-
+    Transform target;
     public override void OnStart(AIController controller)
     {
         //DO NOT SET TARGET AS MAIN BASE
+        target = GameManager.Instance.GetMainBaseTransform();
         controller.GetNavMeshAgent().SetDestination(GameManager.Instance.GetMainBaseTransform().position);
         Debug.Log("WalkStateOnStarted");
 
@@ -23,12 +24,16 @@ public class WalkOnPathState : AIState
 
     public override void OnUpdate(AIController controller)
     {
-        if (ShouldSearchForTarget(controller))
+        if (controller.GetCurrentTarget().transform != null)
         {
-            SearchForTarget(controller);
-            controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().position);
-        }
+            if(controller.GetCurrentTarget().transform != target)
+            {
+                target = controller.GetCurrentTarget().transform;
+                controller.GetNavMeshAgent().SetDestination(target.position);
 
+            }
+
+        }
         controller.distanceToTarget = controller.GetNavMeshAgent().remainingDistance;
 
     }
@@ -45,46 +50,6 @@ public class WalkOnPathState : AIState
         return true;
     }
 
-    private bool ShouldSearchForTarget(AIController controller)
-    {
-        if(controller.GetCurrentTarget() != null)
-        {
-            if (controller.GetCurrentTarget().GetComponent<ITargetable>().IsTargetable == true)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-    private void SearchForTarget(AIController controller)
-    {
-        Transform target = null;
-
-        //Layermask that hits everything except the terrain
-        int layerMask = ~(1<<LayerMask.NameToLayer("Terrain"));
-        float radius = controller.GetEnemyStats().AttackRange;
-
-        float minDistance = float.MaxValue;
-        
-
-        Collider[] hits =  Physics.OverlapSphere(controller.GetCurrentPosition(), radius, layerMask);
-        foreach (Collider hit in hits)
-        {
-            if(hit.TryGetComponent<ITargetable>(out ITargetable t))
-            {
-                if(t.IsTargetable)
-                {
-                    float distanceToTarget = Vector3.Distance(hit.transform.position, controller.transform.position);
-                    if (distanceToTarget < minDistance)
-                    {
-                        target = hit.transform;
-                        minDistance = distanceToTarget;
-                    }
-                }
-            }
-        }
-
-
-        controller.SetCurrentTarget(target);
-    }
+   
+    
 }

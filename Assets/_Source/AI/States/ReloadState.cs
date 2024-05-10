@@ -1,49 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "IdleState_", menuName = ("2Gether/AI/States/IdleState"))]
-public class StunState : AIState
+[CreateAssetMenu(fileName = "ReloadState", menuName = ("2Gether/AI/States/Reload"))]
+public class ReloadState : AIState
 {
-
-    [SerializeField] float stunTime;
-    float timer = 0f;
-    
+    float reloadTimer = 0;
     public override void OnStart(AIController controller)
     {
-        controller.GetNavMeshAgent().Stop();
-        timer = 0f;
         if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
         {
             controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
         }
-
+        controller.isReloading = true;
     }
-
 
     public override void OnUpdate(AIController controller)
     {
-        timer += Time.deltaTime;
-        if(timer > stunTime)
+        reloadTimer += Time.deltaTime;
+        if(reloadTimer >= controller.GetEnemyStats().AttackReloadTime)
         {
-            controller.SetStun(false);
+            controller.isReloading = false;
         }
     }
-
     public override void OnExit(AIController controller)
     {
-        controller.GetNavMeshAgent().Resume();
-
+        reloadTimer = 0;
+        controller.remainingAttacks = controller.GetEnemyStats().AttackAmount;
     }
 
     public override bool CanChangeToState(AIController controller)
     {
-        return controller.IsStunned();
+        return controller.distanceToTarget <= controller.GetEnemyStats().AttackRange && controller.remainingAttacks <= 0;
     }
-
-
-
-
 
 }

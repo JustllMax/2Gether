@@ -9,6 +9,9 @@ public class EnemyStatistics : ScriptableObject
     public float Health;
     public float AttackRange;
     public float AttackDamage;
-    public float AttackCooldown;
+    public float AttackFireRate;
+    public float AttackReloadTime;
+    public float AttackRadius;
+    public float AttackAmount;
     public float MovementSpeed;
 }

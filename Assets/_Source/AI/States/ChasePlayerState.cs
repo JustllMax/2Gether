@@ -7,13 +7,20 @@ using UnityEngine.AI;
 public class ChasePlayerState : AIState
 {
 
+    Transform playerTransform;
+    AITarget playerTarget;
     public override void OnStart(AIController controller)
     {
-        if(controller.GetCurrentTarget() == null)
+        if(playerTransform == null)
         {
-            controller.SetCurrentTarget(GameManager.Instance.GetPlayerController().transform);
+            playerTransform = GameManager.Instance.GetPlayerController().transform;
+            playerTarget = new AITarget(playerTransform, playerTransform.GetComponent<ITargetable>());
         }
 
+        if(controller.GetCurrentTarget().transform == null)
+        {
+            controller.SetCurrentTarget(playerTarget);
+        }
 
 
         if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
@@ -21,11 +28,12 @@ public class ChasePlayerState : AIState
             controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
         }
 
+        controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().transform.position);
     }
 
     public override void OnUpdate(AIController controller)
     {
-        controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().position);
+        controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().transform.position);
         controller.distanceToTarget = controller.GetNavMeshAgent().remainingDistance;
     }
     public override void OnExit(AIController controller)
@@ -36,7 +44,7 @@ public class ChasePlayerState : AIState
 
     public override bool CanChangeToState(AIController controller)
     {
-        return !controller.CanAttack();
+        return GameManager.Instance.IsPlayerAlive() && !controller.CanAttack();
     }
 }
     

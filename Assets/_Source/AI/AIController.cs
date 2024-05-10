@@ -1,7 +1,22 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
+using Random = UnityEngine.Random;
+[Serializable]
+public struct AITarget
+{
+    public Transform transform;
+    public ITargetable targetable;
+
+    
+    public AITarget(Transform transform, ITargetable targetable)
+    {
+        this.transform = transform;
+        this.targetable = targetable;
+    }
+};
 
 public class AIController : MonoBehaviour
 {
@@ -14,6 +29,7 @@ public class AIController : MonoBehaviour
     AIState nextState;
     AIState currentState;
 
+    [SerializeField] TargetType AITargetFocus;
 
     [Header("Audio")]
     [SerializeField] AudioClip hurtSound;
@@ -26,12 +42,14 @@ public class AIController : MonoBehaviour
     Vector3 lastPosition;
     bool isStunned = false;
 
- 
-    Transform currentTarget;
+    AITarget currentTarget = new AITarget();
     public float distanceToTarget;
     float attackTimer = 0f;
+    public bool isReloading;
+    public float remainingAttacks;
     private void Awake()
     {
+        remainingAttacks = stats.AttackAmount;
         _animator = GetComponent<Animator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
     }
@@ -45,10 +63,14 @@ public class AIController : MonoBehaviour
 
     public void Update()
     {
-        if(attackTimer < stats.AttackCooldown)
+        if (attackTimer < stats.AttackFireRate)
         {
             attackTimer += Time.deltaTime;
 
+        }
+        if (ShouldSearchForTarget())
+        {
+            SearchForTarget();
         }
         if (currentState != null)
         {
@@ -57,6 +79,57 @@ public class AIController : MonoBehaviour
         }
     }
 
+    private bool ShouldSearchForTarget()
+    {
+        if (GetCurrentTarget().transform != null)
+        {
+            if (GetCurrentTarget().targetable.IsTargetable == true)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void SearchForTarget()
+    {
+        Transform target = null;
+        ITargetable targetable = null;
+        //Layermask that hits everything except the terrain
+        int layerMask = ~(1 << LayerMask.NameToLayer("Terrain"));
+        float radius = GetEnemyStats().AttackRange;
+
+        float minDistance = float.MaxValue;
+
+
+        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), radius, layerMask);
+        foreach (Collider hit in hits)
+        {
+            if (hit.TryGetComponent(out ITargetable t))
+            {
+                if (t.IsTargetable && ShouldTarget(t))
+                {
+                    float distanceToTarget = Vector3.Distance(hit.transform.position, transform.position);
+                    if (distanceToTarget < minDistance)
+                    {
+                        target = hit.transform;
+                        targetable = t;
+                        minDistance = distanceToTarget;
+                    }
+                }
+            }
+        }
+
+        SetCurrentTarget(new AITarget(target, targetable));
+    }
+
+    bool ShouldTarget(ITargetable t)
+    {
+        if (t.TargetType == AITargetFocus || AITargetFocus == TargetType.Both) {
+            return true;
+        }
+        return false;
+    }
     public void ChangeState()
     {
         nextState = GetNextState();
@@ -127,6 +200,7 @@ public class AIController : MonoBehaviour
     public void AttackPerformed()
     {
         attackTimer = 0f;
+        remainingAttacks--;
     }
     
     #region GetSet
@@ -150,9 +224,9 @@ public class AIController : MonoBehaviour
     }
     public bool CanAttack()
     {
-        if (currentTarget != null)
+        if (currentTarget.transform != null)
         {
-            if(currentTarget.GetComponent<ITargetable>().IsTargetable && attackTimer >= stats.AttackCooldown)
+            if(currentTarget.targetable.IsTargetable && remainingAttacks > 0)
             {
                 return true;
             }
@@ -161,12 +235,12 @@ public class AIController : MonoBehaviour
     }
 
 
-    public void SetCurrentTarget(Transform target)
+    public void SetCurrentTarget(AITarget target)
     {
         currentTarget = target;
     }
 
-    public Transform GetCurrentTarget()
+    public AITarget GetCurrentTarget()
     {
         return currentTarget;
     }
