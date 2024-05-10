@@ -38,9 +38,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AffectedLayer: 1
     - _Color_Threshold: 0.58
     - _Normal_Threshold: 0.081
-    - _Outline_Thickness: 1.79
+    - _Outline_Thickness: 0.74
     - _Outline_Threshold: 0.5
     m_Colors:
     - _Outline_Color: {r: 0, g: 0, b: 0, a: 0}

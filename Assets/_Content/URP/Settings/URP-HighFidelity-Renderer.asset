@@ -107,10 +107,10 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
-  m_RenderingMode: 0
+  m_RenderingMode: 1
   m_DepthPrimingMode: 0
   m_CopyDepthMode: 0
-  m_AccurateGbufferNormals: 0
+  m_AccurateGbufferNormals: 1
   m_IntermediateTextureMode: 1
 --- !u!114 &5666379279374465358
 MonoBehaviour:
@@ -125,10 +125,10 @@ MonoBehaviour:
   m_Name: FullScreenPassRendererFeature
   m_EditorClassIdentifier: 
   m_Active: 1
-  injectionPoint: 600
+  injectionPoint: 550
   fetchColorBuffer: 1
   requirements: 6
   passMaterial: {fileID: 2100000, guid: e852796fa4dadb245ae3d1d481a731b1, type: 2}
   passIndex: 0
-  bindDepthStencilAttachment: 0
+  bindDepthStencilAttachment: 1
   m_Version: 1
