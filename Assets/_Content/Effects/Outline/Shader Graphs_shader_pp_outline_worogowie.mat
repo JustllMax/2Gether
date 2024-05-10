@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_shader_pp_outline
+  m_Name: Shader Graphs_shader_pp_outline_worogowie
   m_Shader: {fileID: -6465566751694194690, guid: f44d1791ccee7e8418265a0b2ddfac40,
     type: 3}
   m_Parent: {fileID: 0}
@@ -38,11 +38,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AffectedLayer: 3
-    - _Color_Threshold: 0.6
+    - _AffectedLayer: 9
+    - _Color_Threshold: 0.58
     - _Normal_Threshold: 0.081
-    - _Outline_Thickness: 2.24
+    - _Outline_Thickness: 0.76
     - _Outline_Threshold: 0.5
     m_Colors:
-    - _Outline_Color: {r: 1, g: 0, b: 0, a: 0}
+    - _Outline_Color: {r: 0.045387268, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
