@@ -22,17 +22,17 @@ public class BombBuilding : Building
 
     private void Update()
     {
-        UpdateTarget();
-        if (target == null)
-            return;
 
-        if(fireContDown <= 0f)
+        if(fireContDown <= 0f && target)
         {
             OnAttack();
             fireContDown = 1f / fireRate;
         }
         fireContDown -= Time.deltaTime;
         
+        UpdateTarget();
+        if (target == null)
+            return;
     }
 
     public override void OnAttack()

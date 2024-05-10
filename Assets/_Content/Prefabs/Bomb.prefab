@@ -11,10 +11,8 @@ GameObject:
   - component: {fileID: 6296635078610316806}
   - component: {fileID: 1430561729187527813}
   - component: {fileID: 8608680444450265463}
-  - component: {fileID: 2618699486462112981}
-  - component: {fileID: 1791263649752045110}
   - component: {fileID: 5671813942061316346}
-  - component: {fileID: -7822436095491385947}
+  - component: {fileID: 7438765330347327150}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Untagged
@@ -88,48 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2618699486462112981
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3558628129676915701}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &1791263649752045110
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3558628129676915701}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5671813942061316346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,8 +100,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particles: {fileID: 2814134339504240344}
   meshRenderer: {fileID: 8608680444450265463}
-  col: {fileID: 1791263649752045110}
---- !u!54 &-7822436095491385947
+  col: {fileID: 0}
+  overlapRadius: 0.15
+--- !u!54 &7438765330347327150
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,7 +112,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
