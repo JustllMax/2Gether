@@ -1,40 +1,65 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Linq;
 
-public class VFX : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class VFX : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public Transform targetTransform;
-    public Image targetBackground;
 
 
-    public float moveDuration = 1f;
-    public float fadeDuration = 1f;
-    public float moveOffset = 2f;
-    Vector3 startPos;
-
-
-    public void OnPointerClick(PointerEventData eventData)
+    struct Combo
     {
-        Debug.Log(eventData.hovered[0].name);
+        public RectTransform t;
+        public Vector3 startPos;
+
+        public Combo(RectTransform t, Vector3 startPos)
+        {
+            this.t = t;
+            this.startPos = startPos;
+        }
     }
+
+    [Header("Offset")]
+    public float moveDuration = 1f;
+    public float moveOffset = -100f;
+    [Header("Fade")]
+    public float fadeDuration = 1f;
+    public float fadeMin = 0.2f;
+    public float fadeMax = 1f;
+
+    List<Combo> assets;
+    Image background;
+    private void Awake()
+    {
+        assets = new List<Combo>();
+        List<RectTransform> transformChildren = transform.GetComponentsInChildren<RectTransform>().ToList();
+        transformChildren.RemoveAt(0);
+        foreach(RectTransform c in transformChildren)
+        {
+            assets.Add(new Combo(c, c.anchoredPosition));
+            Debug.Log(c.position);
+        }
+
+        background = transformChildren[0].GetComponent<Image>();
+    }
+
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        targetTransform = eventData.hovered[0].transform;
-        startPos = targetTransform.position;
-        targetTransform.DOMoveX(targetTransform.position.x + moveOffset, moveDuration);
-        targetBackground = targetTransform.GetComponentsInChildren<Image>()[1];
-        targetBackground.DOFade(1f, fadeDuration);
+        foreach(var child in assets)
+            child.t.DOAnchorPosX(child.startPos.x + moveOffset, moveDuration);
+        
+        background.DOFade(fadeMax, fadeDuration);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        targetTransform.DOMoveX(targetTransform.position.x - moveOffset, moveDuration);
-        targetBackground.DOFade(0f, fadeDuration);
+        foreach (var child in assets)
+            child.t.DOAnchorPosX(child.startPos.x, moveDuration);
+
+        background.DOFade(fadeMin, fadeDuration);
     }
 }
