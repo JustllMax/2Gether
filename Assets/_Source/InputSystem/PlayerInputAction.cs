@@ -505,6 +505,34 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""AllTime"",
+            ""id"": ""43c8c272-60a2-4ee1-919b-4020b699725c"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""415ce2ce-46ae-4e86-88d7-560a732697d6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""01908a50-a08b-4fe0-a993-075b69d86d02"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -550,6 +578,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_FPSController_Dash = m_FPSController.FindAction("Dash", throwIfNotFound: true);
         m_FPSController_Reload = m_FPSController.FindAction("Reload", throwIfNotFound: true);
         m_FPSController_Grenade = m_FPSController.FindAction("Grenade", throwIfNotFound: true);
+        // AllTime
+        m_AllTime = asset.FindActionMap("AllTime", throwIfNotFound: true);
+        m_AllTime_Pause = m_AllTime.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -795,6 +826,52 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         }
     }
     public FPSControllerActions @FPSController => new FPSControllerActions(this);
+
+    // AllTime
+    private readonly InputActionMap m_AllTime;
+    private List<IAllTimeActions> m_AllTimeActionsCallbackInterfaces = new List<IAllTimeActions>();
+    private readonly InputAction m_AllTime_Pause;
+    public struct AllTimeActions
+    {
+        private @PlayerInputAction m_Wrapper;
+        public AllTimeActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_AllTime_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_AllTime; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AllTimeActions set) { return set.Get(); }
+        public void AddCallbacks(IAllTimeActions instance)
+        {
+            if (instance == null || m_Wrapper.m_AllTimeActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_AllTimeActionsCallbackInterfaces.Add(instance);
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+        }
+
+        private void UnregisterCallbacks(IAllTimeActions instance)
+        {
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+        }
+
+        public void RemoveCallbacks(IAllTimeActions instance)
+        {
+            if (m_Wrapper.m_AllTimeActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IAllTimeActions instance)
+        {
+            foreach (var item in m_Wrapper.m_AllTimeActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_AllTimeActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public AllTimeActions @AllTime => new AllTimeActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -832,5 +909,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnGrenade(InputAction.CallbackContext context);
+    }
+    public interface IAllTimeActions
+    {
+        void OnPause(InputAction.CallbackContext context);
     }
 }

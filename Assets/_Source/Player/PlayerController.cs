@@ -139,6 +139,7 @@ public class PlayerController : MonoBehaviour
 
     private void RotateCharacter()
     {
+
         var mouseInput = FPSController.Look.ReadValue<Vector2>();
         transform.Rotate(new Vector3(0, mouseInput.x * _cameraSensitivity, 0));
 

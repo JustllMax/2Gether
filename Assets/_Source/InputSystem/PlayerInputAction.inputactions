@@ -483,6 +483,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "AllTime",
+            "id": "43c8c272-60a2-4ee1-919b-4020b699725c",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "415ce2ce-46ae-4e86-88d7-560a732697d6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "01908a50-a08b-4fe0-a993-075b69d86d02",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

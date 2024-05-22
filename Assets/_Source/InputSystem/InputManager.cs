@@ -59,4 +59,17 @@ public class InputManager : MonoBehaviour
         playerInputAction.FPSController.Enable();
         Debug.Log(this + " fps enabled");
     }
+
+    public void DisableControllers()
+    {
+        playerInputAction.BuilderController.Disable();
+        playerInputAction.FPSController.Disable();
+    }
+
+    public void EnableControllers()
+    {
+        playerInputAction.BuilderController.Enable();
+        playerInputAction.FPSController.Enable();
+    }
+
 }
