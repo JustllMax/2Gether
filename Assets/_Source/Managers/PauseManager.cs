@@ -5,8 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PauseManager : MonoBehaviour
 {
-   [SerializeField] GameObject pauseMenuDay;
-   [SerializeField] GameObject pauseMenuNight;
+   [SerializeField] GameObject pauseMenu;
     bool isGamePaused = false;
 
     private static PauseManager _instance;
@@ -47,16 +46,14 @@ public class PauseManager : MonoBehaviour
         if (isGamePaused == false)
         {
             isGamePaused = true;
-            pauseMenuDay.SetActive(true);
-            pauseMenuNight.SetActive(true);
+            pauseMenu.SetActive(true);
             Time.timeScale = 0f;
             InputManager.Instance.DisableControllers();
         }
         else
         {
             isGamePaused = false;
-            pauseMenuDay.SetActive(false);
-            pauseMenuNight.SetActive(false);
+            pauseMenu.SetActive(false);
             Time.timeScale = 1f;
             InputManager.Instance.EnableControllers();
 
@@ -75,16 +72,14 @@ public class PauseManager : MonoBehaviour
         if (isGamePaused == false)
         {
             isGamePaused = true;
-            pauseMenuDay.SetActive(true);
-            pauseMenuNight.SetActive(true);
+            pauseMenu.SetActive(true);
             Time.timeScale = 0f;
             InputManager.Instance.DisableControllers();
         }
         else
         {
             isGamePaused = false;
-            pauseMenuDay.SetActive(false);
-            pauseMenuNight.SetActive(false);
+            pauseMenu.SetActive(false);
             Time.timeScale = 1f;
             InputManager.Instance.EnableControllers();
 
