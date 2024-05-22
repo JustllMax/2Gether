@@ -87,10 +87,11 @@ public class PathGenerator
                     if (
                         newPos.x >= 0 && newPos.x < _startPos.x &&
                         newPos.y >= _startPos.y && newPos.y <= _startPos.y &&
-                        map[newPos.x, newPos.y] != 0
+                        HasNeighbors(newPos.x, newPos.y, out curDirection) && curDirection != direction
                         //isDirection(pos.x, pos.y, direction, curDirection, i)
                         )
                     {
+                        
                         isDirection = false;
                     }
                 }
@@ -99,7 +100,7 @@ public class PathGenerator
                     if (
                         newPos.x >= _startPos.x && newPos.x < _mapSize.x &&
                         newPos.y > _startPos.y && newPos.y < _mapSize.y &&
-                        map[newPos.x, newPos.y] != 0
+                        HasNeighbors(newPos.x, newPos.y, out curDirection) && curDirection != direction
                         //isDirection(pos.x, pos.y, direction, curDirection, i)
                         )
                     {
@@ -111,7 +112,7 @@ public class PathGenerator
                     if (
                         newPos.x > _startPos.x && newPos.x < _mapSize.x &&
                         newPos.y >= 0 && newPos.y <= _startPos.y &&
-                        map[newPos.x, newPos.y] != 0
+                        HasNeighbors(newPos.x, newPos.y, out curDirection) && curDirection != direction
                         //isDirection(pos.x, pos.y, direction, curDirection, i)
                         )
                     {
@@ -123,7 +124,7 @@ public class PathGenerator
                     if (
                         newPos.x >= 0 && newPos.x <= _startPos.x &&
                         newPos.y >= 0 && newPos.y < _startPos.y &&
-                        map[newPos.x, newPos.y] != 0
+                        HasNeighbors(newPos.x, newPos.y, out curDirection) && curDirection != direction
                         //isDirection(pos.x, pos.y, direction, curDirection, i)
                         )
                     {

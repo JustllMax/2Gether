@@ -51,6 +51,16 @@ public class SlotPlacer : MonoBehaviour
         else
             _map = (int[,])maps[mapId].map.Clone();
 
+            string line = "";
+            for(int i = 0; i < _map.GetLength(0); i++)
+            {
+                for(int j = 0; j < _map.GetLength(1); j++)
+                {
+                    line += _map[i,j] + "\t";
+                }
+                line += "\n\n";
+            }
+            Debug.Log(line);
         GenerateMap();
     }
 

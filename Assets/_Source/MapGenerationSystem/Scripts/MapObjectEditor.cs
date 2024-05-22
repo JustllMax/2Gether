@@ -4,34 +4,62 @@ using UnityEngine;
 [CustomEditor(typeof(MapObject))]
 public class MapObjectEditor : Editor
 {
+    private SerializedProperty mapSizeProp;
+    private SerializedProperty startPosProp;
+
+    private void OnEnable()
+    {
+        mapSizeProp = serializedObject.FindProperty("mapSize");
+        startPosProp = serializedObject.FindProperty("startPos");
+    }
+
     public override void OnInspectorGUI()
     {
+        serializedObject.Update();
+
+        EditorGUILayout.PropertyField(mapSizeProp);
+        EditorGUILayout.PropertyField(startPosProp);
+
         MapObject mapObject = (MapObject)target;
 
-        EditorGUI.BeginChangeCheck();
-
-        EditorGUILayout.LabelField("Map Size");
-        mapObject.mapSize = EditorGUILayout.Vector2IntField("Size", mapObject.mapSize);
-
-        EditorGUILayout.LabelField("Start Position");
-        mapObject.startPos = EditorGUILayout.Vector2IntField("Position", mapObject.startPos);
-
-        EditorGUILayout.LabelField("Map");
-        for (int i = 0; i < mapObject.map.GetLength(0); i++)
+        if (GUILayout.Button("Initialize Map"))
         {
-            EditorGUILayout.BeginHorizontal();
-
-            for (int j = 0; j < mapObject.map.GetLength(1); j++)
-            {
-                mapObject.map[i, j] = EditorGUILayout.IntField(mapObject.map[i, j]);
-            }
-
-            EditorGUILayout.EndHorizontal();
+            InitializeMap(mapObject);
         }
-        
-        if (EditorGUI.EndChangeCheck())
+
+        if (mapObject.map != null && mapObject.map.Length > 0)
+        {
+            DrawMapEditor(mapObject);
+        }
+
+        if (GUI.changed)
         {
             EditorUtility.SetDirty(mapObject);
         }
+
+        serializedObject.ApplyModifiedProperties();
+    }
+
+    private void InitializeMap(MapObject mapObject)
+    {
+        mapObject.map = new int[mapObject.mapSize.x, mapObject.mapSize.y];
+        mapObject.OnBeforeSerialize();
+        EditorUtility.SetDirty(mapObject);
+    }
+
+    private void DrawMapEditor(MapObject mapObject)
+    {
+        // Инвертируем порядок строк, чтобы начало массива было в левом нижнем углу
+        for (int y = mapObject.mapSize.y - 1; y >= 0; y--)
+        {
+            EditorGUILayout.BeginHorizontal();
+            for (int x = 0; x < mapObject.mapSize.x; x++)
+            {
+                mapObject.map[x, y] = EditorGUILayout.IntField(mapObject.map[x, y], GUILayout.Width(20));
+            }
+            EditorGUILayout.EndHorizontal();
+        }
+        mapObject.OnBeforeSerialize();
+        EditorUtility.SetDirty(mapObject);
     }
 }
