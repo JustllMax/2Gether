@@ -7,12 +7,13 @@ public class MeleeAttackState : AIState
 {
 
 
-    float lastAttackTime = 0f;
+
     bool firstAttackFlag = true;
 
     public override void OnStart(AIController controller)
     {
-        if (lastAttackTime != 0f)
+        Debug.Log(this + " Started");
+        if (controller.lastAttackTime >= 0.1f)
         {
             firstAttackFlag = false;
         }
@@ -21,19 +22,25 @@ public class MeleeAttackState : AIState
 
     public override void OnUpdate(AIController controller)
     {
-        if (firstAttackFlag || Time.time > lastAttackTime + controller.GetEnemyStats().AttackFireRate)
+        if (firstAttackFlag || Time.time > controller.lastAttackTime + controller.GetEnemyStats().AttackFireRate)
         {
+            if (controller.CanAttack() == false)
+                return;
+
             if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
             {
                 controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
             }
 
+            
             PerformAttack(controller);
         }
     }
 
     public override void OnExit(AIController controller)
     {
+        controller.GetNavMeshAgent().ResetPath();
+        Debug.Log(this + " exit");
 
     }
 
@@ -45,9 +52,13 @@ public class MeleeAttackState : AIState
 
     void PerformAttack(AIController controller)
     {
-        lastAttackTime = Time.time;
-        Vector3 dir = (controller.GetCurrentPosition() - controller.GetCurrentTarget().transform.position).normalized;
+
+        Debug.Log(this + " attack performed");
+
+        controller.lastAttackTime = Time.time;
+        Vector3 dir = (controller.GetCurrentTarget().transform.position - controller.GetCurrentPosition()).normalized;
         Vector3 spawnPos = controller.transform.position + dir * controller.GetEnemyStats().AttackRange;
+        Debug.Log(spawnPos);
         //Layermask that hits everything except the terrain
         int buildingMask = 1 << LayerMask.NameToLayer(TargetType.Player.ToString());
         int playerMask = 1 << LayerMask.NameToLayer(TargetType.Building.ToString());
@@ -59,10 +70,13 @@ public class MeleeAttackState : AIState
         {
             if(hit.TryGetComponent(out IDamagable damagable))
             {
-                damagable.TakeDamage(controller.GetEnemyStats().AttackDamage);
+                if(damagable.TakeDamage(controller.GetEnemyStats().AttackDamage) == true)
+                {
+                    controller.distanceToTarget = 100000f;
+                    controller.SetCurrentTarget(new AITarget( null, null));
+                }
             }
         }
-        controller.AttackPerformed();
     }
 
 }

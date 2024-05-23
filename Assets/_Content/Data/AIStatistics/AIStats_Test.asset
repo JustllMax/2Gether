@@ -9,7 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a843abb0488290642b584c9ffd172cf7, type: 3}
-  m_Name: IdleState
+  m_Script: {fileID: 11500000, guid: 0141a3b9c5960364fa1c0d12baf7cfae, type: 3}
+  m_Name: AIStats_Test
   m_EditorClassIdentifier: 
-  weight: 0
+  Health: 50
+  AttackRange: 2
+  AttackDamage: 15
+  AttackFireRate: 5
+  AttackReloadTime: 0.5
+  AttackRadius: 1
+  AttackAmount: 2
+  MovementSpeed: 3

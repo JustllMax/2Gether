@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters;
-using UnityEditorInternal;
 using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "WalkState", menuName = ("2Gether/AI/States/Walk"))]
 public class WalkOnPathState : AIState
 {
-    Transform target;
+    Transform dest;
     public override void OnStart(AIController controller)
     {
-        //DO NOT SET TARGET AS MAIN BASE
-        target = GameManager.Instance.GetMainBaseTransform();
+        //DO NOT SET AITARGET AS MAIN BASE
+        dest = GameManager.Instance.GetMainBaseTransform();
         controller.GetNavMeshAgent().SetDestination(GameManager.Instance.GetMainBaseTransform().position);
         Debug.Log("WalkStateOnStarted");
 
@@ -24,13 +23,13 @@ public class WalkOnPathState : AIState
 
     public override void OnUpdate(AIController controller)
     {
+        //Check is the current AITarget main base, if yes then nothing, if no then set destination as found target
         if (controller.GetCurrentTarget().transform != null)
         {
-            if(controller.GetCurrentTarget().transform != target)
+            if(controller.GetCurrentTarget().transform != dest)
             {
-                target = controller.GetCurrentTarget().transform;
-                controller.GetNavMeshAgent().SetDestination(target.position);
-
+                dest = controller.GetCurrentTarget().transform;
+                controller.GetNavMeshAgent().SetDestination(dest.position);
             }
 
         }

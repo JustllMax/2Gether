@@ -9,9 +9,11 @@ public enum TargetType
     Both // ONLY FOR AI TO PICK
 }
 
+
 public interface ITargetable
 {
     public bool IsTargetable { get; set; }
+
     public TargetType TargetType { get; set; }
 
 }

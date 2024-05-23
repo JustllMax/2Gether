@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
+using NaughtyAttributes;
+
+
 [Serializable]
 public struct AITarget
 {
@@ -18,7 +21,7 @@ public struct AITarget
     }
 };
 
-public class AIController : MonoBehaviour
+public class AIController : MonoBehaviour, IDamagable
 {
     [Header("Enemy Statistics")]
     [SerializeField] EnemyStatistics stats;
@@ -39,19 +42,35 @@ public class AIController : MonoBehaviour
 
     Animator _animator;
     NavMeshAgent _navMeshAgent;
-    Vector3 lastPosition;
     bool isStunned = false;
+    private float attackTimer = 0f;
 
-    AITarget currentTarget = new AITarget();
+    [Foldout("DEBUG INFO")]
+    [SerializeField] private AITarget currentTarget = new AITarget();
+
+    [Foldout("DEBUG INFO")]
     public float distanceToTarget;
-    float attackTimer = 0f;
+
+    [Foldout("DEBUG INFO")]
+    public float lastAttackTime = 0f;
+
+    [Foldout("DEBUG INFO")]
     public bool isReloading;
+
+    [Foldout("DEBUG INFO")]
     public float remainingAttacks;
+
+    private float _health;
+    public float Health { get => _health; set => _health = value; }
+
     private void Awake()
     {
-        remainingAttacks = stats.AttackAmount;
         _animator = GetComponent<Animator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
+
+        remainingAttacks = GetEnemyStats().AttackAmount;
+        Health = GetEnemyStats().Health;
+        _navMeshAgent.speed = GetEnemyStats().MovementSpeed;
     }
 
     private void Start()
@@ -81,10 +100,11 @@ public class AIController : MonoBehaviour
 
     private bool ShouldSearchForTarget()
     {
-        if (GetCurrentTarget().transform != null)
+        if (GetCurrentTarget().transform  != null)
         {
             if (GetCurrentTarget().targetable.IsTargetable == true)
             {
+
                 return false;
             }
         }
@@ -97,7 +117,7 @@ public class AIController : MonoBehaviour
         ITargetable targetable = null;
         //Layermask that hits everything except the terrain
         int layerMask = ~(1 << LayerMask.NameToLayer("Terrain"));
-        float radius = GetEnemyStats().AttackRange;
+        float radius = GetEnemyStats().AttackRange*3f;
 
         float minDistance = float.MaxValue;
 
@@ -135,10 +155,7 @@ public class AIController : MonoBehaviour
         nextState = GetNextState();
 
         if (nextState == null) { return; }
-        if (currentState != null && !currentState.CanChangeToState(this))
-        {
-            return;
-        }
+
         if (nextState == currentState)
         {
             return;
@@ -172,6 +189,7 @@ public class AIController : MonoBehaviour
                 if (state.weight > highestWeight)
                 {
                     highestWeight = state.weight;
+ 
                 }
             }
         }
@@ -182,6 +200,7 @@ public class AIController : MonoBehaviour
             if (state.CanChangeToState(this) && state.weight == highestWeight)
             {
                 states.Add(state);
+                Debug.Log(state.name);
             }
         }
 
@@ -197,12 +216,29 @@ public class AIController : MonoBehaviour
 
     }
 
-    public void AttackPerformed()
+    public void RangedAttackPerformed()
     {
         attackTimer = 0f;
         remainingAttacks--;
     }
-    
+
+    public bool TakeDamage(float damage)
+    {
+        Health -= damage;
+        if(Health <= 0)
+        {
+            Kill();
+            return true;
+        }
+        return false;
+    }
+
+    public void Kill()
+    {
+        Destroy(gameObject);
+    }
+
+
     #region GetSet
     public EnemyStatistics GetEnemyStats()
     {
