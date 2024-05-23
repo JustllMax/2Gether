@@ -7,5 +7,6 @@ public enum AIAnimNames
     WALK,
     ATTACK,
     STUN,
-    DEATH
+    DEATH,
+    RELOAD
 }
