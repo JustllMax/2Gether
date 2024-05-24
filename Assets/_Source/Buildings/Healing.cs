@@ -14,13 +14,13 @@ public class Healing : Building
     public ParticleSystem particles;
 
 
-    void Start()
+    public override void Start()
     {
   
      
     }
 
-    void Update()
+    public override void Update()
     {
        
     }
@@ -50,17 +50,6 @@ public class Healing : Building
     {
         //todo 
     }
-
-    public override void OnUpgrade()
-    {
-
-    }
-
-    public override void OnSell()
-    {
-        GoldManager.Instance.GoldAdd(price);
-    }
-
 
 
     void OnDrawGizmos()

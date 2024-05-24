@@ -7,6 +7,7 @@ public class Bomb : MonoBehaviour
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private Collider col;
     [SerializeField] private float overlapRadius = 0.15f;
+    private AIController controller;
     private float speed = 30f;
     Vector3 direction;
     float distance;
@@ -23,24 +24,15 @@ public class Bomb : MonoBehaviour
     {
         transform.Translate(direction.normalized * distance, Space.World);
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, overlapRadius);
+    }
 
-        foreach (var hitCollider in hitColliders)
-        {
-            if (hitCollider != col)
-            {
-                if (hitCollider.gameObject.layer == LayerMask.NameToLayer("IgnoreBomb"))
-                {
-                    continue;
-                }
-                Debug.Log("Collided with: " + hitCollider.gameObject.name);
-                Explode();
-                ExplosionDamage(transform.position, 1.5f, 3f);
-                Destroy(gameObject, 1.1f);
-            }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy")){
+            Explode();
+            ExplosionDamage(transform.position, 2f, 3f);
+            Destroy(gameObject, 1.1f);
         }
-
-
     }
 
     private void Explode()
@@ -67,19 +59,33 @@ public class Bomb : MonoBehaviour
 
     private void ExplosionDamage(Vector3 center, float radius, float force)
     {
-        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+
+        int enemyLayer = LayerMask.GetMask("Enemy");
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius, enemyLayer);
 
         foreach (var hitCollider in hitColliders)
         {
             Rigidbody rb = hitCollider.GetComponent<Rigidbody>();
             if (rb != null)
             {
+                //push
                 Vector3 direction = hitCollider.transform.position - center;
-
                 rb.AddForce(direction.normalized * force, ForceMode.Impulse);
+            }
+
+
+
+            if (hitCollider.TryGetComponent(out AIController controller))
+            {
+
+                controller.TakeDamage(controller.GetEnemyStats().AttackDamage);
+
             }
         }
     }
+
+
+
 
 }
 

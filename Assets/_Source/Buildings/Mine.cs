@@ -42,6 +42,7 @@ public class Mine : MonoBehaviour
     private void Explode()
     {
         OnAttack();
+        ExplosionDamage(transform.position, 2f, 7f);
         Destroy(gameObject,1.1f);
     }
 
@@ -50,6 +51,33 @@ public class Mine : MonoBehaviour
         if (particles != null)
         {
             particles.Play();
+        }
+    }
+
+    private void ExplosionDamage(Vector3 center, float radius, float force)
+    {
+
+        int enemyLayer = LayerMask.GetMask("Enemy");
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius, enemyLayer);
+
+        foreach (var hitCollider in hitColliders)
+        {
+            Rigidbody rb = hitCollider.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                //push
+                Vector3 direction = hitCollider.transform.position - center;
+                rb.AddForce(direction.normalized * force, ForceMode.Impulse);
+            }
+
+
+
+            if (hitCollider.TryGetComponent(out AIController controller))
+            {
+
+                controller.TakeDamage(controller.GetEnemyStats().AttackDamage);
+
+            }
         }
     }
 }

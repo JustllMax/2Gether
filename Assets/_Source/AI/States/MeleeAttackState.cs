@@ -74,6 +74,7 @@ public class MeleeAttackState : AIState
                 {
                     controller.distanceToTarget = 100000f;
                     controller.SetCurrentTarget(new AITarget( null, null));
+                    
                 }
             }
         }

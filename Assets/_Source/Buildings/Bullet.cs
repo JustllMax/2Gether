@@ -35,7 +35,26 @@ public class Bullet : MonoBehaviour
 
     void hitTarget()
     {
-        Debug.Log("hit");
+        Damage(transform.position, 1f);
         Destroy(gameObject);
+    }
+
+
+
+    private void Damage(Vector3 center, float radius)
+    {
+
+        int enemyLayer = LayerMask.GetMask("Enemy");
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius, enemyLayer);
+
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.TryGetComponent(out AIController controller))
+            {
+
+                controller.TakeDamage(3);
+
+            }
+        }
     }
 }

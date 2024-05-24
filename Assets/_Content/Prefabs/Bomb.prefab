@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8608680444450265463}
   - component: {fileID: 5671813942061316346}
   - component: {fileID: 7438765330347327150}
+  - component: {fileID: 9222919569563019278}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Untagged
@@ -100,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particles: {fileID: 2814134339504240344}
   meshRenderer: {fileID: 8608680444450265463}
-  col: {fileID: 0}
+  col: {fileID: 9222919569563019278}
   overlapRadius: 0.15
 --- !u!54 &7438765330347327150
 Rigidbody:
@@ -129,6 +130,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &9222919569563019278
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558628129676915701}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &8359352486909887274
 PrefabInstance:
   m_ObjectHideFlags: 0

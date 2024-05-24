@@ -75,8 +75,12 @@ public class AIController : MonoBehaviour, IDamagable
 
     private void Start()
     {
-        currentState = _AIStates[0];
-        currentState.OnStart(this);
+        if(_AIStates.Count != 0)
+        {
+            currentState = _AIStates[0];
+            currentState.OnStart(this);
+        }
+            
     }
 
 
@@ -224,6 +228,7 @@ public class AIController : MonoBehaviour, IDamagable
 
     public bool TakeDamage(float damage)
     {
+        Debug.Log(this + " took damage " + damage);
         Health -= damage;
         if(Health <= 0)
         {

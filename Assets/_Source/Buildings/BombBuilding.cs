@@ -16,11 +16,11 @@ public class BombBuilding : Building
     public float fireRate = .3f;
 
 
-    void Start()
+    public override void Start()
     {
     }
 
-    private void Update()
+    public override void Update()
     {
 
         if(fireContDown <= 0f && target)
@@ -77,19 +77,6 @@ public class BombBuilding : Building
     {
         //todo
     }
-
-    public override void OnUpgrade()
-    {
-        //todo
-    }
-
-    public override void OnSell()
-    {
-        GoldManager.Instance.GoldAdd(price);
-    }
-
-    
-
 
     void OnDrawGizmosSelected()
     {

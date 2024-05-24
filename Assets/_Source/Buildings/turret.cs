@@ -18,34 +18,42 @@ public class Turret : Building
     [Header("For Laser")]
     public bool useLaser = false;
     public LineRenderer lineRenderer;
+    public float laserCooldown = 1f;
+    public float lastLaserDamageTime;
+    public float LaserDamage = 2f;
+    public float LaserDamageDiff = 2f;
 
 
-    void Start()
+
+    public override void Start()
     {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
     }
 
-   
-        
 
-    private void Update()
+
+
+    public override void Update()
     {
         LockOnTarget();
-        if(target == null && useLaser && lineRenderer.enabled == true)
+        if (target == null && useLaser && lineRenderer.enabled == true) { 
             lineRenderer.enabled = false;
+            LaserDamage = 2f;
+        }
 
         if (target == null)
                 return;
         if (useLaser)
         {
             Laser();
+
         }
         else
         {
             if (fireContDown <= 0f)
             {
                 OnAttack();
-                Debug.Log("bam");
+
 
                 fireContDown = 1f / fireRate;
             }
@@ -74,21 +82,10 @@ public class Turret : Building
 
     public override void OnTakeDamage()
     {
-        //todo 
-    }
-
-    public override void OnUpgrade()
-    {
         
     }
 
-    public override void OnSell()
-    {
-        GoldManager.Instance.GoldAdd(price);
-    }
-
-    //
-
+  
 
     private void LockOnTarget()
     {
@@ -107,7 +104,15 @@ public class Turret : Building
         lineRenderer.enabled = true;
         lineRenderer.SetPosition(0, firePoint.position);
         lineRenderer.SetPosition(1, target.position);
-
+        if (target != null && target.TryGetComponent(out AIController controller))
+        {
+            if (Time.time - lastLaserDamageTime >= laserCooldown)
+            {
+                controller.TakeDamage(LaserDamage);
+                lastLaserDamageTime = Time.time;
+                LaserDamage += LaserDamageDiff;
+            }
+        }
     }
    
 
@@ -144,6 +149,7 @@ public class Turret : Building
         Gizmos.DrawWireSphere(transform.position, range);
     }
 
+   
 
 }
 
