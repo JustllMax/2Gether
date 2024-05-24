@@ -18,6 +18,8 @@ public class GunPistol : Gun
     [SerializeField]
     private Transform bulletSpawnPoint;
     [SerializeField]
+    private Transform trailSpawnPoint;
+    [SerializeField]
     private ParticleSystem impactParticleSystem;
     [SerializeField]
     private TrailRenderer bulletTrail;
@@ -86,7 +88,7 @@ public class GunPistol : Gun
     }
 
 
-
+    //TO DO: FIX ANGLE OF TRAIL TO MATCH AIM POSITION
     private void CalculateFire(Transform bulletSpawnPoint)
     {
         Debug.Log(this + " Fire " + (ammoInMagazine - 1));
@@ -98,7 +100,7 @@ public class GunPistol : Gun
 
         if (Physics.Raycast(bulletSpawnPoint.position, direction, out  hit, GetGunData().Range, mask))
         {
-            TrailRenderer trail = Instantiate(bulletTrail, bulletSpawnPoint.position, Quaternion.identity);
+            TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
 
             StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
 
@@ -106,7 +108,7 @@ public class GunPistol : Gun
         }
         else
         {
-            TrailRenderer trail = Instantiate(bulletTrail, bulletSpawnPoint.position, Quaternion.identity);
+            TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
 
             StartCoroutine(SpawnTrail(trail, bulletSpawnPoint.position + GetDirection() * 100, Vector3.zero, false));
 
