@@ -76,7 +76,7 @@ public class UIFlow : MonoBehaviour
             .AppendInterval(1f)
             .OnComplete(() =>
             {
-                FadeOutCards();
+                //FadeOutCards();
                 rerollButton.interactable = false;
                 continueButton.interactable = false;
                 UnityEngine.UI.Image rerollButtonImage = rerollButton.GetComponent<UnityEngine.UI.Image>();
@@ -89,24 +89,24 @@ public class UIFlow : MonoBehaviour
             .AppendInterval(3f)
             .OnComplete(() =>
             {
-                Transform[] cards = cardpackOpenPanel.GetComponentsInChildren<Transform>();
+                UICards[] cards = cardpackOpenPanel.GetComponentsInChildren<UICards>();
 
-                foreach (Transform card in cards)
+                foreach (var card in cards)
                 {
-                    if (card != cardpackOpenPanel.transform)
+                    if (card.transform != cardpackOpenPanel.transform)
                     {
-                        card.SetParent(cardsPanel.transform, false);
+                        card.transform.SetParent(cardsPanel.transform, false);
                     }
                 }
                 cardpackPanel.SetActive(false);
 
-                foreach (Transform card in cards)
+                foreach (var card in cards)
                 {
-                    if (card != cardsPanel.transform)
+                    if (card.transform != cardsPanel.transform)
                     {
-                        UnityEngine.UI.Image cardImage = card.GetComponent<UnityEngine.UI.Image>();
-                        cardImage.color = new Color(cardImage.color.r, cardImage.color.g, cardImage.color.b, 0f);
-                        cardImage.DOFade(1f, 1f).SetDelay(0.5f);
+                        //UnityEngine.UI.Image cardImage = card.GetComponent<UnityEngine.UI.Image>();
+                        //cardImage.color = new Color(cardImage.color.r, cardImage.color.g, cardImage.color.b, 0f);
+                        //cardImage.DOFade(1f, 1f).SetDelay(0.5f);
                     }
                 }
             });
@@ -154,9 +154,9 @@ public class UIFlow : MonoBehaviour
         {
             if (card != cardpackOpenPanel.transform)
             {
-                UnityEngine.UI.Image cardImage = card.GetComponent<UnityEngine.UI.Image>();
-                cardImage.color = new Color(cardImage.color.r, cardImage.color.g, cardImage.color.b, 0f);
-                cardImage.DOFade(1f, 1f).SetDelay(0.5f);
+                //UnityEngine.UI.Image cardImage = card.GetComponent<UnityEngine.UI.Image>();
+                //cardImage.color = new Color(cardImage.color.r, cardImage.color.g, cardImage.color.b, 0f);
+                //cardImage.DOFade(1f, 1f).SetDelay(0.5f);
             }
         }
     }
