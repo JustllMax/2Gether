@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using Unity.Collections;
 using UnityEngine;
 
@@ -22,36 +23,62 @@ public class PathGenerator
     {
         for (int i = 0; i < 4; i++)
         {
-            GeneratePath(_startPos, i, i);
+            GeneratePath(i, i);
         }
 
         return map;
     }
-    void GeneratePath(Vector2Int pos, int curDirection, int direction)
+    void GeneratePath(int curDirection, int direction)
     {
-        Vector2Int newPos = pos + _directions[curDirection];
-
-        if (pos != _startPos)
-            curDirection = GetRandomDirection(direction, curDirection, newPos);
-
-        if (newPos.x >= 0 && newPos.x < _mapSize.x && newPos.y >= 0 && newPos.y < _mapSize.y)
+        bool isEnd = false;
+        Vector2Int pos = _startPos;
+        while (!isEnd)
         {
-            //Debug.Log($"Pos:[{pos.x},{pos.y}] new:[{newPos.x},{newPos.y}] dir:{direction} randDir:{curDirection} value:{map[pos.x, pos.y]}");
-            if (newPos.x < 0 || newPos.y < 0 || newPos.x >= _mapSize.x || newPos.y >= _mapSize.y)
+            Vector2Int newPos = pos + _directions[direction];
+            if (pos != _startPos)
+                curDirection = GetRandomDirection(direction, curDirection, newPos);
+
+            if (newPos.x >= 0 && newPos.x < _mapSize.x && newPos.y >= 0 && newPos.y < _mapSize.y)
             {
-                map[newPos.x, newPos.y] = 1;
-                return;
+                //Debug.Log($"Pos:[{pos.x},{pos.y}] new:[{newPos.x},{newPos.y}] dir:{direction} randDir:{curDirection} value:{map[pos.x, pos.y]}");
+                if (newPos.x < 0 || newPos.y < 0 || newPos.x >= _mapSize.x || newPos.y >= _mapSize.y)
+                {
+                    map[newPos.x, newPos.y] = 1;
+                    isEnd = true;
+                }
+
+                map[newPos.x, newPos.y] = GetNeighborsCount(newPos.x, newPos.y);
+                map[pos.x, pos.y] = GetNeighborsCount(pos.x, pos.y);
+
+
+
             }
 
-            map[newPos.x, newPos.y] = GetNeighborsCount(newPos.x, newPos.y);
-            map[pos.x, pos.y] = GetNeighborsCount(pos.x, pos.y);
+            /*
+            Vector2Int newPos = pos + _directions[curDirection];
 
-            GeneratePath(newPos, curDirection, direction);
+            if (pos != _startPos)
+                curDirection = GetRandomDirection(direction, curDirection, newPos);
+
+            if (newPos.x >= 0 && newPos.x < _mapSize.x && newPos.y >= 0 && newPos.y < _mapSize.y)
+            {
+                //Debug.Log($"Pos:[{pos.x},{pos.y}] new:[{newPos.x},{newPos.y}] dir:{direction} randDir:{curDirection} value:{map[pos.x, pos.y]}");
+                if (newPos.x < 0 || newPos.y < 0 || newPos.x >= _mapSize.x || newPos.y >= _mapSize.y)
+                {
+                    map[newPos.x, newPos.y] = 1;
+                    return;
+                }
+
+                map[newPos.x, newPos.y] = GetNeighborsCount(newPos.x, newPos.y);
+                map[pos.x, pos.y] = GetNeighborsCount(pos.x, pos.y);
+
+                GeneratePath(newPos, curDirection, direction);
+            }
+            else
+                return;
+            */
         }
-        else
-            return;
     }
-
     private int GetNeighborsCount(int x, int y)
     {
         int count = 0;
@@ -91,7 +118,7 @@ public class PathGenerator
                         //isDirection(pos.x, pos.y, direction, curDirection, i)
                         )
                     {
-                        
+
                         isDirection = false;
                     }
                 }
