@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.cratesmith.assetui": {
+      "version": "https://github.com/Cratesmith/Cratesmith.AssetUI.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "cfcde2d6cc694e631290a7110c9bf26ce2452f66"
+    },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
       "depth": 0,
@@ -7,12 +14,22 @@
       "dependencies": {},
       "hash": "809d23edae0df58fd0f61b4b6f67855c59d1b2fb"
     },
-        "com.dbrizov.naughtyattributes": {
+    "com.dbrizov.naughtyattributes": {
       "version": "https://github.com/dbrizov/NaughtyAttributes.git#upm",
       "depth": 0,
       "source": "git",
       "dependencies": {},
       "hash": "8a8fa5a9659a6d63f196391c71e06c4286c8acd7"
+    },
+    "com.singularitygroup.hotreload": {
+      "version": "git+https://gitlab.hotreload.net/root/hot-reload-releases.git#1.12.9",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0"
+      },
+      "hash": "15115347b80179b483f7f4022c18fe48604dee8d"
     },
     "com.unity.2d.animation": {
       "version": "9.1.0",
@@ -217,7 +234,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.textmeshpro": {
-      "version": "3.0.6",
+      "version": "3.0.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {

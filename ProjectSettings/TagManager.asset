@@ -4,8 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
-  - Ground
+  - Terrain
   layers:
   - Default
   - TransparentFX
@@ -13,16 +12,16 @@ TagManager:
   - 
   - Water
   - UI
-  - IgnoreBomb
+  - Player
+  - Guns
+  - Enemy
+  - Building
   - 
   - 
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Terrain
   - 
   - 
   - 

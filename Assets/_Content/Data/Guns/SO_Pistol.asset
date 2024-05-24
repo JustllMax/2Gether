@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c45e4b3479300f4a819f4ce616d0633, type: 3}
+  m_Name: SO_Pistol
+  m_EditorClassIdentifier: 
+  CardType: 2
+  Rarity: 0
+  Name: Pistol
+  Description: Pistol
+  GunType: 0
+  P_Bullet: {fileID: 0}
+  BulletGroundHitSound: {fileID: 0}
+  BulletEnemyHitSound: {fileID: 0}
+  IsAutomatic: 0
+  MagazineSize: 5
+  FireRate: 2
+  Range: 10
+  ReloadTime: 1.5
+  BulletDamage: 5
+  ParryCoolDown: 2
+  ParryAmount: 5

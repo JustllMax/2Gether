@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ece13041b0496154880b755c509cd0d6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - dayCamera: {instanceID: 0}
+  - nightCamera: {instanceID: 0}
+  - crosshairUI: {instanceID: 0}
+  - groundFog: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
