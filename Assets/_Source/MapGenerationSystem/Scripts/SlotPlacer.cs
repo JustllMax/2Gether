@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 
@@ -7,6 +8,7 @@ public class SlotPlacer : MonoBehaviour
 
     #region slots
     [SerializeField] private GameObject[] slotPrefabs;
+    [SerializeField] private GameObject[] emptySlotPrefabs;
     [SerializeField] private PathSlot startingSlot;
 
     #endregion
@@ -35,7 +37,6 @@ public class SlotPlacer : MonoBehaviour
     {
         mapSize = maps[mapId].mapSize;
         startPos = maps[mapId].startPos;
-        Debug.Log("" + mapSize.x);
         Generate();
     }
 
@@ -51,22 +52,12 @@ public class SlotPlacer : MonoBehaviour
         else
             _map = (int[,])maps[mapId].map.Clone();
 
-            string line = "";
-            for(int i = 0; i < _map.GetLength(0); i++)
-            {
-                for(int j = 0; j < _map.GetLength(1); j++)
-                {
-                    line += _map[i,j] + "\t";
-                }
-                line += "\n\n";
-            }
-            Debug.Log(line);
         GenerateMap();
     }
 
     void GenerateMap()
     {
-        PathSlot path;
+        PathSlot path = new();
         for (int y = 0; y < mapSize.y; y++)
         {
             for (int x = 0; x < mapSize.x; x++)
@@ -89,14 +80,34 @@ public class SlotPlacer : MonoBehaviour
                             path = Instantiate(slotPrefabs[2]).GetComponent<PathSlot>();
                     }
                     else
-                        path = Instantiate(slotPrefabs[_map[x, y]]).GetComponent<PathSlot>();
+                    {
+                        if (_map[x, y] <= 5)
+                            path = Instantiate(slotPrefabs[_map[x, y]]).GetComponent<PathSlot>();
+                    }
+
+                    if (_map[x, y] == 0 || _map[x, y] > 5)
+                    {
+                        if (!isRandomGeneration && _map[x, y] > 5)
+                        {
+                            path = Instantiate(emptySlotPrefabs[_map[x, y] - 5]).GetComponent<PathSlot>();
+                        }
+                        else if (isRandomGeneration)
+                        {
+                            if (emptySlotPrefabs.Length > 1)
+                            {
+                                int randEmptySlot = Random.Range(0, 100);
+                                path = Instantiate(emptySlotPrefabs[randEmptySlot > 10 ? 0 : Random.Range(1, emptySlotPrefabs.Length)]).GetComponent<PathSlot>();
+                            }
+                        }
+                        else
+                            path = Instantiate(emptySlotPrefabs[0]).GetComponent<PathSlot>();
+                    }
 
                     path.gameObject.transform.position = new Vector3(x, 0, y) * 30;
                     path.slot.pos = new Vector2Int(x, y);
 
                     #region parent   
 
-                    Debug.Log($"x:{path.slot.pos.x} y: {path.slot.pos.y}");
 
                     if (
                         path.slot.pos.x >= 0 && path.slot.pos.x < startPos.x &&
@@ -149,70 +160,70 @@ public class SlotPlacer : MonoBehaviour
         {
             if (_map[x, y] == 1)
             {
-                if (y == 0 && _map[x, y + 1] != 0)
+                if (y == 0 && isHaveNeighbor(_map[x, y + 1]))
                 {
                     neighborDir = 1;
                 }
-                if (y == mapSize.y - 1 && _map[x, y - 1] != 0)
+                if (y == mapSize.y - 1 && isHaveNeighbor(_map[x, y - 1]))
                 {
                     neighborDir = 3;
                 }
 
-                if (x == mapSize.x - 1 && _map[x - 1, y] != 0)
+                if (x == mapSize.x - 1 && isHaveNeighbor(_map[x - 1, y]))
                 {
                     neighborDir = 0;
                 }
-                if (x == 0 && _map[x + 1, y] != 0)
+                if (x == 0 && isHaveNeighbor(_map[x + 1, y]))
                 {
                     neighborDir = 2;
                 }
             }
             if (_map[x, y] == 2 && isCurved(x, y))
             {
-                if (_map[x - 1, y] != 0 && _map[x, y - 1] != 0)
+                if (isHaveNeighbor(_map[x - 1, y]) && isHaveNeighbor(_map[x, y - 1]))
                 {
                     neighborDir = 3;
                 }
-                if (_map[x - 1, y] != 0 && _map[x, y + 1] != 0)
+                if (isHaveNeighbor(_map[x - 1, y]) && isHaveNeighbor(_map[x, y + 1]))
                 {
                     neighborDir = 0;
                 }
-                if (_map[x + 1, y] != 0 && _map[x, y + 1] != 0)
+                if (isHaveNeighbor(_map[x + 1, y]) && isHaveNeighbor(_map[x, y + 1]))
                 {
                     neighborDir = 1;
                 }
-                if (_map[x + 1, y] != 0 && _map[x, y - 1] != 0)
+                if (isHaveNeighbor(_map[x + 1, y]) && isHaveNeighbor(_map[x, y - 1]))
                 {
                     neighborDir = 2;
                 }
             }
             else if (_map[x, y] == 2)
             {
-                if (_map[x - 1, y] != 0 && _map[x + 1, y] != 0)
+                if (isHaveNeighbor(_map[x - 1, y]) && isHaveNeighbor(_map[x + 1, y]))
                 {
                     neighborDir = 0;
                 }
 
-                if (_map[x, y - 1] != 0 && _map[x, y + 1] != 0)
+                if (isHaveNeighbor(_map[x, y - 1]) && isHaveNeighbor(_map[x, y + 1]))
                 {
                     neighborDir = 1;
                 }
             }
             if (_map[x, y] == 3)
             {
-                if (_map[x - 1, y] != 0 && _map[x, y + 1] != 0 && _map[x, y - 1] != 0)
+                if (isHaveNeighbor(_map[x - 1, y]) && isHaveNeighbor(_map[x, y + 1]) && isHaveNeighbor(_map[x, y - 1]))
                 {
                     neighborDir = 1;
                 }
-                if (_map[x + 1, y] != 0 && _map[x, y + 1] != 0 && _map[x, y - 1] != 0)
+                if (isHaveNeighbor(_map[x + 1, y]) && isHaveNeighbor(_map[x, y + 1]) && isHaveNeighbor(_map[x, y - 1]))
                 {
                     neighborDir = 3;
                 }
-                if (_map[x + 1, y] != 0 && _map[x - 1, y] != 0 && _map[x, y + 1] != 0)
+                if (isHaveNeighbor(_map[x + 1, y]) && isHaveNeighbor(_map[x - 1, y]) && isHaveNeighbor(_map[x, y + 1]))
                 {
                     neighborDir = 2;
                 }
-                if (_map[x + 1, y] != 0 && _map[x - 1, y] != 0 && _map[x, y - 1] != 0)
+                if (isHaveNeighbor(_map[x + 1, y]) && isHaveNeighbor(_map[x - 1, y]) && isHaveNeighbor(_map[x, y - 1]))
                 {
                     neighborDir = 0;
                 }
@@ -220,17 +231,23 @@ public class SlotPlacer : MonoBehaviour
         }
         path.RotateSlot(Vector3.up, _angles[neighborDir]);
     }
-
+    private bool isHaveNeighbor(int val)
+    {
+        if (val != 0 && val < 6)
+            return true;
+        else
+            return false;
+    }
     bool isCurved(int x, int y)
     {
         if (x > 0 && x < mapSize.x - 1 && y > 0 && y < mapSize.y - 1)
         {
-            if (_map[x - 1, y] != 0 && _map[x + 1, y] != 0)
+            if (isHaveNeighbor(_map[x - 1, y]) && isHaveNeighbor(_map[x + 1, y]))
             {
                 return false;
             }
 
-            if (_map[x, y - 1] != 0 && _map[x, y + 1] != 0)
+            if (isHaveNeighbor(_map[x, y - 1]) && isHaveNeighbor(_map[x, y + 1]))
             {
                 return false;
             }

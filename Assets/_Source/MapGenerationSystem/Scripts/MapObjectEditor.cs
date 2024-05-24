@@ -19,14 +19,17 @@ public class MapObjectEditor : Editor
 
         EditorGUILayout.PropertyField(mapSizeProp);
         EditorGUILayout.PropertyField(startPosProp);
-
+        EditorGUILayout.LabelField("1 - Map end");
+        EditorGUILayout.LabelField("2 - Straight or curved path");
+        EditorGUILayout.LabelField("3 - T-shaped turn path");
+        EditorGUILayout.LabelField("4 - Cross turn path");
+        EditorGUILayout.LabelField("6... - Variable empty slot");
         MapObject mapObject = (MapObject)target;
 
         if (GUILayout.Button("Initialize Map"))
         {
             InitializeMap(mapObject);
         }
-
         if (mapObject.map != null && mapObject.map.Length > 0)
         {
             DrawMapEditor(mapObject);
@@ -49,7 +52,6 @@ public class MapObjectEditor : Editor
 
     private void DrawMapEditor(MapObject mapObject)
     {
-        // Инвертируем порядок строк, чтобы начало массива было в левом нижнем углу
         for (int y = mapObject.mapSize.y - 1; y >= 0; y--)
         {
             EditorGUILayout.BeginHorizontal();
