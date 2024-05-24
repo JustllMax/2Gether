@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: droid.png
+    second: {fileID: 2100000, guid: 2a74ee29631fe024aa794bb53ccfacb4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: shield.png
     second: {fileID: 2100000, guid: ed6e9a55e0de4bc4e96adc6139d1ddea, type: 2}
   materials:
