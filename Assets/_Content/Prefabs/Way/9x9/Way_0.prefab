@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2828241274687339861}
   m_Layer: 0
   m_Name: Way_0
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot: {fileID: 11400000, guid: 01fa74d2d04cd264cae243850dd468bc, type: 2}
+  pos: {x: 0, y: 0}
 --- !u!1001 &2484011405422989310
 PrefabInstance:
   m_ObjectHideFlags: 0
