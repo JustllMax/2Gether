@@ -39,7 +39,7 @@ public class AIController : MonoBehaviour, IDamagable
     [SerializeField] AudioClip attackSound;
     [SerializeField] AudioClip deathSound;
 
-
+    DisintegrationEffect _deathEffect;
     Animator _animator;
     NavMeshAgent _navMeshAgent;
     bool isStunned = false;
@@ -65,6 +65,7 @@ public class AIController : MonoBehaviour, IDamagable
 
     private void Awake()
     {
+        _deathEffect = GetComponent<DisintegrationEffect>();
         _animator = GetComponent<Animator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
@@ -235,7 +236,8 @@ public class AIController : MonoBehaviour, IDamagable
 
     public void Kill()
     {
-        Destroy(gameObject);
+        gameObject.AddComponent<DisintegrationEffect>();
+        _deathEffect.Execute();
     }
 
 
