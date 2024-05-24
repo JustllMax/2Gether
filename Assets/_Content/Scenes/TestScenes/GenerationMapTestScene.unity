@@ -283,13 +283,17 @@ MonoBehaviour:
   - {fileID: 1245027202219669942, guid: c00fc4b72e3fe5e498ac8895ddf8f631, type: 3}
   - {fileID: 1245027202219669942, guid: 440da7e4c06890d49af4400266af4282, type: 3}
   - {fileID: 1245027202219669942, guid: 9e2e81003956054488282ea90422df5e, type: 3}
+  emptySlotPrefabs:
+  - {fileID: 2921056365862328451, guid: efbb994236c1fdb4881d72c0bb9345b6, type: 3}
+  - {fileID: 2921056365862328451, guid: bb386dcbb6e148a48984283b05a0b930, type: 3}
+  - {fileID: 2921056365862328451, guid: 1177ba66b283e0d4aa13b4e3d904379d, type: 3}
   startingSlot: {fileID: 2229698089831652448, guid: 27093c5f5d5bb8f4bbf11a4a777c6404,
     type: 3}
   maps:
   - {fileID: 11400000, guid: c2b841090844d5348bbbead1cea17cb2, type: 2}
   - {fileID: 11400000, guid: 1ae1c96b996a3cd4c8240f37a4a11be0, type: 2}
-  mapId: 0
-  isRandomGeneration: 1
+  mapId: 1
+  isRandomGeneration: 0
 --- !u!4 &1121353187
 Transform:
   m_ObjectHideFlags: 0
