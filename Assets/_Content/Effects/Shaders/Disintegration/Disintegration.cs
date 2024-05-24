@@ -6,23 +6,13 @@ public class DisintegrationEffect : MonoBehaviour
     private static int disintegrationTimeID;
     private static int disintegrationTextureID;
 
-    private MaterialPropertyBlock propertyBlock;
-    private Renderer objectRenderer;
+    private Renderer[] objectRenderers;
+    private MaterialPropertyBlock[] propertyBlocks;
     private float startTime;
 
-
-    void Start()
+    public void Awake()
     {
-        foreach (Transform child in transform)
-        {
-            child.gameObject.AddComponent<DisintegrationEffect>();
-        }
-
-        startTime = Time.time;
-
-        objectRenderer = GetComponent<Renderer>();
-        if (objectRenderer == null)
-            return;
+        startTime = 0;
 
         if (desintegrationMaterial == null)
         {
@@ -30,24 +20,40 @@ public class DisintegrationEffect : MonoBehaviour
             disintegrationTimeID = Shader.PropertyToID("_InstanceDisintegrationTime");
             disintegrationTextureID = Shader.PropertyToID("_MainTex");
         }
+    }
 
-        propertyBlock = new MaterialPropertyBlock();
+    public void Execute()
+    {
+        if (startTime != 0)
+            return;
 
-        if (objectRenderer.material != null && objectRenderer.material.mainTexture != null)
+        startTime = Time.time;
+        objectRenderers = GetComponentsInChildren<Renderer>();
+        propertyBlocks = new MaterialPropertyBlock[objectRenderers.Length];
+        for (int i = 0; i < objectRenderers.Length; i++)
         {
-            propertyBlock.SetTexture(disintegrationTextureID, objectRenderer.material.mainTexture);
+            propertyBlocks[i] = new MaterialPropertyBlock();
+
+
+            if (objectRenderers[i].material != null && objectRenderers[i].material.mainTexture != null)
+            {
+                propertyBlocks[i].SetTexture(disintegrationTextureID, objectRenderers[i].material.mainTexture);
+            }
+            objectRenderers[i].material = desintegrationMaterial;
         }
-        objectRenderer.material = desintegrationMaterial;
     }
 
     void Update()
     {
+        if (startTime == 0)
+            return;
+
         float elapsed = Time.time - startTime;
 
-        if (objectRenderer != null)
+        for (int i = 0; i < objectRenderers.Length; i++)
         {
-            propertyBlock.SetFloat(disintegrationTimeID, elapsed);
-            objectRenderer.SetPropertyBlock(propertyBlock);
+            propertyBlocks[i].SetFloat(disintegrationTimeID, elapsed);
+            objectRenderers[i].SetPropertyBlock(propertyBlocks[i]);
         }
         
         if (elapsed > 3.0f)
