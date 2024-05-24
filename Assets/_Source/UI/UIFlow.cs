@@ -25,7 +25,6 @@ public class UIFlow : MonoBehaviour
         boosterPackButton.onClick.AddListener(OpenBoosterPack);
         rerollButton.onClick.AddListener(Reroll);
         continueButton.onClick.AddListener(Continue);
-
     }
 
     void OpenBoosterPack()
