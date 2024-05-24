@@ -7,7 +7,7 @@ public class AIBullet : MonoBehaviour
 {
     Vector3 direction;
     Vector3 spawnPos;
-    float disappearDistance;
+    float disappearDistance = 1000f;
     ObjectPool<AIBullet> _pool;
     float damage;
     void Start()
@@ -27,9 +27,9 @@ public class AIBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(TryGetComponent(out IDamagable damagable))
+        if(other.TryGetComponent(out ITargetable targetable))
         {
-            damagable.TakeDamage(damage);
+            other.GetComponent<IDamagable>().TakeDamage(damage);
         }
         _pool.Release(this);
     }

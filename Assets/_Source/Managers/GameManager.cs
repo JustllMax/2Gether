@@ -31,5 +31,8 @@ public class GameManager : MonoBehaviour
     public Transform GetMainBaseTransform() {  return mainBaseTransform; }
     public bool IsPlayerAlive() {  return isPlayerAlive; }
 
-
+    public void OnPlayerDeath()
+    {
+        isPlayerAlive = false;
+    }
 }

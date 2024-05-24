@@ -6,8 +6,10 @@ public class GunPistol : Gun
 {
 
     bool isParryOnCD = false;
-    float firingCooldown = 0;
-    float firingCooldownTimer = 0;
+    [SerializeField]
+    float firingCooldown = 0.5f;
+    [SerializeField]
+    float firingCooldownTimer = 0f;
     [SerializeField] Transform firePoint;
     void Start()
     {
@@ -17,13 +19,14 @@ public class GunPistol : Gun
 
     void Update()
     {
-        if(firingCooldownTimer > 0)
+        if(firingCooldownTimer > 0.1f)
         {
             firingCooldownTimer -= Time.deltaTime; 
         }
     }
     public override void Fire(bool isSameButtonPress, Transform firePoint)
     {
+        Debug.Log("Fire attempt");
         if (firingCooldownTimer <= 0f)
         {
             if(isSameButtonPress)

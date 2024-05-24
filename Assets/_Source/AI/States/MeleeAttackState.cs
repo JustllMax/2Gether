@@ -68,9 +68,9 @@ public class MeleeAttackState : AIState
         var hits = Physics.OverlapSphere(spawnPos, controller.GetEnemyStats().AttackRadius, layerMask);
         foreach ( var hit in hits )
         {
-            if(hit.TryGetComponent(out IDamagable damagable))
+            if(hit.TryGetComponent(out ITargetable targetable))
             {
-                if(damagable.TakeDamage(controller.GetEnemyStats().AttackDamage) == true)
+                if(hit.GetComponent<IDamagable>().TakeDamage(controller.GetEnemyStats().AttackDamage) == true)
                 {
                     controller.distanceToTarget = 100000f;
                     controller.SetCurrentTarget(new AITarget( null, null));
