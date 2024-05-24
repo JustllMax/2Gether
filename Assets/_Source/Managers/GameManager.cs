@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] PlayerController _playerController;
     [SerializeField] Transform mainBaseTransform;
     bool isPlayerAlive = true;
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -25,7 +26,10 @@ public class GameManager : MonoBehaviour
         _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
+
     public PlayerController GetPlayerController() { return _playerController; }
     public Transform GetMainBaseTransform() {  return mainBaseTransform; }
     public bool IsPlayerAlive() {  return isPlayerAlive; }
+
+
 }
