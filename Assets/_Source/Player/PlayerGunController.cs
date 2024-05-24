@@ -37,14 +37,15 @@ public class PlayerGunController : MonoBehaviour
 
     private void Update()
     {
-        if ( _animator.GetCurrentAnimatorStateInfo(0).ToString().ToUpper().Equals(PlayerAnimNames.IDLE) == false)
-        {
-            isDuringAnimation = true;
-        }
-        else
+        if ( _animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimNames.IDLE.ToString()))
         {
             isDuringAnimation = false;
         }
+        else
+        {
+            isDuringAnimation = true;
+        }
+        Debug.Log(_animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimNames.IDLE.ToString()));
 
         if (firedButtonHeld )
         {
@@ -69,7 +70,6 @@ public class PlayerGunController : MonoBehaviour
     {
         if (context.performed && !isDuringAnimation) // the key has been pressed
         {
-           
             firedButtonHeld = true;
         }        
     }

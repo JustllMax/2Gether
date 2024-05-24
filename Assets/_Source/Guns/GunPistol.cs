@@ -6,54 +6,51 @@ public class GunPistol : Gun
 {
 
     bool isParryOnCD = false;
+
+
+
     [SerializeField]
-    float firingCooldown = 0.5f;
+    private bool addBulletSpread = true;
     [SerializeField]
-    float firingCooldownTimer = 0f;
-    [SerializeField] Transform firePoint;
+    private Vector3 bulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
+    [SerializeField]
+    private ParticleSystem shootingSystem;
+    [SerializeField]
+    private Transform bulletSpawnPoint;
+    [SerializeField]
+    private ParticleSystem impactParticleSystem;
+    [SerializeField]
+    private TrailRenderer bulletTrail;
+    [SerializeField]
+    private LayerMask mask;
+    [SerializeField]
+    private float bulletSpeed = 100;
+
+    private float shootDelay = 0.2f;
+
+    private Animator animator;
+    private float LastShootTime;
     void Start()
     {
+        animator = GetComponentInParent<Animator>();
         ammoInMagazine = GetMagazineSize();
-        firingCooldown = GetGunData().FireRate;
+        shootDelay = GetGunData().FireRate;
     }
 
-    void Update()
+    public override void Fire(bool isSameButtonPress, Transform bulletSpawnPoint)
     {
-        if(firingCooldownTimer > 0.1f)
-        {
-            firingCooldownTimer -= Time.deltaTime; 
-        }
-    }
-    public override void Fire(bool isSameButtonPress, Transform firePoint)
-    {
-        Debug.Log("Fire attempt");
-        if (firingCooldownTimer <= 0f)
+        if (LastShootTime + shootDelay < Time.time)
         {
             if(isSameButtonPress)
             {
                 return;
             }
             ammoInMagazine -= 1;
-            firingCooldownTimer = firingCooldown;
-            CalculateFire(firePoint);
+            CalculateFire(bulletSpawnPoint);
         }
 
     }
 
-    private void CalculateFire(Transform firePoint)
-    {
-        Debug.Log(this + " Fire " + (ammoInMagazine - 1));
-
-        RaycastHit hit;
-
-        if(Physics.Raycast(firePoint.position, firePoint.forward, out hit, GetGunData().Range))
-        {
-            
-            Debug.Log( hit.transform.gameObject + " Hit!");
-            hit.transform.GetComponent<Renderer>().enabled = false;
-        }
-
-    }
 
     public override void Aim()
     {
@@ -68,7 +65,7 @@ public class GunPistol : Gun
     private void OnDrawGizmos()
     {
 
-        Debug.DrawRay(firePoint.position, firePoint.forward * GetGunData().Range, Color.green);
+        Debug.DrawRay(bulletSpawnPoint.position, bulletSpawnPoint.forward * GetGunData().Range, Color.green);
     }
     public override bool CanAim()
     {
@@ -89,5 +86,75 @@ public class GunPistol : Gun
     }
 
 
-    
+
+    private void CalculateFire(Transform bulletSpawnPoint)
+    {
+        Debug.Log(this + " Fire " + (ammoInMagazine - 1));
+
+        RaycastHit hit;
+
+
+        Vector3 direction = GetDirection();
+
+        if (Physics.Raycast(bulletSpawnPoint.position, direction, out  hit, GetGunData().Range, mask))
+        {
+            TrailRenderer trail = Instantiate(bulletTrail, bulletSpawnPoint.position, Quaternion.identity);
+
+            StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
+
+            LastShootTime = Time.time;
+        }
+        else
+        {
+            TrailRenderer trail = Instantiate(bulletTrail, bulletSpawnPoint.position, Quaternion.identity);
+
+            StartCoroutine(SpawnTrail(trail, bulletSpawnPoint.position + GetDirection() * 100, Vector3.zero, false));
+
+            LastShootTime = Time.time;
+        }
+
+    }
+
+    private Vector3 GetDirection()
+    {
+        Vector3 direction = bulletSpawnPoint.forward;
+
+        if (addBulletSpread)
+        {
+            direction += new Vector3(
+                Random.Range(-bulletSpreadVariance.x, bulletSpreadVariance.x),
+                Random.Range(-bulletSpreadVariance.y, bulletSpreadVariance.y),
+                Random.Range(-bulletSpreadVariance.z, bulletSpreadVariance.z)
+            );
+
+            direction.Normalize();
+        }
+
+        return direction;
+    }
+
+    private IEnumerator SpawnTrail(TrailRenderer Trail, Vector3 HitPoint, Vector3 HitNormal, bool MadeImpact)
+    {
+
+        Vector3 startPosition = Trail.transform.position;
+        float distance = Vector3.Distance(Trail.transform.position, HitPoint);
+        float remainingDistance = distance;
+
+        while (remainingDistance > 0)
+        {
+            Trail.transform.position = Vector3.Lerp(startPosition, HitPoint, 1 - (remainingDistance / distance));
+
+            remainingDistance -= bulletSpeed * Time.deltaTime;
+
+            yield return null;
+        }
+        //animator.SetBool("IsShooting", false);
+        Trail.transform.position = HitPoint;
+        if (MadeImpact)
+        {
+            Instantiate(impactParticleSystem, HitPoint, Quaternion.LookRotation(HitNormal));
+        }
+
+        Destroy(Trail.gameObject, Trail.time);
+    }
 }
