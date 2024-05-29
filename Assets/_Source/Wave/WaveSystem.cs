@@ -19,11 +19,29 @@ public class WaveSystem : MonoBehaviour
     
     private int _subWaveIndex;
 
-    private void Start()
+    private void Awake()
     {
-        BeginWave(Resources.Load<WaveData>("wave_test"));
+        GameManager.OnGameManagerReady += OnStart;
     }
 
+    private void OnStart()
+    {
+        _spawnPoints = new List<GameObject>();
+        foreach (var spawn in SlotPlacer.Instance.spawnSlots)
+        {
+            Debug.Log(spawn.GetInstanceID() + "" + spawn.gameObject.name);
+
+            _spawnPoints.Add(spawn.gameObject);
+        }
+        
+        Debug.Log("Count " + _spawnPoints.Count);
+        foreach (var spawn in _spawnPoints)
+        {
+            Debug.Log(spawn.GetInstanceID() + "" + spawn.gameObject.name);
+        }
+        BeginWave(Resources.Load<WaveData>("wave_test"));
+    }
+    
     public GameObject GetRandomSpawnPoint()
     {
         return _spawnPoints[UnityEngine.Random.Range(0, _spawnPoints.Count)];
@@ -46,7 +64,7 @@ public class WaveSystem : MonoBehaviour
         {
             for (int i = 0; i < wave.EnemyPool.EnemyCount; i++)
             {
-                Instantiate(wave.EnemyPool.GetNextEnemy(i), GetRandomSpawnPoint().transform);
+                Instantiate(wave.EnemyPool.GetNextEnemy(i), GetRandomSpawnPoint().transform.position + Vector3.up, Quaternion.identity);
                 await UniTask.WaitForSeconds(wave.EnemySpawnInterval);
             }
      

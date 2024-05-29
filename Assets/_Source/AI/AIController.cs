@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 using NaughtyAttributes;
+using System.Runtime.CompilerServices;
 
 
 [Serializable]
@@ -13,7 +14,7 @@ public struct AITarget
     public Transform transform;
     public ITargetable targetable;
 
-    
+
     public AITarget(Transform transform, ITargetable targetable)
     {
         this.transform = transform;
@@ -23,6 +24,11 @@ public struct AITarget
 
 public class AIController : MonoBehaviour, IDamagable
 {
+    #region variables
+
+
+    #region AI states
+
     [Header("Enemy Statistics")]
     [SerializeField] EnemyStatistics stats;
 
@@ -32,24 +38,36 @@ public class AIController : MonoBehaviour, IDamagable
     AIState nextState;
     AIState currentState;
 
-    [SerializeField] TargetType AITargetFocus;
+    #endregion
+
+    #region VFX
 
     [Header("Audio")]
     [SerializeField] AudioClip hurtSound;
     [SerializeField] AudioClip attackSound;
     [SerializeField] AudioClip deathSound;
-
     DisintegrationEffect _deathEffect;
     Animator _animator;
+
+    #endregion
+
+    #region NavMesh
+
     NavMeshAgent _navMeshAgent;
-    bool isStunned = false;
-    private float attackTimer = 0f;
+    [SerializeField] TargetType AITargetFocus;
 
     [Foldout("DEBUG INFO")]
     [SerializeField] private AITarget currentTarget = new AITarget();
 
     [Foldout("DEBUG INFO")]
     public float distanceToTarget;
+
+    #endregion
+
+    #region Attack variable
+
+    bool isStunned = false;
+    private float attackTimer = 0f;
 
     [Foldout("DEBUG INFO")]
     public float lastAttackTime = 0f;
@@ -63,49 +81,72 @@ public class AIController : MonoBehaviour, IDamagable
     private float _health;
     public float Health { get => _health; set => _health = value; }
 
+
+    private bool isMapGenerated = false;
+    #endregion
+
+    #endregion
     private void Awake()
     {
+        GameManager.OnGameManagerReady += OnStart;
+
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshAgent.speed = GetEnemyStats().MovementSpeed;
+
         _deathEffect = GetComponent<DisintegrationEffect>();
         _animator = GetComponent<Animator>();
-        _navMeshAgent = GetComponent<NavMeshAgent>();
 
         remainingAttacks = GetEnemyStats().AttackAmount;
         Health = GetEnemyStats().Health;
-        _navMeshAgent.speed = GetEnemyStats().MovementSpeed;
     }
 
-    private void Start()
+
+    void OnDestroy()
+    {
+        NavMeshSurfaceManager.OnNavMeshGenerated -= OnStart;
+    }
+
+    void OnStart()
+    {
+        currentState = _AIStates[0];
+        currentState.OnStart(this);
+        isMapGenerated = true;
+    }
+
+    void Start()
     {
         currentState = _AIStates[0];
         currentState.OnStart(this);
     }
 
-
     public void Update()
     {
-        if (attackTimer < stats.AttackFireRate)
+        if (isMapGenerated)
         {
-            attackTimer += Time.deltaTime;
+            if (attackTimer < stats.AttackFireRate)
+            {
+                attackTimer += Time.deltaTime;
+            }
 
-        }
-        if (ShouldSearchForTarget())
-        {
-            SearchForTarget();
-        }
-        if (currentState != null)
-        {
-            currentState.OnUpdate(this);
-            ChangeState();
+            if (ShouldSearchForTarget())
+            {
+                SearchForTarget();
+            }
+
+            if (currentState != null)
+            {
+                currentState.OnUpdate(this);
+                ChangeState();
+            }
         }
     }
 
     private bool ShouldSearchForTarget()
     {
-        if (GetCurrentTarget().transform  != null)
+        if (GetCurrentTarget().transform != null)
         {
             if (GetCurrentTarget().targetable.IsTargetable == true)
             {
-
                 return false;
             }
         }
@@ -118,7 +159,7 @@ public class AIController : MonoBehaviour, IDamagable
         ITargetable targetable = null;
         //Layermask that hits everything except the terrain
         int layerMask = ~(1 << LayerMask.NameToLayer("Terrain"));
-        float radius = GetEnemyStats().AttackRange*3f;
+        float radius = GetEnemyStats().AttackRange * 3f;
 
         float minDistance = float.MaxValue;
 
@@ -146,7 +187,8 @@ public class AIController : MonoBehaviour, IDamagable
 
     bool ShouldTarget(ITargetable t)
     {
-        if (t.TargetType == AITargetFocus || AITargetFocus == TargetType.Both) {
+        if (t.TargetType == AITargetFocus || AITargetFocus == TargetType.Both)
+        {
             return true;
         }
         return false;
@@ -190,7 +232,7 @@ public class AIController : MonoBehaviour, IDamagable
                 if (state.weight > highestWeight)
                 {
                     highestWeight = state.weight;
- 
+
                 }
             }
         }
@@ -201,7 +243,7 @@ public class AIController : MonoBehaviour, IDamagable
             if (state.CanChangeToState(this) && state.weight == highestWeight)
             {
                 states.Add(state);
-                Debug.Log(state.name);
+                //Debug.Log(state.name);
             }
         }
 
@@ -226,7 +268,7 @@ public class AIController : MonoBehaviour, IDamagable
     public bool TakeDamage(float damage)
     {
         Health -= damage;
-        if(Health <= 0)
+        if (Health <= 0)
         {
             Kill();
             return true;
@@ -264,7 +306,7 @@ public class AIController : MonoBehaviour, IDamagable
     {
         if (currentTarget.transform != null)
         {
-            if(currentTarget.targetable.IsTargetable && remainingAttacks > 0)
+            if (currentTarget.targetable.IsTargetable && remainingAttacks > 0)
             {
                 return true;
             }

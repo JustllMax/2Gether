@@ -195,10 +195,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b3de6a9e7c391ef49bbab0099a0c1916, type: 2}
   - {fileID: 11400000, guid: eb1298214d79bd648a8b3e2d577b10e5, type: 2}
   - {fileID: 11400000, guid: 7ff79690d78f3c14ca44a75e4afcac18, type: 2}
-  AITargetFocus: 0
   hurtSound: {fileID: 0}
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}
+  AITargetFocus: 0
   currentTarget:
     transform: {fileID: 0}
   distanceToTarget: 0
@@ -213,7 +213,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5830721225078026835}
   m_Enabled: 1
-  m_AgentTypeID: -1372625422
+  m_AgentTypeID: 1479372276
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8

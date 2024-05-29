@@ -6,9 +6,9 @@ using UnityEngine;
 [Serializable]
 public struct SingleWaveData
 {
-    public WaveEnemyPool EnemyPool;
-    public float EnemySpawnInterval;
-    public float Cooldown;
+    [SerializeField] public WaveEnemyPool EnemyPool;
+    [SerializeField] public float EnemySpawnInterval;
+    [SerializeField] public float Cooldown;
 }
 
 [CreateAssetMenu(menuName = "Game/Wave/Wave Data")]

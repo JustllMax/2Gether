@@ -10,10 +10,11 @@ public class WalkOnPathState : AIState
     Transform dest;
     public override void OnStart(AIController controller)
     {
-        //DO NOT SET AITARGET AS MAIN BASE
+        //DO NOT SET AI TARGET AS MAIN BASE
         dest = GameManager.Instance.GetMainBaseTransform();
+
+        
         controller.GetNavMeshAgent().SetDestination(GameManager.Instance.GetMainBaseTransform().position);
-        Debug.Log("WalkStateOnStarted");
 
         if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
         {
@@ -34,7 +35,6 @@ public class WalkOnPathState : AIState
 
         }
         controller.distanceToTarget = controller.GetNavMeshAgent().remainingDistance;
-
     }
 
 
@@ -45,7 +45,6 @@ public class WalkOnPathState : AIState
 
     public override bool CanChangeToState(AIController controller)
     {
-        
         return true;
     }
 
