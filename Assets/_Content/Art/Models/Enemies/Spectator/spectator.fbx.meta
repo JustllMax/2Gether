@@ -3,7 +3,12 @@ guid: 5268a7a4b9bbde44caae89d626ee5182
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: spectator.png
+    second: {fileID: 2100000, guid: 9d4bf3111abbdac4ca43e09db34d58b5, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
