@@ -45,7 +45,7 @@ public class PlayerGunController : MonoBehaviour
         {
             isDuringAnimation = true;
         }
-        Debug.Log(_animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimNames.IDLE.ToString()));
+
 
         if (firedButtonHeld )
         {
