@@ -40,12 +40,28 @@ public class PathGenerator
             if (pos != _startPos)
                 curDirection = GetRandomDirection(direction, newPos);
 
-            if (newPos.x < 0 || newPos.y < 0 || newPos.x >= _mapSize.x || newPos.y >= _mapSize.y)
+            if (newPos.x < 0 || newPos.y < 0 || newPos.x > _mapSize.x - 1 || newPos.y > _mapSize.y - 1)
             {
                 map[pos.x, pos.y] = 1;
+                if (curDirection == 0)
+                {
+                    map[pos.x + 1, pos.y] += 1;
+                }
+                else if (direction == 1)
+                {
+                    map[pos.x, pos.y - 1] += 1;
+                }
+                else if (direction == 2)
+                {
+                    map[pos.x - 1, pos.y] += 1;
+                }
+                else if (direction == 3)
+                {
+                    map[pos.x, pos.y + 1] += 1;
+                }
                 isEnd = true;
             }
-            if (newPos.x >= 0 && newPos.x < _mapSize.x && newPos.y >= 0 && newPos.y < _mapSize.y)
+            if (newPos.x > 0 && newPos.x < _mapSize.x - 1 && newPos.y > 0 && newPos.y < _mapSize.y - 1)
             {
                 map[newPos.x, newPos.y] = 1;
 
@@ -65,7 +81,7 @@ public class PathGenerator
             count++;
         if (y - 1 >= 0 && map[x, y - 1] > 0)
             count++;
-        if (y + 1 < _mapSize.y && map[x, y + 1] > 0) 
+        if (y + 1 < _mapSize.y && map[x, y + 1] > 0)
             count++;
         return count;
     }
@@ -77,7 +93,7 @@ public class PathGenerator
             direction
         };
         int dir = Random.Range(0, 100);
-        if (pos.x > 0 && pos.x < _mapSize.x-1 && pos.y > 0 && pos.y < _mapSize.y-1)
+        if (pos.x > 0 && pos.x < _mapSize.x - 1 && pos.y > 0 && pos.y < _mapSize.y - 1)
         {
             if (direction == 0)
             {
