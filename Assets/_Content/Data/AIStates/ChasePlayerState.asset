@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7da1d654d2d95b478fd1575188d5cb3, type: 3}
   m_Name: ChasePlayerState
   m_EditorClassIdentifier: 
-  weight: 2
+  weight: 1
   animName: 0
+  AnimDelay: 0
