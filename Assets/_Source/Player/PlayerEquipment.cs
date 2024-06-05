@@ -47,7 +47,7 @@ public class PlayerEquipment : MonoBehaviour
 
         _FPSController.WeaponSwitch.performed += SwitchWeaponByHotkeys;
         _FPSController.SwitchToLastWeapon.performed += SwitchToLastHeldWeapon;
-        
+        Setup();
         
     }
 
@@ -215,8 +215,6 @@ public class PlayerEquipment : MonoBehaviour
                 {
                     return false;
                 }
-
-
         }
     }
 
@@ -229,6 +227,12 @@ public class PlayerEquipment : MonoBehaviour
     #endregion Reload
 
     #region Utils
+
+    void Setup()
+    {
+        SwitchCurrentGun(GunList[0]);
+    }
+
     private int GetGunIndexByRef(Gun gun)
     {
         for(int i = 0; i < GunList.Count; i++ )

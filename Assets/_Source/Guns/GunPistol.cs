@@ -28,7 +28,7 @@ public class GunPistol : Gun
     [SerializeField]
     private float bulletSpeed = 100;
 
-    private float shootDelay = 0.2f;
+    private float shootDelay;
 
     private Animator animator;
     private float LastShootTime;
@@ -37,6 +37,7 @@ public class GunPistol : Gun
         animator = GetComponentInParent<Animator>();
         ammoInMagazine = GetMagazineSize();
         shootDelay = GetGunData().FireRate;
+        LastShootTime = Time.time;
     }
 
     public override void Fire(bool isSameButtonPress, Transform bulletSpawnPoint)
@@ -51,7 +52,6 @@ public class GunPistol : Gun
             CalculateFire(bulletSpawnPoint);
             shootingSystem.Play();
         }
-
     }
 
 
@@ -92,7 +92,6 @@ public class GunPistol : Gun
     //TO DO: FIX ANGLE OF TRAIL TO MATCH AIM POSITION
     private void CalculateFire(Transform bulletSpawnPoint)
     {
-        Debug.Log(this + " Fire " + (ammoInMagazine - 1));
 
         RaycastHit hit;
 

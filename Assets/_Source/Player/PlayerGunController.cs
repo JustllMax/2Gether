@@ -6,7 +6,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class PlayerGunController : MonoBehaviour
 {
-    [SerializeField] Transform _camera;
+    [SerializeField] Transform nightCamera;
     [SerializeField] Transform FirePoint;
     PlayerInputAction.FPSControllerActions _FPScontroller;
     PlayerEquipment _equipment;
@@ -17,6 +17,7 @@ public class PlayerGunController : MonoBehaviour
     [SerializeField]
     bool isDuringAnimation = false;
 
+    bool flagOneShot = true;
     private void Awake()
     {
         _equipment = GetComponent<PlayerEquipment>();
@@ -37,7 +38,7 @@ public class PlayerGunController : MonoBehaviour
 
     private void Update()
     {
-        FirePoint.rotation = _camera.rotation;
+        FirePoint.rotation = nightCamera.rotation;
 
 
         if ( _animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimNames.IDLE.ToString()))
@@ -61,7 +62,16 @@ public class PlayerGunController : MonoBehaviour
             {
                 if (_equipment.CanFire())
                 {
-                    _equipment.GetCurrentGun().Fire(isHoldingFire, FirePoint);
+                   
+                    if (flagOneShot)
+                    {
+                        flagOneShot = false;
+                        _equipment.GetCurrentGun().Fire(false, FirePoint);
+                    }
+                    else
+                    {
+                        _equipment.GetCurrentGun().Fire(isHoldingFire, FirePoint);
+                    }
                 }
 
             }
@@ -84,6 +94,7 @@ public class PlayerGunController : MonoBehaviour
             firedButtonHeld = false;
             buttonHeldTimer = 0f;
             isHoldingFire = false;
+            flagOneShot = true;
         }
     }
 

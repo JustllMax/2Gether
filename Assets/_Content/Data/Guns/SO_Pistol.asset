@@ -21,10 +21,10 @@ MonoBehaviour:
   BulletGroundHitSound: {fileID: 0}
   BulletEnemyHitSound: {fileID: 0}
   IsAutomatic: 0
-  MagazineSize: 5
-  FireRate: 2
+  MagazineSize: 8
+  FireRate: 0.1
   Range: 50
-  ReloadTime: 1.5
+  ReloadTime: 1.2
   BulletDamage: 5
   ParryCoolDown: 2
   ParryAmount: 5
