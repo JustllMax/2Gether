@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05a24b9d7b82262498294975e6511ca7, type: 3}
   m_Name: SO_Shotgun
   m_EditorClassIdentifier: 
-  CardType: 0
+  CardType: 2
   Rarity: 0
-  Name: 
-  Description: 
-  GunType: 0
+  Name: Shotgun
+  Description: Shotgun
+  GunType: 2
   P_Bullet: {fileID: 0}
   BulletGroundHitSound: {fileID: 0}
   BulletEnemyHitSound: {fileID: 0}
   IsAutomatic: 0
-  MagazineSize: 0
-  FireRate: 0
-  Range: 0
-  ReloadTime: 0
-  BulletDamage: 0
-  AmountOfPelletsInShot: 0
+  MagazineSize: 5
+  FireRate: 2
+  Range: 10
+  ReloadTime: 3
+  BulletDamage: 10
+  AmountOfPelletsInShot: 6
