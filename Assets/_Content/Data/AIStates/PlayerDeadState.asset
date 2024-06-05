@@ -9,14 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0141a3b9c5960364fa1c0d12baf7cfae, type: 3}
-  m_Name: AIStats_Test
+  m_Script: {fileID: 11500000, guid: 0fa57ced62cbb9242a1e007494f26e9e, type: 3}
+  m_Name: PlayerDeadState
   m_EditorClassIdentifier: 
-  Health: 50
-  AttackRange: 2
-  AttackDamage: 15
-  AttackFireRate: 2
-  AttackReloadTime: 0.5
-  AttackRadius: 2
-  AttackAmount: 2
-  MovementSpeed: 3
+  weight: 2
+  animName: 0
+  AnimDelay: 0

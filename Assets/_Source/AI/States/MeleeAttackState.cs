@@ -32,7 +32,7 @@ public class MeleeAttackState : AIState
 
     public override void OnExit(AIController controller)
     {
-        //controller.GetNavMeshAgent().ResetPath();
+        controller.GetNavMeshAgent().ResetPath();
         Debug.Log(this + " exit");
 
     }
@@ -67,9 +67,10 @@ public class MeleeAttackState : AIState
 
                 if(hit.GetComponent<IDamagable>().TakeDamage(controller.GetEnemyStats().AttackDamage) == true)
                 {
-                    Debug.Log(this + "Target died");
                     controller.distanceToTarget = 100000f;
-                    controller.SetCurrentTarget(new AITarget( null, null));
+                    controller.SetCurrentTarget(new AITarget(null, null));
+                    Debug.Log(this + "Target died");
+                   
                 }
 
             }

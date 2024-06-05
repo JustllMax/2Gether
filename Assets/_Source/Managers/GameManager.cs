@@ -9,7 +9,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] PlayerController _playerController;
     [SerializeField] Transform mainBaseTransform;
-    bool isPlayerAlive = true;
+
+    //TODO: Change to event 
+    public bool isPlayerAlive = true;
 
     private void Awake()
     {

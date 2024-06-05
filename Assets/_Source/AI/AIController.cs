@@ -46,6 +46,8 @@ public class AIController : MonoBehaviour, IDamagable
     NavMeshAgent _navMeshAgent;
     bool isStunned = false;
     bool isDead = false;
+    [SerializeField]
+    LayerMask targetLayerMask;
     private float attackTimer = 0f;
 
     [Foldout("DEBUG INFO")]
@@ -80,6 +82,7 @@ public class AIController : MonoBehaviour, IDamagable
 
     private void Start()
     {
+        SetLayerTargeting(AITargetFocus);
         currentState = _AIStates[0];
         currentState.OnStart(this);
     }
@@ -119,9 +122,35 @@ public class AIController : MonoBehaviour, IDamagable
 
     } 
 
+    void SetLayerTargeting(TargetType targetType) 
+    {
+        int playerLayer = LayerMask.NameToLayer("Player");
+        int buildingLayer = LayerMask.NameToLayer("Building");
+        LayerMask mask;
+
+        switch (targetType)
+        {
+            case TargetType.Building:
+                mask = (1 << buildingLayer);
+                targetLayerMask = mask;
+                return;
+
+            case TargetType.Player:
+                mask = (1 << playerLayer);
+                targetLayerMask = mask;
+                return;
+
+            case TargetType.Both:
+                mask = (1 << playerLayer) | (1 << buildingLayer);
+                targetLayerMask = mask;
+                return;
+
+        }
+    }
+
     private bool ShouldSearchForTarget()
     {
-        if (GetCurrentTarget().transform  != null)
+        if (GetCurrentTarget().transform != null)
         {
             if (GetCurrentTarget().targetable != null)
             {
@@ -136,19 +165,19 @@ public class AIController : MonoBehaviour, IDamagable
     {
         Transform target = null;
         ITargetable targetable = null;
-        //Layermask that hits everything except the terrain
-        int layerMask = ~(1 << LayerMask.NameToLayer("Terrain"));
+
+
         float radius = GetEnemyStats().AttackRange*3f;
 
         float minDistance = float.MaxValue;
 
 
-        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), radius, layerMask);
+        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), radius, targetLayerMask);
         foreach (Collider hit in hits)
         {
             if (hit.TryGetComponent(out ITargetable t))
             {
-                if (t.IsTargetable && ShouldTarget(t))
+                if (t.IsTargetable)
                 {
                     float distanceToTarget = Vector3.Distance(hit.transform.position, transform.position);
                     if (distanceToTarget < minDistance)
@@ -164,13 +193,6 @@ public class AIController : MonoBehaviour, IDamagable
             SetCurrentTarget(new AITarget(target, targetable));
     }
 
-    bool ShouldTarget(ITargetable t)
-    {
-        if (t.TargetType == AITargetFocus || AITargetFocus == TargetType.Both) {
-            return true;
-        }
-        return false;
-    }
     public void ChangeState()
     {
         nextState = GetNextState();
@@ -272,17 +294,17 @@ public class AIController : MonoBehaviour, IDamagable
         isDead = true;
         hitboxCollider.enabled = false;
         GetNavMeshAgent().enabled = false;
-        if (GetAnimator().GetNextAnimatorStateInfo(0).IsName(AIAnimNames.DEATH.ToString()))
+        if (!GetAnimator().GetNextAnimatorStateInfo(0).IsName(AIAnimNames.DEATH.ToString()))
         {
             GetAnimator().CrossFade(AIAnimNames.DEATH.ToString(), 0.1f);
         }
-        _deathEffect.Execute();
+        
         Invoke("DestroyObj", DeathInvokeTime);
     }
 
     void DestroyObj()
     {
-        Destroy(gameObject);
+        _deathEffect.Execute();
     }
 
 

@@ -80,6 +80,12 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         _dashCount = _maxDashCount;
     }
 
+    private void OnValidate()
+    {
+        if (TargetType != TargetType.Player)
+            TargetType = TargetType.Player;
+    }
+
     void Start()
     {
         FPSController = InputManager.Instance.GetPlayerInputAction().FPSController;
@@ -246,7 +252,9 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     public void Kill()
     {
         IsTargetable = false;
-        
+        //TODO: Change to event 
+
+        GameManager.Instance.isPlayerAlive = false;
         return;
     }
 }
