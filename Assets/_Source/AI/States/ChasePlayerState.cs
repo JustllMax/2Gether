@@ -41,12 +41,16 @@ public class ChasePlayerState : AIState
     public override void OnUpdate(AIController controller)
     {
         controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().transform.position);
-        controller.distanceToTarget = controller.GetNavMeshAgent().remainingDistance;
     }
     public override void OnExit(AIController controller)
     {
         controller.GetNavMeshAgent().ResetPath();
 
+    }
+
+    public override bool CanExitState(AIController controller)
+    {
+        return true;
     }
 
     public override bool CanChangeToState(AIController controller)

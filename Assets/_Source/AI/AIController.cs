@@ -39,10 +39,13 @@ public class AIController : MonoBehaviour, IDamagable
     [SerializeField] AudioClip attackSound;
     [SerializeField] AudioClip deathSound;
 
+    [SerializeField] BoxCollider hitboxCollider;
+    [SerializeField] float DeathInvokeTime = 2f;
     DisintegrationEffect _deathEffect;
     Animator _animator;
     NavMeshAgent _navMeshAgent;
     bool isStunned = false;
+    bool isDead = false;
     private float attackTimer = 0f;
 
     [Foldout("DEBUG INFO")]
@@ -53,6 +56,7 @@ public class AIController : MonoBehaviour, IDamagable
 
     [Foldout("DEBUG INFO")]
     public float lastAttackTime = 0f;
+
 
     [Foldout("DEBUG INFO")]
     public bool isReloading;
@@ -66,7 +70,7 @@ public class AIController : MonoBehaviour, IDamagable
     private void Awake()
     {
         _deathEffect = GetComponent<DisintegrationEffect>();
-        _animator = GetComponent<Animator>();
+        _animator = GetComponentInChildren<Animator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
         remainingAttacks = GetEnemyStats().AttackAmount;
@@ -83,20 +87,36 @@ public class AIController : MonoBehaviour, IDamagable
 
     public void Update()
     {
-        if (attackTimer < stats.AttackFireRate)
+
+        if (isDead)
         {
-            attackTimer += Time.deltaTime;
+            return;
+        }
+
+        if (lastAttackTime < stats.AttackFireRate)
+        {
+            lastAttackTime += Time.deltaTime;
 
         }
+
+
         if (ShouldSearchForTarget())
         {
             SearchForTarget();
         }
+
+        if (currentTarget.transform != null)
+        {
+             distanceToTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
+        }
+
         if (currentState != null)
         {
             currentState.OnUpdate(this);
             ChangeState();
         }
+
+
     } 
 
     private bool ShouldSearchForTarget()
@@ -162,10 +182,12 @@ public class AIController : MonoBehaviour, IDamagable
             return;
         }
 
-        if (currentState != null)
+        if (currentState != null && !currentState.CanExitState(this))
         {
-            currentState.OnExit(this);
+            return;
         }
+
+        currentState.OnExit(this);
 
         if (nextState != null && nextState != currentState)
         {
@@ -228,7 +250,7 @@ public class AIController : MonoBehaviour, IDamagable
         {
             if (currentTarget.targetable.IsTargetable && remainingAttacks > 0)
             {
-                return true;
+                 return true;
             }
         }
         return false;
@@ -247,8 +269,20 @@ public class AIController : MonoBehaviour, IDamagable
 
     public void Kill()
     {
-        gameObject.AddComponent<DisintegrationEffect>();
+        isDead = true;
+        hitboxCollider.enabled = false;
+        GetNavMeshAgent().enabled = false;
+        if (GetAnimator().GetNextAnimatorStateInfo(0).IsName(AIAnimNames.DEATH.ToString()))
+        {
+            GetAnimator().CrossFade(AIAnimNames.DEATH.ToString(), 0.1f);
+        }
         _deathEffect.Execute();
+        Invoke("DestroyObj", DeathInvokeTime);
+    }
+
+    void DestroyObj()
+    {
+        Destroy(gameObject);
     }
 
 
