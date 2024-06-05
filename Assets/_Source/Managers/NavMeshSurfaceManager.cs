@@ -13,7 +13,6 @@ public class NavMeshSurfaceManager : MonoBehaviour
 
     void OnEnable()
     {
-        SlotPlacer.OnMapGenerated -= OnMapGenerated;
         SlotPlacer.OnMapGenerated += OnMapGenerated;
     }
     void OnDisable()
@@ -26,6 +25,7 @@ public class NavMeshSurfaceManager : MonoBehaviour
         {
             surface.BuildNavMesh();
         }
+       
     }
 
     void OnMapGenerated()

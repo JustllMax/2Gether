@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     {   
         SlotPlacer.OnMapGenerated += OnMapGenerated;
         NavMeshSurfaceManager.OnNavMeshGenerated += OnNavMeshGenerated;
+
+        _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
     void OnDisable()
     {
@@ -61,11 +63,6 @@ public class GameManager : MonoBehaviour
             Debug.Log("GameManager Invoke");
             OnGameManagerReady?.Invoke();
         }
-    }
-
-    void Start()
-    {
-        _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
     
 
