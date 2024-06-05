@@ -97,16 +97,16 @@ public class AIController : MonoBehaviour, IDamagable
             currentState.OnUpdate(this);
             ChangeState();
         }
-    }
+    } 
 
     private bool ShouldSearchForTarget()
     {
         if (GetCurrentTarget().transform  != null)
         {
-            if (GetCurrentTarget().targetable.IsTargetable == true)
+            if (GetCurrentTarget().targetable != null)
             {
-
-                return false;
+                if(GetCurrentTarget().targetable.IsTargetable)
+                    return false;
             }
         }
         return true;
@@ -140,8 +140,8 @@ public class AIController : MonoBehaviour, IDamagable
                 }
             }
         }
-
-        SetCurrentTarget(new AITarget(target, targetable));
+        if(target != null)
+            SetCurrentTarget(new AITarget(target, targetable));
     }
 
     bool ShouldTarget(ITargetable t)
@@ -222,6 +222,17 @@ public class AIController : MonoBehaviour, IDamagable
         attackTimer = 0f;
         remainingAttacks--;
     }
+    public bool CanAttack()
+    {
+        if (currentTarget.transform != null)
+        {
+            if (currentTarget.targetable.IsTargetable && remainingAttacks > 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public bool TakeDamage(float damage)
     {
@@ -260,17 +271,7 @@ public class AIController : MonoBehaviour, IDamagable
     {
         isStunned = val;
     }
-    public bool CanAttack()
-    {
-        if (currentTarget.transform != null)
-        {
-            if(currentTarget.targetable.IsTargetable && remainingAttacks > 0)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+
 
 
     public void SetCurrentTarget(AITarget target)

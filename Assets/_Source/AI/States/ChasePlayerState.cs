@@ -13,12 +13,17 @@ public class ChasePlayerState : AIState
     {
         if(playerTransform == null)
         {
+            Debug.Log(this + " searching for player");
             playerTransform = GameManager.Instance.GetPlayerController().transform;
-            playerTarget = new AITarget(playerTransform, playerTransform.GetComponent<ITargetable>());
+            playerTarget = new AITarget(playerTransform, GameManager.Instance.GetPlayerController().GetComponent<ITargetable>());
+            controller.SetCurrentTarget(playerTarget);
+
         }
 
-        if(controller.GetCurrentTarget().transform == null)
+        if (controller.GetCurrentTarget().transform == null)
         {
+            Debug.Log(this + " " + GameManager.Instance.GetPlayerController().GetComponent<ITargetable>().TargetType);
+
             controller.SetCurrentTarget(playerTarget);
         }
 
@@ -27,6 +32,8 @@ public class ChasePlayerState : AIState
         {
             controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
         }
+
+        Debug.Log(this + " set destination to player");
 
         controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().transform.position);
     }
@@ -44,7 +51,7 @@ public class ChasePlayerState : AIState
 
     public override bool CanChangeToState(AIController controller)
     {
-        return GameManager.Instance.IsPlayerAlive() && !controller.CanAttack();
+        return GameManager.Instance.IsPlayerAlive();
     }
 }
     

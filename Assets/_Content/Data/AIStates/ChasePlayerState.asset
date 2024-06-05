@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7da1d654d2d95b478fd1575188d5cb3, type: 3}
-  m_Name: ChaseState
+  m_Name: ChasePlayerState
   m_EditorClassIdentifier: 
   weight: 2
   animName: 0
