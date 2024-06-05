@@ -29,6 +29,7 @@ public class UIFlow : MonoBehaviour
     {
         _currentCardPoolData = pd;
 
+
         gamePanel.SetActive(false);
         cardpackPanel.SetActive(true);
         rerollButton.gameObject.SetActive(false);
