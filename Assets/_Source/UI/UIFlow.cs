@@ -15,8 +15,20 @@ public class UIFlow : MonoBehaviour
     public GameObject gamePanel;
     public GameObject cardsPanel;
 
+    private CardPoolData _currentCardPoolData;
+
     void Start()
     {
+        gamePanel.SetActive(false);
+        cardpackPanel.SetActive(false);
+        rerollButton.gameObject.SetActive(false);
+        continueButton.gameObject.SetActive(false);
+    }
+
+    public void ShowPanel(CardPoolData pd)
+    {
+        _currentCardPoolData = pd;
+
         gamePanel.SetActive(false);
         cardpackPanel.SetActive(true);
         rerollButton.gameObject.SetActive(false);
@@ -122,10 +134,11 @@ public class UIFlow : MonoBehaviour
 
     void SpawnCards()
     {
-        for (int i = 0; i < 5; i++)
+        foreach (var card in _currentCardPoolData.Cards)
         {
-            GameObject card = Instantiate(cardPrefab, cardpackOpenPanel.transform);
-            card.name = "Card " + (i + 1);
+            GameObject gocard = Instantiate(cardPrefab, cardpackOpenPanel.transform);
+            gocard.GetComponent<CardObject>().PopulateCard(card);
+            gocard.name = "Card " + card.CardName;
         }
 
         HorizontalLayoutGroup layoutGroup = cardpackOpenPanel.GetComponent<HorizontalLayoutGroup>();

@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] PlayerController _playerController;
     [SerializeField] Transform mainBaseTransform;
+    [SerializeField] UIFlow _cardManager;
+
+    public CardPoolData InitialCardPool;
+
     bool isPlayerAlive = true;
 
     private void Awake()
@@ -24,8 +28,14 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        StartGame();
     }
 
+    public void StartGame()
+    {
+        // 1. display the ui
+        _cardManager.ShowPanel(InitialCardPool);
+    }
 
     public PlayerController GetPlayerController() { return _playerController; }
     public Transform GetMainBaseTransform() {  return mainBaseTransform; }
