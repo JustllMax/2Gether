@@ -498,16 +498,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3fa2170c3627604eb22f76758f66219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panSpeed: 100
-  panBorderThickness: 10
-  scrollSpeed: 10
-  smoothSpeed: 0.5
-  minDepth: 50
-  maxDepth: 200
-  cameraLeft: -100
-  cameraRight: 55
-  cameraBackward: -100
-  cameraForward: 55
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
