@@ -8,7 +8,6 @@ public class GunPistol : Gun
     bool isParryOnCD = false;
 
 
-    public GameObject hittest;
 
     [SerializeField]
     private bool addBulletSpread = true;
@@ -110,7 +109,6 @@ public class GunPistol : Gun
             }
             StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true, target));
 
-            Instantiate(hittest, hit.point, Quaternion.identity, null);
             LastShootTime = Time.time;
         }
         else
