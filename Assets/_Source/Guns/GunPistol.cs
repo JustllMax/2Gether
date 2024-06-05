@@ -8,6 +8,7 @@ public class GunPistol : Gun
     bool isParryOnCD = false;
 
 
+    public GameObject hittest;
 
     [SerializeField]
     private bool addBulletSpread = true;
@@ -49,6 +50,7 @@ public class GunPistol : Gun
             }
             ammoInMagazine -= 1;
             CalculateFire(bulletSpawnPoint);
+            shootingSystem.Play();
         }
 
     }
@@ -101,16 +103,21 @@ public class GunPistol : Gun
         if (Physics.Raycast(bulletSpawnPoint.position, direction, out  hit, GetGunData().Range, mask))
         {
             TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
+            IDamagable target = null;
+            if(hit.transform.TryGetComponent<AIController>(out AIController controller))
+            {
+                target = controller.GetComponent<IDamagable>();
+            }
+            StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true, target));
 
-            StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
-
+            Instantiate(hittest, hit.point, Quaternion.identity, null);
             LastShootTime = Time.time;
         }
         else
         {
             TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
 
-            StartCoroutine(SpawnTrail(trail, bulletSpawnPoint.position + GetDirection() * 100, Vector3.zero, false));
+            StartCoroutine(SpawnTrail(trail, bulletSpawnPoint.position + GetDirection() * 100, Vector3.zero, false, null));
 
             LastShootTime = Time.time;
         }
@@ -135,7 +142,7 @@ public class GunPistol : Gun
         return direction;
     }
 
-    private IEnumerator SpawnTrail(TrailRenderer Trail, Vector3 HitPoint, Vector3 HitNormal, bool MadeImpact)
+    private IEnumerator SpawnTrail(TrailRenderer Trail, Vector3 HitPoint, Vector3 HitNormal, bool MadeImpact, IDamagable target)
     {
 
         Vector3 startPosition = Trail.transform.position;
@@ -150,11 +157,13 @@ public class GunPistol : Gun
 
             yield return null;
         }
-        //animator.SetBool("IsShooting", false);
+
         Trail.transform.position = HitPoint;
         if (MadeImpact)
         {
             Instantiate(impactParticleSystem, HitPoint, Quaternion.LookRotation(HitNormal));
+            if(target != null)
+                target.TakeDamage(GetGunData().BulletDamage);
         }
 
         Destroy(Trail.gameObject, Trail.time);

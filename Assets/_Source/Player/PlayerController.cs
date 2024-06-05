@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     private Transform _camera;
 
     [SerializeField]
+    private Transform gunCamera;
+
+    [SerializeField]
     private float _cameraSensitivity = 0.1f;
 
     [SerializeField]
@@ -158,6 +161,9 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         _cameraAngleX = Mathf.Clamp(_cameraAngleX, -90, 90);
 
         _camera.localRotation = Quaternion.Euler(new Vector3(-_cameraAngleX, 0, 0));
+
+        gunCamera.rotation = _camera.rotation;
+
     }
 
     private void OnJump(InputAction.CallbackContext context)

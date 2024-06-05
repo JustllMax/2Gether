@@ -6,7 +6,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class PlayerGunController : MonoBehaviour
 {
-
+    [SerializeField] Transform _camera;
     [SerializeField] Transform FirePoint;
     PlayerInputAction.FPSControllerActions _FPScontroller;
     PlayerEquipment _equipment;
@@ -37,6 +37,9 @@ public class PlayerGunController : MonoBehaviour
 
     private void Update()
     {
+        FirePoint.rotation = _camera.rotation;
+
+
         if ( _animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimNames.IDLE.ToString()))
         {
             isDuringAnimation = false;

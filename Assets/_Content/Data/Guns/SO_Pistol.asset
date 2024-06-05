@@ -23,7 +23,7 @@ MonoBehaviour:
   IsAutomatic: 0
   MagazineSize: 5
   FireRate: 2
-  Range: 10
+  Range: 50
   ReloadTime: 1.5
   BulletDamage: 5
   ParryCoolDown: 2
