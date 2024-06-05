@@ -5,6 +5,9 @@ using UnityEngine;
 public class GunShotgun : Gun
 {
     [SerializeField]
+    private int pelletsPerShot = 6;
+
+    [SerializeField]
     private bool addBulletSpread = true;
     [SerializeField]
     private Vector3 bulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
@@ -24,15 +27,10 @@ public class GunShotgun : Gun
     private float bulletSpeed = 100;
 
     private float shootDelay;
-    private float spreadAngle = 2f; // K¹t rozproszenia dla dwóch pocisków
-    private int pelletsPerShot = 6;
-
-    private Animator animator;
     private float lastShootTime;
 
     void Start()
     {
-        animator = GetComponentInParent<Animator>();
         ammoInMagazine = GetMagazineSize();
         shootDelay = GetGunData().FireRate;
     }
@@ -59,7 +57,8 @@ public class GunShotgun : Gun
         if (lastShootTime + shootDelay < Time.time)
         {
             ammoInMagazine -= 2;
-
+            CalculateFire(bulletSpawnPoint, pelletsPerShot);
+            CalculateFire(bulletSpawnPoint, pelletsPerShot);
             lastShootTime = Time.time;
         }
 
@@ -101,40 +100,27 @@ public class GunShotgun : Gun
         {
             Vector3 direction = GetDirection();
             RaycastHit hit;
-
+            IDamagable target = null;
             if (Physics.Raycast(bulletSpawnPoint.position, direction, out hit, GetGunData().Range, mask))
             {
+                
+                if (hit.transform.TryGetComponent<AIController>(out AIController controller))
+                {
+                    target = controller.GetComponent<IDamagable>();
+                }
                 TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
-                StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
+                StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true, target));
             }
             else
             {
                 TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
-                StartCoroutine(SpawnTrail(trail, bulletSpawnPoint.position + direction * 100, Vector3.zero, false));
+                StartCoroutine(SpawnTrail(trail, bulletSpawnPoint.position + direction * 100, Vector3.zero, false, target));
             }
         }
 
         lastShootTime = Time.time;
     }
 
-    private void CalculateFire(Transform bulletSpawnPoint, Vector3 direction, int pelletCount)
-    {
-        for (int i = 0; i < pelletCount; i++)
-        {
-            RaycastHit hit;
-
-            if (Physics.Raycast(bulletSpawnPoint.position, direction, out hit, GetGunData().Range, mask))
-            {
-                TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
-                StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
-            }
-            else
-            {
-                TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
-                StartCoroutine(SpawnTrail(trail, bulletSpawnPoint.position + direction * 100, Vector3.zero, false));
-            }
-        }
-    }
 
     private Vector3 GetDirection()
     {
@@ -154,7 +140,7 @@ public class GunShotgun : Gun
         return direction;
     }
 
-    private IEnumerator SpawnTrail(TrailRenderer Trail, Vector3 HitPoint, Vector3 HitNormal, bool MadeImpact)
+    private IEnumerator SpawnTrail(TrailRenderer Trail, Vector3 HitPoint, Vector3 HitNormal, bool MadeImpact, IDamagable target)
     {
         Vector3 startPosition = Trail.transform.position;
         float distance = Vector3.Distance(Trail.transform.position, HitPoint);
@@ -173,6 +159,8 @@ public class GunShotgun : Gun
         if (MadeImpact)
         {
             Instantiate(impactParticleSystem, HitPoint, Quaternion.LookRotation(HitNormal));
+            if (target != null)
+                target.TakeDamage(GetGunData().BulletDamage);
         }
 
         Destroy(Trail.gameObject, Trail.time);

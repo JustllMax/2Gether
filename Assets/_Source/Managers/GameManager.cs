@@ -20,9 +20,6 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
-        
-        
-
         if (_instance != null && _instance != this)
         {
             Destroy(this);
@@ -67,6 +64,7 @@ public class GameManager : MonoBehaviour
     
 
     public PlayerController GetPlayerController() { return _playerController; }
+
     public Transform GetMainBaseTransform() {  return mainBaseTransform; }
     public void SetMainBaseTransform(Transform mainBase) {  mainBaseTransform = mainBase; }
     public bool IsPlayerAlive() {  return isPlayerAlive; }
@@ -75,4 +73,5 @@ public class GameManager : MonoBehaviour
     {
         isPlayerAlive = false;
     }
+    
 }

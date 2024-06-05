@@ -19,9 +19,9 @@ TagManager:
   - Building
   - MainBuilding
   - Terrain
+  - 
+  - MainSurface
   - Way
-  - BuildingNavMesh
-  - PlayerNavMesh
   - 
   - 
   - 

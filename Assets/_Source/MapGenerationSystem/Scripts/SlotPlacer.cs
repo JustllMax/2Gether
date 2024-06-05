@@ -148,7 +148,7 @@ public class SlotPlacer : MonoBehaviour
                     {
                         path.name = "spawn " + i++;
                         path.gameObject.transform.SetParent(this.transform.GetChild(1));
-                        
+
                         _spawnSlots.Add(path);
                     }
                     else
@@ -252,16 +252,16 @@ public class SlotPlacer : MonoBehaviour
     {
         if (x > 0 && x < mapSize.x - 1 && y > 0 && y < mapSize.y - 1)
         {
-            if (isHaveNeighbor(_map[x - 1, y]) && isHaveNeighbor(_map[x + 1, y]))
+            if (isHaveNeighbor(_map[x - 1, y]) && isHaveNeighbor(_map[x + 1, y])
+            ||
+                isHaveNeighbor(_map[x, y - 1]) && isHaveNeighbor(_map[x, y + 1]))
             {
                 return false;
             }
 
-            if (isHaveNeighbor(_map[x, y - 1]) && isHaveNeighbor(_map[x, y + 1]))
-            {
-                return false;
-            }
         }
+
+
         return true;
     }
 }

@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6739f286bfac98c4687346f7a97fd200, type: 3}
-  m_Name: MeleeAttackState
+  m_Script: {fileID: 11500000, guid: c7da1d654d2d95b478fd1575188d5cb3, type: 3}
+  m_Name: ChasePlayerState
   m_EditorClassIdentifier: 
-  weight: 3
-  animName: 1
-  AnimDelay: 0
+  weight: 2
+  animName: 0

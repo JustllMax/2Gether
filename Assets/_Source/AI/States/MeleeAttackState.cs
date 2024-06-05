@@ -6,13 +6,11 @@ using UnityEngine;
 public class MeleeAttackState : AIState
 {
 
-
-
     bool firstAttackFlag = true;
 
     public override void OnStart(AIController controller)
     {
-        Debug.Log(this + " Started");
+        Debug.Log(this + " Started, flag: "  + firstAttackFlag);
         if (controller.lastAttackTime >= 0.1f)
         {
             firstAttackFlag = false;
@@ -33,7 +31,7 @@ public class MeleeAttackState : AIState
             }
 
             
-            PerformAttack(controller);
+           controller.StartCoroutine(PerformAttack(controller));
         }
     }
 
@@ -50,15 +48,14 @@ public class MeleeAttackState : AIState
         return controller.distanceToTarget <= controller.GetEnemyStats().AttackRange && controller.CanAttack();
     }
 
-    void PerformAttack(AIController controller)
+    public IEnumerator PerformAttack(AIController controller)
     {
-
+        yield return new WaitForSeconds(AnimDelay);
         Debug.Log(this + " attack performed");
 
         controller.lastAttackTime = Time.time;
         Vector3 dir = (controller.GetCurrentTarget().transform.position - controller.GetCurrentPosition()).normalized;
         Vector3 spawnPos = controller.transform.position + dir * controller.GetEnemyStats().AttackRange;
-        Debug.Log(spawnPos);
         //Layermask that hits everything except the terrain
         int buildingMask = 1 << LayerMask.NameToLayer(TargetType.Player.ToString());
         int playerMask = 1 << LayerMask.NameToLayer(TargetType.Building.ToString());
@@ -72,6 +69,7 @@ public class MeleeAttackState : AIState
             {
                 if(hit.GetComponent<IDamagable>().TakeDamage(controller.GetEnemyStats().AttackDamage) == true)
                 {
+                    Debug.Log(this + "Target died");
                     controller.distanceToTarget = 100000f;
                     controller.SetCurrentTarget(new AITarget( null, null));
                 }

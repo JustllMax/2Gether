@@ -13,7 +13,10 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     float _health = 100f;
 
     [SerializeField]
-    private Transform _camera;
+    private Transform _nightCamera;
+
+    [SerializeField]
+    private Transform _gunCamera;
 
     [SerializeField]
     private float _cameraSensitivity = 0.1f;
@@ -158,7 +161,10 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         _cameraAngleX += mouseInput.y * _cameraSensitivity;
         _cameraAngleX = Mathf.Clamp(_cameraAngleX, -90, 90);
 
-        _camera.localRotation = Quaternion.Euler(new Vector3(-_cameraAngleX, 0, 0));
+        _nightCamera.localRotation = Quaternion.Euler(new Vector3(-_cameraAngleX, 0, 0));
+
+        _gunCamera.rotation = _nightCamera.rotation;
+
     }
 
     private void OnJump(InputAction.CallbackContext context)
@@ -201,7 +207,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         Vector3 movement = _lastMovementDir;
         if (movement == Vector3.zero)
         {
-            movement = _camera.transform.forward;
+            movement = _nightCamera.transform.forward;
             movement.y = 0f;
         }
         movement = movement.normalized;
