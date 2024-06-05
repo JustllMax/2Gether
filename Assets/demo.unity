@@ -392,6 +392,16 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.20118868
       objectReference: {fileID: 0}
+    - target: {fileID: 3302942156999400615, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
+        type: 3}
+      propertyPath: TopDownMovement
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3302942156999400615, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
+        type: 3}
+      propertyPath: LeftRightDistance
+      value: -200
+      objectReference: {fileID: 0}
     - target: {fileID: 5830323962992596256, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_Name
@@ -714,7 +724,10 @@ MonoBehaviour:
   - {fileID: 1245027202219669942, guid: c00fc4b72e3fe5e498ac8895ddf8f631, type: 3}
   - {fileID: 1245027202219669942, guid: 440da7e4c06890d49af4400266af4282, type: 3}
   - {fileID: 1245027202219669942, guid: 9e2e81003956054488282ea90422df5e, type: 3}
-  emptySlotPrefabs: []
+  emptySlotPrefabs:
+  - {fileID: 2921056365862328451, guid: efbb994236c1fdb4881d72c0bb9345b6, type: 3}
+  - {fileID: 2921056365862328451, guid: bb386dcbb6e148a48984283b05a0b930, type: 3}
+  - {fileID: 2921056365862328451, guid: 1177ba66b283e0d4aa13b4e3d904379d, type: 3}
   startingSlot: {fileID: 2229698089831652448, guid: 27093c5f5d5bb8f4bbf11a4a777c6404,
     type: 3}
   maps:
