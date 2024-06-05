@@ -180,6 +180,7 @@ public class PlayerEquipment : MonoBehaviour
         Reload();
     }
 
+    //Called by AnimEvents
     private bool Reload()
     {
         GunType gunType = _currentGun.GetGunData().GunType;

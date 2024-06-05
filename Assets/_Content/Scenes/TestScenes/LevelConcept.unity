@@ -4955,6 +4955,59 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5668833170292645477, guid: 64786b0489090a845957caf0bed36997, type: 3}
+--- !u!1 &428091970
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 428091972}
+  - component: {fileID: 428091971}
+  m_Layer: 0
+  m_Name: enemy_spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &428091971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428091970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3853811d5276254fba5d9be9abbd412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 919132149155446097, guid: 849b7a22247e9a94c8af041767a69c28,
+    type: 3}
+  spawnEffectParticles1: {fileID: 2108609105544464945, guid: 3ef91c0dbb5de8e4c8b693ffacea1a0c,
+    type: 3}
+  spawnEffectParticles2: {fileID: 6723271489475600451, guid: 336088f1e9b7597449973ac1f9b51579,
+    type: 3}
+  riftDuration: 2
+  enemyWidth: 1
+  enemyHeight: 1
+--- !u!4 &428091972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428091970}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.918, y: 0.722, z: -37.09}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &431750156
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16610,6 +16663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c7a75ff634b8c44e84422649490bd92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsDay: 0
 --- !u!4 &1486458934 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 44645214dc391594fba71b0a0e238e6c,
@@ -17578,6 +17632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GunCameraObj: {fileID: 734889130}
+  GunCameradDisplayUI: {fileID: 0}
   dayCamera: {fileID: 8499678231340958813}
   nightCamera: {fileID: 1955290379}
   crosshairUI: {fileID: 1552451357}
@@ -23085,3 +23140,4 @@ SceneRoots:
   - {fileID: 51022526}
   - {fileID: 1815802888}
   - {fileID: 1408577223}
+  - {fileID: 428091972}

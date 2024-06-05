@@ -3,7 +3,12 @@ guid: 849b7a22247e9a94c8af041767a69c28
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: droid.png
+    second: {fileID: 2100000, guid: 2a74ee29631fe024aa794bb53ccfacb4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

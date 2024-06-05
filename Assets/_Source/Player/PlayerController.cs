@@ -6,8 +6,12 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 {
+
+    [SerializeField]
+    float _health = 100f;
+
     [SerializeField]
     private Transform _camera;
 
@@ -59,8 +63,15 @@ public class PlayerController : MonoBehaviour
     private Vector3 _lastMovementDir;
     private float _cameraAngleX;
 
+    public bool IsTargetable { get; set; }
+    public TargetType TargetType { get; set; }
+    public float Health { get; set; }
+
     private void Awake()
     {
+        Health = _health;
+        IsTargetable = true;
+        TargetType = TargetType.Player;
         Application.targetFrameRate = 300;
         _characterController = GetComponent<CharacterController>();
         _audioSource = GetComponent<AudioSource>();
@@ -213,5 +224,24 @@ public class PlayerController : MonoBehaviour
             await UniTask.Yield();
         }
         _isDashing = false;
+    }
+
+    public bool TakeDamage(float damage)
+    {
+
+        Health -= damage;
+        if(Health <= 0)
+        {
+            Kill();
+            return true;
+        }
+        return false;
+    }
+
+    public void Kill()
+    {
+        IsTargetable = false;
+        
+        return;
     }
 }
