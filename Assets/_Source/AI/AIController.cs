@@ -88,8 +88,6 @@ public class AIController : MonoBehaviour, IDamagable
     #endregion
     private void Awake()
     {
-        GameManager.OnGameManagerReady += OnStart;
-
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.speed = GetEnemyStats().MovementSpeed;
 
@@ -98,46 +96,31 @@ public class AIController : MonoBehaviour, IDamagable
 
         remainingAttacks = GetEnemyStats().AttackAmount;
         Health = GetEnemyStats().Health;
-    }
 
-
-    void OnDestroy()
-    {
-        NavMeshSurfaceManager.OnNavMeshGenerated -= OnStart;
-    }
-
-    void OnStart()
-    {
         currentState = _AIStates[0];
-        currentState.OnStart(this);
-        isMapGenerated = true;
     }
 
     void Start()
     {
-        currentState = _AIStates[0];
         currentState.OnStart(this);
     }
 
     public void Update()
     {
-        if (isMapGenerated)
+        if (attackTimer < stats.AttackFireRate)
         {
-            if (attackTimer < stats.AttackFireRate)
-            {
-                attackTimer += Time.deltaTime;
-            }
+            attackTimer += Time.deltaTime;
+        }
 
-            if (ShouldSearchForTarget())
-            {
-                SearchForTarget();
-            }
+        if (ShouldSearchForTarget())
+        {
+            SearchForTarget();
+        }
 
-            if (currentState != null)
-            {
-                currentState.OnUpdate(this);
-                ChangeState();
-            }
+        if (currentState != null)
+        {
+            currentState.OnUpdate(this);
+            ChangeState();
         }
     }
 
@@ -157,6 +140,7 @@ public class AIController : MonoBehaviour, IDamagable
     {
         Transform target = null;
         ITargetable targetable = null;
+
         //Layermask that hits everything except the terrain
         int layerMask = ~(1 << LayerMask.NameToLayer("Terrain"));
         float radius = GetEnemyStats().AttackRange * 3f;

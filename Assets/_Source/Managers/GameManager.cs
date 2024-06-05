@@ -20,8 +20,7 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
-        SlotPlacer.OnMapGenerated += OnMapGenerated;
-        NavMeshSurfaceManager.OnNavMeshGenerated += OnNavMeshGenerated;
+        
         
 
         if (_instance != null && _instance != this)
@@ -31,8 +30,12 @@ public class GameManager : MonoBehaviour
         }
         _instance = this;
     }
-    
-    void OnDestroy()
+    void OnEnable()
+    {   
+        SlotPlacer.OnMapGenerated += OnMapGenerated;
+        NavMeshSurfaceManager.OnNavMeshGenerated += OnNavMeshGenerated;
+    }
+    void OnDisable()
     {
         SlotPlacer.OnMapGenerated -= OnMapGenerated;
         NavMeshSurfaceManager.OnNavMeshGenerated -= OnNavMeshGenerated;
@@ -55,6 +58,7 @@ public class GameManager : MonoBehaviour
     {
         if (isMapReady && isNavMeshReady)
         {
+            Debug.Log("GameManager Invoke");
             OnGameManagerReady?.Invoke();
         }
     }

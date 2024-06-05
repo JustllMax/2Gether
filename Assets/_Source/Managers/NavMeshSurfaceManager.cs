@@ -11,12 +11,12 @@ public class NavMeshSurfaceManager : MonoBehaviour
     public delegate void NavMeshGeneratedHandler();
     public static event Action OnNavMeshGenerated;
 
-    void Awake()
+    void OnEnable()
     {
+        SlotPlacer.OnMapGenerated -= OnMapGenerated;
         SlotPlacer.OnMapGenerated += OnMapGenerated;
-        
     }
-    void OnDestroy()
+    void OnDisable()
     {
         SlotPlacer.OnMapGenerated -= OnMapGenerated;
     }
@@ -32,6 +32,8 @@ public class NavMeshSurfaceManager : MonoBehaviour
     {
         BakeAllNavMeshes();
 
+        Debug.Log("NavMesh Invoke");
         OnNavMeshGenerated?.Invoke();
+
     }
 }

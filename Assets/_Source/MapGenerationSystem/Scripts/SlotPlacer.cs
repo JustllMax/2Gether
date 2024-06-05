@@ -72,6 +72,7 @@ public class SlotPlacer : MonoBehaviour
         _startPos = maps[mapId].startPos;
         Generate();
 
+        Debug.Log("SlotPlacer Invoke");
         OnMapGenerated?.Invoke();
     }
 
@@ -92,6 +93,7 @@ public class SlotPlacer : MonoBehaviour
 
     void GenerateMap()
     {
+        int i = 0;
         PathSlot path = new();
         for (int y = 0; y < mapSize.y; y++)
         {
@@ -144,7 +146,9 @@ public class SlotPlacer : MonoBehaviour
 
                     if (path.slot.value == 1)
                     {
+                        path.name = "spawn " + i++;
                         path.gameObject.transform.SetParent(this.transform.GetChild(1));
+                        
                         _spawnSlots.Add(path);
                     }
                     else
