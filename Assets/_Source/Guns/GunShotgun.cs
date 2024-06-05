@@ -23,11 +23,13 @@ public class GunShotgun : Gun
     [SerializeField]
     private float bulletSpeed = 100;
 
-    private float shootDelay = 0.2f;
-    private float spreadAngle = 5f; // K¹t rozproszenia dla dwóch pocisków
+    private float shootDelay;
+    private float spreadAngle = 2f; // K¹t rozproszenia dla dwóch pocisków
+    private int pelletsPerShot = 6;
 
     private Animator animator;
-    private float LastShootTime;
+    private float lastShootTime;
+
     void Start()
     {
         animator = GetComponentInParent<Animator>();
@@ -37,14 +39,14 @@ public class GunShotgun : Gun
 
     public override void Fire(bool isSameButtonPress, Transform bulletSpawnPoint)
     {
-        if (LastShootTime + shootDelay < Time.time)
+        if (lastShootTime + shootDelay < Time.time)
         {
             if (isSameButtonPress)
             {
                 return;
             }
             ammoInMagazine -= 1;
-            CalculateFire(bulletSpawnPoint);
+            CalculateFire(bulletSpawnPoint, pelletsPerShot);
         }
     }
 
@@ -54,17 +56,11 @@ public class GunShotgun : Gun
 
         Debug.Log(this + " Aim");
 
-        if (LastShootTime + shootDelay < Time.time)
+        if (lastShootTime + shootDelay < Time.time)
         {
             ammoInMagazine -= 2;
 
-            Vector3 leftDirection = Quaternion.Euler(0, -spreadAngle, 0) * bulletSpawnPoint.forward;
-            Vector3 rightDirection = Quaternion.Euler(0, spreadAngle, 0) * bulletSpawnPoint.forward;
-
-            CalculateFire(bulletSpawnPoint, leftDirection);
-            CalculateFire(bulletSpawnPoint, rightDirection);
-
-            LastShootTime = Time.time;
+            lastShootTime = Time.time;
         }
 
         isAiming = false;
@@ -97,51 +93,46 @@ public class GunShotgun : Gun
         return false;
     }
 
-    private void CalculateFire(Transform bulletSpawnPoint)
+    private void CalculateFire(Transform bulletSpawnPoint, int pelletCount)
     {
         Debug.Log(this + " Fire " + (ammoInMagazine - 1));
 
-        RaycastHit hit;
-
-        Vector3 direction = GetDirection();
-
-        if (Physics.Raycast(bulletSpawnPoint.position, direction, out hit, GetGunData().Range, mask))
+        for (int i = 0; i < pelletCount; i++)
         {
-            TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
+            Vector3 direction = GetDirection();
+            RaycastHit hit;
 
-            StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
-
-            LastShootTime = Time.time;
+            if (Physics.Raycast(bulletSpawnPoint.position, direction, out hit, GetGunData().Range, mask))
+            {
+                TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
+                StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
+            }
+            else
+            {
+                TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
+                StartCoroutine(SpawnTrail(trail, bulletSpawnPoint.position + direction * 100, Vector3.zero, false));
+            }
         }
-        else
-        {
-            TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
 
-            StartCoroutine(SpawnTrail(trail, bulletSpawnPoint.position + GetDirection() * 100, Vector3.zero, false));
-
-            LastShootTime = Time.time;
-        }
+        lastShootTime = Time.time;
     }
 
-    private void CalculateFire(Transform bulletSpawnPoint, Vector3 direction)
+    private void CalculateFire(Transform bulletSpawnPoint, Vector3 direction, int pelletCount)
     {
-        RaycastHit hit;
-
-        if (Physics.Raycast(bulletSpawnPoint.position, direction, out hit, GetGunData().Range, mask))
+        for (int i = 0; i < pelletCount; i++)
         {
-            TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
+            RaycastHit hit;
 
-            StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
-
-            LastShootTime = Time.time;
-        }
-        else
-        {
-            TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
-
-            StartCoroutine(SpawnTrail(trail, bulletSpawnPoint.position + direction * 100, Vector3.zero, false));
-
-            LastShootTime = Time.time;
+            if (Physics.Raycast(bulletSpawnPoint.position, direction, out hit, GetGunData().Range, mask))
+            {
+                TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
+                StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
+            }
+            else
+            {
+                TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
+                StartCoroutine(SpawnTrail(trail, bulletSpawnPoint.position + direction * 100, Vector3.zero, false));
+            }
         }
     }
 
