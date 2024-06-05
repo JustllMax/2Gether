@@ -233,7 +233,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
     public bool TakeDamage(float damage)
     {
-
+        Debug.Log(this + "took " + damage + " damage");
         Health -= damage;
         if(Health <= 0)
         {

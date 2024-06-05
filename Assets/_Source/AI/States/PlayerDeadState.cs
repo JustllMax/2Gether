@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters;
-using UnityEditorInternal;
 using UnityEngine;
 
 
@@ -45,5 +44,12 @@ public class PlayerDeadState : AIState
         return !GameManager.Instance.IsPlayerAlive() && !controller.CanAttack();
     }
 
-   
+
+    public override bool CanExitState(AIController controller)
+    {
+        return AnimationComplete(controller);
+    }
+
+
+
 }

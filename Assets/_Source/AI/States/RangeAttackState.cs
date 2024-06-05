@@ -8,13 +8,11 @@ public class RangedAttackState : AIState
 
     GameObject P_Bullet;
     float bulletShootForce;
-
-    float lastAttackTime = 0f;
     bool firstAttackFlag = true;
 
     public override void OnStart(AIController controller)
     {
-        if(lastAttackTime != 0f)
+        if(controller.lastAttackTime != 0f)
         {
             firstAttackFlag = false;
         }
@@ -33,14 +31,14 @@ public class RangedAttackState : AIState
             }
         }
 
-        if (firstAttackFlag || Time.time > lastAttackTime + controller.GetEnemyStats().AttackFireRate )
+        if (firstAttackFlag || controller.lastAttackTime >= controller.GetEnemyStats().AttackFireRate )
         {
             if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
             {
                 controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
             }
 
-            PerformAttack(controller);
+            controller.StartCoroutine(PerformAttack(controller));
         }
 
 
@@ -51,15 +49,25 @@ public class RangedAttackState : AIState
        
     }
 
+    public override bool CanExitState(AIController controller)
+    {
+        return AttackAnimationComplete(controller);
+    }
 
     public override bool CanChangeToState(AIController controller)
     {
         return  controller.distanceToTarget <= controller.GetEnemyStats().AttackRange && controller.CanAttack();
     }
 
-    void PerformAttack(AIController controller)
+    private bool AttackAnimationComplete(AIController controller)
     {
-        lastAttackTime = Time.time;
+        return !controller.GetAnimator().GetCurrentAnimatorStateInfo(0).IsName(animName.ToString());
+    }
+    IEnumerator PerformAttack(AIController controller)
+    {
+        controller.lastAttackTime = 0f;
+        yield return new WaitForSeconds(AnimDelay);
+
         Vector3 dir = (controller.GetCurrentPosition() - controller.GetCurrentTarget().transform.position).normalized;
         AIBullet bullet = AIBulletManager.Instance.Pool.Get();
         bullet.SetDirection(dir);

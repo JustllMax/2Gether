@@ -43,6 +43,11 @@ public class WalkOnPathState : AIState
         controller.GetNavMeshAgent().ResetPath();
     }
 
+    public override bool CanExitState(AIController controller)
+    {
+        return true;
+    }
+
     public override bool CanChangeToState(AIController controller)
     {
         
