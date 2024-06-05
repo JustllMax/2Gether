@@ -95,6 +95,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerController: {fileID: 0}
   mainBaseTransform: {fileID: 0}
+  _cardManager: {fileID: 0}
+  InitialCardPool: {fileID: 11400000, guid: fb854cbca87ab514084056523bea7b0d, type: 2}
 --- !u!1 &5403551339617535328
 GameObject:
   m_ObjectHideFlags: 0
