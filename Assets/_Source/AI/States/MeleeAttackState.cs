@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MeleeAttackState", menuName = ("2Gether/AI/States/MeleeAttack"))]
 public class MeleeAttackState : AIState
 {
-
-
+    [SerializeField]
+    LayerMask mask;
     public override void OnStart(AIController controller)
     {
 
@@ -57,17 +57,14 @@ public class MeleeAttackState : AIState
 
         Vector3 dir = (controller.GetCurrentTarget().transform.position - controller.GetCurrentPosition()).normalized;
         Vector3 spawnPos = controller.transform.position + dir * controller.GetEnemyStats().AttackRange;
-        //Layermask that hits everything except the terrain
-        int buildingMask = 1 << LayerMask.NameToLayer(TargetType.Player.ToString()); 
-        int playerMask = 1 << LayerMask.NameToLayer(TargetType.Building.ToString());
-        int layerMask = buildingMask | playerMask;
-            
+     
 
-        var hits = Physics.OverlapSphere(spawnPos, controller.GetEnemyStats().AttackRadius, layerMask);
-        foreach ( var hit in hits )
+        var hits = Physics.OverlapSphere(spawnPos, controller.GetEnemyStats().AttackRadius, mask);
+        foreach (var hit in hits )
         {
             if(hit.TryGetComponent(out ITargetable targetable))
             {
+
                 if(hit.GetComponent<IDamagable>().TakeDamage(controller.GetEnemyStats().AttackDamage) == true)
                 {
                     Debug.Log(this + "Target died");
