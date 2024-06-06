@@ -27,7 +27,7 @@ public class DayNightCycleManager : MonoBehaviour
     public static event Action NightBegin;
     public static event Action NightEnd;
 
-
+    public bool IsDay;
     private void Start()
     {
         EndNightCycle();        
@@ -52,12 +52,14 @@ public class DayNightCycleManager : MonoBehaviour
 
     public void EndDayCycle()
     {
+        IsDay = false;
         DayEnd?.Invoke();
         NightBegin?.Invoke();
     }
 
     public void EndNightCycle()
     {
+        IsDay = true;
         NightEnd?.Invoke();
         DayBegin?.Invoke();
     }

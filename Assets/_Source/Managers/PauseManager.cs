@@ -26,58 +26,47 @@ public class PauseManager : MonoBehaviour
 
     void Start()
     {
-        InputManager.Instance.GetPlayerInputAction().AllTime.Pause.performed += PauseGame;
+        InputManager.Instance.GetPlayerInputAction().AllTime.Pause.performed += PauseGameInput;
 
     }
 
     private void Update()
     {
+        //TODO: DELETE AFTER INPUT MANAGER FIX
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseGame();
         }
     }
 
-    void PauseGame(InputAction.CallbackContext context)
+    void PauseGameInput(InputAction.CallbackContext context)
     {
-
-        Debug.Log("Pauza");
-
-        if (isGamePaused == false)
-        {
-            isGamePaused = true;
-            pauseMenu.SetActive(true);
-            Time.timeScale = 0f;
-            InputManager.Instance.DisableControllers();
-        }
-        else
-        {
-            isGamePaused = false;
-            pauseMenu.SetActive(false);
-            Time.timeScale = 1f;
-            InputManager.Instance.EnableControllers();
-
-        }
-
+        PauseGame();
     }
 
-
-    //DO USUNIECIA PO NAPRAWWIENIU Z INPUT SYSTEMEM
-    void PauseGame()
+    public void PauseGame()
     {
 
-        Debug.Log("Pauza");
 
 
+        //Pause
         if (isGamePaused == false)
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             isGamePaused = true;
             pauseMenu.SetActive(true);
             Time.timeScale = 0f;
             InputManager.Instance.DisableControllers();
         }
+        //Unpause
         else
         {
+            if (!DayNightCycleManager.Instance.IsDay)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
             isGamePaused = false;
             pauseMenu.SetActive(false);
             Time.timeScale = 1f;

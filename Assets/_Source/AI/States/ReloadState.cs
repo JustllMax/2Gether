@@ -34,4 +34,9 @@ public class ReloadState : AIState
         return controller.distanceToTarget <= controller.GetEnemyStats().AttackRange && controller.remainingAttacks <= 0;
     }
 
+    public override bool CanExitState(AIController controller)
+    {
+        return AnimationComplete(controller);
+    }
+
 }

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters;
-using UnityEditorInternal;
 using UnityEngine;
 
 
@@ -12,30 +11,39 @@ public class PlayerDeadState : AIState
     AITarget mainBaseTarget;
     public override void OnStart(AIController controller)
     {
-
-        if(mainBase == null)
+        
+        Debug.Log(this + " Started");
+        if (GameManager.Instance.GetMainBaseTransform() != null)
         {
             mainBase = GameManager.Instance.GetMainBaseTransform();
             mainBaseTarget = new AITarget(mainBase, mainBase.GetComponent<ITargetable>());
             controller.SetCurrentTarget(mainBaseTarget);
-        }  
+            Debug.Log(this + " Target set to " + mainBaseTarget.transform);
+
+            controller.GetNavMeshAgent().SetDestination(mainBase.position);
+
+        }
+
 
         if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
         {
             controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
         }
-        controller.GetNavMeshAgent().SetDestination(mainBaseTarget.transform.position);
+
+
+
 
     }
 
     public override void OnUpdate(AIController controller)
     {
-        controller.distanceToTarget = controller.GetNavMeshAgent().remainingDistance;
+
     }
 
 
     public override void OnExit(AIController controller)
     {
+        Debug.Log(this + " Exited");
         controller.GetNavMeshAgent().ResetPath();
     }
 
@@ -45,5 +53,12 @@ public class PlayerDeadState : AIState
         return !GameManager.Instance.IsPlayerAlive() && !controller.CanAttack();
     }
 
-   
+
+    public override bool CanExitState(AIController controller)
+    {
+        return true;
+    }
+
+
+
 }

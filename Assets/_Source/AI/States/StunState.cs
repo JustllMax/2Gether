@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "IdleState_", menuName = ("2Gether/AI/States/IdleState"))]
@@ -36,11 +35,16 @@ public class StunState : AIState
         controller.GetNavMeshAgent().Resume();
 
     }
+    public override bool CanExitState(AIController controller)
+    {
+        return true;
+    }
 
     public override bool CanChangeToState(AIController controller)
     {
         return controller.IsStunned();
     }
+
 
 
 

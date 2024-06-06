@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6bfb61264c297341826b1e229c0dfeb, type: 3}
+  m_Name: way_2
+  m_EditorClassIdentifier: 
+  id: 2
+  slotAnchors:
+  - {fileID: 11400000, guid: b01c5d3bdcedd1a418d6fc88ee11c7b6, type: 2}
+  - {fileID: 11400000, guid: b01c5d3bdcedd1a418d6fc88ee11c7b6, type: 2}
+  - {fileID: 11400000, guid: 1ade85ef11b7ebe4a97af971f71f89eb, type: 2}
+  - {fileID: 11400000, guid: 1ade85ef11b7ebe4a97af971f71f89eb, type: 2}
