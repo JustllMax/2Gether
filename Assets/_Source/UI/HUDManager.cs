@@ -120,7 +120,7 @@ public class HUDManager : MonoBehaviour
                 t = (GunType)i;
                 if (crosshair.name.ToLower().Contains(t.ToString().ToLower()))
                 {
-                    IconsDictionary.Add(t, crosshair);
+                    CrosshairsDictionary.Add(t, crosshair);
                 }
             }
         }
