@@ -457,13 +457,40 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Krzysztof Szwedkowicz - Leader, Developer\nKacper Mrowka - Art Leader,
-    2D Graphic Designer\nJakub Szczukiewicz - Technical Leader, Developer\nJakub
-    Staniek - Design Leader, 3D Graphic Designer\nRadoslaw Suwala - Sound Leader,
-    Audio Designer\nJakub Sedek - Model Leader, 3D Graphic Designer, Developer\nAnna
-    Piasta - 2D Graphic Designer\nDaniel Cieslak - \nHanna Sokol - Developer\nHubert
-    Futrzynski - Developer\nIllia Yanchenko - \nLev Zubenko - Developer\nMateusz
-    Szczepanski - 2D Graphic Designer\nRuslan Pohonets - Developer"
+  m_text: 'Krzysztof Szwedkowicz - Leader, Developer
+
+    Kacper Mrowka - Art Leader,
+    2D Graphic Designer
+
+    Jakub Szczukiewicz - Technical Leader, Developer
+
+    Jakub
+    Staniek - Design Leader, 3D Graphic Designer
+
+    Radoslaw Suwala - Sound Leader,
+    Audio Designer
+
+    Jakub Sedek - Model Leader, 3D Graphic Designer, Developer
+
+    Anna
+    Piasta - 2D Graphic Designer
+
+    Daniel Cieslak - Game Designer, 3D Graphic
+    Designer
+
+    Hanna Sokol - Developer
+
+    Hubert Futrzynski - Developer
+
+    Illia
+    Yanchenko - Game Designer, 3D Graphic Designer
+
+    Lev Zubenko - Developer
+
+    Mateusz
+    Szczepanski - 2D Graphic Designer
+
+    Ruslan Pohonets - Developer'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7f3fa397946aff84fb3803766ac56b59, type: 2}
   m_sharedMaterial: {fileID: 1861433223186573922, guid: 7f3fa397946aff84fb3803766ac56b59,
