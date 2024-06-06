@@ -53,7 +53,7 @@ public class HUDManager : MonoBehaviour
         
     }
 
-    public void SetDashMaxTimer(float maxTimer)
+    public void SetAllDashesMaxTimer(float maxTimer)
     {
         foreach(var dash in  Dashes)
         {
@@ -63,6 +63,13 @@ public class HUDManager : MonoBehaviour
 
     public void SetDashCurrentTimer(int dashIndex, float timerValue)
     {
+
+        timerValue = Mathf.Clamp(timerValue, Dashes[dashIndex].minValue, Dashes[dashIndex].maxValue);
+
+        for(int i = dashIndex+1; i<Dashes.Count; i++)
+        {
+            Dashes[i].value = Dashes[i].minValue;
+        }
         Dashes[dashIndex].value = timerValue;
     }
 
@@ -70,8 +77,10 @@ public class HUDManager : MonoBehaviour
     {
         HealthBar.maxValue = maxHealth;
     }
-    public void SetHealth(float currentHealth)
+    public void SetCurrentHealth(float currentHealth)
     {
+        currentHealth = Mathf.Clamp(currentHealth, HealthBar.minValue, HealthBar.maxValue);
+
         HealthCurrentText.text = currentHealth.ToString();
         HealthBar.value = currentHealth;
     }
@@ -88,14 +97,16 @@ public class HUDManager : MonoBehaviour
     }
     public void SetCurrentAmmo(float currentAmmo)
     {
+        currentAmmo = Mathf.Clamp(currentAmmo, AmmoBar.minValue, AmmoBar.maxValue);
+
         AmmoCurrentText.text = currentAmmo.ToString();
         AmmoBar.value = currentAmmo;
     }
 
     public void SwitchGunOnHUD(float currentAmmo, float maxAmmo, GunType type)
     {
-        SetCurrentAmmo(currentAmmo);
         SetMaxAmmo(maxAmmo);
+        SetCurrentAmmo(currentAmmo);
         SetIcon(type);
     }
 }

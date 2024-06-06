@@ -22,7 +22,10 @@ public class GameManager : MonoBehaviour
         }
         _instance = this;
     }
-
+    private void Start()
+    {
+        Application.targetFrameRate = 300;
+    }
     private void OnEnable()
     {
         _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
