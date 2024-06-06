@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -500,7 +500,7 @@ PrefabInstance:
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.32552984
+      value: 0.32552987
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
@@ -783,6 +783,31 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
+    - target: {fileID: 4542388386687634158, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
+        type: 3}
+      propertyPath: mask.m_Bits
+      value: 33587991
+      objectReference: {fileID: 0}
+    - target: {fileID: 5244649489478406011, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5425135659821295255, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
+        type: 3}
+      propertyPath: mask.m_Bits
+      value: 33587991
+      objectReference: {fileID: 0}
+    - target: {fileID: 5993644629852351213, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
+        type: 3}
+      propertyPath: m_VolumeLayerMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554927876836099309, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 33591
+      objectReference: {fileID: 0}
     - target: {fileID: 7062071491655611484, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -838,6 +863,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8952495052658987910, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -867,18 +897,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 483909343}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &483909362 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 644348365738038138, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
-    type: 3}
-  m_PrefabInstance: {fileID: 483909343}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf41519b8b3551349bd88bb772b0fa03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &507531860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1601,6 +1619,74 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ce58ef33dd26454e94930b8ca7a424b, type: 3}
+--- !u!1001 &1168769212
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2375794257122518748, guid: c06c68b77dc061b40a9b37d6138b9fe1,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.381354
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375794257122518748, guid: c06c68b77dc061b40a9b37d6138b9fe1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.019351482
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375794257122518748, guid: c06c68b77dc061b40a9b37d6138b9fe1,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -31.9878
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375794257122518748, guid: c06c68b77dc061b40a9b37d6138b9fe1,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375794257122518748, guid: c06c68b77dc061b40a9b37d6138b9fe1,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375794257122518748, guid: c06c68b77dc061b40a9b37d6138b9fe1,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375794257122518748, guid: c06c68b77dc061b40a9b37d6138b9fe1,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375794257122518748, guid: c06c68b77dc061b40a9b37d6138b9fe1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375794257122518748, guid: c06c68b77dc061b40a9b37d6138b9fe1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375794257122518748, guid: c06c68b77dc061b40a9b37d6138b9fe1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1,
+        type: 3}
+      propertyPath: m_Name
+      value: P_Enemy_Bomberbot
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c06c68b77dc061b40a9b37d6138b9fe1, type: 3}
 --- !u!1001 &1264561763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2237,7 +2323,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _playerController
       value: 
-      objectReference: {fileID: 483909362}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4091,15 +4177,13 @@ MonoBehaviour:
   deathSound: {fileID: 0}
   hitboxCollider: {fileID: 0}
   DeathInvokeTime: 2
-  targetLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
   currentTarget:
     transform: {fileID: 0}
   distanceToTarget: 0
   lastAttackTime: 0
   isReloading: 0
   remainingAttacks: 0
+  _health: 0
 --- !u!33 &7188683131586783920
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4584,3 +4668,4 @@ SceneRoots:
   - {fileID: 6667620718401130194}
   - {fileID: 7583731493819858213}
   - {fileID: 2955687707103044860}
+  - {fileID: 1168769212}

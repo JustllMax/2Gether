@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8793631855307610355}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: weels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +31,7 @@ Transform:
   m_Children:
   - {fileID: 3610852110474111149}
   m_Father: {fileID: 3349545230942041135}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -42.5}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -53.38823}
 --- !u!1 &1240715776138231966
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4862477154288020491}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ Transform:
   m_Children:
   - {fileID: 1934093319088474757}
   m_Father: {fileID: 3349545230942041135}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -5}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -4.9999995}
 --- !u!1 &1753966064997202245
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3787683318410139597}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bone2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ Transform:
   - {fileID: 5682651367916298086}
   - {fileID: 3592282719674753423}
   m_Father: {fileID: 8467814594118726070}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -16.722223}
 --- !u!1 &2176282192093158552
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 4646001809612326250}
   - component: {fileID: 4385103886848689055}
   - component: {fileID: 8749357813796607041}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chainsaw_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 3592282719674753423}
   - component: {fileID: 8139000580494993749}
   - component: {fileID: 4067782619615122597}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,7 +274,7 @@ GameObject:
   - component: {fileID: 1934093319088474757}
   - component: {fileID: 7135656150491229532}
   - component: {fileID: 5302651633323838341}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 328198453962334861}
   - component: {fileID: 3398399582487899046}
   - component: {fileID: 4906218181099828468}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chainsaw_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,7 +440,7 @@ GameObject:
   - component: {fileID: 3349545230942041135}
   - component: {fileID: 2148259213738518681}
   - component: {fileID: 693353059567502335}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -518,7 +518,7 @@ GameObject:
   - component: {fileID: 2714615987184793}
   - component: {fileID: 5889322388628730390}
   - component: {fileID: 2349644838449303534}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -599,7 +599,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8467814594118726070}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chainsaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -622,7 +622,7 @@ Transform:
   - {fileID: 3787683318410139597}
   - {fileID: 5954743485762078379}
   m_Father: {fileID: 3349545230942041135}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -10}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -9.999999}
 --- !u!1 &6219354284539619549
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,7 +637,7 @@ GameObject:
   - component: {fileID: 159690152936407377}
   - component: {fileID: 2570586416541053031}
   - component: {fileID: 6231483698650858367}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: P_Enemy_Booger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -675,17 +675,14 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 7b368f0dbaa8a8946b42ed1bd92d972e, type: 2}
   _AIStates:
   - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
-  - {fileID: 11400000, guid: eb1298214d79bd648a8b3e2d577b10e5, type: 2}
+  - {fileID: 11400000, guid: cdbbc91e4a6186a408d77c3dd79f5214, type: 2}
   - {fileID: 11400000, guid: 7ff79690d78f3c14ca44a75e4afcac18, type: 2}
-  AITargetFocus: 0
+  AITargetFocus: 1
   hurtSound: {fileID: 0}
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}
   hitboxCollider: {fileID: 693353059567502335}
   DeathInvokeTime: 2
-  targetLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
   currentTarget:
     transform: {fileID: 0}
   distanceToTarget: 0
@@ -781,7 +778,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5682651367916298086}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -804,7 +801,7 @@ Transform:
   - {fileID: 4417582772560159232}
   - {fileID: 1127150926279333855}
   m_Father: {fileID: 3787683318410139597}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 72.00002, y: 0, z: 0}
 --- !u!1 &6925713948836534362
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,7 +813,7 @@ GameObject:
   - component: {fileID: 1127150926279333855}
   - component: {fileID: 2383893953843141339}
   - component: {fileID: 109085407542197337}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -899,7 +896,7 @@ GameObject:
   - component: {fileID: 3610852110474111149}
   - component: {fileID: 7272181344333608665}
   - component: {fileID: 8926138693163159048}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -980,7 +977,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4417582772560159232}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chainsaw2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1013,7 +1010,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5954743485762078379}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bone4
   m_TagString: Untagged
   m_Icon: {fileID: 0}

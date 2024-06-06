@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6739f286bfac98c4687346f7a97fd200, type: 3}
-  m_Name: MeleeAttackState
+  m_Script: {fileID: 11500000, guid: c84625a7f77178f49b7b8442b13033d6, type: 3}
+  m_Name: Bomberbot_ExplodeState
   m_EditorClassIdentifier: 
   weight: 3
-  animName: 1
-  AnimDelayForAttack: 0.1
+  animName: 3
+  AnimDelayForAttack: 0.5
   mask:
     serializedVersion: 2
-    m_Bits: 576
+    m_Bits: 0
