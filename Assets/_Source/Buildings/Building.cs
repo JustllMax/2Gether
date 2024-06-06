@@ -2,51 +2,75 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Building : MonoBehaviour
+public abstract class Building : MonoBehaviour, ITargetable, IDamagable
 {
+
+
     private const int UPGRADE_COUNTER_LIMIT = 2;
     private const int LEVEL_LIMIT = 3;
 
+    [SerializeField] protected float DestroyObjectDelay;
+    [SerializeField] protected Animator animator;
     [SerializeField] private BuildingUpgradePath _upgradeTiers;
-    
+    [Header("Audio")]
+    [SerializeField] protected AudioClip createDestroySound; // Played when building is created
+    [SerializeField] protected AudioClip upgradeSound; // Played when building is upgraded
+    [SerializeField] protected AudioClip activationSound; // Played when attacking / activating
+    [SerializeField] protected AudioClip takeHitSound; // Played when receiving damage
+    [SerializeField] protected AudioSource audioSource;
+    [Header("Particles")] 
+    [SerializeField] protected ParticleSystem createDestroyParticles;
+    [SerializeField] protected ParticleSystem upgradeParticles;
+
     private BuildingStatistics _buildingStatistics;
     private float attackTimer = 0;
     private int currentLevel = 1;
     private int upgradeCounter = 0;
+    protected float AttackCoolDownTimer = 5f;
+    [SerializeField] protected LayerMask targetLayerMask;
+    [SerializeField] protected LayerMask obstructionMask;
+    [HideInInspector] public bool IsTargetable { get; set; }
+    [HideInInspector] public TargetType TargetType { get; set; }
+    [HideInInspector] public float Health { get; set; }
 
-    //[Header("Audio")]
-    AudioClip buildSound; // Played when building is created
-    AudioClip upgradeSound; // Played when player upgrades the building
-    AudioClip activationSound; // Played when attacking / activating
+    public virtual void Awake()
+    {
+        animator = GetComponentInChildren<Animator>();
+        IsTargetable = true;
+        TargetType = TargetType.Building;
+        _buildingStatistics = _upgradeTiers.GetStatsForLevel(currentLevel);
+        Health = _buildingStatistics.HealthPoints;
 
+    }
 
     public virtual void Start()
     {
-        _buildingStatistics = _upgradeTiers.GetStatsForLevel(currentLevel);
+
     }
 
-    public virtual void Update()
-    {
-        /*
-        if(attackTimer < _buildingStatistics.ActivationTime) 
-        {
-            attackTimer += Time.deltaTime;
-        }
-        */
-    }
 
-    protected float AttackCoolDownTimer = 5f;
 
-    public virtual void AttackCooldown()
-    {
-        AttackCoolDownTimer -= Time.deltaTime;
-    }
+    public abstract bool TakeDamage(float damage);
+    public abstract void Kill();
 
+
+
+
+    #region ChildrenMethods
     public abstract void OnCreate();
     public abstract void OnAttack();
+    public virtual void OnSell()
+    {
+        GoldManager.Instance.GoldAdd(GetSellCost());
+    }
 
-    public abstract void OnTakeDamage();
+    public bool CanAttack()
+    {
+        return (attackTimer >= _buildingStatistics.ActivationTime);
+    }
+    #endregion ChildrenMethods
 
+    #region Upgrade
 
     public bool TryUpgrading(CardStatistics cardStats)
     {
@@ -78,16 +102,12 @@ public abstract class Building : MonoBehaviour
             upgradeCounter = 0;
         }     
     }
-    public void OnSell()
-    {
-        GoldManager.Instance.GoldAdd(GetSellCost());
-    }
 
-    public bool CanAttack()
-    {
-        return (attackTimer >= _buildingStatistics.ActivationTime);
-    }
+    #endregion Upgrade
 
+
+
+    #region GetSet
     public BuildingStatistics GetStats()
     {
         return _upgradeTiers.GetStatsForLevel(currentLevel);
@@ -100,8 +120,24 @@ public abstract class Building : MonoBehaviour
 
     public int GetSellCost()
     {
-        return _buildingStatistics.BaseSellCost + _buildingStatistics.BaseSellCost * upgradeCounter / 2;
+        return _buildingStatistics.SellCost + _buildingStatistics.SellCost * upgradeCounter / 2;
     }
 
+    public Animator GetAnimator()
+    {
+        return animator;
+    }
+
+    public AudioClip GetUpgradeSFX()
+    {
+        return upgradeSound;
+    }
+
+    public AudioClip GetCreateDestroySoundSFX()
+    {
+        return createDestroySound;
+    }
+
+    #endregion  GetSet
 
 }

@@ -309,6 +309,12 @@ public class AIController : MonoBehaviour, IDamagable
 
 
     #region GetSet
+
+    public bool IsDead()
+    {
+        return isDead;
+    }
+
     public EnemyStatistics GetEnemyStats()
     {
         return stats;

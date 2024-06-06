@@ -2,34 +2,65 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mine : MonoBehaviour
+public class Mine : Building
 {
-    public ParticleSystem particles;
-    public MeshRenderer meshRenderer;
+    [SerializeField] ParticleSystem explosionParticles;
+    [SerializeField] GameObject model;
 
 
-    void Start()
+    #region ChildrenMethods
+
+    public override void OnCreate()
     {
 
     }
 
-    void Update()
+    public override void OnAttack()
     {
-
-    }
-
-    public void OnAttack()
-    {
-        if (particles != null)
+        if (explosionParticles != null)
         {
-            particles.Play();
-            meshRenderer.enabled = false;
+            explosionParticles.Play();
+            model.SetActive(false);
         }
         else
         {
             Debug.Log("particle system not detected");
         }
     }
+
+
+    public override bool TakeDamage(float damage)
+    {
+        audioSource.PlayOneShot(takeHitSound);
+        Health -= damage;
+        if (Health <= 0)
+        {
+            Kill();
+            return true;
+        }
+        return false;
+    }
+
+    public override void Kill()
+    {
+        IsTargetable = false;
+        audioSource.PlayOneShot(createDestroySound);
+        createDestroyParticles.Play();
+        Invoke("DestroyObj", DestroyObjectDelay);
+    }
+
+    void DestroyObj()
+    {
+        Destroy(gameObject);
+    }
+
+    public override void OnSell()
+    {
+        base.OnSell();
+        Kill();
+    }
+
+    #endregion ChildrenMethods
 
     private void OnTriggerEnter(Collider other)
     {
@@ -43,16 +74,9 @@ public class Mine : MonoBehaviour
     {
         OnAttack();
         ExplosionDamage(transform.position, 2f, 7f);
-        Destroy(gameObject,1.1f);
+        Destroy(gameObject,0.2f);
     }
 
-    private void OnDestroy()
-    {
-        if (particles != null)
-        {
-            particles.Play();
-        }
-    }
 
     private void ExplosionDamage(Vector3 center, float radius, float force)
     {

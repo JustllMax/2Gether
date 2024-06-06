@@ -3,9 +3,6 @@ using UnityEngine;
 public class Healing : Building
 {
   
-    private float rangePlayer = 5f;
-    public int price = 200;
-
     private string playerTag = "Player";
     private string buildingTag = "Building";
 
@@ -16,15 +13,18 @@ public class Healing : Building
 
     public override void Start()
     {
-  
+        base.Start();
      
     }
 
-    public override void Update()
+    public void Update()
     {
        
     }
 
+
+
+    #region ChildrenMethods
 
     public override void OnCreate()
     {
@@ -42,11 +42,42 @@ public class Healing : Building
         {
             Debug.Log("particle system not detected");
         }
-
-
     }
 
-    public override void OnTakeDamage()
+
+    public override bool TakeDamage(float damage)
+    {
+        audioSource.PlayOneShot(takeHitSound);
+        Health -= damage;
+        if (Health <= 0)
+        {
+            Kill();
+            return true;
+        }
+        return false;
+    }
+
+    public override void Kill()
+    {
+        IsTargetable = false;
+        audioSource.PlayOneShot(createDestroySound);
+        createDestroyParticles.Play();
+        Invoke("DestroyObj", DestroyObjectDelay);
+    }
+
+    void DestroyObj()
+    {
+        Destroy(gameObject);
+    }
+
+    public override void OnSell()
+    {
+        base.OnSell();
+        Kill();
+    }
+
+    #endregion ChildrenMethods
+    public void OnTakeDamage()
     {
         //todo 
     }
@@ -57,7 +88,7 @@ public class Healing : Building
         Gizmos.color = Color.yellow;
         //Gizmos.DrawWireSphere(transform.position, rangeBuilding);
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, rangePlayer);
+        //Gizmos.DrawWireSphere(transform.position, rangePlayer);
     }
 
 

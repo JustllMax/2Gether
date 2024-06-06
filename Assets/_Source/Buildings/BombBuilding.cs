@@ -20,7 +20,7 @@ public class BombBuilding : Building
     {
     }
 
-    public override void Update()
+    public void Update()
     {
 
         if(fireContDown <= 0f && target)
@@ -35,19 +35,7 @@ public class BombBuilding : Building
             return;
     }
 
-    public override void OnAttack()
-    {
-        if (target != null)
-        {
-            GameObject bombGO = Instantiate(bombPrefab, firePoint.position, firePoint.rotation);
-            Bomb bomb = bombGO.GetComponent<Bomb>();
-            if(bomb != null)
-            {
-                bomb.SeekTarget(target);
-            }
 
-        }
-    }
     private void UpdateTarget()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
@@ -67,16 +55,60 @@ public class BombBuilding : Building
         target = nearestEnemy;
     }
 
+    #region ChildrenMethods
 
     public override void OnCreate()
     {
-        //todo
+
     }
 
-    public override void OnTakeDamage()
+    public override void OnAttack()
     {
-        //todo
+        if (target != null)
+        {
+            GameObject bombGO = Instantiate(bombPrefab, firePoint.position, firePoint.rotation);
+            Bomb bomb = bombGO.GetComponent<Bomb>();
+            if (bomb != null)
+            {
+                bomb.SeekTarget(target);
+            }
+
+        }
     }
+
+
+    public override bool TakeDamage(float damage)
+    {
+        audioSource.PlayOneShot(takeHitSound);
+        Health -= damage;
+        if (Health <= 0)
+        {
+            Kill();
+            return true;
+        }
+        return false;
+    }
+
+    public override void Kill()
+    {
+        IsTargetable = false;
+        audioSource.PlayOneShot(createDestroySound);
+        createDestroyParticles.Play();
+        Invoke("DestroyObj", DestroyObjectDelay);
+    }
+
+    void DestroyObj()
+    {
+        Destroy(gameObject);
+    }
+
+    public override void OnSell()
+    {
+        base.OnSell();
+        Kill();
+    }
+
+    #endregion ChildrenMethods
 
     void OnDrawGizmosSelected()
     {
