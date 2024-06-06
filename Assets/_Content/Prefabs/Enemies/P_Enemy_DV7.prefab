@@ -425,7 +425,6 @@ GameObject:
   - component: {fileID: 4207182611961012953}
   - component: {fileID: 5289232685078081423}
   - component: {fileID: 3308876308692035126}
-  - component: {fileID: 5284112098331814854}
   - component: {fileID: 585408364969161773}
   - component: {fileID: 342869260848099779}
   m_Layer: 0
@@ -472,6 +471,11 @@ MonoBehaviour:
   hurtSound: {fileID: 0}
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}
+  hitboxCollider: {fileID: 2288254540719958319}
+  DeathInvokeTime: 2
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   currentTarget:
     transform: {fileID: 0}
   distanceToTarget: 0
@@ -519,27 +523,6 @@ MonoBehaviour:
   m_IgnoreFromBuild: 1
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
---- !u!95 &5284112098331814854
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2303781138697332408}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 164b0cc916c495a40bdeed92049c13bc, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!54 &585408364969161773
 Rigidbody:
   m_ObjectHideFlags: 0
