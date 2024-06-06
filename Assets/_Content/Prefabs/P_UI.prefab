@@ -3561,6 +3561,21 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4245331007225944990, guid: 5f3284f4c2720994281c7bb2e494f38c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1242713567476957180}
+    - target: {fileID: 4245331007225944990, guid: 5f3284f4c2720994281c7bb2e494f38c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseSettings
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245331007225944990, guid: 5f3284f4c2720994281c7bb2e494f38c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 4584796675966748453, guid: 5f3284f4c2720994281c7bb2e494f38c,
         type: 3}
       propertyPath: m_AnchorMax.x
