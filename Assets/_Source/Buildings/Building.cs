@@ -108,7 +108,7 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
 
 
     #region GetSet
-    public BuildingStatistics GetStats()
+    public BuildingStatistics GetBaseStatistics()
     {
         return _upgradeTiers.GetStatsForLevel(currentLevel);
     }

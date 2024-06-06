@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserTurret : Building
+public class LaserBuilding : Building
 {
     
     public GameObject bulletPrefab;

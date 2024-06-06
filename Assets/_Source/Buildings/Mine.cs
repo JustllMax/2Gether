@@ -6,7 +6,22 @@ public class Mine : Building
 {
     [SerializeField] ParticleSystem explosionParticles;
     [SerializeField] GameObject model;
+    BuildingOffensiveStatistics statistics;
 
+
+    public override void Start()
+    {
+        statistics = GetBaseStatistics() as BuildingOffensiveStatistics;
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out AIController controller))
+        {
+            OnAttack();
+        }
+    }
 
     #region ChildrenMethods
 
@@ -18,14 +33,10 @@ public class Mine : Building
     public override void OnAttack()
     {
         if (explosionParticles != null)
-        {
             explosionParticles.Play();
-            model.SetActive(false);
-        }
-        else
-        {
-            Debug.Log("particle system not detected");
-        }
+
+        ExplosionDamage();
+        Kill();
     }
 
 
@@ -43,9 +54,14 @@ public class Mine : Building
 
     public override void Kill()
     {
+
+        if (createDestroyParticles != null)
+            createDestroyParticles.Play();
+
+        model.SetActive(false);
         IsTargetable = false;
         audioSource.PlayOneShot(createDestroySound);
-        createDestroyParticles.Play();
+       
         Invoke("DestroyObj", DestroyObjectDelay);
     }
 
@@ -62,46 +78,22 @@ public class Mine : Building
 
     #endregion ChildrenMethods
 
-    private void OnTriggerEnter(Collider other)
+    private void ExplosionDamage()
     {
-        if (other.CompareTag("Enemy"))
-        {
-            Explode();
+
+
+        var hits = Physics.OverlapSphere(transform.position, GetStatistics().AOERange, targetLayerMask);
+        foreach (var hit in hits)
+        { 
+             if (hit.TryGetComponent(out AIController controller))
+             {
+                controller.TakeDamage(statistics.AttackDamage);
+             }
         }
     }
-
-    private void Explode()
+    BuildingOffensiveStatistics GetStatistics()
     {
-        OnAttack();
-        ExplosionDamage(transform.position, 2f, 7f);
-        Destroy(gameObject,0.2f);
-    }
-
-
-    private void ExplosionDamage(Vector3 center, float radius, float force)
-    {
-
-        int enemyLayer = LayerMask.GetMask("Enemy");
-        Collider[] hitColliders = Physics.OverlapSphere(center, radius, enemyLayer);
-
-        foreach (var hitCollider in hitColliders)
-        {
-            Rigidbody rb = hitCollider.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                //push
-                Vector3 direction = hitCollider.transform.position - center;
-                rb.AddForce(direction.normalized * force, ForceMode.Impulse);
-            }
-
-
-
-            if (hitCollider.TryGetComponent(out AIController controller))
-            {
-
-                controller.TakeDamage(controller.GetEnemyStats().AttackDamage);
-
-            }
-        }
+        statistics = GetBaseStatistics() as BuildingOffensiveStatistics;
+        return statistics;
     }
 }
