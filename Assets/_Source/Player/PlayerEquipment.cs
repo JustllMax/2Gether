@@ -14,9 +14,6 @@ public class PlayerEquipment : MonoBehaviour
     
     Animator _animator;
 
-    [SerializeField]
-    Animator _animator;
-
     public Dictionary<GunType, int> AmmoStorage;
     public Gun _currentGun;
     public Gun _lastHeldGun;

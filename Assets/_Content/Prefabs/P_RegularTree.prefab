@@ -58,10 +58,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2482041994631827811, guid: 2206a906783c7cf44b784ec96d7cc3a2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 121712793109757091, guid: 2206a906783c7cf44b784ec96d7cc3a2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2206a906783c7cf44b784ec96d7cc3a2,
         type: 3}
       propertyPath: m_Name
-      value: tree_fbx
+      value: P_RegularTree
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2206a906783c7cf44b784ec96d7cc3a2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2206a906783c7cf44b784ec96d7cc3a2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Decoration
+      objectReference: {fileID: 0}
+    - target: {fileID: 5810190056960286076, guid: 2206a906783c7cf44b784ec96d7cc3a2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
