@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 4310112877492397987}
   - component: {fileID: 6540572028366792322}
   m_Layer: 5
-  m_Name: Dash3
+  m_Name: Dash1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -422,7 +422,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 100
-  m_WholeNumbers: 1
+  m_WholeNumbers: 0
   m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1166,15 +1166,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9d217c40e986a5c4baca8ced562d52d9, type: 3}
   - {fileID: 21300000, guid: eade2a7773bff0740901c0e93b77fe42, type: 3}
   - {fileID: 21300000, guid: a20d0826ecd36cd4187bd2037d2eda53, type: 3}
+  Crosshairs: []
+  NightUI: {fileID: 7227938878733523434}
   HealthBar: {fileID: 3734019756096684309}
-  CurrentHPText: {fileID: 5327702891446041866}
+  HealthCurrentText: {fileID: 5327702891446041866}
   Dashes:
-  - {fileID: 2780660258236893458}
-  - {fileID: 2052057441757729077}
   - {fileID: 6540572028366792322}
+  - {fileID: 2052057441757729077}
+  - {fileID: 2780660258236893458}
+  CrosshairImage: {fileID: 1806741994885335667}
   AmmoBar: {fileID: 8971868609384921363}
-  CurrentAmmoText: {fileID: 3605821893298386104}
-  MaxAmmoText: {fileID: 8763848029609062272}
+  AmmoCurrentText: {fileID: 3605821893298386104}
+  AmmoReserveText: {fileID: 8763848029609062272}
   IconImage: {fileID: 5838667744084510131}
 --- !u!1 &4159427579208168037
 GameObject:
@@ -1263,7 +1266,7 @@ GameObject:
   - component: {fileID: 4444627714061260030}
   - component: {fileID: 8763848029609062272}
   m_Layer: 5
-  m_Name: MaxAmmoText
+  m_Name: ReserveAmmoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2295,7 +2298,7 @@ GameObject:
   - component: {fileID: 8671457476071859829}
   - component: {fileID: 2780660258236893458}
   m_Layer: 5
-  m_Name: Dash1
+  m_Name: Dash3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2368,7 +2371,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 100
-  m_WholeNumbers: 1
+  m_WholeNumbers: 0
   m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3089,7 +3092,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 100
-  m_WholeNumbers: 1
+  m_WholeNumbers: 0
   m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:

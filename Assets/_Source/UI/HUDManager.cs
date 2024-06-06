@@ -1,20 +1,24 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Windows;
 using TMPro;
 using NaughtyAttributes;
+
 public class HUDManager : MonoBehaviour
 {
 
+    #region Variables
     private static HUDManager _instance;
     public static HUDManager Instance { get { return _instance; } }
 
 
     [SerializeField]List<Sprite> Icons;
+    [SerializeField]List<Sprite> Crosshairs;
 
     Dictionary<GunType, Sprite> IconsDictionary;
+    Dictionary<GunType, Sprite> CrosshairsDictionary;
+    
+    [Foldout("References")][SerializeField] GameObject NightUI;
 
     [Header("Character")]
     [Foldout("References")][SerializeField] Slider HealthBar;
@@ -22,11 +26,12 @@ public class HUDManager : MonoBehaviour
     [Foldout("References")][SerializeField] List<Slider> Dashes;
 
     [Header("Gun")]
+    [Foldout("References")][SerializeField] Image CrosshairImage;
     [Foldout("References")] [SerializeField] Slider AmmoBar;
     [Foldout("References")] [SerializeField] TMP_Text AmmoCurrentText;
-    [Foldout("References")] [SerializeField] TMP_Text AmmoMaxText;
+    [Foldout("References")] [SerializeField] TMP_Text AmmoReserveText;
     [Foldout("References")] [SerializeField] Image IconImage;
-
+    #endregion Variables
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -38,11 +43,47 @@ public class HUDManager : MonoBehaviour
             _instance = this;
         }
 
+        SetupIconsDictionary();
+        SetupCrosshairsDictionary();
+
+    }
+
+    private void OnEnable()
+    {
+        DayNightCycleManager.NightBegin += OnNightStart;
+        DayNightCycleManager.NightEnd += OnNightEnd;
+    }
+
+    private void OnDisable()
+    {
+        DayNightCycleManager.NightBegin -= OnNightStart;
+        DayNightCycleManager.NightEnd -= OnNightEnd;
+    }
+
+    void OnNightStart()
+    {
+        NightUI.SetActive(true);
+    }
+
+    void OnNightEnd()
+    {
+        NightUI.SetActive(false);
+    }
+
+
+    #region Setup
+
+    void SetupIconsDictionary()
+    {
+        if (Icons == null || Icons.Count == 0)
+            return;
+
         IconsDictionary = new Dictionary<GunType, Sprite>();
         GunType t = 0;
-        foreach(var icon in Icons)
+        foreach (var icon in Icons)
         {
-            for (int i = 0; i < 4; i++ ){
+            for (int i = 0; i < 4; i++)
+            {
                 t = (GunType)i;
                 if (icon.name.ToLower().Contains(t.ToString().ToLower()))
                 {
@@ -50,8 +91,40 @@ public class HUDManager : MonoBehaviour
                 }
             }
         }
-        
+
+        foreach (var item in IconsDictionary)
+        {
+            Debug.Log("Dictionary: " + item.Value);
+        }
     }
+
+    void SetupCrosshairsDictionary()
+    {
+        if (Crosshairs == null || Crosshairs.Count == 0)
+            return;
+
+
+        CrosshairsDictionary = new Dictionary<GunType, Sprite>();
+        GunType t = 0;
+        foreach (var crosshair in Crosshairs)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                t = (GunType)i;
+                if (crosshair.name.ToLower().Contains(t.ToString().ToLower()))
+                {
+                    IconsDictionary.Add(t, crosshair);
+                }
+            }
+        }
+    }
+
+    #endregion Setup
+
+
+
+
+    #region Dash
 
     public void SetAllDashesMaxTimer(float maxTimer)
     {
@@ -73,6 +146,10 @@ public class HUDManager : MonoBehaviour
         Dashes[dashIndex].value = timerValue;
     }
 
+    #endregion Dash
+
+    #region Health
+
     public void SetMaxHealth(float maxHealth)
     {
         HealthBar.maxValue = maxHealth;
@@ -84,15 +161,24 @@ public class HUDManager : MonoBehaviour
         HealthCurrentText.text = HealthBar.value.ToString();
     }
 
-    public void SetIcon(GunType type)
-    {
-        IconImage.sprite = IconsDictionary[type];  
-    }
-
     public void SetMaxAmmo(int maxAmmo)
     {
-        AmmoMaxText.text = maxAmmo.ToString();
         AmmoBar.maxValue = maxAmmo;
+    }
+
+    #endregion Health
+
+    #region Gun
+    public void SetIcon(GunType type)
+    {
+        if (IconsDictionary != null)
+            IconImage.sprite = IconsDictionary[type];
+    }
+
+    public void SetCrosshair(GunType type)
+    {
+        if (CrosshairsDictionary != null)
+            CrosshairImage.sprite = CrosshairsDictionary[type];
     }
     public void SetCurrentAmmo(int currentAmmo)
     {
@@ -102,10 +188,22 @@ public class HUDManager : MonoBehaviour
         AmmoBar.value = currentAmmo;
     }
 
-    public void SwitchGunOnHUD(int currentAmmo, int maxAmmo, GunType type)
+
+    public void SetCurrentAmmo(int currentAmmo, int reserveAmmo)
     {
-        SetMaxAmmo(maxAmmo);
-        SetCurrentAmmo(currentAmmo);
-        SetIcon(type);
+        currentAmmo = Mathf.Clamp(currentAmmo, (int)AmmoBar.minValue, (int)AmmoBar.maxValue);
+        AmmoReserveText.text = reserveAmmo.ToString();
+        AmmoCurrentText.text = currentAmmo.ToString();
+        AmmoBar.value = currentAmmo;
     }
+
+    public void SwitchGunOnHUD(int currentAmmoMag, int maxAmmoMag, int reserveAmmo, GunType type)
+    {
+        SetMaxAmmo(maxAmmoMag);
+        SetCurrentAmmo(currentAmmoMag, reserveAmmo);
+        SetIcon(type);
+        SetCrosshair(type);
+    }
+
+    #endregion Gun
 }

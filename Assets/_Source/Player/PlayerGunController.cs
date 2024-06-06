@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class PlayerGunController : MonoBehaviour
 {
@@ -31,7 +28,7 @@ public class PlayerGunController : MonoBehaviour
 
         _FPScontroller.Fire.performed += PerformFireWeapon;
         _FPScontroller.Fire.canceled += CancelFireWeapon;
-        _FPScontroller.Aim.performed += AimWeapon;
+        _FPScontroller.Aim.performed += PerformAimWeapon;
         _FPScontroller.Reload.performed += ReloadWeapon;
 
     }
@@ -40,38 +37,18 @@ public class PlayerGunController : MonoBehaviour
     {
         FirePoint.rotation = nightCamera.rotation;
 
+        CheckForIdleAnimation();
 
-        if ( _animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimNames.IDLE.ToString()))
-        {
-            isDuringAnimation = false;
-        }
-        else
-        {
-            isDuringAnimation = true;
-        }
 
 
         if (firedButtonHeld )
         {
-            buttonHeldTimer += Time.deltaTime;
-            if(buttonHeldTimer > 0.01)
-            {
-                isHoldingFire = true;
-            }
+            CheckForHoldingFireButton();
             if (_equipment != null)
             {
                 if (_equipment.CanFire())
                 {
-                   
-                    if (flagOneShot)
-                    {
-                        flagOneShot = false;
-                        _equipment.GetCurrentGun().Fire(false, FirePoint);
-                    }
-                    else
-                    {
-                        _equipment.GetCurrentGun().Fire(isHoldingFire, FirePoint);
-                    }
+                    TryFiring();
                 }
 
             }
@@ -98,7 +75,7 @@ public class PlayerGunController : MonoBehaviour
         }
     }
 
-    private void AimWeapon(InputAction.CallbackContext context)
+    private void PerformAimWeapon(InputAction.CallbackContext context)
     {
         
         if(_equipment != null)
@@ -126,6 +103,47 @@ public class PlayerGunController : MonoBehaviour
             }
         }
         
+    }
+
+    void CheckForIdleAnimation()
+    {
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimNames.IDLE.ToString()))
+        {
+            isDuringAnimation = false;
+        }
+        else
+        {
+            isDuringAnimation = true;
+        }
+    }
+
+    void CheckForHoldingFireButton()
+    {
+        buttonHeldTimer += Time.deltaTime;
+        if (buttonHeldTimer > 0.01)
+        {
+            isHoldingFire = true;
+        }
+    }
+
+    void TryFiring()
+    {
+
+        if (flagOneShot)
+        {
+            flagOneShot = false;
+            if (_equipment.GetCurrentGun().Fire(false, FirePoint))
+            {
+                HUDManager.Instance.SetCurrentAmmo(_equipment.GetCurrentGun().GetAmmoInMagazine());
+            }
+        }
+        else
+        {
+            if (_equipment.GetCurrentGun().Fire(isHoldingFire, FirePoint))
+            {
+                HUDManager.Instance.SetCurrentAmmo(_equipment.GetCurrentGun().GetAmmoInMagazine());
+            }
+        }
     }
 
 }

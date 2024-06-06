@@ -1,6 +1,4 @@
-using Cysharp.Threading.Tasks;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -146,7 +144,9 @@ public class PlayerEquipment : MonoBehaviour
         
         _lastHeldGun = _currentGun;
         _currentGun = gun;
-        
+
+        HUDManager.Instance.SwitchGunOnHUD(_currentGun.GetAmmoInMagazine(), _currentGun.GetGunData().MagazineSize, 
+            AmmoStorage[_currentGun.GetGunData().GunType], _currentGun.GetGunData().GunType);
     }
 
     public void SwitchDownEndAnimEvent()
@@ -182,7 +182,7 @@ public class PlayerEquipment : MonoBehaviour
         Reload();
     }
 
-    //Called by AnimEvents
+    //Called by AnimEvents only
     private bool Reload()
     {
         GunType gunType = _currentGun.GetGunData().GunType;
@@ -194,6 +194,7 @@ public class PlayerEquipment : MonoBehaviour
         {
             case GunType.Pistol:
                 _currentGun.SetAmmoInMagazine(magSize);
+                HUDManager.Instance.SetCurrentAmmo(_currentGun.GetAmmoInMagazine());
                 return true;
 
             default:
@@ -204,12 +205,16 @@ public class PlayerEquipment : MonoBehaviour
                     {
                         _currentGun.SetAmmoInMagazine(currentAmmo + AmmoStorage[gunType]);
                         AmmoStorage[gunType] = 0;
+                        HUDManager.Instance.SetCurrentAmmo(_currentGun.GetAmmoInMagazine(), AmmoStorage[gunType]);
+
                         return true;
                     }
                     else
                     {
                         _currentGun.SetAmmoInMagazine(currentAmmo + amountToReload);
                         AmmoStorage[gunType] -= amountToReload;
+                        HUDManager.Instance.SetCurrentAmmo(_currentGun.GetAmmoInMagazine(), AmmoStorage[gunType]);
+
                         return true;
                     }
                 }
@@ -218,6 +223,7 @@ public class PlayerEquipment : MonoBehaviour
                     return false;
                 }
         }
+
     }
 
     private void ResetReloadTimer()
@@ -233,6 +239,7 @@ public class PlayerEquipment : MonoBehaviour
     void Setup()
     {
         SwitchCurrentGun(GunList[0]);
+
     }
 
     private int GetGunIndexByRef(Gun gun)

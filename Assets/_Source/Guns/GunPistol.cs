@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GunPistol : Gun
@@ -40,29 +39,31 @@ public class GunPistol : Gun
         LastShootTime = Time.time;
     }
 
-    public override void Fire(bool isSameButtonPress, Transform bulletSpawnPoint)
+    public override bool Fire(bool isSameButtonPress, Transform bulletSpawnPoint)
     {
         if (LastShootTime + shootDelay < Time.time)
         {
             if(isSameButtonPress)
             {
-                return;
+                return false;
             }
             ammoInMagazine -= 1;
             CalculateFire(bulletSpawnPoint);
             shootingSystem.Play();
+            return true;
         }
+        return false;
     }
 
 
-    public override void Aim()
+    public override bool Aim()
     {
         isAiming = true;
-
+        
         Debug.Log(this + " Parry");
 
         isAiming = false;
-
+        return true;
     }
 
     private void OnDrawGizmos()
