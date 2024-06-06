@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public delegate void GameManagerReadyHandler();
     public static event GameManagerReadyHandler OnGameManagerReady;
 
+    public static event Action OnNextWaveStart;
+
     private bool isMapReady = false;
     private bool isNavMeshReady = false;
     
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
     {
         SlotPlacer.OnMapGenerated -= OnMapGenerated;
         NavMeshSurfaceManager.OnNavMeshGenerated -= OnNavMeshGenerated;
+
     }
 
     void OnMapGenerated()
@@ -62,7 +65,11 @@ public class GameManager : MonoBehaviour
         }
     }
     
-
+    public void OnNextWaveStartInvoke()
+    {
+        OnNextWaveStart?.Invoke();
+    }
+    
     public PlayerController GetPlayerController() { return _playerController; }
 
     public Transform GetMainBaseTransform() {  return mainBaseTransform; }

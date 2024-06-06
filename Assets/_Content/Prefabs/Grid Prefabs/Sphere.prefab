@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5681154037824651454}
   - component: {fileID: 1629881763632466684}
   - component: {fileID: -3725116549763249182}
+  - component: {fileID: -3664280102069250028}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -149,3 +150,22 @@ MonoBehaviour:
   _upgradeTiers: {fileID: 11400000, guid: 502ef1a912de18c42b003dd34d422445, type: 2}
   _buildingSize: {x: 3, y: 1.5, z: 3}
   _renderer: {fileID: 1447220479681022197}
+--- !u!114 &-3664280102069250028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6139430189816594108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff

@@ -261,7 +261,6 @@ public class SlotPlacer : MonoBehaviour
 
         }
 
-
         return true;
     }
 }

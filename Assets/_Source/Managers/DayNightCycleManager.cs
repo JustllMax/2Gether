@@ -38,13 +38,11 @@ public class DayNightCycleManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.H))
         {
             EndNightCycle();
-
         }
 
         if (Input.GetKeyDown(KeyCode.J))
         {
             EndDayCycle();
-
         }
     }
 
@@ -55,6 +53,7 @@ public class DayNightCycleManager : MonoBehaviour
         IsDay = false;
         DayEnd?.Invoke();
         NightBegin?.Invoke();
+        GameManager.Instance.OnNextWaveStartInvoke();
     }
 
     public void EndNightCycle()

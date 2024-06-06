@@ -16,4 +16,20 @@ public class WaveData : ScriptableObject
 {
     [SerializeField]
     public List<SingleWaveData> Waves = new List<SingleWaveData>();
+
+    public void AddWave(SingleWaveData singleWaveData)
+    {
+        Waves.Add(singleWaveData);
+    }
+
+    public void RemoveWave(int index)
+    {
+        Waves.RemoveAt(index);
+    }
+    
+    public void AddEnemyToWave(GameObject enemy, int index)
+    {
+        Waves[index].EnemyPool.Enemies.Add(enemy);
+    }
+
 }

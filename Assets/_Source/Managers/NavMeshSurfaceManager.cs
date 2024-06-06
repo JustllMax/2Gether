@@ -6,10 +6,23 @@ using UnityEngine;
 
 public class NavMeshSurfaceManager : MonoBehaviour
 {
+    private static NavMeshSurfaceManager _instance;
+    public static NavMeshSurfaceManager Instance { get { return _instance; } }
+
     [SerializeField] public List<NavMeshSurface> surfaces;
 
     public delegate void NavMeshGeneratedHandler();
     public static event Action OnNavMeshGenerated;
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+        _instance = this;
+    }
 
     void OnEnable()
     {
@@ -25,7 +38,6 @@ public class NavMeshSurfaceManager : MonoBehaviour
         {
             surface.BuildNavMesh();
         }
-       
     }
 
     void OnMapGenerated()

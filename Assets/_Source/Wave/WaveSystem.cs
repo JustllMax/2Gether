@@ -17,53 +17,12 @@ public class WaveSystem : MonoBehaviour
 
     private WaveData _waveData;
 
-    private int _subWaveIndex;
+    public static int nightIndex = 0;
 
-    void OnEnable()
-    {
-        Debug.Log("WaveSystem Enable");
-        GameManager.OnGameManagerReady += OnStart;
-    }
-    void OnDisable()
-    {
-        GameManager.OnGameManagerReady -= OnStart;
-    }
-    private void OnStart()
-    {
-        Debug.Log("WaveSystem Invoke");
-        // Clear the list before populating to avoid duplication
-        //_spawnPoints.Clear();
-
-        if (SlotPlacer.Instance == null)
-        {
-            Debug.LogError("SlotPlacer instance is null");
-            return;
-        }
-
-        foreach (var spawn in SlotPlacer.Instance.spawnSlots)
-        {
-            if (spawn == null)
-            {
-                Debug.LogError("Spawn point is null");
-                continue;
-            }
-
-            Debug.Log(spawn.GetInstanceID() + " " + spawn.gameObject.name);
-            AddSpawnPoint(spawn.gameObject);
-            //_spawnPoints.Add(spawn.gameObject);
-        }
-        Debug.Log("Count " + _spawnPoints.Count);
-        foreach (var spawn in _spawnPoints)
-        {
-            Debug.Log(spawn.GetInstanceID() + " " + spawn.gameObject.name);
-        }
-
-        BeginWave(Resources.Load<WaveData>("wave_test"));
-    }
+    public static event Action OnEndWave;
 
     public GameObject GetRandomSpawnPoint()
     {
-        Debug.Log("Rand spawn point");
         if (_spawnPoints.Count == 0)
         {
             Debug.LogError("No spawn points available");
@@ -75,7 +34,6 @@ public class WaveSystem : MonoBehaviour
 
     public void BeginWave(WaveData waveData)
     {
-        Debug.Log("Begin wave");
         if (_isWaveActive)
             return;
 
@@ -83,13 +41,18 @@ public class WaveSystem : MonoBehaviour
         _waveData = waveData;
 
         _ = handleWave(_waveData);
+
+        WaveSystem.nightIndex++;
     }
 
     private async UniTaskVoid handleWave(WaveData data)
     {
-        Debug.Log("Handle wave");
+        int waveNumber = (WaveSystem.nightIndex < data.Waves.Count) ? WaveSystem.nightIndex : data.Waves.Count - 1;
+        Debug.Log("Current wave: " + waveNumber + " Wave count: " + data.Waves.Count);
+
         foreach (var wave in data.Waves)
         {
+            await UniTask.WaitForSeconds(wave.Cooldown);
             for (int i = 0; i < wave.EnemyPool.EnemyCount; i++)
             {
                 var spawnPoint = GetRandomSpawnPoint();
@@ -99,11 +62,10 @@ public class WaveSystem : MonoBehaviour
                 }
                 await UniTask.WaitForSeconds(wave.EnemySpawnInterval);
             }
-
-            await UniTask.WaitForSeconds(wave.Cooldown);
         }
+        _isWaveActive = false;
 
-        _isWaveActive = false; // Reset wave active state when done
+        OnEndWave?.Invoke();
     }
 
     private void Update()
@@ -116,7 +78,6 @@ public class WaveSystem : MonoBehaviour
 
     public void AddSpawnPoint(GameObject spawnPoint)
     {
-        Debug.Log("Add spawn point");
         if (spawnPoint != null)
         {
             _spawnPoints.Add(spawnPoint);

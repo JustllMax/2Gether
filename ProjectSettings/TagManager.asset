@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Terrain
   - Way_Anchor
+  - Decoration
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Building
   - MainBuilding
   - Terrain
-  - 
+  - Decoration
   - MainSurface
   - Way
   - 
