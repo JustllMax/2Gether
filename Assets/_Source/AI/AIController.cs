@@ -32,6 +32,7 @@ public class AIController : MonoBehaviour, IDamagable
     AIState nextState;
     AIState currentState;
 
+    [Header("CHANGE ACCORDINGLY TO CHASE/BUILDING. BOTH IS FOR BOSSES")]
     [SerializeField] TargetType AITargetFocus;
 
     [Header("Audio")]
@@ -46,7 +47,6 @@ public class AIController : MonoBehaviour, IDamagable
     NavMeshAgent _navMeshAgent;
     bool isStunned = false;
     bool isDead = false;
-    [SerializeField]
     LayerMask targetLayerMask;
     private float attackTimer = 0f;
 
@@ -65,8 +65,9 @@ public class AIController : MonoBehaviour, IDamagable
 
     [Foldout("DEBUG INFO")]
     public float remainingAttacks;
+    [Foldout("DEBUG INFO")]
+    [SerializeField] private float _health;
 
-    private float _health;
     public float Health { get => _health; set => _health = value; }
 
     private void Awake()
@@ -78,16 +79,48 @@ public class AIController : MonoBehaviour, IDamagable
         remainingAttacks = GetEnemyStats().AttackAmount;
         Health = GetEnemyStats().Health;
         _navMeshAgent.speed = GetEnemyStats().MovementSpeed;
+        Debug.Log("agent type id " + _navMeshAgent.agentTypeID);
     }
 
     private void Start()
     {
+
         SetLayerTargeting(AITargetFocus);
+        SetNavMeshAgentType(AITargetFocus);
         currentState = _AIStates[0];
         currentState.OnStart(this);
     }
 
+    void SetNavMeshAgentType(TargetType focus)
+    {
+        string agentTypeName = "";
+        if(focus.ToString() == TargetType.Player.ToString())
+        {
+            agentTypeName = NavAgentTypeNames.PlayerChase.ToString();
+        }
+        else
+        {
+            agentTypeName = NavAgentTypeNames.BuildingChase.ToString();
+        }
+        int? agentType = GetNavMeshAgentID(agentTypeName);
+        if(agentType != null)
+        {
+            _navMeshAgent.agentTypeID = (int)agentType;
+        }
+    }
 
+    private int? GetNavMeshAgentID(string name)
+    {
+        for (int i = 0; i < NavMesh.GetSettingsCount(); i++)
+        {
+            NavMeshBuildSettings settings = NavMesh.GetSettingsByIndex(index: i);
+            if (name == NavMesh.GetSettingsNameFromID(agentTypeID: settings.agentTypeID))
+            {
+                return settings.agentTypeID;
+            }
+        }
+        return null;
+    }
     public void Update()
     {
 
@@ -245,7 +278,7 @@ public class AIController : MonoBehaviour, IDamagable
             if (state.CanChangeToState(this) && state.weight == highestWeight)
             {
                 states.Add(state);
-                // ! Debug.Log(state.name);
+                Debug.Log(state.name);
             }
         }
 
@@ -280,8 +313,6 @@ public class AIController : MonoBehaviour, IDamagable
 
     public bool TakeDamage(float damage)
     {
-        if(isDead)
-            return false;
         Health -= damage;
         if(Health <= 0)
         {
@@ -302,9 +333,6 @@ public class AIController : MonoBehaviour, IDamagable
         }
         
         Invoke("DestroyObj", DeathInvokeTime);
-        WaveManager.Instance.WaveSystem.enemyCount--;
-        Debug.LogWarning("Kill " + WaveManager.Instance.WaveSystem.enemyCount);
-        
     }
 
     void DestroyObj()

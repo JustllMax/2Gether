@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c84625a7f77178f49b7b8442b13033d6, type: 3}
+  m_Name: Bomberbot_ExplodeState
+  m_EditorClassIdentifier: 
+  weight: 3
+  animName: 3
+  AnimDelayForAttack: 0.5
+  mask:
+    serializedVersion: 2
+    m_Bits: 0

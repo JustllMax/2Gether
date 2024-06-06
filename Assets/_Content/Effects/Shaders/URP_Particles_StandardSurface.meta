@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/_Content/Effects/Shaders/URP_Particles_StandardSurface.meta
 guid: 43063486cec5eb64c8ab47b226962627
-========
-guid: 5b52634d5a660304da43b6678d894a3b
->>>>>>>> 40e4cda849a1adbdc574aabc533ab053e6fd7513:Assets/_Content/Effects/Outline.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

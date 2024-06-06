@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
         NavMeshSurfaceManager.OnNavMeshGenerated += OnNavMeshGenerated;
 
         _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
     }
     private void Start()
     {

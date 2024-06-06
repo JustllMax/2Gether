@@ -7,7 +7,10 @@ public class PlayerGunController : MonoBehaviour
     [SerializeField] Transform FirePoint;
     PlayerInputAction.FPSControllerActions _FPScontroller;
     PlayerEquipment _equipment;
+
+    [SerializeField]
     Animator _animator;
+
     bool firedButtonHeld = false;
     float buttonHeldTimer = 0;
     bool isHoldingFire = false;
@@ -18,7 +21,6 @@ public class PlayerGunController : MonoBehaviour
     private void Awake()
     {
         _equipment = GetComponent<PlayerEquipment>();
-        _animator = GetComponent<Animator>();
     }
 
     void Start()

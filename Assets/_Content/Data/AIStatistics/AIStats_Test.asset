@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: AIStats_Test
   m_EditorClassIdentifier: 
   Health: 50
-  AttackRange: 1
+  AttackRange: 2
   AttackDamage: 15
-  AttackFireRate: 2
-  AttackReloadTime: 0.5
+  AttackFireRate: 0.25
+  AttackReloadTime: 1
   AttackRadius: 2
   AttackAmount: 2
   MovementSpeed: 3

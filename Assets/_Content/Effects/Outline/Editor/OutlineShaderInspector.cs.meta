@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/_Content/Effects/Outline/Editor/OutlineShaderInspector.cs.meta
 guid: 6f68e40f444142148a380b6293a31a74
+========
+guid: 3707df6a54e934242903394709f09f41
+>>>>>>>> 313ce494d337a14cb88f7db51374c2bb1c8c1ef8:Assets/_Content/Effects/Outline/Editor/InternalURPBridge/AssemblyInfo.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

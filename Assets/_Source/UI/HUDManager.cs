@@ -64,8 +64,6 @@ public class HUDManager : MonoBehaviour
     void OnNightStart()
     {
         _ = SetNightUIActivation(true);
-        DayNightCycleManager.Instance.nightBeginTasks--;
-        Debug.LogWarning("HUD " + DayNightCycleManager.Instance.nightBeginTasks);
     }
 
     void OnNightEnd()
