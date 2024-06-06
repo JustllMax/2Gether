@@ -32,4 +32,9 @@ public class WaveData : ScriptableObject
         Waves[index].EnemyPool.Enemies.Add(enemy);
     }
 
+    public object Clone()
+    {
+        return this.MemberwiseClone();
+    }
+
 }

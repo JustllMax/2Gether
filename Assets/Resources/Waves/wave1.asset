@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d28c21a978434b48b634c5dc37bf469, type: 3}
-  m_Name: wave_pool_seq_test 2
+  m_Name: wave1
   m_EditorClassIdentifier: 
   Enemies:
-  - {fileID: 5830721225078026835, guid: d0e011a0f96f3b642b6545b2b99fb4c7, type: 3}
-  - {fileID: 5830721225078026835, guid: d0e011a0f96f3b642b6545b2b99fb4c7, type: 3}
-  - {fileID: 5830721225078026835, guid: 630797b054144104bb00d7e4f476e073, type: 3}
-  - {fileID: 5830721225078026835, guid: 630797b054144104bb00d7e4f476e073, type: 3}
+  - {fileID: 2303781138697332408, guid: 7ce58ef33dd26454e94930b8ca7a424b, type: 3}
+  - {fileID: 2303781138697332408, guid: 7ce58ef33dd26454e94930b8ca7a424b, type: 3}
+  - {fileID: 2303781138697332408, guid: 7ce58ef33dd26454e94930b8ca7a424b, type: 3}
+  - {fileID: 2303781138697332408, guid: 7ce58ef33dd26454e94930b8ca7a424b, type: 3}
   EnemyCount: 4

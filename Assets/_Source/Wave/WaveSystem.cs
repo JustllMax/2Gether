@@ -11,15 +11,13 @@ public class WaveSystem : MonoBehaviour
 
     [Header("System state")]
     private bool _isWaveActive = false;
-
     private float _elapsedTime = 0;
+    public float elapsedTime {get { return _elapsedTime; }}
     private float _spawnEnemyTimer;
-
-    private WaveData _waveData;
-
-    public static int nightIndex = 0;
+    public static int nightCount = 0;
     public int enemyCount = 0;
 
+#region Wave handle
     public GameObject GetRandomSpawnPoint()
     {
         if (_spawnPoints.Count == 0)
@@ -37,21 +35,18 @@ public class WaveSystem : MonoBehaviour
             return;
 
         _isWaveActive = true;
-        _waveData = waveData;
 
-        _ = handleWave(_waveData);
+        _ = handleWave(waveData);
         //StartCoroutine(handleWaveCoroutine(_waveData));
-        nightIndex++;
+
+        nightCount++;
     }
 
     private async UniTaskVoid handleWave(WaveData data)
     {
-        //int waveNumber = (WaveSystem.nightIndex < data.Waves.Count) ? WaveSystem.nightIndex : data.Waves.Count - 1;
-        //Debug.LogWarning("Current wave: " + waveNumber + " Wave count: " + data.Waves.Count);
-
         foreach (var wave in data.Waves)
         {
-            await UniTask.WaitForSeconds(wave.Cooldown);
+            
             for (int i = 0; i < wave.EnemyPool.EnemyCount; i++)
             {
                 var spawnPoint = GetRandomSpawnPoint();
@@ -59,19 +54,16 @@ public class WaveSystem : MonoBehaviour
                 {
                     Instantiate(wave.EnemyPool.GetNextEnemy(i), spawnPoint.transform.position + Vector3.up, Quaternion.identity);
                     enemyCount++;
-                    Debug.LogWarning("Spawn " + WaveManager.Instance.WaveSystem.enemyCount);
                 }
                 await UniTask.WaitForSeconds(wave.EnemySpawnInterval);
             }
+            await UniTask.WaitForSeconds(wave.Cooldown);
         }
         _isWaveActive = false;
     }
 
     private IEnumerator handleWaveCoroutine(WaveData data)
     {
-        int waveNumber = (WaveSystem.nightIndex < data.Waves.Count) ? WaveSystem.nightIndex : data.Waves.Count - 1;
-        Debug.LogWarning("Current wave: " + waveNumber + " Wave count: " + data.Waves.Count);
-
         foreach (var wave in data.Waves)
         {
             yield return new WaitForSeconds(wave.Cooldown);
@@ -82,19 +74,20 @@ public class WaveSystem : MonoBehaviour
                 {
                     Instantiate(wave.EnemyPool.GetNextEnemy(i), spawnPoint.transform.position + Vector3.up, Quaternion.identity);
                     enemyCount++;
-                    Debug.LogWarning("Spawn " + WaveManager.Instance.WaveSystem.enemyCount);
                 }
                 yield return new WaitForSeconds(wave.EnemySpawnInterval);
             }
         }
         _isWaveActive = false;
     }
+#endregion
 
     private void Update()
     {
         if (_isWaveActive)
         {
             _elapsedTime += Time.deltaTime;
+            Debug.LogWarning(_elapsedTime);
         }
     }
 
