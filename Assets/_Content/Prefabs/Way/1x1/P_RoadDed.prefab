@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3236202012237105620}
   - component: {fileID: 724612948647157139}
   m_Layer: 0
-  m_Name: P_Way
+  m_Name: P_RoadDed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,8 +62,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  - {fileID: 2100000, guid: 4459fff084dd84526ab8fd5082d2eacb, type: 2}
+  - {fileID: 2100000, guid: 56e41c60760890d42a9a7e5cc568f600, type: 2}
+  - {fileID: 2100000, guid: 56e41c60760890d42a9a7e5cc568f600, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

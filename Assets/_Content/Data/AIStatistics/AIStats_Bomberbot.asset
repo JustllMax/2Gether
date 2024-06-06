@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 50
   AttackRange: 4
-  AttackDamage: 100
+  AttackDamage: 50
   AttackFireRate: 2
   AttackReloadTime: 0.5
   AttackRadius: 4

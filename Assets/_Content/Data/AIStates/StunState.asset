@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: StunState
   m_EditorClassIdentifier: 
   weight: 4
-  animName: 0
+  animName: 2
   stunTime: 5

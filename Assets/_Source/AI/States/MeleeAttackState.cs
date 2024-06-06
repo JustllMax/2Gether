@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MeleeAttackState", menuName = ("2Gether/AI/States/MeleeAttack"))]
 public class MeleeAttackState : AIState
 {
-    [SerializeField]
-    LayerMask mask;
+    [SerializeField] float AnimDelayForAttack;
+    [SerializeField] LayerMask mask;
     public override void OnStart(AIController controller)
     {
 
@@ -52,19 +52,16 @@ public class MeleeAttackState : AIState
     {
         controller.lastAttackTime = 0f;
 
-        yield return new WaitForSeconds(AnimDelay);
+        yield return new WaitForSeconds(AnimDelayForAttack);
         Debug.Log(this + " attack performed");
+        Vector3 spawnPos = controller.transform.position;
 
-        Vector3 dir = (controller.GetCurrentTarget().transform.position - controller.GetCurrentPosition()).normalized;
-        Vector3 spawnPos = controller.transform.position + dir * controller.GetEnemyStats().AttackRange;
-     
 
         var hits = Physics.OverlapSphere(spawnPos, controller.GetEnemyStats().AttackRadius, mask);
         foreach (var hit in hits )
         {
             if(hit.TryGetComponent(out ITargetable targetable))
             {
-
                 if(hit.GetComponent<IDamagable>().TakeDamage(controller.GetEnemyStats().AttackDamage) == true)
                 {
                     controller.distanceToTarget = 100000f;

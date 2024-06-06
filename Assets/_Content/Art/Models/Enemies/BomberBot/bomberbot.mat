@@ -61,6 +61,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 4b478c8a71969b144a802f25865f0556, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Emissive:
+        m_Texture: {fileID: 2800000, guid: 4b478c8a71969b144a802f25865f0556, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: c751c92a5a3e6fe4a901fc9c4cc332b5, type: 3}
         m_Scale: {x: 1, y: 1}
