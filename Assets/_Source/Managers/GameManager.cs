@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     public CardPoolData InitialCardPool;
 
+	//TODO: Change to event 
     bool isPlayerAlive = true;
 
     private void Awake()
@@ -24,8 +25,11 @@ public class GameManager : MonoBehaviour
         }
         _instance = this;
     }
-
     private void Start()
+    {
+        Application.targetFrameRate = 300;
+    }
+    private void OnEnable()
     {
         _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         StartGame();
@@ -41,5 +45,8 @@ public class GameManager : MonoBehaviour
     public Transform GetMainBaseTransform() {  return mainBaseTransform; }
     public bool IsPlayerAlive() {  return isPlayerAlive; }
 
-
+    public void OnPlayerDeath()
+    {
+        isPlayerAlive = false;
+    }
 }

@@ -14,18 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardType: 0
   Rarity: 0
-  Name: 
-  Description: 
-  GunType: 0
+  Name: AR
+  Description: Automatic Rifle
+  GunType: 1
   P_Bullet: {fileID: 0}
   BulletGroundHitSound: {fileID: 0}
   BulletEnemyHitSound: {fileID: 0}
   IsAutomatic: 0
-  MagazineSize: 0
-  FireRate: 0
-  Range: 0
-  ReloadTime: 0
-  BulletDamage: 0
+  MagazineSize: 30
+  FireRate: 1
+  Range: 15
+  ReloadTime: 2
+  BulletDamage: 5
   P_ARGrenade: {fileID: 0}
   GrenadeExplosionSound: {fileID: 0}
   GrenadeReloadTimer: 0
