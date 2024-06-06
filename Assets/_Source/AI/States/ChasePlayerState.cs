@@ -14,16 +14,17 @@ public class ChasePlayerState : AIState
         if(playerTransform == null)
         {
             Debug.Log(this + " searching for player");
-            playerTransform = GameManager.Instance.GetPlayerController().transform;
-            playerTarget = new AITarget(playerTransform, GameManager.Instance.GetPlayerController().GetComponent<ITargetable>());
-            controller.SetCurrentTarget(playerTarget);
+            if (GameManager.Instance.GetPlayerController().transform != null)
+            {
+                playerTransform = GameManager.Instance.GetPlayerController().transform;
+                playerTarget = new AITarget(playerTransform, GameManager.Instance.GetPlayerController().GetComponent<ITargetable>());
+                controller.SetCurrentTarget(playerTarget);
+            }
 
         }
 
         if (controller.GetCurrentTarget().transform == null)
         {
-            Debug.Log(this + " " + GameManager.Instance.GetPlayerController().GetComponent<ITargetable>().TargetType);
-
             controller.SetCurrentTarget(playerTarget);
         }
 
@@ -40,7 +41,9 @@ public class ChasePlayerState : AIState
 
     public override void OnUpdate(AIController controller)
     {
-        controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().transform.position);
+        if(controller.GetCurrentTarget().transform != null)
+            controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().transform.position);
+
         if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
         {
             controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);

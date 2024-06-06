@@ -15,8 +15,8 @@ MonoBehaviour:
   Health: 200
   AttackRange: 5
   AttackDamage: 5
-  AttackFireRate: 10
+  AttackFireRate: 0.75
   AttackReloadTime: 0.5
-  AttackRadius: 4
+  AttackRadius: 2
   AttackAmount: 30
   MovementSpeed: 2.5

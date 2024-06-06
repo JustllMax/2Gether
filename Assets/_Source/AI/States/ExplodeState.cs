@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MeleeAttackState", menuName = ("2Gether/AI/States/MeleeAttack"))]
-public class MeleeAttackState : AIState
+[CreateAssetMenu(fileName = "ExplodeState", menuName = ("2Gether/AI/States/ExplodeState"))]
+public class Explode : AIState
 {
+
     [SerializeField] float AnimDelayForAttack;
+
     [SerializeField] LayerMask mask;
     public override void OnStart(AIController controller)
     {
@@ -54,25 +56,24 @@ public class MeleeAttackState : AIState
 
         yield return new WaitForSeconds(AnimDelayForAttack);
         Debug.Log(this + " attack performed");
-        Vector3 spawnPos = controller.transform.position;
 
 
-        var hits = Physics.OverlapSphere(spawnPos, controller.GetEnemyStats().AttackRadius, mask);
-        foreach (var hit in hits )
+        var hits = Physics.OverlapSphere(controller.GetCurrentPosition(), controller.GetEnemyStats().AttackRadius, mask);
+        foreach (var hit in hits)
         {
-            if(hit.TryGetComponent(out ITargetable targetable))
+            if (hit.TryGetComponent(out ITargetable targetable))
             {
-                if(hit.GetComponent<IDamagable>().TakeDamage(controller.GetEnemyStats().AttackDamage) == true)
+
+                if (hit.GetComponent<IDamagable>().TakeDamage(controller.GetEnemyStats().AttackDamage))
                 {
-                    controller.distanceToTarget = 100000f;
-                    controller.SetCurrentTarget(new AITarget(null, null));
-                    Debug.Log(this + "Target died");
-                   
+                    Debug.Log("Explosion hit target");
                 }
 
             }
         }
-        
+
+        controller.Kill();
+
     }
 
 
