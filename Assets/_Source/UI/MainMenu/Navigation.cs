@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class Navigation : MonoBehaviour
 {
-    public GameObject canvasMainMenu;
-    public GameObject canvasSettings;
-    public GameObject canvasCredits;
+    public GameObject panelMainMenu;
+    public GameObject panelSettings;
+    public GameObject panelCredits;
 
     void Start()
     {
@@ -19,7 +19,7 @@ public class Navigation : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (canvasCredits.activeSelf || canvasSettings.activeSelf)
+            if (panelCredits.activeSelf || panelSettings.activeSelf)
             {
                 ShowMainMenu();
             }
@@ -33,14 +33,14 @@ public class Navigation : MonoBehaviour
 
     public void OpenSettings()
     {
-        canvasMainMenu.SetActive(false);
-        canvasSettings.SetActive(true);
+        panelMainMenu.SetActive(false);
+        panelSettings.SetActive(true);
     }
 
     public void OpenCredits()
     {
-        canvasMainMenu.SetActive(false);
-        canvasCredits.SetActive(true);
+        panelMainMenu.SetActive(false);
+        panelCredits.SetActive(true);
     }
 
     public void ExitGame()
@@ -50,8 +50,8 @@ public class Navigation : MonoBehaviour
 
     public void ShowMainMenu()
     {
-        canvasMainMenu.SetActive(true);
-        canvasSettings.SetActive(false);
-        canvasCredits.SetActive(false);
+        panelMainMenu.SetActive(true);
+        panelSettings.SetActive(false);
+        panelCredits.SetActive(false);
     }
 }
