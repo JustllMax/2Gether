@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0141a3b9c5960364fa1c0d12baf7cfae, type: 3}
-  m_Name: AIStats_Spectator
+  m_Name: AIStats_Booger
   m_EditorClassIdentifier: 
-  Health: 300
-  AttackRange: 3
-  AttackDamage: 30
-  AttackFireRate: 1
-  AttackReloadTime: 2
-  AttackRadius: 3
-  AttackAmount: 1
-  MovementSpeed: 3
+  Health: 200
+  AttackRange: 5
+  AttackDamage: 5
+  AttackFireRate: 10
+  AttackReloadTime: 0.5
+  AttackRadius: 4
+  AttackAmount: 30
+  MovementSpeed: 2.5

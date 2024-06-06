@@ -3,7 +3,6 @@ Shader "2Gether/Plasma"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _SurfaceSize ("Surface Size", Float) = 1.0
         _AnimationSpeed ("Animation Speed", Float) = 1.0
         _EmissionMin ("Min Emission", Float) = 1.0
         _EmissionMax ("Max Emission", Float) = 1.0
@@ -49,7 +48,6 @@ Shader "2Gether/Plasma"
             float _AnimationSpeed;
             float _EmissionMin;
             float _EmissionMax;
-            float _SurfaceSize;
             float _FresnelPower;
             float _FresnelIntensity;
 
