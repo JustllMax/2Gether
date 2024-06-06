@@ -11,7 +11,8 @@ public class PlayerEquipment : MonoBehaviour
 
     [SerializeField]List<Gun> GunList = new List<Gun>();
     [SerializeField] List<GunAmmoStore> AmmoStore;
-    
+
+    [SerializeField]
     Animator _animator;
 
     public Dictionary<GunType, int> AmmoStorage;
@@ -37,7 +38,6 @@ public class PlayerEquipment : MonoBehaviour
         foreach(GunAmmoStore gun in AmmoStore) {
             AmmoStorage.Add(gun.type, gun.amount);
         }
-        _animator = GetComponent<Animator>();
     }
     void Start()
     {
