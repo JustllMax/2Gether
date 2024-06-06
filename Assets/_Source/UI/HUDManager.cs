@@ -80,9 +80,8 @@ public class HUDManager : MonoBehaviour
     public void SetCurrentHealth(float currentHealth)
     {
         currentHealth = Mathf.Clamp(currentHealth, HealthBar.minValue, HealthBar.maxValue);
-
-        HealthCurrentText.text = currentHealth.ToString();
         HealthBar.value = currentHealth;
+        HealthCurrentText.text = HealthBar.value.ToString();
     }
 
     public void SetIcon(GunType type)
@@ -90,20 +89,20 @@ public class HUDManager : MonoBehaviour
         IconImage.sprite = IconsDictionary[type];  
     }
 
-    public void SetMaxAmmo(float maxAmmo)
+    public void SetMaxAmmo(int maxAmmo)
     {
         AmmoMaxText.text = maxAmmo.ToString();
         AmmoBar.maxValue = maxAmmo;
     }
-    public void SetCurrentAmmo(float currentAmmo)
+    public void SetCurrentAmmo(int currentAmmo)
     {
-        currentAmmo = Mathf.Clamp(currentAmmo, AmmoBar.minValue, AmmoBar.maxValue);
+        currentAmmo = Mathf.Clamp(currentAmmo, (int)AmmoBar.minValue, (int)AmmoBar.maxValue);
 
         AmmoCurrentText.text = currentAmmo.ToString();
         AmmoBar.value = currentAmmo;
     }
 
-    public void SwitchGunOnHUD(float currentAmmo, float maxAmmo, GunType type)
+    public void SwitchGunOnHUD(int currentAmmo, int maxAmmo, GunType type)
     {
         SetMaxAmmo(maxAmmo);
         SetCurrentAmmo(currentAmmo);

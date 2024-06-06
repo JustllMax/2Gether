@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 {
 
     [SerializeField]
+    float _maxHealth = 100f;
+
     float _health = 100f;
 
     [SerializeField]
@@ -64,7 +66,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     private float _dashCooldownTimer;
     private Vector3 _lastMovementDir;
     private float _cameraAngleX;
-
+    private bool _isAlive = true;
     public bool IsTargetable { get; set; }
     public TargetType TargetType { get; set; }
     public float Health { get; set; }
@@ -108,6 +110,11 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
     public void Update()
     {
+        if(_isAlive == false)
+        {
+            return;
+        }
+
         RotateCharacter();
 
         //Gravity
@@ -262,11 +269,19 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         return false;
     }
 
+    public void Heal(float value)
+    {
+        Health += value;
+        Health = Mathf.Clamp(Health, 0, _maxHealth);
+        HUDManager.Instance.SetCurrentHealth(Health);
+    }
+
     public void Kill()
     {
         IsTargetable = false;
+        _isAlive = false;
         //TODO: Change to event 
-
+        
         GameManager.Instance.isPlayerAlive = false;
         return;
     }

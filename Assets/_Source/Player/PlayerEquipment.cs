@@ -12,8 +12,9 @@ public class PlayerEquipment : MonoBehaviour
     PlayerInputAction.FPSControllerActions _FPSController;
 
     [SerializeField]List<Gun> GunList = new List<Gun>();
-    [SerializeField] Animator _animator;
     [SerializeField] List<GunAmmoStore> AmmoStore;
+    
+    Animator _animator;
 
     public Dictionary<GunType, int> AmmoStorage;
     public Gun _currentGun;
@@ -38,6 +39,7 @@ public class PlayerEquipment : MonoBehaviour
         foreach(GunAmmoStore gun in AmmoStore) {
             AmmoStorage.Add(gun.type, gun.amount);
         }
+        _animator = GetComponent<Animator>();
     }
     void Start()
     {
