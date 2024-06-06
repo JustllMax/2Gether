@@ -57,7 +57,7 @@ public class SlotPlacer : MonoBehaviour
 
     void GenerateMap()
     {
-        PathSlot path = new();
+        PathSlot path = null;
         for (int y = 0; y < mapSize.y; y++)
         {
             for (int x = 0; x < mapSize.x; x++)

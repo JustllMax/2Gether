@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using NaughtyAttributes;
 
 public class UIFlow : MonoBehaviour
 {
@@ -15,9 +16,13 @@ public class UIFlow : MonoBehaviour
     public GameObject gamePanel;
     public GameObject cardsPanel;
 
+    [SerializeField]
+    private UICards currentClickedCard = null;
+
+    [SerializeField, ReadOnly]
     private CardPoolData _currentCardPoolData;
 
-    void Start()
+    void Awake()
     {
         gamePanel.SetActive(false);
         cardpackPanel.SetActive(false);
@@ -28,7 +33,6 @@ public class UIFlow : MonoBehaviour
     public void ShowPanel(CardPoolData pd)
     {
         _currentCardPoolData = pd;
-
 
         gamePanel.SetActive(false);
         cardpackPanel.SetActive(true);
@@ -108,6 +112,7 @@ public class UIFlow : MonoBehaviour
                     if (card.transform != cardpackOpenPanel.transform)
                     {
                         card.transform.SetParent(cardsPanel.transform, false);
+                        card.SetUIFlowRef(this);
                     }
                 }
                 cardpackPanel.SetActive(false);
@@ -186,5 +191,19 @@ public class UIFlow : MonoBehaviour
                 cardImage.DOFade(0f, 1f).SetDelay(0.5f);
             }
         }
+    }
+
+    public void SetSelectedCard(UICards card)
+    {
+        if (currentClickedCard == card) return;
+
+        if (currentClickedCard != null)
+        {
+            currentClickedCard.ResetPosition();
+        }
+
+        currentClickedCard = card;
+
+
     }
 }
