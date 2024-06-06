@@ -103,6 +103,8 @@ public class PauseManager : MonoBehaviour
     public void BackToMenu()
     {
         Time.timeScale = 1f;
+        AudioManager.Instance.StopAmbient("A_DayUI_Ambient");
+        AudioManager.Instance.StopMusic("A_DayUI_Music");
         SceneManager.LoadScene(0);
     }
 }
