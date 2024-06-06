@@ -6,8 +6,6 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     private GameObject GunCameraObj;
     [SerializeField]
-    private GameObject GunCameradDisplayUI;
-    [SerializeField]
     private CinemachineVirtualCamera dayCamera;
     [SerializeField]
     private CinemachineVirtualCamera nightCamera;
