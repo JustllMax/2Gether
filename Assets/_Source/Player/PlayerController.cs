@@ -1,15 +1,14 @@
 using Cysharp.Threading.Tasks;
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 {
 
     [SerializeField]
+    float _maxHealth = 100f;
+
     float _health = 100f;
 
     [SerializeField]
@@ -49,7 +48,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     private float _dashCooldown = 1.0f;
 
     [SerializeField]
-    private ushort _maxDashCount = 2;
+    private ushort _maxDashCount = 3;
 
     [SerializeField]
     private bool _isMoving;
@@ -62,10 +61,10 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     private bool _onGround = false;
     private bool _isDashing = false;
     private ushort _dashCount;
-    private float _dashCooldownTime;
+    private float _dashCooldownTimer;
     private Vector3 _lastMovementDir;
     private float _cameraAngleX;
-
+    private bool _isAlive = true;
     public bool IsTargetable { get; set; }
     public TargetType TargetType { get; set; }
     public float Health { get; set; }
@@ -75,10 +74,15 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         Health = _health;
         IsTargetable = true;
         TargetType = TargetType.Player;
-        Application.targetFrameRate = 300;
         _characterController = GetComponent<CharacterController>();
         _audioSource = GetComponent<AudioSource>();
         _dashCount = _maxDashCount;
+    }
+
+    private void OnValidate()
+    {
+        if (TargetType != TargetType.Player)
+            TargetType = TargetType.Player;
     }
 
     void Start()
@@ -86,6 +90,15 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         FPSController = InputManager.Instance.GetPlayerInputAction().FPSController;
 
         FPSController.Jump.performed += OnJump;
+        HUDManager.Instance.SetMaxHealth(Health);
+        HUDManager.Instance.SetCurrentHealth(Health);
+
+        HUDManager.Instance.SetAllDashesMaxTimer(_dashCooldown);
+        for(int i = 0; i < _maxDashCount; i++)
+        {
+            HUDManager.Instance.SetDashCurrentTimer(i, _dashCooldown);
+
+        }
     }
 
     private void FixedUpdate()
@@ -95,15 +108,21 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
     public void Update()
     {
+        if(_isAlive == false)
+        {
+            return;
+        }
+
         RotateCharacter();
 
         //Gravity
         _velocity += _gravityAcceleration * Time.deltaTime;
 
         //Dash cooldown
-        if (!_isDashing && _dashCount < _maxDashCount && _dashCooldownTime < _dashCooldown)
+        if (!_isDashing && _dashCount < _maxDashCount && _dashCooldownTimer < _dashCooldown)
         {
-            _dashCooldownTime += Time.deltaTime;
+            _dashCooldownTimer += Time.deltaTime;
+            HUDManager.Instance.SetDashCurrentTimer(_dashCount, _dashCooldownTimer);
         }
 
         //Reset jump & dash
@@ -113,10 +132,10 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
             if (_velocity.y < 0)
                 _velocity.y = 0f;
 
-            if (_dashCooldownTime >= _dashCooldown)
+            if (_dashCooldownTimer >= _dashCooldown)
             {
-                _dashCount = _maxDashCount;
-                _dashCooldownTime = 0.0f;
+                _dashCount++;
+                _dashCooldownTimer = 0.0f;
             }
         }
 
@@ -193,7 +212,10 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         if (_dashCount > 0 && !_isDashing)
         {
             Dash();
+            //_dashCooldownTimer = 0f;
             _dashCount--;
+            HUDManager.Instance.SetDashCurrentTimer(_dashCount, _dashCooldownTimer);
+
         }
     }
 
@@ -234,8 +256,9 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
     public bool TakeDamage(float damage)
     {
-
+        Debug.Log(this + "took " + damage + " damage");
         Health -= damage;
+        HUDManager.Instance.SetCurrentHealth(Health);
         if(Health <= 0)
         {
             Kill();
@@ -244,10 +267,20 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         return false;
     }
 
+    public void Heal(float value)
+    {
+        Health += value;
+        Health = Mathf.Clamp(Health, 0, _maxHealth);
+        HUDManager.Instance.SetCurrentHealth(Health);
+    }
+
     public void Kill()
     {
         IsTargetable = false;
+        _isAlive = false;
+        //TODO: Change to event 
         
+        GameManager.Instance.isPlayerAlive = false;
         return;
     }
 }

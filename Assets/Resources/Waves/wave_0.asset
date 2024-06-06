@@ -18,7 +18,7 @@ MonoBehaviour:
     Cooldown: 5
   - EnemyPool: {fileID: 11400000, guid: 711856abb4e943c44a3dafbde6a7e026, type: 2}
     EnemySpawnInterval: 0.5
-    Cooldown: 10
-  - EnemyPool: {fileID: 11400000, guid: f2c9d8e92442e614db9af6e7f44d88d0, type: 2}
+    Cooldown: 5
+  - EnemyPool: {fileID: 11400000, guid: 062d209c6134348498cbd0b4828b0067, type: 2}
     EnemySpawnInterval: 0.5
-    Cooldown: 15
+    Cooldown: 5

@@ -17,6 +17,6 @@ MonoBehaviour:
   AttackDamage: 15
   AttackFireRate: 2
   AttackReloadTime: 0.5
-  AttackRadius: 1
+  AttackRadius: 2
   AttackAmount: 2
   MovementSpeed: 3

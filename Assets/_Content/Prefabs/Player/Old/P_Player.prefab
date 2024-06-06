@@ -600,7 +600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 491cc63d75d4c4540b2a74e67ed64691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _SO_Stats: {fileID: 11400000, guid: c44288301eafa8a4b9cf8edf4b4fd34f, type: 2}
+  _SO_Stats: {fileID: 11400000, guid: 5cab93f09bdff9b468d6f8833889f64c, type: 2}
   _Model: {fileID: 6940104122967641503}
   firingSound: {fileID: 0}
   reloadSound: {fileID: 0}
@@ -666,7 +666,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 20
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
@@ -1308,7 +1308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 491cc63d75d4c4540b2a74e67ed64691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _SO_Stats: {fileID: 11400000, guid: c44288301eafa8a4b9cf8edf4b4fd34f, type: 2}
+  _SO_Stats: {fileID: 11400000, guid: e1fd46c668b8bc74fa5f17c929713ee1, type: 2}
   _Model: {fileID: 5192519862357467155}
   firingSound: {fileID: 0}
   reloadSound: {fileID: 0}
@@ -1388,7 +1388,7 @@ MonoBehaviour:
     type: 3}
   mask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 33587991
   bulletSpeed: 100
 --- !u!1 &6940104122967641503
 GameObject:
@@ -1719,7 +1719,7 @@ GameObject:
   - component: {fileID: 5159281564673271810}
   - component: {fileID: 36212410921928957}
   - component: {fileID: 1582886704921254129}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: GunCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1751,8 +1751,8 @@ Camera:
   m_GameObject: {fileID: 8917326839404837370}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 4
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1852,7 +1852,7 @@ GameObject:
   - component: {fileID: 9078178050116245136}
   - component: {fileID: 7626223833473269004}
   - component: {fileID: 3333791552747181671}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: P_Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1918,7 +1918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf41519b8b3551349bd88bb772b0fa03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 100
+  _maxHealth: 100
   _nightCamera: {fileID: 823719554601124883}
   _gunCamera: {fileID: 5159281564673271810}
   _cameraSensitivity: 0.1
@@ -1930,8 +1930,8 @@ MonoBehaviour:
   _movementSpeed: 6
   _jumpHeight: 1.5
   _dashSpeed: 20
-  _dashCooldown: 1
-  _maxDashCount: 2
+  _dashCooldown: 2
+  _maxDashCount: 3
   _isMoving: 0
 --- !u!114 &5254199356192977003
 MonoBehaviour:
@@ -1950,8 +1950,9 @@ MonoBehaviour:
   - {fileID: 3912728841439371252}
   - {fileID: 4542388386687634158}
   - {fileID: 8888084585703060918}
-  _animator: {fileID: 3333791552747181671}
   AmmoStore:
+  - type: 0
+    amount: 9999
   - type: 1
     amount: 60
   - type: 2
@@ -2027,6 +2028,14 @@ PrefabInstance:
     - target: {fileID: 1743301284569550, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
       propertyPath: m_Name
       value: MuzzleFlash01_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743301284569550, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1992675705445476, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4300533007854612, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2155,6 +2164,14 @@ PrefabInstance:
     - target: {fileID: 1743301284569550, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
       propertyPath: m_Name
       value: MuzzleFlash01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743301284569550, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1992675705445476, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4300533007854612, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2291,6 +2308,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_MainCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 844436919908224881, guid: 002545678bee4264fbe68d9229d73128,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2753117317975641421, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: near clip plane
@@ -2309,37 +2331,37 @@ PrefabInstance:
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -93.43553
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 87.024
+      value: 0.62999994
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -86.725525
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7858988
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.4857124
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.32552984
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.20118861
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}

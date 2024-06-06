@@ -26,7 +26,8 @@ public class DayNightCycleManager : MonoBehaviour
 
     public static event Action NightBegin;
     public static event Action NightEnd;
-
+    public int nightBeginTasks = 3;
+    
     public bool IsDay;
     private void Start()
     {
@@ -46,14 +47,11 @@ public class DayNightCycleManager : MonoBehaviour
         }
     }
 
-
-
     public void EndDayCycle()
     {
         IsDay = false;
         DayEnd?.Invoke();
         NightBegin?.Invoke();
-        GameManager.Instance.OnNextWaveStartInvoke();
     }
 
     public void EndNightCycle()

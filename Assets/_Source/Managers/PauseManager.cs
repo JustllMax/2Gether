@@ -36,7 +36,6 @@ public class PauseManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseGame();
-            GameManager.Instance.OnNextWaveStartInvoke();
         }
     }
 

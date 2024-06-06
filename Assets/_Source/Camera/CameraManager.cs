@@ -6,13 +6,9 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     private GameObject GunCameraObj;
     [SerializeField]
-    private GameObject GunCameradDisplayUI;
-    [SerializeField]
     private CinemachineVirtualCamera dayCamera;
     [SerializeField]
     private CinemachineVirtualCamera nightCamera;
-    [SerializeField]
-    private GameObject crosshairUI;
     [SerializeField]
     private GameObject groundFog;
 
@@ -58,6 +54,8 @@ public class CameraManager : MonoBehaviour
     {
         SwitchCameraPriority(dayCamera, 10);
         SwitchCameraPriority(nightCamera, 20);
+        DayNightCycleManager.Instance.nightBeginTasks--;
+        Debug.LogWarning("Camera " + DayNightCycleManager.Instance.nightBeginTasks);
     }
 
     private void SwitchCameraPriority(CinemachineVirtualCamera camera, int priority)
@@ -79,8 +77,6 @@ public class CameraManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            GunCameradDisplayUI.SetActive(true);
-            crosshairUI.SetActive(true);
             GunCameraObj.SetActive(true);
             //Fire event that camera changed to night
 
@@ -89,8 +85,6 @@ public class CameraManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            crosshairUI.SetActive(false);
-            GunCameradDisplayUI.SetActive(false);
             GunCameraObj.SetActive(false);
             //Fire event that camera changed to day
         }

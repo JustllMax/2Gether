@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/_Source/Managers/NavMeshSurfaceManager.cs.meta
+guid: 60e64f399ea10b94da18c2775291ba16
+========
+guid: 3707df6a54e934242903394709f09f41
+>>>>>>>> 40e4cda849a1adbdc574aabc533ab053e6fd7513:Assets/_Content/Effects/Outline/Editor/InternalURPBridge/AssemblyInfo.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

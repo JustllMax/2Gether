@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: wave_pool_seq_test
   m_EditorClassIdentifier: 
   Enemies:
-  - {fileID: 5830721225078026835, guid: d0e011a0f96f3b642b6545b2b99fb4c7, type: 3}
+  - {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1, type: 3}
   EnemyCount: 1

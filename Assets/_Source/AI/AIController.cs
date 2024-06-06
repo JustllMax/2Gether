@@ -5,7 +5,6 @@ using UnityEngine.AI;
 using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 using NaughtyAttributes;
-using System.Runtime.CompilerServices;
 
 
 [Serializable]
@@ -14,7 +13,7 @@ public struct AITarget
     public Transform transform;
     public ITargetable targetable;
 
-
+    
     public AITarget(Transform transform, ITargetable targetable)
     {
         this.transform = transform;
@@ -24,11 +23,6 @@ public struct AITarget
 
 public class AIController : MonoBehaviour, IDamagable
 {
-    #region variables
-
-
-    #region AI states
-
     [Header("Enemy Statistics")]
     [SerializeField] EnemyStatistics stats;
 
@@ -38,23 +32,23 @@ public class AIController : MonoBehaviour, IDamagable
     AIState nextState;
     AIState currentState;
 
-    #endregion
-
-    #region VFX
+    [SerializeField] TargetType AITargetFocus;
 
     [Header("Audio")]
     [SerializeField] AudioClip hurtSound;
     [SerializeField] AudioClip attackSound;
     [SerializeField] AudioClip deathSound;
+
+    [SerializeField] BoxCollider hitboxCollider;
+    [SerializeField] float DeathInvokeTime = 2f;
     DisintegrationEffect _deathEffect;
     Animator _animator;
-
-    #endregion
-
-    #region NavMesh
-
     NavMeshAgent _navMeshAgent;
-    [SerializeField] TargetType AITargetFocus;
+    bool isStunned = false;
+    bool isDead = false;
+    [SerializeField]
+    LayerMask targetLayerMask;
+    private float attackTimer = 0f;
 
     [Foldout("DEBUG INFO")]
     [SerializeField] private AITarget currentTarget = new AITarget();
@@ -62,15 +56,9 @@ public class AIController : MonoBehaviour, IDamagable
     [Foldout("DEBUG INFO")]
     public float distanceToTarget;
 
-    #endregion
-
-    #region Attack variable
-
-    bool isStunned = false;
-    private float attackTimer = 0f;
-
     [Foldout("DEBUG INFO")]
     public float lastAttackTime = 0f;
+
 
     [Foldout("DEBUG INFO")]
     public bool isReloading;
@@ -81,40 +69,48 @@ public class AIController : MonoBehaviour, IDamagable
     private float _health;
     public float Health { get => _health; set => _health = value; }
 
-
-    private bool isMapGenerated = false;
-    #endregion
-
-    #endregion
     private void Awake()
     {
-        _navMeshAgent = GetComponent<NavMeshAgent>();
-        _navMeshAgent.speed = GetEnemyStats().MovementSpeed;
-
         _deathEffect = GetComponent<DisintegrationEffect>();
-        _animator = GetComponent<Animator>();
+        _animator = GetComponentInChildren<Animator>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
 
         remainingAttacks = GetEnemyStats().AttackAmount;
         Health = GetEnemyStats().Health;
-
-        currentState = _AIStates[0];
+        _navMeshAgent.speed = GetEnemyStats().MovementSpeed;
     }
 
-    void Start()
+    private void Start()
     {
+        SetLayerTargeting(AITargetFocus);
+        currentState = _AIStates[0];
         currentState.OnStart(this);
     }
 
+
     public void Update()
     {
-        if (attackTimer < stats.AttackFireRate)
+
+        if (isDead)
         {
-            attackTimer += Time.deltaTime;
+            return;
         }
+
+        if (lastAttackTime < stats.AttackFireRate)
+        {
+            lastAttackTime += Time.deltaTime;
+
+        }
+
 
         if (ShouldSearchForTarget())
         {
             SearchForTarget();
+        }
+
+        if (currentTarget.transform != null)
+        {
+             distanceToTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
         }
 
         if (currentState != null)
@@ -122,7 +118,35 @@ public class AIController : MonoBehaviour, IDamagable
             currentState.OnUpdate(this);
             ChangeState();
         }
+
+
     } 
+
+    void SetLayerTargeting(TargetType targetType) 
+    {
+        int playerLayer = LayerMask.NameToLayer("Player");
+        int buildingLayer = LayerMask.NameToLayer("Building");
+        LayerMask mask;
+
+        switch (targetType)
+        {
+            case TargetType.Building:
+                mask = (1 << buildingLayer);
+                targetLayerMask = mask;
+                return;
+
+            case TargetType.Player:
+                mask = (1 << playerLayer);
+                targetLayerMask = mask;
+                return;
+
+            case TargetType.Both:
+                mask = (1 << playerLayer) | (1 << buildingLayer);
+                targetLayerMask = mask;
+                return;
+
+        }
+    }
 
     private bool ShouldSearchForTarget()
     {
@@ -142,19 +166,18 @@ public class AIController : MonoBehaviour, IDamagable
         Transform target = null;
         ITargetable targetable = null;
 
-        //Layermask that hits everything except the terrain
-        int layerMask = ~(1 << LayerMask.NameToLayer("Terrain"));
-        float radius = GetEnemyStats().AttackRange * 3f;
+
+        float radius = GetEnemyStats().AttackRange*3f;
 
         float minDistance = float.MaxValue;
 
 
-        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), radius, layerMask);
+        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), radius, targetLayerMask);
         foreach (Collider hit in hits)
         {
             if (hit.TryGetComponent(out ITargetable t))
             {
-                if (t.IsTargetable && ShouldTarget(t))
+                if (t.IsTargetable)
                 {
                     float distanceToTarget = Vector3.Distance(hit.transform.position, transform.position);
                     if (distanceToTarget < minDistance)
@@ -170,14 +193,6 @@ public class AIController : MonoBehaviour, IDamagable
             SetCurrentTarget(new AITarget(target, targetable));
     }
 
-    bool ShouldTarget(ITargetable t)
-    {
-        if (t.TargetType == AITargetFocus || AITargetFocus == TargetType.Both)
-        {
-            return true;
-        }
-        return false;
-    }
     public void ChangeState()
     {
         nextState = GetNextState();
@@ -189,10 +204,12 @@ public class AIController : MonoBehaviour, IDamagable
             return;
         }
 
-        if (currentState != null)
+        if (currentState != null && !currentState.CanExitState(this))
         {
-            currentState.OnExit(this);
+            return;
         }
+
+        currentState.OnExit(this);
 
         if (nextState != null && nextState != currentState)
         {
@@ -217,7 +234,7 @@ public class AIController : MonoBehaviour, IDamagable
                 if (state.weight > highestWeight)
                 {
                     highestWeight = state.weight;
-
+ 
                 }
             }
         }
@@ -228,7 +245,7 @@ public class AIController : MonoBehaviour, IDamagable
             if (state.CanChangeToState(this) && state.weight == highestWeight)
             {
                 states.Add(state);
-                //Debug.Log(state.name);
+                // ! Debug.Log(state.name);
             }
         }
 
@@ -255,7 +272,7 @@ public class AIController : MonoBehaviour, IDamagable
         {
             if (currentTarget.targetable.IsTargetable && remainingAttacks > 0)
             {
-                return true;
+                 return true;
             }
         }
         return false;
@@ -263,8 +280,10 @@ public class AIController : MonoBehaviour, IDamagable
 
     public bool TakeDamage(float damage)
     {
+        if(isDead)
+            return false;
         Health -= damage;
-        if (Health <= 0)
+        if(Health <= 0)
         {
             Kill();
             return true;
@@ -274,7 +293,22 @@ public class AIController : MonoBehaviour, IDamagable
 
     public void Kill()
     {
-        gameObject.AddComponent<DisintegrationEffect>();
+        isDead = true;
+        hitboxCollider.enabled = false;
+        GetNavMeshAgent().enabled = false;
+        if (!GetAnimator().GetNextAnimatorStateInfo(0).IsName(AIAnimNames.DEATH.ToString()))
+        {
+            GetAnimator().CrossFade(AIAnimNames.DEATH.ToString(), 0.1f);
+        }
+        
+        Invoke("DestroyObj", DeathInvokeTime);
+        WaveManager.Instance.WaveSystem.enemyCount--;
+        Debug.LogWarning("Kill " + WaveManager.Instance.WaveSystem.enemyCount);
+        
+    }
+
+    void DestroyObj()
+    {
         _deathEffect.Execute();
     }
 
