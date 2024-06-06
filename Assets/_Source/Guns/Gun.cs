@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 abstract public class Gun : MonoBehaviour
@@ -12,8 +10,8 @@ abstract public class Gun : MonoBehaviour
     [SerializeField] protected bool isAiming;
     [SerializeField] protected int ammoInMagazine;
 
-    public abstract void Fire(bool isSameButtonPress, Transform bulletSpawnPoint);
-    public abstract void Aim();
+    public abstract bool Fire(bool isSameButtonPress, Transform bulletSpawnPoint);
+    public abstract bool Aim();
 
     public abstract bool CanFire();
 

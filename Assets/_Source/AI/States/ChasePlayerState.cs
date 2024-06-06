@@ -41,6 +41,10 @@ public class ChasePlayerState : AIState
     public override void OnUpdate(AIController controller)
     {
         controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().transform.position);
+        if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
+        {
+            controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
+        }
     }
     public override void OnExit(AIController controller)
     {
