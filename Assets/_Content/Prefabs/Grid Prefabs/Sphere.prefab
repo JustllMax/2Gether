@@ -102,7 +102,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -150,6 +150,7 @@ MonoBehaviour:
   _upgradeTiers: {fileID: 11400000, guid: 502ef1a912de18c42b003dd34d422445, type: 2}
   _buildingSize: {x: 3, y: 1.5, z: 3}
   _renderer: {fileID: 1447220479681022197}
+  isCanBePlacedOnRoad: 1
 --- !u!114 &-3664280102069250028
 MonoBehaviour:
   m_ObjectHideFlags: 0

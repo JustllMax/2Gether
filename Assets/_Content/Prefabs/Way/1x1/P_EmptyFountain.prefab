@@ -115,10 +115,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8658030959571537356}
     m_Modifications:
+    - target: {fileID: 639965044696240822, guid: 93462841750745646bf71c30f1b539ac,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789694408505244576, guid: 93462841750745646bf71c30f1b539ac,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 2787173867396991217, guid: 93462841750745646bf71c30f1b539ac,
         type: 3}
       propertyPath: m_Name
       value: P_Fountain
+      objectReference: {fileID: 0}
+    - target: {fileID: 2787173867396991217, guid: 93462841750745646bf71c30f1b539ac,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3307286382237667915, guid: 93462841750745646bf71c30f1b539ac,
         type: 3}
@@ -189,6 +204,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6649604289619711123, guid: 93462841750745646bf71c30f1b539ac,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

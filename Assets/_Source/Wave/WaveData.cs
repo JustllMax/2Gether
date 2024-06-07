@@ -6,9 +6,17 @@ using UnityEngine;
 [Serializable]
 public struct SingleWaveData
 {
-    [SerializeField] public WaveEnemyPool EnemyPool;
+    [SerializeField] public List<GameObject> Enemies;
     [SerializeField] public float EnemySpawnInterval;
     [SerializeField] public float Cooldown;
+
+    public SingleWaveData(List<GameObject> enemies)
+    {
+        Enemies = new List<GameObject>(enemies);
+        EnemySpawnInterval = 0;
+        Cooldown = 0;
+    }
+
 }
 
 [CreateAssetMenu(menuName = "Game/Wave/Wave Data")]
@@ -26,15 +34,21 @@ public class WaveData : ScriptableObject
     {
         Waves.RemoveAt(index);
     }
-    
+
     public void AddEnemyToWave(GameObject enemy, int index)
     {
-        Waves[index].EnemyPool.Enemies.Add(enemy);
+        Waves[index].Enemies.Add(enemy);
     }
 
     public object Clone()
     {
         return this.MemberwiseClone();
+    }
+
+    public static ScriptableObject DeepCopy(ScriptableObject source)
+    {
+        ScriptableObject copy = Instantiate(source);
+        return copy;
     }
 
 }

@@ -26,6 +26,8 @@ public class BuildCardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, 
     [SerializeField] private Vector2Int _gridSize = new Vector2Int(12, 12);
     private bool _isAvailableToBuild;
     [SerializeField] private const int gridOffset = 10;
+
+    [SerializeField] private LayerMask layerMask;
     #endregion
 
     private Vector2Int rayPosition;
@@ -46,24 +48,31 @@ public class BuildCardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, 
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, 5000f, layerMask))
             {
-                if (hit.collider.gameObject.CompareTag("Terrain"))
+                if (hit.collider.gameObject.CompareTag("Terrain") || hit.collider.gameObject.CompareTag("Way"))
                 {
                     _terrain = hit.collider.gameObject;
                     rayPosition.x = Mathf.RoundToInt(math.abs(hit.point.x));
                     rayPosition.y = Mathf.RoundToInt(math.abs(hit.point.z));
+
+
+
                     if (_draggingBuilding.GetComponent<GridBuilding>().IsDecorationCollision)
                         _isAvailableToBuild = false;
+                    else if (_terrain.CompareTag("Way") && !_draggingBuilding.GetComponent<GridBuilding>().isCanBePlacedOnRoad)
+                    {
 
+                        _isAvailableToBuild = false;
+                    }
                     else if (
-                        rayPosition.x < -1 * gridOffset || 
+                        rayPosition.x < -1 * gridOffset ||
                         rayPosition.y > _gridController.gridSize.x * gridOffset - _draggingBuilding.GetComponent<GridBuilding>().buildingSize.x
                         )
                         _isAvailableToBuild = false;
 
                     else if (
-                        rayPosition.y < -1 * gridOffset || 
+                        rayPosition.y < -1 * gridOffset ||
                         rayPosition.y > _gridController.gridSize.y * gridOffset - _draggingBuilding.GetComponent<GridBuilding>().buildingSize.y
                         )
                         _isAvailableToBuild = false;
@@ -74,7 +83,7 @@ public class BuildCardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, 
                         (int)_draggingBuilding.transform.position.z / gridOffset)
                         )
                         _isAvailableToBuild = false;
-                        
+
                     else
                         _isAvailableToBuild = true;
 

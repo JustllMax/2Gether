@@ -10,7 +10,8 @@ public class WaveSystem : MonoBehaviour
     private List<GameObject> _spawnPoints = new List<GameObject>();
 
     [Header("System state")]
-    private bool _isWaveActive = false;
+    public bool isWaveActive = false;
+    public bool isSpawnActive = false;
     private float _elapsedTime = 0;
     public float elapsedTime {get { return _elapsedTime; }}
     private float _spawnEnemyTimer;
@@ -28,20 +29,19 @@ public class WaveSystem : MonoBehaviour
 
         return _spawnPoints[UnityEngine.Random.Range(0, _spawnPoints.Count)];
     }
-
+/*
     public void BeginWave(WaveData waveData)
     {
-        if (_isWaveActive)
+        if (isWaveActive)
             return;
 
-        _isWaveActive = true;
+        isWaveActive = true;
 
         _ = handleWave(waveData);
         //StartCoroutine(handleWaveCoroutine(_waveData));
 
         nightCount++;
     }
-
     private async UniTaskVoid handleWave(WaveData data)
     {
         foreach (var wave in data.Waves)
@@ -52,14 +52,14 @@ public class WaveSystem : MonoBehaviour
                 var spawnPoint = GetRandomSpawnPoint();
                 if (spawnPoint != null)
                 {
-                    Instantiate(wave.EnemyPool.GetNextEnemy(i), spawnPoint.transform.position + Vector3.up, Quaternion.identity);
+                    Instantiate(wave.EnemyPool.GetNextEnemy(i), spawnPoint.transform.position + (Vector3.one*10) +  Vector3.up, Quaternion.identity);
                     enemyCount++;
                 }
                 await UniTask.WaitForSeconds(wave.EnemySpawnInterval);
             }
             await UniTask.WaitForSeconds(wave.Cooldown);
         }
-        _isWaveActive = false;
+        isWaveActive = false;
     }
 
     private IEnumerator handleWaveCoroutine(WaveData data)
@@ -78,16 +78,50 @@ public class WaveSystem : MonoBehaviour
                 yield return new WaitForSeconds(wave.EnemySpawnInterval);
             }
         }
-        _isWaveActive = false;
+        isWaveActive = false;
+    }
+
+*/
+
+    public void BeginWave(List<SingleWave> waveData)
+    {
+        if (isWaveActive)
+            return;
+
+        isWaveActive = true;
+        
+        _ = handleWave(waveData);
+        //StartCoroutine(handleWaveCoroutine(_waveData));
+
+        nightCount++;
+    }     
+    
+    private async UniTaskVoid handleWave(List<SingleWave> data)
+    {
+        isSpawnActive = true;
+        foreach (var wave in data)
+        {
+            for (int i = 0; i < wave.EnemyPool.Count; i++)
+            {
+                var spawnPoint = GetRandomSpawnPoint();
+                if (spawnPoint != null)
+                {
+                    Instantiate(wave.EnemyPool[i], spawnPoint.transform.position + new Vector3(10, 1, 10), Quaternion.identity);
+                    enemyCount++;
+                }
+                await UniTask.WaitForSeconds(wave.EnemySpawnInterval);
+            }
+            await UniTask.WaitForSeconds(wave.Cooldown);
+        }
+        isSpawnActive = false;
     }
 #endregion
 
     private void Update()
     {
-        if (_isWaveActive)
+        if (isWaveActive)
         {
             _elapsedTime += Time.deltaTime;
-            Debug.LogWarning(_elapsedTime);
         }
     }
 

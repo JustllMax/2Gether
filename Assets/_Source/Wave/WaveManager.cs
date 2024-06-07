@@ -4,6 +4,20 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
+public struct SingleWave
+{
+    public List<GameObject> EnemyPool;
+    public float EnemySpawnInterval;
+    public float Cooldown;
+
+    public SingleWave(List<GameObject> EnemyPool, float EnemySpawnInterval, float Cooldown)
+    {
+        this.EnemyPool = EnemyPool;
+        this.EnemySpawnInterval = EnemySpawnInterval;
+        this.Cooldown = Cooldown;
+    }
+}
+
 public class WaveManager : MonoBehaviour
 {
 
@@ -14,14 +28,11 @@ public class WaveManager : MonoBehaviour
     [SerializeField] List<GameObject> _enemyFollowPrefabs;
     [SerializeField] List<GameObject> _enemyAttackPrefabs;
     [SerializeField] List<GameObject> _enemyBossPrefabs;
-    private WaveData _waveData;
+    List<SingleWave> waves = new List<SingleWave>();
     private WaveSystem _waveSystem;
-    public WaveSystem WaveSystem { get { return _waveSystem; } }
+    public WaveSystem waveSystem { get { return _waveSystem; } }
 
     #region Wave Spawn hard system
-
-    private List<List<int>> difEnemy;
-    int sumDif = 0;
     private float waveClearExpected = 240;
     private float waveClear = 0;
 
@@ -39,16 +50,16 @@ public class WaveManager : MonoBehaviour
         }
         _instance = this;
         _waveSystem = GetComponent<WaveSystem>();
-        _waveData = (WaveData)Resources.Load<WaveData>("Waves/wave_data").Clone();
+        WaveData waveData = Resources.Load<WaveData>("Waves/wave_data");
 
-        foreach(var wave in _waveData.Waves)
+        foreach(var wave in waveData.Waves)
         {
+            waves.Add(new SingleWave(new List<GameObject>(wave.Enemies), wave.EnemySpawnInterval, wave.Cooldown));
             waveClearExpected += wave.Cooldown;
         }
     }
     void OnEnable()
     {
-        Debug.LogWarning("Wave Enable");
         GameManager.OnGameManagerReady += OnStart;
     }
     void OnDisable()
@@ -57,7 +68,6 @@ public class WaveManager : MonoBehaviour
     }
     private void OnStart()
     {
-        Debug.LogWarning("Wave OnStart");
         if (SlotPlacer.Instance == null)
         {
             return;
@@ -74,10 +84,11 @@ public class WaveManager : MonoBehaviour
     #endregion
 
 
-    void Update()
+    void FixedUpdate()
     {
-        //Debug.LogWarning("Wave update");
-        if (_waveSystem.enemyCount <= 0)
+        Debug.LogWarning("Enemies: " + _waveSystem.enemyCount);
+
+        if (_waveSystem.enemyCount <= 0 && _waveSystem.isWaveActive && !_waveSystem.isSpawnActive)
         {
             EndWave();
         }
@@ -184,7 +195,7 @@ public class WaveManager : MonoBehaviour
     }
             */
 
-            foreach (var wave in _waveData.Waves)
+            foreach (var wave in waves)
             {
                 //wave.Cooldown += followEnemiesNumberToAdd+attackEnemiesNumberToAdd;
 
@@ -192,13 +203,13 @@ public class WaveManager : MonoBehaviour
                 for (int followCount = 0; followCount < followEnemiesNumberToAdd; followCount++)
                 {
                     followToAdd = UnityEngine.Random.Range(0, _enemyFollowPrefabs.Count);
-                    wave.EnemyPool.Enemies.Add(_enemyFollowPrefabs[followToAdd]);
+                    wave.EnemyPool.Add(_enemyFollowPrefabs[followToAdd]);
                 }
 
                 for (int followCount = 0; followCount < attackEnemiesNumberToAdd; followCount++)
                 {
                     attackToAdd = UnityEngine.Random.Range(0, _enemyAttackPrefabs.Count);
-                    wave.EnemyPool.Enemies.Add(_enemyAttackPrefabs[attackToAdd]);
+                    wave.EnemyPool.Add(_enemyAttackPrefabs[attackToAdd]);
                 }
             }
             waveClearExpected += followEnemiesNumberToAdd + attackEnemiesNumberToAdd;
@@ -207,19 +218,20 @@ public class WaveManager : MonoBehaviour
         if (WaveSystem.nightCount % 5 == 0)
         {
             bossToAdd = UnityEngine.Random.Range(0, _enemyBossPrefabs.Count);
-            _waveData.Waves[_waveData.Waves.Count - 1].EnemyPool.Enemies.Add(_enemyBossPrefabs[bossToAdd]);
+            waves[waves.Count - 1].EnemyPool.Add(_enemyBossPrefabs[bossToAdd]);
         }
     }
     #endregion
     public void EndWave()
     {
+        _waveSystem.isWaveActive = false;
         DayNightCycleManager.Instance.EndNightCycle();
         NextNightWaveData();
     }
 
     void StartWave()
     {
-        _waveSystem.BeginWave(_waveData);
+        _waveSystem.BeginWave(waves);
     }
 
     #endregion

@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: wave_data
   m_EditorClassIdentifier: 
   Waves:
-  - EnemyPool: {fileID: 11400000, guid: 52171184d3482264392d8f5d8aef9aec, type: 2}
+  - Enemies:
+    - {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1, type: 3}
     EnemySpawnInterval: 0.5
     Cooldown: 15
-  - EnemyPool: {fileID: 11400000, guid: 6557f24be755bff43b877b7667ff98b7, type: 2}
+  - Enemies:
+    - {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1, type: 3}
     EnemySpawnInterval: 0.5
-    Cooldown: 30
-  - EnemyPool: {fileID: 11400000, guid: c972e88216b74f849be5155513f7006b, type: 2}
+    Cooldown: 15
+  - Enemies:
+    - {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1, type: 3}
     EnemySpawnInterval: 0.5
-    Cooldown: 45
+    Cooldown: 15

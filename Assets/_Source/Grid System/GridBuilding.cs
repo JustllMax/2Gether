@@ -6,6 +6,7 @@ public class GridBuilding : Building
 {
     [SerializeField] private Vector3 _buildingSize;
     [SerializeField] private Renderer _renderer;
+    [SerializeField] public bool isCanBePlacedOnRoad = false;
     private bool _isDecorationCollision;
     public bool IsDecorationCollision
     {

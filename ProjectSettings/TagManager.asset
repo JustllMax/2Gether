@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Terrain
-  - Way_Anchor
   - Decoration
+  - Way
   layers:
   - Default
   - TransparentFX
