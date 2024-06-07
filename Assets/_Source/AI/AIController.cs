@@ -69,6 +69,7 @@ public class AIController : MonoBehaviour, IDamagable
     [SerializeField] private float _health;
 
     public float Health { get => _health; set => _health = value; }
+    public bool IsAlive { get => !isDead; }
 
     private void Awake()
     {
