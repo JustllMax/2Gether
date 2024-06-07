@@ -42,6 +42,7 @@ public class GunShotgun : Gun
             {
                 return false;
             }
+            AudioManager.Instance.PlaySFXAtSource( firingSound, audioSource);
             ammoInMagazine -= 1;
             CalculateFire(bulletSpawnPoint, pelletsPerShot);
             return true;
@@ -94,7 +95,8 @@ public class GunShotgun : Gun
 
         if (ammoInMagazine > 0)
             return true;
-
+        if (!audioSource.isPlaying)
+            AudioManager.Instance.PlaySFXAtSource(noAmmoSound, audioSource);
         return false;
     }
 
