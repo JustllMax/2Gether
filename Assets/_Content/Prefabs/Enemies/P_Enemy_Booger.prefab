@@ -652,7 +652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6caa5531e1f463045acef6e84e0b2b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: 7b368f0dbaa8a8946b42ed1bd92d972e, type: 2}
+  stats: {fileID: 11400000, guid: 8d6a648ff1a8fd142a81afe85196d688, type: 2}
   _AIStates:
   - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
   - {fileID: 11400000, guid: cdbbc91e4a6186a408d77c3dd79f5214, type: 2}
@@ -669,7 +669,7 @@ MonoBehaviour:
   distanceToTarget: 0
   lastAttackTime: 0
   isReloading: 0
-  remainingAttacks: 0
+  comboLength: 0
   _health: 0
   maxHealth: 0
 --- !u!195 &8244053411383442607

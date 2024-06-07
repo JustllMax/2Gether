@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 using NaughtyAttributes;
+using UnityEngine.InputSystem.XR;
 
 
 [Serializable]
@@ -64,7 +65,7 @@ public class AIController : MonoBehaviour, IDamagable
     public bool isReloading;
 
     [Foldout("DEBUG INFO")]
-    public float remainingAttacks;
+    public float comboLength;
     [Foldout("DEBUG INFO")]
     [SerializeField] private float _health;
 
@@ -82,7 +83,7 @@ public class AIController : MonoBehaviour, IDamagable
         hitboxCollider = GetComponentInChildren<Collider>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
-        remainingAttacks = GetEnemyStats().AttackAmount;
+        comboLength = GetEnemyStats().attackCombo.Length;
         maxHealth = GetEnemyStats().Health;
         Health = maxHealth;
         _navMeshAgent.speed = GetEnemyStats().MovementSpeed;
@@ -136,7 +137,7 @@ public class AIController : MonoBehaviour, IDamagable
             return;
         }
 
-        if (lastAttackTime < stats.AttackFireRate)
+        if (lastAttackTime < stats.ComboDelay)
         {
             lastAttackTime += Time.deltaTime;
 
@@ -159,10 +160,9 @@ public class AIController : MonoBehaviour, IDamagable
             ChangeState();
         }
 
-
-    } 
-
-    void SetLayerTargeting(TargetType targetType) 
+        _animator.SetFloat("walk_speed", _navMeshAgent.velocity.magnitude / stats.MovementSpeed);
+    }
+    void SetLayerTargeting(TargetType targetType)
     {
         int playerLayer = LayerMask.NameToLayer("Player");
         int buildingLayer = LayerMask.NameToLayer("Building");
@@ -190,11 +190,11 @@ public class AIController : MonoBehaviour, IDamagable
 
     private bool ShouldSearchForTarget()
     {
-        if (GetCurrentTarget().transform != null)
+        if (currentTarget.transform != null)
         {
-            if (GetCurrentTarget().targetable != null)
+            if (currentTarget.targetable != null)
             {
-                if(GetCurrentTarget().targetable.IsTargetable)
+                if(currentTarget.targetable.IsTargetable)
                     return false;
             }
         }
@@ -304,13 +304,13 @@ public class AIController : MonoBehaviour, IDamagable
     public void RangedAttackPerformed()
     {
         attackTimer = 0f;
-        remainingAttacks--;
+        comboLength--;
     }
     public bool CanAttack()
     {
         if (currentTarget.transform != null)
         {
-            if (currentTarget.targetable.IsTargetable && remainingAttacks > 0)
+            if (currentTarget.targetable != null && currentTarget.targetable.IsTargetable && comboLength > 0)
             {
                  return true;
             }
@@ -338,12 +338,8 @@ public class AIController : MonoBehaviour, IDamagable
         isDead = true;
         hitboxCollider.enabled = false;
         GetNavMeshAgent().enabled = false;
-        
-        if (!GetAnimator().GetNextAnimatorStateInfo(0).IsName(AIAnimNames.DEATH.ToString()))
-        {
-            GetAnimator().CrossFade(AIAnimNames.DEATH.ToString(), 0.1f);
-        }
-        
+
+        PlayAnimation("DEATH");
         Invoke("Desintegrate", DeathInvokeTime);
 
         WaveManager.Instance.waveSystem.enemyCount--;
@@ -362,10 +358,33 @@ public class AIController : MonoBehaviour, IDamagable
         return true;
     }
 
-
-    public void InstantiateGameObject(GameObject obj, Transform parent)
+    public bool AnimationComplete(string animName)
     {
-        Instantiate(obj, parent);
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+        return !stateInfo.IsName(animName) || (stateInfo.normalizedTime >= 1 && !_animator.IsInTransition(0));
+    }
+
+    public void PlayAnimation(string animName, float crossTime = 0.1f)
+    {
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+
+        if (!stateInfo.IsName(animName))
+        {
+            Debug.LogError("test1");
+            _animator.CrossFadeInFixedTime(animName, crossTime);
+        } else if (stateInfo.normalizedTime >= 1 && !_animator.IsInTransition(0))
+        {
+            Debug.LogError("test2");
+            _animator.Play(animName, -1, 0);
+
+        }
+    }
+
+    public GameObject InstantiateGameObject(GameObject obj, Transform parent)
+    {
+        return Instantiate(obj, parent);
     }
     #region GetSet
 

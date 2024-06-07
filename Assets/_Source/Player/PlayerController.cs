@@ -241,8 +241,6 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
             _velocity.z = movement.z * _dashSpeed;
             await UniTask.Yield();
         }
-        _isDashing = false;
-        return;
 
         _velocity = new Vector3(0,0,0);
 

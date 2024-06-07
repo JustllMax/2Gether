@@ -2128,7 +2128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde83e1bf51f90549b9542a73de5b940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: 4048d42399c49f4428dd8d16211f0e0b, type: 2}
+  stats: {fileID: 11400000, guid: a7c2e041215d4ac448a89f1d2c9b23f5, type: 2}
   _AIStates:
   - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
   - {fileID: 11400000, guid: d7317b2390809ab40bd383fcda9bd2e6, type: 2}
@@ -2145,14 +2145,14 @@ MonoBehaviour:
   distanceToTarget: 0
   lastAttackTime: 0
   isReloading: 0
-  remainingAttacks: 0
+  comboLength: 0
   _health: 0
   maxHealth: 0
   explosionParticles: {fileID: 5985198733810873842, guid: 93efba87289fd6d448953bcccb7a1058,
     type: 3}
   explosionMask:
     serializedVersion: 2
-    m_Bits: 576
+    m_Bits: 832
 --- !u!195 &1600096481173909209
 NavMeshAgent:
   m_ObjectHideFlags: 0

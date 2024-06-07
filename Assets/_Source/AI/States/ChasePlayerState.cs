@@ -28,11 +28,8 @@ public class ChasePlayerState : AIState
             controller.SetCurrentTarget(playerTarget);
         }
 
-
-        if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
-        {
-            controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
-        }
+   
+        controller.PlayAnimation("WALK");
 
         Debug.Log(this + " set destination to player");
 
@@ -43,11 +40,6 @@ public class ChasePlayerState : AIState
     {
         if(controller.GetCurrentTarget().transform != null)
             controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().transform.position);
-
-        if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
-        {
-            controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
-        }
     }
     public override void OnExit(AIController controller)
     {

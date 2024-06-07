@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: AIStats_Bomberbot
   m_EditorClassIdentifier: 
   Health: 50
-  AttackRange: 4
-  AttackDamage: 50
-  AttackFireRate: 2
-  AttackRadius: 4
+  AttackRange: 3
   MovementSpeed: 6
-  AttackReloadTime: 0.5
-  AttackAmount: 1
+  attackCombo:
+  - Damage: 80
+    Delay: 0.3
+    DamagerRadius: 5
+  ComboDelay: 0

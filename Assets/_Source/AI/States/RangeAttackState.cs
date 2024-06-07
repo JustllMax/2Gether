@@ -22,22 +22,18 @@ public class RangedAttackState : AIState
     public override void OnUpdate(AIController controller)
     {
 
-        if (controller.remainingAttacks <= 0)
-        {
-            if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(AIAnimNames.RELOAD.ToString()))
-            {
-                controller.GetAnimator().CrossFade(AIAnimNames.RELOAD.ToString(), 0.1f);
-                return;
-            }
-        }
+        //if (controller.comboLength <= 0)
+        //{
+        //    if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(AIAnimNames.RELOAD.ToString()))
+        //    {
+        //        controller.GetAnimator().CrossFade(AIAnimNames.RELOAD.ToString(), 0.1f);
+        //        return;
+        //    }
+        //}
 
-        if (firstAttackFlag || controller.lastAttackTime >= controller.GetEnemyStats().AttackFireRate )
+        if (firstAttackFlag || controller.lastAttackTime >= controller.GetEnemyStats().attackCombo[0].Delay )
         {
-            if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
-            {
-                controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
-            }
-
+            controller.PlayAnimation("ATTACK");
             controller.StartCoroutine(PerformAttack(controller));
         }
 
@@ -61,7 +57,7 @@ public class RangedAttackState : AIState
 
     private bool AttackAnimationComplete(AIController controller)
     {
-        return !controller.GetAnimator().GetCurrentAnimatorStateInfo(0).IsName(animName.ToString());
+        return controller.AnimationComplete("ATTACK");
     }
     IEnumerator PerformAttack(AIController controller)
     {
@@ -71,7 +67,7 @@ public class RangedAttackState : AIState
         Vector3 dir = (controller.GetCurrentPosition() - controller.GetCurrentTarget().transform.position).normalized;
         AIBullet bullet = AIBulletManager.Instance.Pool.Get();
         bullet.SetDirection(dir);
-        bullet.SetDamage(controller.GetEnemyStats().AttackDamage);
+        bullet.SetDamage(controller.GetEnemyStats().attackCombo[0].Damage);
         controller.RangedAttackPerformed();
     }
 }
