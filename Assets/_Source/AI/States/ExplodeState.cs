@@ -71,11 +71,18 @@ public class Explode : AIState
 
             }
         }
+
+        Renderer[] renderers = controller.gameObject.GetComponentsInChildren<Renderer>();
+        foreach (var renderer in renderers)
+            renderer.enabled = false;
+
         if (explosionParticles != null)
             controller.InstantiateGameObject(explosionParticles.gameObject, controller.transform);
 
         AudioManager.Instance.PlaySFXAtSource(controller.attackSound, controller.audioSource);
-        controller.Kill();
+
+
+        controller.Kill(false);
 
     }
 

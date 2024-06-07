@@ -49,7 +49,7 @@ public class Mine : Building
         return false;
     }
 
-    public override void Kill()
+    public override void Kill(bool desintegrate = false)
     {
 
         model.SetActive(false);

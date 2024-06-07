@@ -276,7 +276,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         return true;
     }
 
-    public void Kill()
+    public void Kill(bool desintegrate = true)
     {
         IsTargetable = false;
         _isAlive = false;

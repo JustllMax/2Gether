@@ -333,7 +333,7 @@ public class AIController : MonoBehaviour, IDamagable
         return false;
     }
 
-    public void Kill()
+    public void Kill(bool desintegate = true)
     {
         isDead = true;
         hitboxCollider.enabled = false;
@@ -344,14 +344,22 @@ public class AIController : MonoBehaviour, IDamagable
             GetAnimator().CrossFade(AIAnimNames.DEATH.ToString(), 0.1f);
         }
         
-        Invoke("DestroyObj", DeathInvokeTime);
+        if (desintegate)
+            Invoke("Desintegrate", DeathInvokeTime);
+        else
+            Invoke("DestroyObj", DeathInvokeTime);
 
         WaveManager.Instance.waveSystem.enemyCount--;
     }
 
-    void DestroyObj()
+    void Desintegrate()
     {
         _deathEffect.Execute();
+    }
+
+    void DestroyObj()
+    {
+        Destroy(gameObject);
     }
 
     public bool Heal(float amount)

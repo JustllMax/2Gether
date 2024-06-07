@@ -87,7 +87,7 @@ public class HospitalBuilding : Building
         return false;
     }
 
-    public override void Kill()
+    public override void Kill(bool desintegrate = false)
     {
         IsTargetable = false;
         if(createDestroyParticles != null)

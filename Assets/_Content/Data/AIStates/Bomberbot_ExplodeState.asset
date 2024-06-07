@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weight: 3
   animName: 3
-  AnimDelayForAttack: 0.5
+  AnimDelayForAttack: 0.45
   explosionParticles: {fileID: 5985198733810873842, guid: 93efba87289fd6d448953bcccb7a1058,
     type: 3}
   mask:

@@ -59,7 +59,7 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
 
 
     public abstract bool TakeDamage(float damage);
-    public abstract void Kill();
+    public abstract void Kill(bool desintegrate = true);
 
     public bool Heal(float amount)
     {
