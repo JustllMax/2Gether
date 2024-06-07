@@ -5,8 +5,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BuffCard", menuName = "2Gether/Cards/BuffCard")]
 public class BuffCard : Card
 {
-    public override void OnSubmitCard(GameContext ctx)
+    public override void OnBeginUseCard(GameContext ctx)
     {
-        Log.Debug("Card submitted: " + this.CardName);
+        throw new System.NotImplementedException();
     }
+
+    public override void OnCardSubmitted(GameContext ctx)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnEndUseCard(GameContext ctx)
+    {
+        throw new System.NotImplementedException();
+    }
+
+
 }

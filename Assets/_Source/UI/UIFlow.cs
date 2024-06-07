@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using NaughtyAttributes;
+using System;
 
 public class UIFlow : MonoBehaviour
 {
@@ -200,10 +201,15 @@ public class UIFlow : MonoBehaviour
         if (currentClickedCard != null)
         {
             currentClickedCard.ResetPosition();
+            currentClickedCard.CardData.EndExecute();
         }
 
         currentClickedCard = card;
+        currentClickedCard.CardData.Execute();
+    }
 
+    public void DiscardCard(Card buildingCard)
+    {
 
     }
 }

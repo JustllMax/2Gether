@@ -16,5 +16,5 @@ MonoBehaviour:
   CardSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   CardDescription: aaa
   CardStatisticsData: {fileID: 11400000, guid: a07c20b9b59085a409e8231e6f0601ce, type: 2}
-  BuildingPrefab: {fileID: 2195012266145351689, guid: f2c6fd45381ee894fa8238c81b92a942,
+  BuildingPrefab: {fileID: 7591932275088343701, guid: 427bf0348ca5d7240b330a8fc5b100d1,
     type: 3}

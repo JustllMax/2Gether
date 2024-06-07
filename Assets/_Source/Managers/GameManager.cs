@@ -39,10 +39,14 @@ public class GameManager : MonoBehaviour
 
         _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
+
     }
     private void Start()
     {
-        Application.targetFrameRate = 300;
+        Application.targetFrameRate = 75;
+
+        _cardManager.ShowPanel(InitialCardPool);
+
     }
     void OnDisable()
     {

@@ -19,6 +19,20 @@ public class CardObject : MonoBehaviour
     [SerializeField]
     private Image _thumbnail;
 
+    public void Execute()
+    {
+        GameContext ctx = new GameContext();
+        ctx.buildingPlacer = BuildingPlacer.Instance;
+        _card.OnBeginUseCard(ctx);
+    }
+
+    public void EndExecute()
+    {
+        GameContext ctx = new GameContext();
+        ctx.buildingPlacer = BuildingPlacer.Instance;
+        _card.OnEndUseCard(ctx);
+    }
+
     public void PopulateCard(Card card)
     {
         _card = card;

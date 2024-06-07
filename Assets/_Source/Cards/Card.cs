@@ -14,5 +14,9 @@ abstract public class Card : ScriptableObject
 
     public CardStatistics CardStatisticsData;
 
-    public abstract void OnSubmitCard(GameContext ctx);
+    public abstract void OnCardSubmitted(GameContext ctx);
+
+    public abstract void OnBeginUseCard(GameContext ctx);
+    public abstract void OnEndUseCard(GameContext ctx);
+
 }
