@@ -9,14 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0141a3b9c5960364fa1c0d12baf7cfae, type: 3}
-  m_Name: AIStats_Booger
+  m_Script: {fileID: 11500000, guid: 6739f286bfac98c4687346f7a97fd200, type: 3}
+  m_Name: CyberTank_MeleeAttackState
   m_EditorClassIdentifier: 
-  Health: 50
-  AttackRange: 2.5
-  AttackDamage: 20
-  AttackFireRate: 1.5
-  AttackReloadTime: 0
-  AttackRadius: 2
-  AttackAmount: 30
-  MovementSpeed: 3.5
+  weight: 3
+  animName: 1
+  AnimDelayForAttack: 0.7
+  mask:
+    serializedVersion: 2
+    m_Bits: 576

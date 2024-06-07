@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0141a3b9c5960364fa1c0d12baf7cfae, type: 3}
-  m_Name: AIStats_Booger
+  m_Name: AIStats_CyberTank
   m_EditorClassIdentifier: 
-  Health: 50
-  AttackRange: 2.5
-  AttackDamage: 20
+  Health: 300
+  AttackRange: 4
+  AttackDamage: 75
   AttackFireRate: 1.5
-  AttackReloadTime: 0
-  AttackRadius: 2
-  AttackAmount: 30
-  MovementSpeed: 3.5
+  AttackReloadTime: 3
+  AttackRadius: 1.5
+  AttackAmount: 1
+  MovementSpeed: 1.5

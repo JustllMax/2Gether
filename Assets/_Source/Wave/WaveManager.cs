@@ -86,7 +86,6 @@ public class WaveManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.LogWarning("Enemies: " + _waveSystem.enemyCount);
 
         if (_waveSystem.enemyCount <= 0 && _waveSystem.isWaveActive && !_waveSystem.isSpawnActive)
         {
