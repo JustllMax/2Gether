@@ -7,7 +7,7 @@ public class Explode : AIState
 {
 
     [SerializeField] float AnimDelayForAttack;
-
+    [SerializeField] ParticleSystem explosionParticles;
     [SerializeField] LayerMask mask;
     public override void OnStart(AIController controller)
     {
@@ -71,7 +71,10 @@ public class Explode : AIState
 
             }
         }
+        if (explosionParticles != null)
+            controller.InstantiateGameObject(explosionParticles.gameObject, controller.transform);
 
+        AudioManager.Instance.PlaySFXAtSource(controller.attackSound, controller.audioSource);
         controller.Kill();
 
     }

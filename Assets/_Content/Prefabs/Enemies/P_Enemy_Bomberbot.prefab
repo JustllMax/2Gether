@@ -882,7 +882,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7531585423459486670}
-  - component: {fileID: 2368249477968516378}
   - component: {fileID: 979683485163093238}
   m_Layer: 8
   m_Name: Model
@@ -907,27 +906,6 @@ Transform:
   - {fileID: 3096307709511144209}
   m_Father: {fileID: 2375794257122518748}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!65 &2368249477968516378
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4012421817266821705}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.4, y: 1.5, z: 1.2}
-  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!95 &979683485163093238
 Animator:
   serializedVersion: 5
@@ -2113,6 +2091,7 @@ GameObject:
   - component: {fileID: 3307119080023307009}
   - component: {fileID: 4127966417348806019}
   - component: {fileID: 7658996164712833693}
+  - component: {fileID: 3146555766493492058}
   m_Layer: 8
   m_Name: P_Enemy_Bomberbot
   m_TagString: Untagged
@@ -2158,7 +2137,7 @@ MonoBehaviour:
   hurtSound: {fileID: 0}
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}
-  hitboxCollider: {fileID: 2368249477968516378}
+  hitboxCollider: {fileID: 0}
   DeathInvokeTime: 0.5
   currentTarget:
     transform: {fileID: 0}
@@ -2166,6 +2145,8 @@ MonoBehaviour:
   lastAttackTime: 0
   isReloading: 0
   remainingAttacks: 0
+  _health: 0
+  maxHealth: 0
 --- !u!195 &1600096481173909209
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2246,6 +2227,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e6e1ee94b4cbe64ea381be97d533e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &3146555766493492058
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029036811985243743}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.4, y: 1.5, z: 1.2}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1 &9120831812455038450
 GameObject:
   m_ObjectHideFlags: 0
