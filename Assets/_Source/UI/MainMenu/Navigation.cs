@@ -61,6 +61,7 @@ public class Navigation : MonoBehaviour
         {
             AudioManager.Instance.PlayMusic("A_Menu_Music");
         }
+        AudioManager.Instance.EnableMusicLowPassFilter(false);
         panelMainMenu.SetActive(true);
         panelSettings.SetActive(false);
         panelCredits.SetActive(false);

@@ -37,10 +37,10 @@ public class AIController : MonoBehaviour, IDamagable
 
     [Header("Audio")]
     [SerializeField] AudioClip hurtSound;
-    [SerializeField] AudioClip attackSound;
+    public AudioClip attackSound;
     [SerializeField] AudioClip deathSound;
-
-    [SerializeField] BoxCollider hitboxCollider;
+    [HideInInspector] public AudioSource audioSource;
+    [SerializeField] Collider hitboxCollider;
     [SerializeField] float DeathInvokeTime = 2f;
     DisintegrationEffect _deathEffect;
     Animator _animator;
@@ -69,15 +69,22 @@ public class AIController : MonoBehaviour, IDamagable
     [SerializeField] private float _health;
 
     public float Health { get => _health; set => _health = value; }
+    public bool IsAlive { get => !isDead; }
 
+    public float maxHealth;
     private void Awake()
     {
+        if(audioSource == null)
+            audioSource = GetComponent<AudioSource>();
         _deathEffect = GetComponent<DisintegrationEffect>();
         _animator = GetComponentInChildren<Animator>();
+
+        hitboxCollider = GetComponentInChildren<Collider>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
         remainingAttacks = GetEnemyStats().AttackAmount;
-        Health = GetEnemyStats().Health;
+        maxHealth = GetEnemyStats().Health;
+        Health = maxHealth;
         _navMeshAgent.speed = GetEnemyStats().MovementSpeed;
         Debug.Log("agent type id " + _navMeshAgent.agentTypeID);
     }
@@ -316,8 +323,10 @@ public class AIController : MonoBehaviour, IDamagable
         if(isDead)
             return false;
         Health -= damage;
+        AudioManager.Instance.PlaySFXAtSource(hurtSound, audioSource);
         if(Health <= 0)
         {
+            AudioManager.Instance.PlaySFXAtSource(deathSound, audioSource);
             Kill();
             return true;
         }
@@ -329,6 +338,7 @@ public class AIController : MonoBehaviour, IDamagable
         isDead = true;
         hitboxCollider.enabled = false;
         GetNavMeshAgent().enabled = false;
+        
         if (!GetAnimator().GetNextAnimatorStateInfo(0).IsName(AIAnimNames.DEATH.ToString()))
         {
             GetAnimator().CrossFade(AIAnimNames.DEATH.ToString(), 0.1f);
@@ -344,8 +354,26 @@ public class AIController : MonoBehaviour, IDamagable
         _deathEffect.Execute();
     }
 
+    public bool Heal(float amount)
+    {
 
+        Health += amount;
+        Health = Mathf.Clamp(Health, 0f, maxHealth);
+        return true;
+    }
+
+
+    public void InstantiateGameObject(GameObject obj, Transform parent)
+    {
+        Instantiate(obj, parent);
+    }
     #region GetSet
+
+    public bool IsDead()
+    {
+        return isDead;
+    }
+
     public EnemyStatistics GetEnemyStats()
     {
         return stats;

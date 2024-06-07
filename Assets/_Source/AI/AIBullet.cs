@@ -5,11 +5,13 @@ using UnityEngine.Pool;
 
 public class AIBullet : MonoBehaviour
 {
-    Vector3 direction;
-    Vector3 spawnPos;
-    float disappearDistance = 1000f;
-    ObjectPool<AIBullet> _pool;
-    float damage;
+    private Vector3 direction;
+    private Vector3 spawnPos;
+    private float disappearDistance = 1000f;
+    private ObjectPool<AIBullet> _pool;
+    private float damage;
+    private float _speed = 1;
+
     void Start()
     {
         spawnPos = transform.position;
@@ -17,7 +19,7 @@ public class AIBullet : MonoBehaviour
 
     void Update()
     {
-        transform.position += direction * Time.deltaTime;
+        transform.position += direction * _speed * Time.deltaTime;
         float distance = Vector3.Distance(spawnPos, transform.position);
         if(distance > disappearDistance)
         {
@@ -46,5 +48,10 @@ public class AIBullet : MonoBehaviour
     public void SetPool(ObjectPool<AIBullet> pool)
     {
         _pool = pool;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        _speed = speed;
     }
 }

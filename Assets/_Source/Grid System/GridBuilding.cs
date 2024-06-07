@@ -64,8 +64,28 @@ public class GridBuilding : Building
         throw new System.NotImplementedException();
     }
 
-    public override void OnTakeDamage()
+    public override bool TakeDamage(float damage)
     {
-        throw new System.NotImplementedException();
+        audioSource.PlayOneShot(takeHitSound);
+        Health -= damage;
+        if (Health <= 0)
+        {
+            Kill();
+            return true;
+        }
+        return false;
+    }
+
+    public override void Kill()
+    {
+        IsTargetable = false;
+        audioSource.PlayOneShot(createDestroySound);
+        createDestroyParticles.Play();
+        Invoke("DestroyObj", DestroyObjectDelay);
+    }
+
+    void DestroyObj()
+    {
+        Destroy(gameObject);
     }
 }

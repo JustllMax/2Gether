@@ -42,6 +42,7 @@ public class GunShotgun : Gun
             {
                 return false;
             }
+
             ammoInMagazine -= 1;
             CalculateFire(bulletSpawnPoint, pelletsPerShot);
             return true;
@@ -94,12 +95,14 @@ public class GunShotgun : Gun
 
         if (ammoInMagazine > 0)
             return true;
-
+        if (!audioSource.isPlaying)
+            AudioManager.Instance.PlaySFXAtSource(noAmmoSound, audioSource);
         return false;
     }
 
     private void CalculateFire(Transform bulletSpawnPoint, int pelletCount)
     {
+        AudioManager.Instance.PlaySFXAtSource(firingSound, audioSource);
         Debug.Log(this + " Fire " + (ammoInMagazine - 1));
 
         for (int i = 0; i < pelletCount; i++)

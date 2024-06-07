@@ -18,8 +18,8 @@ MonoBehaviour:
   Description: 
   BuildingType: 0
   ActivationTime: 0
-  BaseHealthPoints: 0
-  BaseSellCost: 0
+  HealthPoints: 0
+  SellCost: 0
   HasHealthRegen: 0
   HealthRegen: 0
   HasThorns: 0

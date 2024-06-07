@@ -7,6 +7,8 @@ TagManager:
   - Terrain
   - Decoration
   - Way
+  - Way_Anchor
+  - MainBase
   layers:
   - Default
   - TransparentFX
@@ -19,6 +21,7 @@ TagManager:
   - Enemy
   - Building
   - MainBuilding
+  - AIBullet
   - Terrain
   - Decoration
   - MainSurface
