@@ -16,7 +16,7 @@ MonoBehaviour:
   AttackRange: 4
   AttackDamage: 50
   AttackFireRate: 2
-  AttackReloadTime: 0.5
   AttackRadius: 4
-  AttackAmount: 1
   MovementSpeed: 6
+  AttackReloadTime: 0.5
+  AttackAmount: 1

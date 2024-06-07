@@ -40,15 +40,15 @@ public class AIController : MonoBehaviour, IDamagable
     public AudioClip attackSound;
     [SerializeField] AudioClip deathSound;
     [HideInInspector] public AudioSource audioSource;
-    [SerializeField] Collider hitboxCollider;
-    [SerializeField] float DeathInvokeTime = 2f;
+    [SerializeField] protected Collider hitboxCollider;
+    [SerializeField] protected float DeathInvokeTime = 2f;
     DisintegrationEffect _deathEffect;
     Animator _animator;
     NavMeshAgent _navMeshAgent;
-    bool isStunned = false;
-    bool isDead = false;
-    LayerMask targetLayerMask;
-    private float attackTimer = 0f;
+    protected bool isStunned = false;
+    protected bool isDead = false;
+    protected LayerMask targetLayerMask;
+    protected float attackTimer = 0f;
 
     [Foldout("DEBUG INFO")]
     [SerializeField] private AITarget currentTarget = new AITarget();
@@ -333,7 +333,7 @@ public class AIController : MonoBehaviour, IDamagable
         return false;
     }
 
-    public void Kill()
+    public virtual void Kill()
     {
         isDead = true;
         hitboxCollider.enabled = false;
@@ -344,12 +344,12 @@ public class AIController : MonoBehaviour, IDamagable
             GetAnimator().CrossFade(AIAnimNames.DEATH.ToString(), 0.1f);
         }
         
-        Invoke("DestroyObj", DeathInvokeTime);
+        Invoke("Desintegrate", DeathInvokeTime);
 
         WaveManager.Instance.waveSystem.enemyCount--;
     }
 
-    void DestroyObj()
+    void Desintegrate()
     {
         _deathEffect.Execute();
     }
