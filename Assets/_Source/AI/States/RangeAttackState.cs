@@ -22,7 +22,7 @@ public class RangedAttackState : AIState
     public override void OnUpdate(AIController controller)
     {
 
-        if (controller.remainingAttacks <= 0)
+        if (controller.comboLength <= 0)
         {
             if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(AIAnimNames.RELOAD.ToString()))
             {
@@ -31,7 +31,7 @@ public class RangedAttackState : AIState
             }
         }
 
-        if (firstAttackFlag || controller.lastAttackTime >= controller.GetEnemyStats().AttackFireRate )
+        if (firstAttackFlag || controller.lastAttackTime >= controller.GetEnemyStats().attackCombo[0].Delay )
         {
             if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
             {
@@ -71,7 +71,7 @@ public class RangedAttackState : AIState
         Vector3 dir = (controller.GetCurrentPosition() - controller.GetCurrentTarget().transform.position).normalized;
         AIBullet bullet = AIBulletManager.Instance.Pool.Get();
         bullet.SetDirection(dir);
-        bullet.SetDamage(controller.GetEnemyStats().AttackDamage);
+        bullet.SetDamage(controller.GetEnemyStats().attackCombo[0].Damage);
         controller.RangedAttackPerformed();
     }
 }

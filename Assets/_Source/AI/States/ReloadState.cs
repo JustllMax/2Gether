@@ -18,7 +18,7 @@ public class ReloadState : AIState
     public override void OnUpdate(AIController controller)
     {
         reloadTimer += Time.deltaTime;
-        if(reloadTimer >= controller.GetEnemyStats().AttackReloadTime)
+        if(reloadTimer >= controller.GetEnemyStats().attackCombo[0].Delay)
         {
             controller.isReloading = false;
         }
@@ -26,12 +26,12 @@ public class ReloadState : AIState
     public override void OnExit(AIController controller)
     {
         reloadTimer = 0;
-        controller.remainingAttacks = controller.GetEnemyStats().AttackAmount;
+        controller.comboLength = controller.GetEnemyStats().attackCombo.Length;
     }
 
     public override bool CanChangeToState(AIController controller)
     {
-        return controller.distanceToTarget <= controller.GetEnemyStats().AttackRange && controller.remainingAttacks <= 0;
+        return controller.distanceToTarget <= controller.GetEnemyStats().AttackRange && controller.comboLength <= 0;
     }
 
     public override bool CanExitState(AIController controller)

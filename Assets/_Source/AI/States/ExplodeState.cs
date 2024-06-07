@@ -16,7 +16,7 @@ public class Explode : AIState
 
         Debug.Log(this + " AnimationComplete(controller) " + AnimationComplete(controller));
 
-        if (AnimationComplete(controller) && controller.lastAttackTime >= controller.GetEnemyStats().AttackFireRate)
+        if (AnimationComplete(controller) && controller.lastAttackTime >= controller.GetEnemyStats().ComboDelay)
         {
             controller.Kill();
         }

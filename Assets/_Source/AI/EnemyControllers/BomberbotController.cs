@@ -32,13 +32,13 @@ public class  BomberbotController : AIController
     {
         Debug.Log(this + " attack performed");
 
-        var hits = Physics.OverlapSphere(GetCurrentPosition(), GetEnemyStats().AttackRadius, explosionMask);
+        var hits = Physics.OverlapSphere(GetCurrentPosition(), GetEnemyStats().attackCombo[0].DamagerRadius, explosionMask);
         foreach (var hit in hits)
         {
             if (hit.TryGetComponent(out ITargetable targetable))
             {
 
-                if (hit.GetComponent<IDamagable>().TakeDamage(GetEnemyStats().AttackDamage))
+                if (hit.GetComponent<IDamagable>().TakeDamage(GetEnemyStats().attackCombo[0].Damage))
                 {
                     Debug.Log("Explosion hit target");
                 }

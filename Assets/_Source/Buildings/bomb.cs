@@ -78,7 +78,7 @@ public class Bomb : MonoBehaviour
             if (hitCollider.TryGetComponent(out AIController controller))
             {
 
-                controller.TakeDamage(controller.GetEnemyStats().AttackDamage);
+                controller.TakeDamage(controller.GetEnemyStats().attackCombo[0].Damage);
 
             }
         }

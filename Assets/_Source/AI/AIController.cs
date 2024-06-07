@@ -64,7 +64,7 @@ public class AIController : MonoBehaviour, IDamagable
     public bool isReloading;
 
     [Foldout("DEBUG INFO")]
-    public float remainingAttacks;
+    public float comboLength;
     [Foldout("DEBUG INFO")]
     [SerializeField] private float _health;
 
@@ -82,7 +82,7 @@ public class AIController : MonoBehaviour, IDamagable
         hitboxCollider = GetComponentInChildren<Collider>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
-        remainingAttacks = GetEnemyStats().AttackAmount;
+        comboLength = GetEnemyStats().attackCombo.Length;
         maxHealth = GetEnemyStats().Health;
         Health = maxHealth;
         _navMeshAgent.speed = GetEnemyStats().MovementSpeed;
@@ -136,7 +136,7 @@ public class AIController : MonoBehaviour, IDamagable
             return;
         }
 
-        if (lastAttackTime < stats.AttackFireRate)
+        if (lastAttackTime < stats.ComboDelay)
         {
             lastAttackTime += Time.deltaTime;
 
@@ -304,13 +304,13 @@ public class AIController : MonoBehaviour, IDamagable
     public void RangedAttackPerformed()
     {
         attackTimer = 0f;
-        remainingAttacks--;
+        comboLength--;
     }
     public bool CanAttack()
     {
         if (currentTarget.transform != null)
         {
-            if (currentTarget.targetable.IsTargetable && remainingAttacks > 0)
+            if (currentTarget.targetable.IsTargetable && comboLength > 0)
             {
                  return true;
             }
