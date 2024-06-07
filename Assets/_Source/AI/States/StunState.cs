@@ -11,13 +11,9 @@ public class StunState : AIState
     
     public override void OnStart(AIController controller)
     {
-        controller.GetNavMeshAgent().Stop();
+        controller.GetNavMeshAgent().isStopped = true;
         timer = 0f;
-        if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
-        {
-            controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
-        }
-
+        controller.PlayAnimation("STUN");
     }
 
 
@@ -32,7 +28,7 @@ public class StunState : AIState
 
     public override void OnExit(AIController controller)
     {
-        controller.GetNavMeshAgent().Resume();
+        controller.GetNavMeshAgent().isStopped = false;
 
     }
     public override bool CanExitState(AIController controller)
@@ -44,10 +40,4 @@ public class StunState : AIState
     {
         return controller.IsStunned();
     }
-
-
-
-
-
-
 }

@@ -468,7 +468,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
   - {fileID: 11400000, guid: eb1298214d79bd648a8b3e2d577b10e5, type: 2}
   - {fileID: 11400000, guid: 7ff79690d78f3c14ca44a75e4afcac18, type: 2}
-  AITargetFocus: 0
+  AITargetFocus: 1
   hurtSound: {fileID: 0}
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}
@@ -480,7 +480,7 @@ MonoBehaviour:
   distanceToTarget: 0
   lastAttackTime: 0
   isReloading: 0
-  remainingAttacks: 0
+  comboLength: 0
   _health: 0
   maxHealth: 0
 --- !u!195 &5289232685078081423

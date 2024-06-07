@@ -17,12 +17,8 @@ public class  BomberbotController : AIController
         isDead = true;
         hitboxCollider.enabled = false;
         GetNavMeshAgent().enabled = false;
-        
-        if (!GetAnimator().GetNextAnimatorStateInfo(0).IsName(AIAnimNames.DEATH.ToString()))
-        {
-            GetAnimator().CrossFade(AIAnimNames.DEATH.ToString(), 0.1f);
-        }
 
+        PlayAnimation("DEATH");
         Invoke("Explode", DeathInvokeTime);
 
         WaveManager.Instance.waveSystem.enemyCount--;
@@ -51,7 +47,10 @@ public class  BomberbotController : AIController
             renderer.enabled = false;
 
         if (explosionParticles != null)
-            InstantiateGameObject(explosionParticles.gameObject, transform);
+        {
+            InstantiateGameObject(explosionParticles.gameObject, transform).transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
+        }
+
 
         AudioManager.Instance.PlaySFXAtSource(attackSound, audioSource);
 

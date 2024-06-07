@@ -8,10 +8,7 @@ public class ReloadState : AIState
     float reloadTimer = 0;
     public override void OnStart(AIController controller)
     {
-        if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
-        {
-            controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
-        }
+        controller.PlayAnimation("RELOAD");
         controller.isReloading = true;
     }
 
@@ -36,7 +33,7 @@ public class ReloadState : AIState
 
     public override bool CanExitState(AIController controller)
     {
-        return AnimationComplete(controller);
+        return controller.AnimationComplete("RELOAD");
     }
 
 }

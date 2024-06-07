@@ -10,30 +10,23 @@ public class Explode : AIState
 
     }
 
-
     public override void OnUpdate(AIController controller)
     {
-
-        Debug.Log(this + " AnimationComplete(controller) " + AnimationComplete(controller));
-
-        if (AnimationComplete(controller) && controller.lastAttackTime >= controller.GetEnemyStats().ComboDelay)
+        if (controller.lastAttackTime >= controller.GetEnemyStats().ComboDelay)
         {
             controller.Kill();
         }
-
     }
 
     public override void OnExit(AIController controller)
     {
-        controller.GetNavMeshAgent().ResetPath();
-        Debug.Log(this + " exit");
 
     }
 
 
     public override bool CanExitState(AIController controller)
     {
-        return AnimationComplete(controller);
+        return false;
     }
 
     public override bool CanChangeToState(AIController controller)

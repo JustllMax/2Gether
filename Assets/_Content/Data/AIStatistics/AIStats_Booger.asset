@@ -12,11 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0141a3b9c5960364fa1c0d12baf7cfae, type: 3}
   m_Name: AIStats_Booger
   m_EditorClassIdentifier: 
-  Health: 50
+  Health: 40
+  MovementSpeed: 4
   AttackRange: 2.5
-  AttackDamage: 10
-  AttackFireRate: 1.5
-  AttackRadius: 2
-  MovementSpeed: 3.5
-  AttackReloadTime: 0
-  AttackAmount: 30
+  ComboDelay: 0.3
+  attackCombo:
+  - Damage: 5
+    Delay: 0.1
+    DamagerRadius: 1.5
+  - Damage: 5
+    Delay: 0.1
+    DamagerRadius: 1.5
+  - Damage: 5
+    Delay: 0.1
+    DamagerRadius: 1.5
+  - Damage: 5
+    Delay: 0.1
+    DamagerRadius: 1.5

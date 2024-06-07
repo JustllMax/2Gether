@@ -25,14 +25,7 @@ public class PlayerDeadState : AIState
         }
 
 
-        if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
-        {
-            controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
-        }
-
-
-
-
+        controller.PlayAnimation("WALK");
     }
 
     public override void OnUpdate(AIController controller)

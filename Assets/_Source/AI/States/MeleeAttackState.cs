@@ -15,16 +15,11 @@ public class MeleeAttackState : AIState
 
     public override void OnUpdate(AIController controller)
     {
+        Debug.Log(this + " AnimationComplete(controller) " + controller.AnimationComplete("ATTACK"));
 
-        Debug.Log(this + " AnimationComplete(controller) " + AnimationComplete(controller));
-
-        if (AnimationComplete(controller) && controller.lastAttackTime >= controller.GetEnemyStats().ComboDelay)
+        if (controller.AnimationComplete("ATTACK") && controller.lastAttackTime >= controller.GetEnemyStats().ComboDelay)
         {
-
-            if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
-            {
-                controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
-            }
+            controller.PlayAnimation("ATTACK");
             controller.StartCoroutine(PerformAttack(controller));
         }
 
@@ -40,7 +35,7 @@ public class MeleeAttackState : AIState
 
     public override bool CanExitState(AIController controller)
     {
-        return AnimationComplete(controller);
+        return controller.AnimationComplete("ATTACK");
     }
 
     public override bool CanChangeToState(AIController controller)
@@ -57,6 +52,12 @@ public class MeleeAttackState : AIState
             EnemyAttack attack = controller.GetEnemyStats().attackCombo[index];
 
             yield return new WaitForSeconds(attack.Delay);
+
+            if (!controller.CanAttack())
+            {
+                break;
+            }
+
             Debug.Log(this + " attack performed");
             Vector3 spawnPos = controller.transform.position;
 
