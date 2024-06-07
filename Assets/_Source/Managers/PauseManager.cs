@@ -31,7 +31,7 @@ public class PauseManager : MonoBehaviour
 
     void Start()
     {
-        InputManager.Instance.GetPlayerInputAction().AllTime.Pause.performed += PauseGameInput;
+        //InputManager.Instance.GetPlayerInputAction().AllTime.Pause.performed += PauseGameInput;
     }
 
     private void Update()
@@ -90,15 +90,15 @@ public class PauseManager : MonoBehaviour
 
     public void OpenSettings()
     {
-        pauseMenu.SetActive(false);
         settingsMenu.SetActive(true);
+        pauseMenu.SetActive(false);
         isInSettingsMenu = true;
     }
 
     public void CloseSettings()
     {
-        settingsMenu.SetActive(false);
         pauseMenu.SetActive(true);
+        settingsMenu.SetActive(false);
         isInSettingsMenu = false;
     }
 
