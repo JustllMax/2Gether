@@ -88,7 +88,7 @@ public class GunPistol : Gun
             return true;
         if(!audioSource.isPlaying)
             AudioManager.Instance.PlaySFXAtSource(noAmmoSound, audioSource);
-        
+        GameManager.Instance.GetPlayerController().GetComponent<PlayerGunController>().ReloadWeapon();
         return false;
     }
 

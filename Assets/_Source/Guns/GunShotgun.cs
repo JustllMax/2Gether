@@ -64,6 +64,8 @@ public class GunShotgun : Gun
             lastShootTime = Time.time;
 
             HUDManager.Instance.SetCurrentAmmo(ammoInMagazine);
+            GameManager.Instance.GetPlayerController().GetComponent<PlayerGunController>().ReloadWeapon();
+
             isAiming = false;
             return true;
         }
@@ -95,8 +97,8 @@ public class GunShotgun : Gun
 
         if (ammoInMagazine > 0)
             return true;
-        if (!audioSource.isPlaying)
-            AudioManager.Instance.PlaySFXAtSource(noAmmoSound, audioSource);
+  
+        GameManager.Instance.GetPlayerController().GetComponent<PlayerGunController>().ReloadWeapon();
         return false;
     }
 

@@ -107,6 +107,21 @@ public class PlayerGunController : MonoBehaviour
         
     }
 
+    public void ReloadWeapon()
+    {
+        if (_equipment != null)
+        {
+            if (_equipment.CanReload() && !isDuringAnimation)
+            {
+                if (!_animator.GetNextAnimatorStateInfo(0).IsName(PlayerAnimNames.RELOADDOWN.ToString()))
+                {
+                    _animator.CrossFade(PlayerAnimNames.RELOADDOWN.ToString(), 0.1f);
+                }
+
+            }
+        }
+    }
+
     void CheckForIdleAnimation()
     {
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimNames.IDLE.ToString()))
