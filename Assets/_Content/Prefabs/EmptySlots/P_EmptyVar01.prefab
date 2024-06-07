@@ -61,8 +61,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f3ec46f8a32fd45bbb274c2a42e7ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HeightMap: {fileID: 0}
-  frame: {fileID: 0}
+  HeightMap: {fileID: 8600000, guid: a820b6991914d354ba30bc1a3b9d8474, type: 2}
+  frame: {fileID: 2800000, guid: 89d9ef212ba2fb544a93870d5bd60e4a, type: 3}
   HeightMapUpdate: {fileID: 2100000, guid: 4d2cd5f92ff2a8f44a6da3d14102aa9f, type: 2}
   SecondsToRestore: 100
   Tires:

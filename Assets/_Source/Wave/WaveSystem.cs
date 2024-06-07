@@ -111,7 +111,13 @@ public class WaveSystem : MonoBehaviour
                 }
                 await UniTask.WaitForSeconds(wave.EnemySpawnInterval);
             }
-            await UniTask.WaitForSeconds(wave.Cooldown);
+            
+            do
+            {
+                await UniTask.WaitForSeconds(1);    
+                if(enemyCount <= 0 && isWaveActive && isSpawnActive)
+                    break;
+            }while(_elapsedTime < wave.Cooldown);
         }
         isSpawnActive = false;
     }
