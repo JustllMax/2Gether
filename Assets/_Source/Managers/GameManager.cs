@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public CardPoolData InitialCardPool;
 
 	//TODO: Change to event 
-    bool isPlayerAlive = true;
+    public bool isPlayerAlive = true;
 
     private void Awake()
     {
