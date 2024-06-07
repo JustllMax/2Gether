@@ -1904,7 +1904,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
   - {fileID: 11400000, guid: eb1298214d79bd648a8b3e2d577b10e5, type: 2}
   - {fileID: 11400000, guid: 7ff79690d78f3c14ca44a75e4afcac18, type: 2}
-  AITargetFocus: 0
+  AITargetFocus: 1
   hurtSound: {fileID: 0}
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}
@@ -2012,7 +2012,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 5
-  attackCooldown: 0.25
+  projectileDamage: 10
+  projectileCooldown: 0.25
+  burstCooldown: 3
+  burstCount: 5
   projectilePrefab: {fileID: 0}
   turret: {fileID: 5634618494101632747}
   turret2: {fileID: 692128910358468689}
