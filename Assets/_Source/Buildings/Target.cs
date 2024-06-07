@@ -36,6 +36,11 @@ public class Target : MonoBehaviour, ITargetable, IDamagable
         Destroy(gameObject);
     }
 
+    public bool Heal(float amount)
+    {
+        return false;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

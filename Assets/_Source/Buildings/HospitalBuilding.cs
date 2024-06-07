@@ -1,13 +1,18 @@
 using UnityEngine;
 
-public class Healing : Building
+public class HospitalBuilding : Building
 {
   
     public ParticleSystem particles;
 
     BuildingHospitalStatistics statistics;
 
-    float timer = 0f;
+    float activationTimer = 0f;
+    float healingTimer = 0f;
+
+    PlayerController player;
+    bool isPlayerInRange = false;
+    bool healOnce;
     public override void Start()
     {
         base.Start();
@@ -16,18 +21,42 @@ public class Healing : Building
 
     public void Update()
     {
-
-        if(timer < GetStatistics().delayBetweenActivation)
+        if (isPlayerInRange)
         {
-            timer += Time.time;
+            if (activationTimer < GetStatistics().ActivationTime)
+            {
+                activationTimer += Time.time;
+            }
+            else
+            {
+                //Heal after activating, then repeat after delay
+                if (healOnce)
+                {
+                    healOnce = false;
+                    OnAttack();
+                }
+                healingTimer += Time.time;
+                if (healingTimer > GetStatistics().delayBetweenActivation)
+                {
+                    healingTimer = 0f;
+                    OnAttack();
+                }
+            }
         }
         else
         {
-            OnAttack();
+            activationTimer = 0f;
+            healOnce = true;
         }
+
+
     }
 
+    void SearchForPlayer()
+    {
 
+       
+    }
 
     #region ChildrenMethods
 
@@ -39,18 +68,17 @@ public class Healing : Building
 
     public override void OnAttack()
     {
-
-        timer = 0f;
-        if(particles != null)
+        if (particles != null)
             particles.Play();
 
         var hits = Physics.OverlapSphere(transform.position, GetStatistics().AreaRange, targetLayerMask);
-        
-        foreach(var hit in hits)
+
+        foreach (var hit in hits)
         {
-            if(hit.TryGetComponent(out PlayerController controller))
+            if (hit.TryGetComponent(out IDamagable damagable))
             {
-                controller.Heal(GetStatistics().healAmount);
+                damagable.TakeDamage(-GetStatistics().healAmount);
+                return;
             }
         }
     }

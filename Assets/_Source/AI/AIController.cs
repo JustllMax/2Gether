@@ -69,7 +69,7 @@ public class AIController : MonoBehaviour, IDamagable
     [SerializeField] private float _health;
 
     public float Health { get => _health; set => _health = value; }
-
+    public float maxHealth;
     private void Awake()
     {
         _deathEffect = GetComponent<DisintegrationEffect>();
@@ -77,7 +77,8 @@ public class AIController : MonoBehaviour, IDamagable
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
         remainingAttacks = GetEnemyStats().AttackAmount;
-        Health = GetEnemyStats().Health;
+        maxHealth = GetEnemyStats().Health;
+        Health = maxHealth;
         _navMeshAgent.speed = GetEnemyStats().MovementSpeed;
         Debug.Log("agent type id " + _navMeshAgent.agentTypeID);
     }
@@ -340,6 +341,13 @@ public class AIController : MonoBehaviour, IDamagable
         _deathEffect.Execute();
     }
 
+    public bool Heal(float amount)
+    {
+
+        Health += amount;
+        Health = Mathf.Clamp(Health, 0f, maxHealth);
+        return true;
+    }
 
     #region GetSet
 

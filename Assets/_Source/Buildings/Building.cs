@@ -31,6 +31,8 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
     [SerializeField] protected LayerMask obstructionMask;
     [HideInInspector] public bool IsTargetable { get; set; }
     [HideInInspector] public TargetType TargetType { get; set; }
+
+    protected float maxHealth;
     [HideInInspector] public float Health { get; set; }
 
     public virtual void Awake()
@@ -39,7 +41,8 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
         IsTargetable = true;
         TargetType = TargetType.Building;
         _buildingStatistics = _upgradeTiers.GetStatsForLevel(currentLevel);
-        Health = _buildingStatistics.HealthPoints;
+        maxHealth = _buildingStatistics.HealthPoints;
+        Health = maxHealth;
 
     }
 
@@ -53,6 +56,13 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
     public abstract bool TakeDamage(float damage);
     public abstract void Kill();
 
+    public bool Heal(float amount)
+    {
+        maxHealth = GetBaseStatistics().HealthPoints;
+        Health += amount;
+        Health = Mathf.Clamp(Health, 0f, maxHealth);
+        return true;
+    }
 
 
 
