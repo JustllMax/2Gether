@@ -8,7 +8,7 @@ public class AIBulletManager : MonoBehaviour
     private static AIBulletManager _instance;
     public static AIBulletManager Instance { get { return _instance; } }
     ObjectPool<AIBullet> _pool;
-    GameObject P_Bullet;
+    [SerializeField] private GameObject P_Bullet;
     float maxPoolSize = 15;
 
     private void Awake()

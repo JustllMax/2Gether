@@ -8,7 +8,7 @@ abstract public class BuildingStatistics : CardStatistics
 {
     public BuildingType BuildingType;
     public float ActivationTime;
-    public float BaseHealthPoints;
-    public int BaseSellCost;
+    public float HealthPoints;
+    public int SellCost;
 
 }

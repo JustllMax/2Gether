@@ -32,17 +32,22 @@ public class AIController : MonoBehaviour, IDamagable
     AIState nextState;
     AIState currentState;
 
+    [Header("CHANGE ACCORDINGLY TO CHASE/BUILDING. BOTH IS FOR BOSSES")]
     [SerializeField] TargetType AITargetFocus;
 
     [Header("Audio")]
     [SerializeField] AudioClip hurtSound;
-    [SerializeField] AudioClip attackSound;
+    public AudioClip attackSound;
     [SerializeField] AudioClip deathSound;
-
-
+    [HideInInspector] public AudioSource audioSource;
+    [SerializeField] Collider hitboxCollider;
+    [SerializeField] float DeathInvokeTime = 2f;
+    DisintegrationEffect _deathEffect;
     Animator _animator;
     NavMeshAgent _navMeshAgent;
     bool isStunned = false;
+    bool isDead = false;
+    LayerMask targetLayerMask;
     private float attackTimer = 0f;
 
     [Foldout("DEBUG INFO")]
@@ -54,62 +59,143 @@ public class AIController : MonoBehaviour, IDamagable
     [Foldout("DEBUG INFO")]
     public float lastAttackTime = 0f;
 
+
     [Foldout("DEBUG INFO")]
     public bool isReloading;
 
     [Foldout("DEBUG INFO")]
     public float remainingAttacks;
+    [Foldout("DEBUG INFO")]
+    [SerializeField] private float _health;
 
-    private float _health;
     public float Health { get => _health; set => _health = value; }
+    public bool IsAlive { get => !isDead; }
 
+    public float maxHealth;
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        if(audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+        _deathEffect = GetComponent<DisintegrationEffect>();
+        _animator = GetComponentInChildren<Animator>();
+
+        hitboxCollider = GetComponentInChildren<Collider>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
         remainingAttacks = GetEnemyStats().AttackAmount;
-        Health = GetEnemyStats().Health;
+        maxHealth = GetEnemyStats().Health;
+        Health = maxHealth;
         _navMeshAgent.speed = GetEnemyStats().MovementSpeed;
+        Debug.Log("agent type id " + _navMeshAgent.agentTypeID);
     }
 
     private void Start()
     {
-        if(_AIStates.Count != 0)
-        {
-            currentState = _AIStates[0];
-            currentState.OnStart(this);
-        }
-            
+
+        SetLayerTargeting(AITargetFocus);
+        SetNavMeshAgentType(AITargetFocus);
+        currentState = _AIStates[0];
+        currentState.OnStart(this);
     }
 
+    void SetNavMeshAgentType(TargetType focus)
+    {
+        string agentTypeName = "";
+        if(focus.ToString() == TargetType.Player.ToString())
+        {
+            agentTypeName = NavAgentTypeNames.PlayerChase.ToString();
+        }
+        else
+        {
+            agentTypeName = NavAgentTypeNames.BuildingChase.ToString();
+        }
+        int? agentType = GetNavMeshAgentID(agentTypeName);
+        if(agentType != null)
+        {
+            _navMeshAgent.agentTypeID = (int)agentType;
+        }
+    }
 
+    private int? GetNavMeshAgentID(string name)
+    {
+        for (int i = 0; i < NavMesh.GetSettingsCount(); i++)
+        {
+            NavMeshBuildSettings settings = NavMesh.GetSettingsByIndex(index: i);
+            if (name == NavMesh.GetSettingsNameFromID(agentTypeID: settings.agentTypeID))
+            {
+                return settings.agentTypeID;
+            }
+        }
+        return null;
+    }
     public void Update()
     {
-        if (attackTimer < stats.AttackFireRate)
+
+        if (isDead)
         {
-            attackTimer += Time.deltaTime;
+            return;
+        }
+
+        if (lastAttackTime < stats.AttackFireRate)
+        {
+            lastAttackTime += Time.deltaTime;
 
         }
+
+
         if (ShouldSearchForTarget())
         {
             SearchForTarget();
         }
+
+        if (currentTarget.transform != null)
+        {
+             distanceToTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
+        }
+
         if (currentState != null)
         {
             currentState.OnUpdate(this);
             ChangeState();
         }
+
+
+    } 
+
+    void SetLayerTargeting(TargetType targetType) 
+    {
+        int playerLayer = LayerMask.NameToLayer("Player");
+        int buildingLayer = LayerMask.NameToLayer("Building");
+        LayerMask mask;
+
+        switch (targetType)
+        {
+            case TargetType.Building:
+                mask = (1 << buildingLayer);
+                targetLayerMask = mask;
+                return;
+
+            case TargetType.Player:
+                mask = (1 << playerLayer);
+                targetLayerMask = mask;
+                return;
+
+            case TargetType.Both:
+                mask = (1 << playerLayer) | (1 << buildingLayer);
+                targetLayerMask = mask;
+                return;
+
+        }
     }
 
     private bool ShouldSearchForTarget()
     {
-        if (GetCurrentTarget().transform  != null)
+        if (GetCurrentTarget().transform != null)
         {
-            if (GetCurrentTarget().targetable.IsTargetable == true)
+            if (GetCurrentTarget().targetable != null)
             {
-
-                return false;
+                if(GetCurrentTarget().targetable.IsTargetable)
+                    return false;
             }
         }
         return true;
@@ -119,19 +205,19 @@ public class AIController : MonoBehaviour, IDamagable
     {
         Transform target = null;
         ITargetable targetable = null;
-        //Layermask that hits everything except the terrain
-        int layerMask = ~(1 << LayerMask.NameToLayer("Terrain"));
+
+
         float radius = GetEnemyStats().AttackRange*3f;
 
         float minDistance = float.MaxValue;
 
 
-        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), radius, layerMask);
+        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), radius, targetLayerMask);
         foreach (Collider hit in hits)
         {
             if (hit.TryGetComponent(out ITargetable t))
             {
-                if (t.IsTargetable && ShouldTarget(t))
+                if (t.IsTargetable)
                 {
                     float distanceToTarget = Vector3.Distance(hit.transform.position, transform.position);
                     if (distanceToTarget < minDistance)
@@ -143,17 +229,10 @@ public class AIController : MonoBehaviour, IDamagable
                 }
             }
         }
-
-        SetCurrentTarget(new AITarget(target, targetable));
+        if(target != null)
+            SetCurrentTarget(new AITarget(target, targetable));
     }
 
-    bool ShouldTarget(ITargetable t)
-    {
-        if (t.TargetType == AITargetFocus || AITargetFocus == TargetType.Both) {
-            return true;
-        }
-        return false;
-    }
     public void ChangeState()
     {
         nextState = GetNextState();
@@ -165,10 +244,12 @@ public class AIController : MonoBehaviour, IDamagable
             return;
         }
 
-        if (currentState != null)
+        if (currentState != null && !currentState.CanExitState(this))
         {
-            currentState.OnExit(this);
+            return;
         }
+
+        currentState.OnExit(this);
 
         if (nextState != null && nextState != currentState)
         {
@@ -225,13 +306,25 @@ public class AIController : MonoBehaviour, IDamagable
         attackTimer = 0f;
         remainingAttacks--;
     }
+    public bool CanAttack()
+    {
+        if (currentTarget.transform != null)
+        {
+            if (currentTarget.targetable.IsTargetable && remainingAttacks > 0)
+            {
+                 return true;
+            }
+        }
+        return false;
+    }
 
     public bool TakeDamage(float damage)
     {
-        Debug.Log(this + " took damage " + damage);
         Health -= damage;
+        AudioManager.Instance.PlaySFXAtSource(hurtSound, audioSource);
         if(Health <= 0)
         {
+            AudioManager.Instance.PlaySFXAtSource(deathSound, audioSource);
             Kill();
             return true;
         }
@@ -240,11 +333,43 @@ public class AIController : MonoBehaviour, IDamagable
 
     public void Kill()
     {
-        Destroy(gameObject);
+        isDead = true;
+        hitboxCollider.enabled = false;
+        GetNavMeshAgent().enabled = false;
+        
+        if (!GetAnimator().GetNextAnimatorStateInfo(0).IsName(AIAnimNames.DEATH.ToString()))
+        {
+            GetAnimator().CrossFade(AIAnimNames.DEATH.ToString(), 0.1f);
+        }
+        
+        Invoke("DestroyObj", DeathInvokeTime);
+    }
+
+    void DestroyObj()
+    {
+        _deathEffect.Execute();
+    }
+
+    public bool Heal(float amount)
+    {
+
+        Health += amount;
+        Health = Mathf.Clamp(Health, 0f, maxHealth);
+        return true;
     }
 
 
+    public void InstantiateGameObject(GameObject obj, Transform parent)
+    {
+        Instantiate(obj, parent);
+    }
     #region GetSet
+
+    public bool IsDead()
+    {
+        return isDead;
+    }
+
     public EnemyStatistics GetEnemyStats()
     {
         return stats;
@@ -263,17 +388,7 @@ public class AIController : MonoBehaviour, IDamagable
     {
         isStunned = val;
     }
-    public bool CanAttack()
-    {
-        if (currentTarget.transform != null)
-        {
-            if(currentTarget.targetable.IsTargetable && remainingAttacks > 0)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+
 
 
     public void SetCurrentTarget(AITarget target)

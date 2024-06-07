@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: MeleeAttackState
   m_EditorClassIdentifier: 
   weight: 3
-  animName: 0
+  animName: 1
+  AnimDelayForAttack: 0.1
+  mask:
+    serializedVersion: 2
+    m_Bits: 576

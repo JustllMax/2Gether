@@ -13,11 +13,17 @@ public class ChasePlayerState : AIState
     {
         if(playerTransform == null)
         {
-            playerTransform = GameManager.Instance.GetPlayerController().transform;
-            playerTarget = new AITarget(playerTransform, playerTransform.GetComponent<ITargetable>());
+            Debug.Log(this + " searching for player");
+            if (GameManager.Instance.GetPlayerController().transform != null)
+            {
+                playerTransform = GameManager.Instance.GetPlayerController().transform;
+                playerTarget = new AITarget(playerTransform, GameManager.Instance.GetPlayerController().GetComponent<ITargetable>());
+                controller.SetCurrentTarget(playerTarget);
+            }
+
         }
 
-        if(controller.GetCurrentTarget().transform == null)
+        if (controller.GetCurrentTarget().transform == null)
         {
             controller.SetCurrentTarget(playerTarget);
         }
@@ -28,13 +34,20 @@ public class ChasePlayerState : AIState
             controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
         }
 
+        Debug.Log(this + " set destination to player");
+
         controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().transform.position);
     }
 
     public override void OnUpdate(AIController controller)
     {
-        controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().transform.position);
-        controller.distanceToTarget = controller.GetNavMeshAgent().remainingDistance;
+        if(controller.GetCurrentTarget().transform != null)
+            controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().transform.position);
+
+        if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
+        {
+            controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
+        }
     }
     public override void OnExit(AIController controller)
     {
@@ -42,9 +55,14 @@ public class ChasePlayerState : AIState
 
     }
 
+    public override bool CanExitState(AIController controller)
+    {
+        return true;
+    }
+
     public override bool CanChangeToState(AIController controller)
     {
-        return GameManager.Instance.IsPlayerAlive() && !controller.CanAttack();
+        return GameManager.Instance.IsPlayerAlive();
     }
 }
     

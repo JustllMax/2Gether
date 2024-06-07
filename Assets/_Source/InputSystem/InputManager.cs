@@ -25,10 +25,6 @@ public class InputManager : MonoBehaviour
         playerInputAction = new PlayerInputAction();
     }
 
-    private void Start()
-    {
-        StartNightCycle();
-    }
 
     private void OnEnable()
     {
@@ -51,6 +47,8 @@ public class InputManager : MonoBehaviour
 
         playerInputAction.FPSController.Disable();
         playerInputAction.BuilderController.Enable();
+        Debug.Log(this + " fps disabled");
+
     }
 
     public void StartNightCycle()

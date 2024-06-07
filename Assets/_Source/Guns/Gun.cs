@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 abstract public class Gun : MonoBehaviour
@@ -7,13 +5,16 @@ abstract public class Gun : MonoBehaviour
     [SerializeField] GunData _SO_Stats;
     [SerializeField] GameObject _Model;
 
+
+    [SerializeField]protected AudioSource audioSource;
     [SerializeField]protected AudioClip firingSound;
     [SerializeField] protected AudioClip reloadSound;
+    [SerializeField] protected AudioClip noAmmoSound;
     [SerializeField] protected bool isAiming;
     [SerializeField] protected int ammoInMagazine;
 
-    public abstract void Fire(bool isSameButtonPress, Transform firePoint);
-    public abstract void Aim();
+    public abstract bool Fire(bool isSameButtonPress, Transform bulletSpawnPoint);
+    public abstract bool Aim();
 
     public abstract bool CanFire();
 
@@ -44,4 +45,20 @@ abstract public class Gun : MonoBehaviour
     {
         return _Model;
     }
+
+    public AudioSource GetAudioSource()
+    {
+        return audioSource;
+    }
+
+    public AudioClip  GetReloadSFX()
+    {
+        return reloadSound;
+    }
+
+    public AudioClip GetNoAmmoSFX()
+    {
+        return noAmmoSound;
+    }
+
 }

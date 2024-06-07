@@ -13,7 +13,7 @@ public struct BuildingUpgradePair
 [CreateAssetMenu(fileName ="UpgradePath_BUILDINGNAME", menuName= "2Gether/BuildingUpgradePath")]
 public class BuildingUpgradePath : ScriptableObject
 {
-    public List<BuildingUpgradePair> UpgradePairs = new List<BuildingUpgradePair>();
+    public List<BuildingUpgradePair> UpgradePairs;
 
     private void OnValidate()
     {

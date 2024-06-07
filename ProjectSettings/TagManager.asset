@@ -5,9 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Terrain
-  - Undefined
-  - Enemy
-  - Building
+  - Way_Anchor
   layers:
   - Default
   - TransparentFX
@@ -19,7 +17,7 @@ TagManager:
   - Guns
   - Enemy
   - Building
-  - IgnoreBomb
+  - 
   - 
   - 
   - 
@@ -34,7 +32,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Way_Anchor
   - 
   - 
   - 
