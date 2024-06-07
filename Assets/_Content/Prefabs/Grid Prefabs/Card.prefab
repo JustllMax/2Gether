@@ -91,9 +91,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridSize: {x: 130, y: 130}
-  _anchorSize: {x: 6, y: 6}
-  _placeDistance: 10
-  _isOnCenter: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1658469199238472637
 GameObject:
   m_ObjectHideFlags: 0

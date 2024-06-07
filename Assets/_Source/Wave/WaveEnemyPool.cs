@@ -8,4 +8,6 @@ public abstract class WaveEnemyPool : ScriptableObject
     public int EnemyCount;
 
     public abstract GameObject GetNextEnemy(int index);
+
+    
 }

@@ -54,6 +54,8 @@ public class CameraManager : MonoBehaviour
     {
         SwitchCameraPriority(dayCamera, 10);
         SwitchCameraPriority(nightCamera, 20);
+        DayNightCycleManager.Instance.nightBeginTasks--;
+        Debug.LogWarning("Camera " + DayNightCycleManager.Instance.nightBeginTasks);
     }
 
     private void SwitchCameraPriority(CinemachineVirtualCamera camera, int priority)

@@ -6,7 +6,12 @@ public class GridBuilding : Building
 {
     [SerializeField] private Vector3 _buildingSize;
     [SerializeField] private Renderer _renderer;
-
+    [SerializeField] public bool isCanBePlacedOnRoad = false;
+    private bool _isDecorationCollision;
+    public bool IsDecorationCollision
+    {
+        get { return _isDecorationCollision; }
+    }
     public Vector3 buildingSize {get => _buildingSize; set{;}}
 
     public void SetColor(bool isAvailableToBuild)
@@ -24,6 +29,30 @@ public class GridBuilding : Building
     public void ResetColor()
     {
         _renderer.material.color = Color.white;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Enter " + other.gameObject.name);
+        if (other.gameObject.tag == "Decoration")
+        {
+            _isDecorationCollision = true;
+            Debug.Log("Decoration " + _isDecorationCollision);
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        Debug.Log("Exit" + other.gameObject.name);
+        if (other.gameObject.tag == "Decoration")
+        {
+            _isDecorationCollision = false;
+            Debug.Log("Decoration " + _isDecorationCollision);
+        }
     }
 
     public override void OnAttack()

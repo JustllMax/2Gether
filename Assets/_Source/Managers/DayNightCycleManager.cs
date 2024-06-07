@@ -26,7 +26,8 @@ public class DayNightCycleManager : MonoBehaviour
 
     public static event Action NightBegin;
     public static event Action NightEnd;
-
+    public int nightBeginTasks = 3;
+    
     public bool IsDay;
     private void Start()
     {
@@ -47,7 +48,6 @@ public class DayNightCycleManager : MonoBehaviour
             }
             AudioManager.Instance.PlayAmbient("A_DayUI_Ambient");
             EndNightCycle();
-
         }
 
         if (Input.GetKeyDown(KeyCode.J))
@@ -62,11 +62,8 @@ public class DayNightCycleManager : MonoBehaviour
             }
             AudioManager.Instance.StopAmbient("A_DayUI_Ambient");
             EndDayCycle();
-
         }
     }
-
-
 
     public void EndDayCycle()
     {
