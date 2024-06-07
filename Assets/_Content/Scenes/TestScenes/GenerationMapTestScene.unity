@@ -292,7 +292,7 @@ MonoBehaviour:
   maps:
   - {fileID: 11400000, guid: c2b841090844d5348bbbead1cea17cb2, type: 2}
   - {fileID: 11400000, guid: 1ae1c96b996a3cd4c8240f37a4a11be0, type: 2}
-  mapId: 1
+  mapId: 0
   isRandomGeneration: 0
 --- !u!4 &1121353187
 Transform:

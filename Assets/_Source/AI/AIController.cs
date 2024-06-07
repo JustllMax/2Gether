@@ -320,6 +320,8 @@ public class AIController : MonoBehaviour, IDamagable
 
     public bool TakeDamage(float damage)
     {
+        if(isDead)
+            return false;
         Health -= damage;
         AudioManager.Instance.PlaySFXAtSource(hurtSound, audioSource);
         if(Health <= 0)
@@ -343,6 +345,8 @@ public class AIController : MonoBehaviour, IDamagable
         }
         
         Invoke("DestroyObj", DeathInvokeTime);
+
+        WaveManager.Instance.waveSystem.enemyCount--;
     }
 
     void DestroyObj()

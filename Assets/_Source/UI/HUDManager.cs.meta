@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/_Source/UI/HUDManager.cs.meta
 guid: c6d77e7ede58eae4cb084e9aeb293a4e
+========
+guid: 34f933cc613bfe54aa3016b40959e541
+>>>>>>>> 313ce494d337a14cb88f7db51374c2bb1c8c1ef8:Assets/_Content/Effects/Outline/Editor/InternalURPBridge/InternalURPBridgeEditorUtils.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 public class BuildCardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
@@ -17,13 +18,16 @@ public class BuildCardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, 
     #region Buildings
     private GameObject _draggingBuilding;
     private float y;
-    private  GameObject _terrain;
+    private GameObject _terrain;
     #endregion
 
     #region Grid
     private GridController _gridController;
     [SerializeField] private Vector2Int _gridSize = new Vector2Int(12, 12);
     private bool _isAvailableToBuild;
+    [SerializeField] private const int gridOffset = 10;
+
+    [SerializeField] private LayerMask layerMask;
     #endregion
 
     private Vector2Int rayPosition;
@@ -35,19 +39,8 @@ public class BuildCardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, 
     public void OnPointerDown(PointerEventData eventData)
     {
         _draggingBuilding = Instantiate(_cardSO.prefab, Vector3.zero, Quaternion.identity);
+        y = _draggingBuilding.transform.localScale.y / 2;
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
-        {
-            if (hit.collider.gameObject.CompareTag("Terrain"))
-            {
-                int x = Mathf.RoundToInt(hit.point.x);
-                int z = Mathf.RoundToInt(hit.point.z);
-
-                _draggingBuilding.transform.position = new Vector3(x, y, z);
-            }
-        }
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -55,20 +48,42 @@ public class BuildCardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, 
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, 5000f, layerMask))
             {
-                if (hit.collider.gameObject.CompareTag("Terrain"))
+                if (hit.collider.gameObject.CompareTag("Terrain") || hit.collider.gameObject.CompareTag("Way"))
                 {
                     _terrain = hit.collider.gameObject;
-                    rayPosition.x = Mathf.RoundToInt(hit.point.x);
-                    rayPosition.y = Mathf.RoundToInt(hit.point.z);
+                    rayPosition.x = Mathf.RoundToInt(math.abs(hit.point.x));
+                    rayPosition.y = Mathf.RoundToInt(math.abs(hit.point.z));
 
-                    if (rayPosition.x < -5 || rayPosition.y > _gridController.gridSize.x * 10 -  _draggingBuilding.GetComponent<GridBuilding>().buildingSize.x)
+
+
+                    if (_draggingBuilding.GetComponent<GridBuilding>().IsDecorationCollision)
                         _isAvailableToBuild = false;
-                    else if (rayPosition.y < -5 || rayPosition.y > _gridController.gridSize.y * 10 -  _draggingBuilding.GetComponent<GridBuilding>().buildingSize.y)
+                    else if (_terrain.CompareTag("Way") && !_draggingBuilding.GetComponent<GridBuilding>().isCanBePlacedOnRoad)
+                    {
+
                         _isAvailableToBuild = false;
-                    else if (_gridController.IsPlaceTaken((int)_draggingBuilding.transform.position.x / 10, (int)_draggingBuilding.transform.position.z / 10))
+                    }
+                    else if (
+                        rayPosition.x < -1 * gridOffset ||
+                        rayPosition.y > _gridController.gridSize.x * gridOffset - _draggingBuilding.GetComponent<GridBuilding>().buildingSize.x
+                        )
                         _isAvailableToBuild = false;
+
+                    else if (
+                        rayPosition.y < -1 * gridOffset ||
+                        rayPosition.y > _gridController.gridSize.y * gridOffset - _draggingBuilding.GetComponent<GridBuilding>().buildingSize.y
+                        )
+                        _isAvailableToBuild = false;
+
+                    else if (
+                        _gridController.IsPlaceTaken(
+                        (int)_draggingBuilding.transform.position.x / gridOffset,
+                        (int)_draggingBuilding.transform.position.z / gridOffset)
+                        )
+                        _isAvailableToBuild = false;
+
                     else
                         _isAvailableToBuild = true;
 
@@ -81,12 +96,13 @@ public class BuildCardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, 
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if(_isAvailableToBuild)
+        if (_isAvailableToBuild)
         {
-            Vector2Int pos = new Vector2Int((int)_draggingBuilding.transform.position.x / 10, (int)_draggingBuilding.transform.position.z / 10);
-             _draggingBuilding.GetComponent<GridBuilding>().ResetColor();
+            Vector2Int pos = new Vector2Int((int)_draggingBuilding.transform.position.x / gridOffset, (int)_draggingBuilding.transform.position.z / gridOffset);
+            _draggingBuilding.GetComponent<GridBuilding>().ResetColor();
             _gridController.SetGridSlot(pos, _terrain);
             _gridController.TryPlace(pos, _draggingBuilding.GetComponent<Building>());
+
         }
         Destroy(_draggingBuilding);
     }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1385571718272116731}
   m_Layer: 0
   m_Name: P_EmptyManhole
-  m_TagString: Untagged
+  m_TagString: Decoration
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -185,6 +185,16 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -6733177361254619370, guid: aa00235feda672747a8c20ffcbb546e7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -5568371526223589888, guid: aa00235feda672747a8c20ffcbb546e7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: -1439730007547781893, guid: aa00235feda672747a8c20ffcbb546e7,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -194,6 +204,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: M_EmptySlotManhole
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: aa00235feda672747a8c20ffcbb546e7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: aa00235feda672747a8c20ffcbb546e7,
+        type: 3}
+      propertyPath: m_TagString
+      value: Decoration
       objectReference: {fileID: 0}
     - target: {fileID: 3316992658331686828, guid: aa00235feda672747a8c20ffcbb546e7,
         type: 3}
@@ -215,6 +235,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 88c4656f9ca8ea44a84f9b94e91f908a, type: 2}
+    - target: {fileID: 8513859187771203891, guid: aa00235feda672747a8c20ffcbb546e7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: -7029948723529949830, guid: aa00235feda672747a8c20ffcbb546e7, type: 3}

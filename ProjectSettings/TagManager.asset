@@ -5,7 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Terrain
+  - Decoration
+  - Way
   - Way_Anchor
+  - MainBase
   layers:
   - Default
   - TransparentFX
@@ -14,15 +17,19 @@ TagManager:
   - Water
   - UI
   - Player
-  - Guns
+  - 
   - Enemy
   - Building
+  - MainBuilding
   - AIBullet
-  - 
-  - 
-  - 
-  - 
   - Terrain
+  - Decoration
+  - MainSurface
+  - Way
+  - 
+  - 
+  - 
+  - Guns
   - 
   - 
   - 
@@ -30,9 +37,6 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - Way_Anchor
   - 
   - 
   - 

@@ -1,9 +1,22 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/_Content/Art/Models/Buildings/Attack/Latern.fbx.meta
 guid: 85dca0317d86db340b6853d34eb908ca
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects: {}
+========
+guid: 454a3402457459049a6bcfb0a9308943
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: texture_antena.png
+    second: {fileID: 2100000, guid: b4640410ed2c82943b80223b895ee7f4, type: 2}
+>>>>>>>> 313ce494d337a14cb88f7db51374c2bb1c8c1ef8:Assets/_Content/Art/Models/Buildings/Attack/M_Antenna.fbx.meta
   materials:
     materialImportMode: 2
     materialName: 0

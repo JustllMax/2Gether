@@ -1,16 +1,34 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.AI.Navigation;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 public class SlotPlacer : MonoBehaviour
 {
 
+    private static SlotPlacer _instance;
+    public static SlotPlacer Instance { get { return _instance; } }
+
     #region slots
+    private PathSlot[,] _spawnedSlots;
+    public PathSlot[,] spawnedSlots
+    {
+        get { return _spawnedSlots; }
+        set { _spawnedSlots = value; }
+    }
+    private List<PathSlot> _spawnSlots = new List<PathSlot>();
+    public List<PathSlot> spawnSlots
+    {
+        get { return _spawnSlots; }
+        set { _spawnSlots = value; }
+    }
+
     [SerializeField] private GameObject[] slotPrefabs;
     [SerializeField] private GameObject[] emptySlotPrefabs;
     [SerializeField] private PathSlot startingSlot;
-
     #endregion
 
     #region map
@@ -18,34 +36,52 @@ public class SlotPlacer : MonoBehaviour
     [SerializeField] private List<MapObject> maps;
     [SerializeField] private int mapId;
     [SerializeField] private bool isRandomGeneration = false;
-
     #endregion
 
     #region private variables
 
     private float[] _angles = { 0f, 90f, 180f, 270f };
-
     private Vector2Int mapSize;
-    private Vector2Int startPos;
-
-    public PathSlot[,] spawnedSlots;
+    private Vector2Int _startPos;
+    public Vector2Int startPos
+    {
+        get { return _startPos; }
+    }
     private int[,] _map;
     #endregion
 
+    #region NavMeshVariables
+    public delegate void SlotPlacerGeneratedHandler();
+    public static event Action OnMapGenerated;
+
+    #endregion
+
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+        _instance = this;
+    }
 
     void Start()
     {
         mapSize = maps[mapId].mapSize;
-        startPos = maps[mapId].startPos;
+        _startPos = maps[mapId].startPos;
         Generate();
+
+        Debug.Log("SlotPlacer Invoke");
+        OnMapGenerated?.Invoke();
     }
 
     void Generate()
     {
-        spawnedSlots = new PathSlot[mapSize.x, mapSize.y];
+        _spawnedSlots = new PathSlot[mapSize.x, mapSize.y];
         if (isRandomGeneration)
         {
-            PathGenerator pathGenerator = new PathGenerator(mapSize, startPos);
+            PathGenerator pathGenerator = new PathGenerator(mapSize, _startPos);
             pathGenerator.GenerateMap();
             _map = (int[,])pathGenerator.map.Clone();
         }
@@ -57,17 +93,18 @@ public class SlotPlacer : MonoBehaviour
 
     void GenerateMap()
     {
+        int i = 0;
         PathSlot path = new();
         for (int y = 0; y < mapSize.y; y++)
         {
             for (int x = 0; x < mapSize.x; x++)
             {
-                if (y == startPos.x && x == startPos.y)
+                if (y == _startPos.x && x == _startPos.y)
                 {
                     path = Instantiate(startingSlot).GetComponent<PathSlot>();
                     path.gameObject.transform.position = new Vector3(x, 0, y) * 30;
                     path.slot.pos = new Vector2Int(x, y);
-                    spawnedSlots[x, y] = path;
+                    _spawnedSlots[x, y] = path;
                     path.gameObject.transform.SetParent(this.transform);
                 }
                 else
@@ -79,13 +116,7 @@ public class SlotPlacer : MonoBehaviour
                         else
                             path = Instantiate(slotPrefabs[2]).GetComponent<PathSlot>();
                     }
-                    else
-                    {
-                        if (_map[x, y] <= 5)
-                            path = Instantiate(slotPrefabs[_map[x, y]]).GetComponent<PathSlot>();
-                    }
-
-                    if (_map[x, y] == 0 || _map[x, y] > 5)
+                    else if (_map[x, y] == 0 || _map[x, y] > 5)
                     {
                         if (!isRandomGeneration && _map[x, y] > 5)
                         {
@@ -102,53 +133,32 @@ public class SlotPlacer : MonoBehaviour
                         else
                             path = Instantiate(emptySlotPrefabs[0]).GetComponent<PathSlot>();
                     }
+                    else
+                    {
+                        path = Instantiate(slotPrefabs[_map[x, y]]).GetComponent<PathSlot>();
+                    }
 
                     path.gameObject.transform.position = new Vector3(x, 0, y) * 30;
                     path.slot.pos = new Vector2Int(x, y);
+                    path.slot.value = _map[x, y];
 
                     #region parent   
 
-
-                    if (
-                        path.slot.pos.x >= 0 && path.slot.pos.x < startPos.x &&
-                        path.slot.pos.y >= startPos.y && path.slot.pos.y <= mapSize.y
-                        )
+                    if (path.slot.value == 1)
                     {
-                        path.gameObject.transform.SetParent(this.transform.GetChild(0));
-                    }
-                    else if (
-                        path.slot.pos.x >= startPos.x && path.slot.pos.x < mapSize.x &&
-                        path.slot.pos.y > startPos.y && path.slot.pos.y < mapSize.y
-                        )
-                    {
+                        path.name = "spawn " + i++;
                         path.gameObject.transform.SetParent(this.transform.GetChild(1));
-                    }
-                    else if (
-                        path.slot.pos.x > startPos.x && path.slot.pos.x < mapSize.x &&
-                        path.slot.pos.y >= 0 && path.slot.pos.y <= startPos.y
-                        )
-                    {
-                        path.gameObject.transform.SetParent(this.transform.GetChild(2));
-                    }
-                    else if (
-                        path.slot.pos.x >= 0 && path.slot.pos.x <= startPos.x &&
-                        path.slot.pos.y >= 0 && path.slot.pos.y < startPos.y
-                        )
-                    {
-                        path.gameObject.transform.SetParent(this.transform.GetChild(3));
+
+                        _spawnSlots.Add(path);
                     }
                     else
                     {
-                        path.gameObject.transform.SetParent(this.transform.GetChild(4));
+                        path.gameObject.transform.SetParent(this.transform.GetChild(0));
                     }
                     #endregion
                 }
-
-
-
                 RotatePath(x, y, path);
-                spawnedSlots[x, y] = path;
-
+                _spawnedSlots[x, y] = path;
             }
         }
     }
@@ -242,16 +252,15 @@ public class SlotPlacer : MonoBehaviour
     {
         if (x > 0 && x < mapSize.x - 1 && y > 0 && y < mapSize.y - 1)
         {
-            if (isHaveNeighbor(_map[x - 1, y]) && isHaveNeighbor(_map[x + 1, y]))
+            if (isHaveNeighbor(_map[x - 1, y]) && isHaveNeighbor(_map[x + 1, y])
+            ||
+                isHaveNeighbor(_map[x, y - 1]) && isHaveNeighbor(_map[x, y + 1]))
             {
                 return false;
             }
 
-            if (isHaveNeighbor(_map[x, y - 1]) && isHaveNeighbor(_map[x, y + 1]))
-            {
-                return false;
-            }
         }
+
         return true;
     }
 }

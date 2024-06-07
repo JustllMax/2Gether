@@ -1,4 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/_Content/Art/Models/Buildings/Attack/LightOfDarkness.fbx.meta
+guid: 90e6e48f076aa7a448fac5b36537d6f9
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects: {}
+========
 guid: f93bfbe1a26b4c6429f1261cdb5d08c5
 ModelImporter:
   serializedVersion: 22200
@@ -9,6 +16,7 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: texture_fabric.png
     second: {fileID: 2100000, guid: 11407dc59a7e1224784be110154397d8, type: 2}
+>>>>>>>> 313ce494d337a14cb88f7db51374c2bb1c8c1ef8:Assets/_Content/Art/Models/Buildings/Attack/M_Fabric.fbx.meta
   materials:
     materialImportMode: 2
     materialName: 0

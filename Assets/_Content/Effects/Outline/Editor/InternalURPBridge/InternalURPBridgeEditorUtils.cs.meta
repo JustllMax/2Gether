@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/_Source/Wave/WaveManager.cs.meta
+guid: 78f2920c8dd5888459465577083d20a4
+========
 guid: 34f933cc613bfe54aa3016b40959e541
+>>>>>>>> 40e4cda849a1adbdc574aabc533ab053e6fd7513:Assets/_Content/Effects/Outline/Editor/InternalURPBridge/InternalURPBridgeEditorUtils.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
