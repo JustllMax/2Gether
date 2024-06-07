@@ -3,28 +3,34 @@ using UnityEngine;
 public class Healing : Building
 {
   
-    private string playerTag = "Player";
-    private string buildingTag = "Building";
-
-    private GameObject PlayerObject;
-    private GameObject BuildingObject;
     public ParticleSystem particles;
 
+    BuildingHospitalStatistics statistics;
 
+    float timer = 0f;
     public override void Start()
     {
         base.Start();
-     
+        GetStatistics();
     }
 
     public void Update()
     {
-       
+
+        if(timer < GetStatistics().delayBetweenActivation)
+        {
+            timer += Time.time;
+        }
+        else
+        {
+            OnAttack();
+        }
     }
 
 
 
     #region ChildrenMethods
+
 
     public override void OnCreate()
     {
@@ -33,14 +39,19 @@ public class Healing : Building
 
     public override void OnAttack()
     {
-        if (particles != null)
-        {
+
+        timer = 0f;
+        if(particles != null)
             particles.Play();
-            Debug.Log("++++");
-        }
-        else
+
+        var hits = Physics.OverlapSphere(transform.position, GetStatistics().AreaRange, targetLayerMask);
+        
+        foreach(var hit in hits)
         {
-            Debug.Log("particle system not detected");
+            if(hit.TryGetComponent(out PlayerController controller))
+            {
+                controller.Heal(GetStatistics().healAmount);
+            }
         }
     }
 
@@ -86,35 +97,13 @@ public class Healing : Building
     void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireSphere(transform.position, rangeBuilding);
-        Gizmos.color = Color.blue;
-        //Gizmos.DrawWireSphere(transform.position, rangePlayer);
+        Gizmos.DrawWireSphere(transform.position, GetStatistics().AreaRange);
+
     }
 
-
-    private void OnTriggerEnter(Collider collision)
+    BuildingHospitalStatistics GetStatistics()
     {
-        if (collision.CompareTag(playerTag))
-        {
-            Debug.Log("player entered zone");
-            OnAttack();
-
-        }
-        if (collision.CompareTag(buildingTag))
-        {
-            Debug.Log("building in the zone");
-
-        }
+        return statistics = GetBaseStatistics() as BuildingHospitalStatistics;
+        
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag(playerTag))
-        {
-            Debug.Log("Player left zone");
-            if (particles != null)
-                particles.Stop();
-        }
-    }
-
 }

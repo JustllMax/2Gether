@@ -8,12 +8,12 @@ using UnityEngine.UI;
 using UnityEditor;
 #endif
 
-[CreateAssetMenu(fileName = "Building_", menuName = "2Gether/Buildings/Offensive")]
+[CreateAssetMenu(fileName = "Building_", menuName = "2Gether/Buildings/Offensive/Standard")]
 public class BuildingOffensiveStatistics : BuildingStatistics
 {
     public float AttackDamage;
     public float AttackRange;
-
+    public float AttackFireRate;
     [HideInInspector]public bool IsAOE;
     [HideInInspector]public GameObject P_AOE;
     [HideInInspector]public float AOERange;

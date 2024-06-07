@@ -25,17 +25,24 @@ public class LaserBuilding : Building
     private float range;
     BuildingOffensiveStatistics statistics;
 
+    BuildingOffensiveStatistics GetStatistics()
+    {
+        statistics = GetBaseStatistics() as BuildingOffensiveStatistics;
+        return statistics;
+    }
+
     public override void Awake()
     {
         base.Awake();
-        statistics = GetStats() as BuildingOffensiveStatistics;
-        laserOriginalDamage = statistics.AttackDamage;
+        laserOriginalDamage = GetStatistics().AttackDamage;
         laserDamage = laserOriginalDamage;
-        range = statistics.AttackRange;
+        range = GetStatistics().AttackRange;
+
     }
 
     public override void Start()
     {
+        statistics = GetBaseStatistics() as BuildingOffensiveStatistics;
         base.Start();
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
     }
@@ -60,8 +67,6 @@ public class LaserBuilding : Building
             if (fireContDown <= 0f)
             {
                 OnAttack();
-
-
                 fireContDown = 1f / fireRate;
             }
             fireContDown -= Time.deltaTime;
@@ -154,7 +159,7 @@ public class LaserBuilding : Building
     {
         List<AIController> enemies;
         enemies = new List<AIController>();
-        var hits = Physics.OverlapSphere(transform.position, statistics.AttackRange, targetLayerMask);
+        var hits = Physics.OverlapSphere(transform.position, GetStatistics().AttackRange, targetLayerMask);
         foreach (var hit in hits)
         {
             if (hit.TryGetComponent(out AIController controller))
@@ -187,6 +192,7 @@ public class LaserBuilding : Building
         }
         target = null;
     }
+
 
     void OnDrawGizmosSelected()
     {

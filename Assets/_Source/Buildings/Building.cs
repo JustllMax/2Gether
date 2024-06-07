@@ -64,6 +64,7 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
         GoldManager.Instance.GoldAdd(GetSellCost());
     }
 
+
     public bool CanAttack()
     {
         return (attackTimer >= _buildingStatistics.ActivationTime);
@@ -81,7 +82,7 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
 
         if(cardStats == _buildingStatistics)
         {
-            OnUpgrade();
+            Upgrade();
             return true;
         }
         else
@@ -90,7 +91,7 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
         }
     }
 
-    private void OnUpgrade() 
+    private void Upgrade() 
     {
         //Play upgrade clip
         upgradeCounter++;
