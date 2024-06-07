@@ -2606,7 +2606,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: a197eb8653a628f4581e2d9e66e8e3f2, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -3434,37 +3434,37 @@ PrefabInstance:
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -93.43553
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.62999994
+      value: 87.024
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -89.13553
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7858988
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0.48571235
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.32552996
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.2011887
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
