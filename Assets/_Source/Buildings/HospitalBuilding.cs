@@ -5,7 +5,6 @@ public class HospitalBuilding : Building
   
     public ParticleSystem healingParticles;
 
-    BuildingHospitalStatistics statistics;
 
     float activationTimer = 0f;
     float healingTimer = 0f;
@@ -52,19 +51,8 @@ public class HospitalBuilding : Building
 
     }
 
-    void SearchForPlayer()
-    {
-
-       
-    }
-
     #region ChildrenMethods
 
-
-    public override void OnCreate()
-    {
-
-    }
 
     public override void OnAttack()
     {
@@ -73,12 +61,13 @@ public class HospitalBuilding : Building
 
         var hits = Physics.OverlapSphere(transform.position, GetStatistics().AreaRange, targetLayerMask);
 
+        AudioManager.Instance.PlaySFXAtSource(activationSound, audioSource);
+
         foreach (var hit in hits)
         {
             if (hit.TryGetComponent(out IDamagable damagable))
             {
-                damagable.TakeDamage(-GetStatistics().healAmount);
-                return;
+                damagable.Heal(GetStatistics().healAmount);
             } 
         }
     }
@@ -86,10 +75,12 @@ public class HospitalBuilding : Building
 
     public override bool TakeDamage(float damage)
     {
-        audioSource.PlayOneShot(takeHitSound);
+        AudioManager.Instance.PlaySFXAtSource(takeHitSound, audioSource);
+
         Health -= damage;
         if (Health <= 0)
         {
+            AudioManager.Instance.PlaySFXAtSource(createDestroySound, audioSource);
             Kill();
             return true;
         }
@@ -99,8 +90,8 @@ public class HospitalBuilding : Building
     public override void Kill()
     {
         IsTargetable = false;
-        audioSource.PlayOneShot(createDestroySound);
-        createDestroyParticles.Play();
+        if(createDestroyParticles != null)
+            createDestroyParticles.Play();
         Invoke("DestroyObj", DestroyObjectDelay);
     }
 
@@ -112,15 +103,12 @@ public class HospitalBuilding : Building
     public override void OnSell()
     {
         base.OnSell();
+        AudioManager.Instance.PlaySFX(createDestroySound);
+
         Kill();
     }
 
     #endregion ChildrenMethods
-    public void OnTakeDamage()
-    {
-        //todo 
-    }
-
 
     void OnDrawGizmos()
     {
@@ -131,7 +119,7 @@ public class HospitalBuilding : Building
 
     BuildingHospitalStatistics GetStatistics()
     {
-        return statistics = GetBaseStatistics() as BuildingHospitalStatistics;
+        return GetBaseStatistics() as BuildingHospitalStatistics;
         
     }
 }

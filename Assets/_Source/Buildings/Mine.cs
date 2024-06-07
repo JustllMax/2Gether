@@ -11,6 +11,7 @@ public class Mine : Building
 
     public override void Start()
     {
+        IsTargetable = false;
         statistics = GetBaseStatistics() as BuildingOffensiveStatistics;
     }
 
@@ -25,17 +26,11 @@ public class Mine : Building
 
     #region ChildrenMethods
 
-    public override void OnCreate()
-    {
-
-    }
-
     public override void OnAttack()
     {
         if (explosionParticles != null)
             explosionParticles.Play();
-        audioSource.PlayOneShot(activationSound);
-
+        AudioManager.Instance.PlaySFXAtSource(activationSound, audioSource);
         ExplosionDamage();
         Kill();
     }
@@ -43,7 +38,8 @@ public class Mine : Building
 
     public override bool TakeDamage(float damage)
     {
-        audioSource.PlayOneShot(takeHitSound);
+        AudioManager.Instance.PlaySFXAtSource(takeHitSound, audioSource);
+
         Health -= damage;
         if (Health <= 0)
         {
@@ -56,11 +52,8 @@ public class Mine : Building
     public override void Kill()
     {
 
-
         model.SetActive(false);
         IsTargetable = false;
-
-       
         Invoke("DestroyObj", DestroyObjectDelay);
     }
 
@@ -76,7 +69,7 @@ public class Mine : Building
         if (createDestroyParticles != null)
             createDestroyParticles.Play();
 
-        audioSource.PlayOneShot(createDestroySound);
+        AudioManager.Instance.PlaySFX(createDestroySound);
         Kill();
     }
 

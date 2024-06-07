@@ -15,6 +15,7 @@ MonoBehaviour:
   weight: 3
   animName: 3
   AnimDelayForAttack: 0.5
+  explosionParticles: {fileID: 0}
   mask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 576

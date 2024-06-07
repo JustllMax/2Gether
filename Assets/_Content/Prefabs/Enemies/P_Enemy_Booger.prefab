@@ -439,7 +439,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3349545230942041135}
   - component: {fileID: 2148259213738518681}
-  - component: {fileID: 693353059567502335}
   m_Layer: 8
   m_Name: Model
   m_TagString: Untagged
@@ -486,27 +485,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &693353059567502335
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4478358925680902300}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.4, y: 2.6, z: 1.2}
-  m_Center: {x: 0, y: 1.3, z: 0}
 --- !u!1 &4495941783512857639
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,6 +615,7 @@ GameObject:
   - component: {fileID: 159690152936407377}
   - component: {fileID: 2570586416541053031}
   - component: {fileID: 6231483698650858367}
+  - component: {fileID: 1672254407431204474}
   m_Layer: 8
   m_Name: P_Enemy_Booger
   m_TagString: Untagged
@@ -681,7 +660,7 @@ MonoBehaviour:
   hurtSound: {fileID: 0}
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}
-  hitboxCollider: {fileID: 693353059567502335}
+  hitboxCollider: {fileID: 0}
   DeathInvokeTime: 2
   currentTarget:
     transform: {fileID: 0}
@@ -689,6 +668,8 @@ MonoBehaviour:
   lastAttackTime: 0
   isReloading: 0
   remainingAttacks: 0
+  _health: 0
+  maxHealth: 0
 --- !u!195 &8244053411383442607
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -769,6 +750,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e6e1ee94b4cbe64ea381be97d533e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &1672254407431204474
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6219354284539619549}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.4, y: 2.6, z: 1.2}
+  m_Center: {x: 0, y: 1.3, z: 0}
 --- !u!1 &6431500379394144440
 GameObject:
   m_ObjectHideFlags: 0

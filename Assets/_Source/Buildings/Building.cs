@@ -17,14 +17,14 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
     [SerializeField] protected AudioClip upgradeSound; // Played when building is upgraded
     [SerializeField] protected AudioClip activationSound; // Played when attacking / activating
     [SerializeField] protected AudioClip takeHitSound; // Played when receiving damage
-    [SerializeField] protected AudioSource audioSource;
+    protected AudioSource audioSource;
     [Header("Particles")] 
     [SerializeField] protected ParticleSystem createDestroyParticles;
     [SerializeField] protected ParticleSystem upgradeParticles;
 
     private BuildingStatistics _buildingStatistics;
     private float attackTimer = 0;
-    private int currentLevel = 1;
+    private int currentLevel = 0;
     private int upgradeCounter = 0;
     protected float AttackCoolDownTimer = 5f;
     [SerializeField] protected LayerMask targetLayerMask;
@@ -47,6 +47,7 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
         _buildingStatistics = _upgradeTiers.GetStatsForLevel(currentLevel);
         maxHealth = _buildingStatistics.HealthPoints;
         Health = maxHealth;
+        audioSource = GetComponent<AudioSource>();
 
     }
 
@@ -71,7 +72,12 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
 
 
     #region ChildrenMethods
-    public abstract void OnCreate();
+    public void OnCreate()
+    {
+        AudioManager.Instance.PlaySFX(createDestroySound);
+        if (createDestroyParticles != null)
+            createDestroyParticles.Play();
+    }
     public abstract void OnAttack();
     public virtual void OnSell()
     {
@@ -107,11 +113,13 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
 
     private void Upgrade() 
     {
-        //Play upgrade clip
+        AudioManager.Instance.PlaySFX(upgradeSound);
         upgradeCounter++;
 
         if(upgradeCounter == UPGRADE_COUNTER_LIMIT)
         {
+            if (upgradeParticles != null)
+                upgradeParticles.Play();
             currentLevel++;
             _buildingStatistics = _upgradeTiers.GetStatsForLevel(currentLevel);
             upgradeCounter = 0;

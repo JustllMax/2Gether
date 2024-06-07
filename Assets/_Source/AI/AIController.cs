@@ -37,10 +37,10 @@ public class AIController : MonoBehaviour, IDamagable
 
     [Header("Audio")]
     [SerializeField] AudioClip hurtSound;
-    [SerializeField] AudioClip attackSound;
+    public AudioClip attackSound;
     [SerializeField] AudioClip deathSound;
-
-    [SerializeField] BoxCollider hitboxCollider;
+    [HideInInspector] public AudioSource audioSource;
+    [SerializeField] Collider hitboxCollider;
     [SerializeField] float DeathInvokeTime = 2f;
     DisintegrationEffect _deathEffect;
     Animator _animator;
@@ -72,8 +72,12 @@ public class AIController : MonoBehaviour, IDamagable
     public float maxHealth;
     private void Awake()
     {
+        if(audioSource == null)
+            audioSource = GetComponent<AudioSource>();
         _deathEffect = GetComponent<DisintegrationEffect>();
         _animator = GetComponentInChildren<Animator>();
+
+        hitboxCollider = GetComponentInChildren<Collider>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
         remainingAttacks = GetEnemyStats().AttackAmount;
@@ -315,8 +319,10 @@ public class AIController : MonoBehaviour, IDamagable
     public bool TakeDamage(float damage)
     {
         Health -= damage;
+        AudioManager.Instance.PlaySFXAtSource(hurtSound, audioSource);
         if(Health <= 0)
         {
+            AudioManager.Instance.PlaySFXAtSource(deathSound, audioSource);
             Kill();
             return true;
         }
@@ -328,6 +334,7 @@ public class AIController : MonoBehaviour, IDamagable
         isDead = true;
         hitboxCollider.enabled = false;
         GetNavMeshAgent().enabled = false;
+        
         if (!GetAnimator().GetNextAnimatorStateInfo(0).IsName(AIAnimNames.DEATH.ToString()))
         {
             GetAnimator().CrossFade(AIAnimNames.DEATH.ToString(), 0.1f);
@@ -349,6 +356,11 @@ public class AIController : MonoBehaviour, IDamagable
         return true;
     }
 
+
+    public void InstantiateGameObject(GameObject obj, Transform parent)
+    {
+        Instantiate(obj, parent);
+    }
     #region GetSet
 
     public bool IsDead()

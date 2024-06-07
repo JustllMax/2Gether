@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8696543111338083955}
   - component: {fileID: 7602616585702769570}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: P_MineBuilding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8696543111338083955
 Transform:
   m_ObjectHideFlags: 0
@@ -66,10 +66,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8696543111338083955}
     m_Modifications:
+    - target: {fileID: 1207787650232216784, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1535636967918989059, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4009848794559257256, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6487170595694911868, guid: 845449df11c37d74ebb9d21659d7af50,
         type: 3}
       propertyPath: m_Name
       value: P_Mine_6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487170595694911868, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6583923697780913749, guid: 845449df11c37d74ebb9d21659d7af50,
         type: 3}
@@ -121,6 +141,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9078849500760044240, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -140,10 +165,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8696543111338083955}
     m_Modifications:
+    - target: {fileID: 1207787650232216784, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1535636967918989059, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4009848794559257256, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6487170595694911868, guid: 845449df11c37d74ebb9d21659d7af50,
         type: 3}
       propertyPath: m_Name
       value: P_Mine_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487170595694911868, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6583923697780913749, guid: 845449df11c37d74ebb9d21659d7af50,
         type: 3}
@@ -195,6 +240,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9078849500760044240, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -214,10 +264,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8696543111338083955}
     m_Modifications:
+    - target: {fileID: 1207787650232216784, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1535636967918989059, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4009848794559257256, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6487170595694911868, guid: 845449df11c37d74ebb9d21659d7af50,
         type: 3}
       propertyPath: m_Name
       value: P_Mine_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487170595694911868, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6583923697780913749, guid: 845449df11c37d74ebb9d21659d7af50,
         type: 3}
@@ -269,6 +339,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9078849500760044240, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -288,16 +363,56 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8696543111338083955}
     m_Modifications:
+    - target: {fileID: 1207787650232216784, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1535636967918989059, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3503455312568175525, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: takeHitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 37e8deef3569f64458306968fc3c237a, type: 3}
+    - target: {fileID: 3503455312568175525, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: upgradeSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 3c69e4e5834fed747a1cecd10a45743d, type: 3}
     - target: {fileID: 3503455312568175525, guid: 845449df11c37d74ebb9d21659d7af50,
         type: 3}
       propertyPath: _upgradeTiers
       value: 
       objectReference: {fileID: 11400000, guid: 27515f79dde7bb74f9af4b31de8edaf9,
         type: 2}
+    - target: {fileID: 3503455312568175525, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: activationSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 003507eb68bb84e43b826a90993d52fc, type: 3}
+    - target: {fileID: 3503455312568175525, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: createDestroySound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4c548fa16b1645e44b98e224b0317905, type: 3}
+    - target: {fileID: 4009848794559257256, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6487170595694911868, guid: 845449df11c37d74ebb9d21659d7af50,
         type: 3}
       propertyPath: m_Name
       value: P_Mine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487170595694911868, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6583923697780913749, guid: 845449df11c37d74ebb9d21659d7af50,
         type: 3}
@@ -349,6 +464,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9078849500760044240, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -368,10 +488,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8696543111338083955}
     m_Modifications:
+    - target: {fileID: 1207787650232216784, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1535636967918989059, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4009848794559257256, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6487170595694911868, guid: 845449df11c37d74ebb9d21659d7af50,
         type: 3}
       propertyPath: m_Name
       value: P_Mine_5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487170595694911868, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6583923697780913749, guid: 845449df11c37d74ebb9d21659d7af50,
         type: 3}
@@ -423,6 +563,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9078849500760044240, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -442,10 +587,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8696543111338083955}
     m_Modifications:
+    - target: {fileID: 1207787650232216784, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1535636967918989059, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4009848794559257256, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6487170595694911868, guid: 845449df11c37d74ebb9d21659d7af50,
         type: 3}
       propertyPath: m_Name
       value: P_Mine_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487170595694911868, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6583923697780913749, guid: 845449df11c37d74ebb9d21659d7af50,
         type: 3}
@@ -497,6 +662,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9078849500760044240, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -516,10 +686,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8696543111338083955}
     m_Modifications:
+    - target: {fileID: 1207787650232216784, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1535636967918989059, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4009848794559257256, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6487170595694911868, guid: 845449df11c37d74ebb9d21659d7af50,
         type: 3}
       propertyPath: m_Name
       value: P_Mine_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487170595694911868, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6583923697780913749, guid: 845449df11c37d74ebb9d21659d7af50,
         type: 3}
@@ -570,6 +760,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078849500760044240, guid: 845449df11c37d74ebb9d21659d7af50,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

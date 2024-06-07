@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1155050633523703832}
   - component: {fileID: 6228821174951417382}
   - component: {fileID: 8232995071450534597}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: P_Hospital
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10.577305, y: -0.02, z: -3.07}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4.2792, y: 4.2792, z: 4.2792}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5279686647586502073}
@@ -48,11 +48,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DestroyObjectDelay: 0
   _upgradeTiers: {fileID: 11400000, guid: a3dc7e8831c226e4db88c9617d29e41a, type: 2}
-  createDestroySound: {fileID: 0}
-  upgradeSound: {fileID: 0}
-  activationSound: {fileID: 0}
-  takeHitSound: {fileID: 0}
-  audioSource: {fileID: 8232995071450534597}
+  createDestroySound: {fileID: 8300000, guid: 4c548fa16b1645e44b98e224b0317905, type: 3}
+  upgradeSound: {fileID: 8300000, guid: 3c69e4e5834fed747a1cecd10a45743d, type: 3}
+  activationSound: {fileID: 8300000, guid: 33f0088ab88dc6743bf77fa756457138, type: 3}
+  takeHitSound: {fileID: 8300000, guid: 37e8deef3569f64458306968fc3c237a, type: 3}
   createDestroyParticles: {fileID: 0}
   upgradeParticles: {fileID: 0}
   targetLayerMask:
@@ -216,10 +215,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3660653046356411250, guid: f008bcc514a9676458ff37fa5b8f532f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f008bcc514a9676458ff37fa5b8f532f,
         type: 3}
       propertyPath: m_Name
       value: Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f008bcc514a9676458ff37fa5b8f532f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7226419802350426929, guid: f008bcc514a9676458ff37fa5b8f532f,
         type: 3}
@@ -230,6 +239,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Convex
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7953606483559150473, guid: f008bcc514a9676458ff37fa5b8f532f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -57,10 +57,6 @@ public class BombBuilding : Building
 
     #region ChildrenMethods
 
-    public override void OnCreate()
-    {
-
-    }
 
     public override void OnAttack()
     {

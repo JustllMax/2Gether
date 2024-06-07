@@ -26,11 +26,6 @@ public class GridBuilding : Building
         _renderer.material.color = Color.white;
     }
 
-    public override void OnCreate()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void OnAttack()
     {
         throw new System.NotImplementedException();
