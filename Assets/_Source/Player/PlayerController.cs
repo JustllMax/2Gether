@@ -266,11 +266,13 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         return false;
     }
 
-    public void Heal(float value)
+    public bool Heal(float amount)
     {
-        Health += value;
+        Health += amount;
         Health = Mathf.Clamp(Health, 0, _maxHealth);
         HUDManager.Instance.SetCurrentHealth(Health);
+
+        return true;
     }
 
     public void Kill()

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5905854775221451533}
   - component: {fileID: 2576746371617549471}
   - component: {fileID: 4899120767262580992}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cylinder_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 918081285928390471}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: thread_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ Transform:
   - {fileID: 8688357931490441240}
   - {fileID: 8642498888770467891}
   m_Father: {fileID: 3096307709511144209}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -8.628521, y: 0, z: 0}
 --- !u!1 &562178022310550985
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 5071990431640785785}
   - component: {fileID: 2526230641304018079}
   - component: {fileID: 7439647189246313206}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8225156236637883713}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wheel8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ Transform:
   m_Children:
   - {fileID: 3593745112132404892}
   m_Father: {fileID: 918081285928390471}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -77.142876, y: 180, z: -180}
 --- !u!1 &1110192208275121267
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 3593745112132404892}
   - component: {fileID: 6582981232875426601}
   - component: {fileID: 5902365392091512970}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cylinder_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +329,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7080591698640336594}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wheel2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -351,7 +351,7 @@ Transform:
   m_Children:
   - {fileID: 3555452314523721236}
   m_Father: {fileID: 7191596910394762588}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -77.142876, y: 180, z: -180}
 --- !u!1 &2038463135206153707
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,7 +363,7 @@ GameObject:
   - component: {fileID: 3800862076475334364}
   - component: {fileID: 8650661094417651393}
   - component: {fileID: 7710168664558026766}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cylinder_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3096307709511144209}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -469,7 +469,7 @@ Transform:
   - {fileID: 7191596910394762588}
   - {fileID: 918081285928390471}
   m_Father: {fileID: 7531585423459486670}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 8.628521, y: 0, z: 0}
 --- !u!1 &2817813312674930615
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,7 +479,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6847545535888160293}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wheel7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,7 +501,7 @@ Transform:
   m_Children:
   - {fileID: 1563487527562186450}
   m_Father: {fileID: 918081285928390471}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -86.478165, y: 133.33331, z: -133.33331}
 --- !u!1 &2967480797254621098
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,7 +513,7 @@ GameObject:
   - component: {fileID: 5892561243257258367}
   - component: {fileID: 6090716357797533116}
   - component: {fileID: 262593130645802173}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cylinder_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -596,7 +596,7 @@ GameObject:
   - component: {fileID: 2267547373369421194}
   - component: {fileID: 800881515342874526}
   - component: {fileID: 1582406176347134081}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -679,7 +679,7 @@ GameObject:
   - component: {fileID: 5834100603395416359}
   - component: {fileID: 402338690848105155}
   - component: {fileID: 4388775887147090249}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cylinder_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -762,7 +762,7 @@ GameObject:
   - component: {fileID: 6292642757169394585}
   - component: {fileID: 6679616374034350193}
   - component: {fileID: 8215023139648130343}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cylinder_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -843,7 +843,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7191596910394762588}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: thread_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -872,7 +872,7 @@ Transform:
   - {fileID: 3016509548155667738}
   - {fileID: 5730223583339751734}
   m_Father: {fileID: 3096307709511144209}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -8.628521, y: 0, z: 0}
 --- !u!1 &4012421817266821705
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,9 +882,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7531585423459486670}
-  - component: {fileID: 2368249477968516378}
   - component: {fileID: 979683485163093238}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -907,27 +906,6 @@ Transform:
   - {fileID: 3096307709511144209}
   m_Father: {fileID: 2375794257122518748}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!65 &2368249477968516378
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4012421817266821705}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.4, y: 1.5, z: 1.2}
-  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!95 &979683485163093238
 Animator:
   serializedVersion: 5
@@ -958,7 +936,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3190531254431076091}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wheel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -980,7 +958,7 @@ Transform:
   m_Children:
   - {fileID: 3612179764397787250}
   m_Father: {fileID: 7191596910394762588}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -86.478165, y: 133.33331, z: -133.33331}
 --- !u!1 &4321915216044426616
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,7 +970,7 @@ GameObject:
   - component: {fileID: 3134193929878114719}
   - component: {fileID: 7543726179868339797}
   - component: {fileID: 6762544603583258289}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1075,7 +1053,7 @@ GameObject:
   - component: {fileID: 8084811829728579979}
   - component: {fileID: 3636512019803426944}
   - component: {fileID: 5883245968976669695}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1156,7 +1134,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8405578801353087855}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wheel4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1178,7 +1156,7 @@ Transform:
   m_Children:
   - {fileID: 6292642757169394585}
   m_Father: {fileID: 7191596910394762588}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -77.142876, y: 180, z: -180}
 --- !u!1 &4718521112658162555
 GameObject:
   m_ObjectHideFlags: 0
@@ -1188,7 +1166,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5730223583339751734}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wheel6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1210,7 +1188,7 @@ Transform:
   m_Children:
   - {fileID: 5834100603395416359}
   m_Father: {fileID: 7191596910394762588}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -86.478165, y: 133.33331, z: -133.33331}
 --- !u!1 &5113267593131745754
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,7 +1200,7 @@ GameObject:
   - component: {fileID: 256316641681109409}
   - component: {fileID: 4665420241279611777}
   - component: {fileID: 5111445473299009686}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1303,7 +1281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8642498888770467891}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wheel12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1325,7 +1303,7 @@ Transform:
   m_Children:
   - {fileID: 5905854775221451533}
   m_Father: {fileID: 918081285928390471}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -86.478165, y: 133.33331, z: -133.33331}
 --- !u!1 &5532467792116233359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1337,7 +1315,7 @@ GameObject:
   - component: {fileID: 5127455529759629321}
   - component: {fileID: 4210850117628395217}
   - component: {fileID: 3677089038124152254}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cylinder_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1418,7 +1396,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 436274858814541111}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wheel9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1440,7 +1418,7 @@ Transform:
   m_Children:
   - {fileID: 9161042740638666675}
   m_Father: {fileID: 918081285928390471}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -77.142876, y: 180, z: -180}
 --- !u!1 &6410846206318841654
 GameObject:
   m_ObjectHideFlags: 0
@@ -1450,7 +1428,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8688357931490441240}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wheel11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1472,7 +1450,7 @@ Transform:
   m_Children:
   - {fileID: 3800862076475334364}
   m_Father: {fileID: 918081285928390471}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -77.142876, y: 180, z: -180}
 --- !u!1 &6639807223782973672
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,7 +1462,7 @@ GameObject:
   - component: {fileID: 3612179764397787250}
   - component: {fileID: 9165083124830845669}
   - component: {fileID: 2463918026101444367}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1567,7 +1545,7 @@ GameObject:
   - component: {fileID: 1563487527562186450}
   - component: {fileID: 2556140415852926449}
   - component: {fileID: 5449906768985787756}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cylinder_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1648,7 +1626,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8418772967506480441}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wheel3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1670,7 +1648,7 @@ Transform:
   m_Children:
   - {fileID: 5892561243257258367}
   m_Father: {fileID: 7191596910394762588}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -77.142876, y: 180, z: -180}
 --- !u!1 &7933586294140204121
 GameObject:
   m_ObjectHideFlags: 0
@@ -1680,7 +1658,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7087730007181228601}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1702,7 +1680,7 @@ Transform:
   m_Children:
   - {fileID: 8084811829728579979}
   m_Father: {fileID: 3096307709511144209}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 2.1592987, y: 0, z: 0}
 --- !u!1 &8490334600495498900
 GameObject:
   m_ObjectHideFlags: 0
@@ -1714,7 +1692,7 @@ GameObject:
   - component: {fileID: 5651218771437504398}
   - component: {fileID: 1433353838231844342}
   - component: {fileID: 1893291712494094137}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1795,7 +1773,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3016509548155667738}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wheel5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1817,7 +1795,7 @@ Transform:
   m_Children:
   - {fileID: 5127455529759629321}
   m_Father: {fileID: 7191596910394762588}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -77.142876, y: 180, z: -180}
 --- !u!1 &8620948223904525750
 GameObject:
   m_ObjectHideFlags: 0
@@ -1827,7 +1805,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 618815255622306986}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1861,7 +1839,7 @@ GameObject:
   - component: {fileID: 9161042740638666675}
   - component: {fileID: 4301330869614831829}
   - component: {fileID: 2010590317748634661}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cylinder_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1944,7 +1922,7 @@ GameObject:
   - component: {fileID: 3537276830135535981}
   - component: {fileID: 6613205473475271427}
   - component: {fileID: 526181226781263660}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cylinder_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2027,7 +2005,7 @@ GameObject:
   - component: {fileID: 3555452314523721236}
   - component: {fileID: 5210970745715275441}
   - component: {fileID: 4944144540480217530}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cylinder_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2113,7 +2091,9 @@ GameObject:
   - component: {fileID: 3307119080023307009}
   - component: {fileID: 4127966417348806019}
   - component: {fileID: 7658996164712833693}
-  m_Layer: 0
+  - component: {fileID: 3146555766493492058}
+  - component: {fileID: 7360317746810707024}
+  m_Layer: 8
   m_Name: P_Enemy_Bomberbot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2151,23 +2131,24 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 4048d42399c49f4428dd8d16211f0e0b, type: 2}
   _AIStates:
   - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
-  - {fileID: 11400000, guid: eb1298214d79bd648a8b3e2d577b10e5, type: 2}
+  - {fileID: 11400000, guid: 5e86318e4d1d92b4db74c429847a6db9, type: 2}
+  - {fileID: 11400000, guid: d7317b2390809ab40bd383fcda9bd2e6, type: 2}
   - {fileID: 11400000, guid: 7ff79690d78f3c14ca44a75e4afcac18, type: 2}
-  AITargetFocus: 0
+  AITargetFocus: 1
   hurtSound: {fileID: 0}
-  attackSound: {fileID: 0}
-  deathSound: {fileID: 0}
-  hitboxCollider: {fileID: 2368249477968516378}
-  DeathInvokeTime: 2
-  targetLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
+  attackSound: {fileID: 8300000, guid: 003507eb68bb84e43b826a90993d52fc, type: 3}
+  deathSound: {fileID: 8300000, guid: 003507eb68bb84e43b826a90993d52fc, type: 3}
+  audioSource: {fileID: 0}
+  hitboxCollider: {fileID: 0}
+  DeathInvokeTime: 0.5
   currentTarget:
     transform: {fileID: 0}
   distanceToTarget: 0
   lastAttackTime: 0
   isReloading: 0
   remainingAttacks: 0
+  _health: 0
+  maxHealth: 0
 --- !u!195 &1600096481173909209
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2248,6 +2229,123 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e6e1ee94b4cbe64ea381be97d533e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &3146555766493492058
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029036811985243743}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.4, y: 1.5, z: 1.2}
+  m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!82 &7360317746810707024
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029036811985243743}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &9120831812455038450
 GameObject:
   m_ObjectHideFlags: 0
@@ -2257,7 +2355,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3340412550074462214}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wheel10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2279,4 +2377,4 @@ Transform:
   m_Children:
   - {fileID: 3537276830135535981}
   m_Father: {fileID: 918081285928390471}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -77.142876, y: 180, z: -180}

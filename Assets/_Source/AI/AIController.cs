@@ -32,21 +32,21 @@ public class AIController : MonoBehaviour, IDamagable
     AIState nextState;
     AIState currentState;
 
+    [Header("CHANGE ACCORDINGLY TO CHASE/BUILDING. BOTH IS FOR BOSSES")]
     [SerializeField] TargetType AITargetFocus;
 
     [Header("Audio")]
     [SerializeField] AudioClip hurtSound;
-    [SerializeField] AudioClip attackSound;
+    public AudioClip attackSound;
     [SerializeField] AudioClip deathSound;
-
-    [SerializeField] BoxCollider hitboxCollider;
+    [HideInInspector] public AudioSource audioSource;
+    [SerializeField] Collider hitboxCollider;
     [SerializeField] float DeathInvokeTime = 2f;
     DisintegrationEffect _deathEffect;
     Animator _animator;
     NavMeshAgent _navMeshAgent;
     bool isStunned = false;
     bool isDead = false;
-    [SerializeField]
     LayerMask targetLayerMask;
     private float attackTimer = 0f;
 
@@ -65,29 +65,69 @@ public class AIController : MonoBehaviour, IDamagable
 
     [Foldout("DEBUG INFO")]
     public float remainingAttacks;
+    [Foldout("DEBUG INFO")]
+    [SerializeField] private float _health;
 
-    private float _health;
     public float Health { get => _health; set => _health = value; }
+    public bool IsAlive { get => !isDead; }
 
+    public float maxHealth;
     private void Awake()
     {
+        if(audioSource == null)
+            audioSource = GetComponent<AudioSource>();
         _deathEffect = GetComponent<DisintegrationEffect>();
         _animator = GetComponentInChildren<Animator>();
+
+        hitboxCollider = GetComponentInChildren<Collider>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
         remainingAttacks = GetEnemyStats().AttackAmount;
-        Health = GetEnemyStats().Health;
+        maxHealth = GetEnemyStats().Health;
+        Health = maxHealth;
         _navMeshAgent.speed = GetEnemyStats().MovementSpeed;
+        Debug.Log("agent type id " + _navMeshAgent.agentTypeID);
     }
 
     private void Start()
     {
+
         SetLayerTargeting(AITargetFocus);
+        SetNavMeshAgentType(AITargetFocus);
         currentState = _AIStates[0];
         currentState.OnStart(this);
     }
 
+    void SetNavMeshAgentType(TargetType focus)
+    {
+        string agentTypeName = "";
+        if(focus.ToString() == TargetType.Player.ToString())
+        {
+            agentTypeName = NavAgentTypeNames.PlayerChase.ToString();
+        }
+        else
+        {
+            agentTypeName = NavAgentTypeNames.BuildingChase.ToString();
+        }
+        int? agentType = GetNavMeshAgentID(agentTypeName);
+        if(agentType != null)
+        {
+            _navMeshAgent.agentTypeID = (int)agentType;
+        }
+    }
 
+    private int? GetNavMeshAgentID(string name)
+    {
+        for (int i = 0; i < NavMesh.GetSettingsCount(); i++)
+        {
+            NavMeshBuildSettings settings = NavMesh.GetSettingsByIndex(index: i);
+            if (name == NavMesh.GetSettingsNameFromID(agentTypeID: settings.agentTypeID))
+            {
+                return settings.agentTypeID;
+            }
+        }
+        return null;
+    }
     public void Update()
     {
 
@@ -281,8 +321,10 @@ public class AIController : MonoBehaviour, IDamagable
     public bool TakeDamage(float damage)
     {
         Health -= damage;
+        AudioManager.Instance.PlaySFXAtSource(hurtSound, audioSource);
         if(Health <= 0)
         {
+            AudioManager.Instance.PlaySFXAtSource(deathSound, audioSource);
             Kill();
             return true;
         }
@@ -294,6 +336,7 @@ public class AIController : MonoBehaviour, IDamagable
         isDead = true;
         hitboxCollider.enabled = false;
         GetNavMeshAgent().enabled = false;
+        
         if (!GetAnimator().GetNextAnimatorStateInfo(0).IsName(AIAnimNames.DEATH.ToString()))
         {
             GetAnimator().CrossFade(AIAnimNames.DEATH.ToString(), 0.1f);
@@ -307,8 +350,26 @@ public class AIController : MonoBehaviour, IDamagable
         _deathEffect.Execute();
     }
 
+    public bool Heal(float amount)
+    {
 
+        Health += amount;
+        Health = Mathf.Clamp(Health, 0f, maxHealth);
+        return true;
+    }
+
+
+    public void InstantiateGameObject(GameObject obj, Transform parent)
+    {
+        Instantiate(obj, parent);
+    }
     #region GetSet
+
+    public bool IsDead()
+    {
+        return isDead;
+    }
+
     public EnemyStatistics GetEnemyStats()
     {
         return stats;

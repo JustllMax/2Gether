@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RangedAttackState", menuName = ("2Gether/AI/States/RangedAttack"))]
 public class RangedAttackState : AIState
 {
-
+    [SerializeField] float AnimDelayForAttack;
     GameObject P_Bullet;
     float bulletShootForce;
     bool firstAttackFlag = true;
@@ -66,7 +66,7 @@ public class RangedAttackState : AIState
     IEnumerator PerformAttack(AIController controller)
     {
         controller.lastAttackTime = 0f;
-        yield return new WaitForSeconds(AnimDelay);
+        yield return new WaitForSeconds(AnimDelayForAttack);
 
         Vector3 dir = (controller.GetCurrentPosition() - controller.GetCurrentTarget().transform.position).normalized;
         AIBullet bullet = AIBulletManager.Instance.Pool.Get();
