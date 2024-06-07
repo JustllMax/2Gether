@@ -19,9 +19,9 @@ Shader "Custom/SHADER_VoronoiFluid"
 	}
 	SubShader
 	{
-		Tags { "RenderType"="Transparent" "Queue"="Transparent+1" }
+		Tags { "RenderType"="Transparent" "Queue"="Transparent" }
 		Blend SrcAlpha OneMinusSrcAlpha
-		Cull Off
+		//Cull Off
 
 		Pass
 		{
@@ -81,22 +81,22 @@ Shader "Custom/SHADER_VoronoiFluid"
 				uv *= _Size1;	// Skalowanie diagramu
 				float2 iuv = floor(uv);
 				float2 fuv = frac(uv);
-				float minDist = 1.0; // Najkrótszy dystans od punktu komórki
+				float minDist = 1.0; // Najkrï¿½tszy dystans od punktu komï¿½rki
 				for (int y = -1; y <= 1; y++)
 				{
 					for (int x = -1; x <= 1; x++)
 					{
-						// Szukamy pozycji s¹siedniego punktu komórki na siatce
+						// Szukamy pozycji sï¿½siedniego punktu komï¿½rki na siatce
 						float2 neighbour = float2(float(x), float(y));
-						// Wyznaczamy losowo pozycjê tego punktu
+						// Wyznaczamy losowo pozycjï¿½ tego punktu
 						float2 pointv = random2(iuv + neighbour);
 						// Poruszamy punktami w czasie
 						pointv = 0.5 + 0.5*sin(_Time.z * _Jiggle1 + 6.2236*pointv);
-						// Wyznaczamy wektor pomiêdzy pikselem a punktem
+						// Wyznaczamy wektor pomiï¿½dzy pikselem a punktem
 						float2 diff = neighbour + pointv - fuv;
-						// Obliczamy odleg³oœæ
+						// Obliczamy odlegï¿½oï¿½ï¿½
 						float dist = length(diff);
-						// Je¿eli odleg³oœæ jest mniejsza ni¿ dotychczasowa najmniejsza, zapisujemy j¹
+						// Jeï¿½eli odlegï¿½oï¿½ï¿½ jest mniejsza niï¿½ dotychczasowa najmniejsza, zapisujemy jï¿½
 						minDist = min(minDist, dist);
 					}
 				}
@@ -111,22 +111,22 @@ Shader "Custom/SHADER_VoronoiFluid"
 				uv *= _Size2; // Skalowanie diagramu
 				iuv = floor(uv);
 				fuv = frac(uv);
-				minDist = 1.0;	// Najkrótszy dystans od punktu komórki
+				minDist = 1.0;	// Najkrï¿½tszy dystans od punktu komï¿½rki
 				for (int y = -1; y <= 1; y++)
 				{
 					for (int x = -1; x <= 1; x++)
 					{
-						// Szukamy pozycji s¹siedniego punktu komórki na siatce
+						// Szukamy pozycji sï¿½siedniego punktu komï¿½rki na siatce
 						float2 neighbour = float2(float(x), float(y));
-						// Wyznaczamy losowo pozycjê tego punktu
+						// Wyznaczamy losowo pozycjï¿½ tego punktu
 						float2 pointv = random2(iuv + neighbour);
 						// Poruszamy punktami w czasie
 						pointv = 0.5 + 0.5*sin(_Time.z * _Jiggle2 + 4.2236*pointv);
-						// Wyznaczamy wektor pomiêdzy pikselem a punktem
+						// Wyznaczamy wektor pomiï¿½dzy pikselem a punktem
 						float2 diff = neighbour + pointv - fuv;
-						// Obliczamy odleg³oœæ
+						// Obliczamy odlegï¿½oï¿½ï¿½
 						float dist = length(diff);
-						// Je¿eli odleg³oœæ jest mniejsza ni¿ dotychczasowa najmniejsza, zapisujemy j¹
+						// Jeï¿½eli odlegï¿½oï¿½ï¿½ jest mniejsza niï¿½ dotychczasowa najmniejsza, zapisujemy jï¿½
 						minDist = min(minDist, dist);
 					}
 				}
@@ -141,22 +141,22 @@ Shader "Custom/SHADER_VoronoiFluid"
 				uv *= _Size3; // Skalowanie diagramu
 				iuv = floor(uv);
 				fuv = frac(uv);
-				minDist = 1.0;  // Najkrótszy dystans od punktu komórki
+				minDist = 1.0;  // Najkrï¿½tszy dystans od punktu komï¿½rki
 				for (int y = -1; y <= 1; y++)
 				{
 					for (int x = -1; x <= 1; x++)
 					{
-						// Szukamy pozycji s¹siedniego punktu komórki na siatce
+						// Szukamy pozycji sï¿½siedniego punktu komï¿½rki na siatce
 						float2 neighbour = float2(float(x), float(y));
-						// Wyznaczamy losowo pozycjê tego punktu
+						// Wyznaczamy losowo pozycjï¿½ tego punktu
 						float2 pointv = random2(iuv + neighbour);
 						// Poruszamy punktami w czasie
 						pointv = 0.5 + 0.5*sin(_Time.z * _Jiggle3 + 4.2236*pointv);
-						// Wyznaczamy wektor pomiêdzy pikselem a punktem
+						// Wyznaczamy wektor pomiï¿½dzy pikselem a punktem
 						float2 diff = neighbour + pointv - fuv;
-						// Obliczamy odleg³oœæ
+						// Obliczamy odlegï¿½oï¿½ï¿½
 						float dist = length(diff);
-						// Je¿eli odleg³oœæ jest mniejsza ni¿ dotychczasowa najmniejsza, zapisujemy j¹
+						// Jeï¿½eli odlegï¿½oï¿½ï¿½ jest mniejsza niï¿½ dotychczasowa najmniejsza, zapisujemy jï¿½
 						minDist = min(minDist, dist);
 					}
 				}

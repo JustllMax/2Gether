@@ -1,10 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
-<<<<<<<< HEAD:Assets/_Content/Materials/tex_roadCrs.mat
 --- !u!114 &-3239639875850052938
-========
---- !u!114 &-1051634534635417928
->>>>>>>> 313ce494d337a14cb88f7db51374c2bb1c8c1ef8:Assets/_Content/Materials/pino2.mat
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24,11 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<<< HEAD:Assets/_Content/Materials/tex_roadCrs.mat
   m_Name: tex_roadCrs
-========
-  m_Name: pino2
->>>>>>>> 313ce494d337a14cb88f7db51374c2bb1c8c1ef8:Assets/_Content/Materials/pino2.mat
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -46,11 +38,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-<<<<<<<< HEAD:Assets/_Content/Materials/tex_roadCrs.mat
         m_Texture: {fileID: 2800000, guid: b94ce7df58343dc4c833cb98ef8331ad, type: 3}
-========
-        m_Texture: {fileID: 2800000, guid: 3be26e000057d4f4ab110fd06c1fc7e7, type: 3}
->>>>>>>> 313ce494d337a14cb88f7db51374c2bb1c8c1ef8:Assets/_Content/Materials/pino2.mat
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -74,11 +62,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-<<<<<<<< HEAD:Assets/_Content/Materials/tex_roadCrs.mat
         m_Texture: {fileID: 2800000, guid: b94ce7df58343dc4c833cb98ef8331ad, type: 3}
-========
-        m_Texture: {fileID: 2800000, guid: 3be26e000057d4f4ab110fd06c1fc7e7, type: 3}
->>>>>>>> 313ce494d337a14cb88f7db51374c2bb1c8c1ef8:Assets/_Content/Materials/pino2.mat
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:

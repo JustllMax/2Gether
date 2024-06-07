@@ -25,15 +25,13 @@ public class WaveManager : MonoBehaviour
     private float waveClearExpected = 240;
     private float waveClear = 0;
 
-    private static int waveClearAvr;
-    private static int waveClearSum = 0;
-
     #endregion
     #endregion
 
     #region On start 
     void Awake()
     {
+        Debug.LogWarning("Wave awake");
         if (_instance != null && _instance != this)
         {
             Destroy(this);
@@ -41,7 +39,7 @@ public class WaveManager : MonoBehaviour
         }
         _instance = this;
         _waveSystem = GetComponent<WaveSystem>();
-        _waveData = (WaveData)Resources.Load<WaveData>("Waves/wave_" + ((WaveSystem.nightCount < waveMaxCount) ? WaveSystem.nightCount : 0)).Clone();
+        _waveData = (WaveData)Resources.Load<WaveData>("Waves/wave_data").Clone();
 
         foreach(var wave in _waveData.Waves)
         {
@@ -50,9 +48,7 @@ public class WaveManager : MonoBehaviour
     }
     void OnEnable()
     {
-
-        
-
+        Debug.LogWarning("Wave Enable");
         GameManager.OnGameManagerReady += OnStart;
     }
     void OnDisable()
@@ -61,6 +57,7 @@ public class WaveManager : MonoBehaviour
     }
     private void OnStart()
     {
+        Debug.LogWarning("Wave OnStart");
         if (SlotPlacer.Instance == null)
         {
             return;
@@ -77,8 +74,9 @@ public class WaveManager : MonoBehaviour
     #endregion
 
 
-    void FixedUpdate()
+    void Update()
     {
+        //Debug.LogWarning("Wave update");
         if (_waveSystem.enemyCount <= 0)
         {
             EndWave();
@@ -86,8 +84,8 @@ public class WaveManager : MonoBehaviour
 
         if (DayNightCycleManager.Instance.nightBeginTasks <= 0)
         {
-            DayNightCycleManager.Instance.nightBeginTasks = 3;
             Debug.LogWarning("Wave start " + DayNightCycleManager.Instance.nightBeginTasks);
+            DayNightCycleManager.Instance.nightBeginTasks = 3;
             StartWave();
         }
         waveClear = _waveSystem.elapsedTime;
@@ -222,10 +220,6 @@ public class WaveManager : MonoBehaviour
     void StartWave()
     {
         _waveSystem.BeginWave(_waveData);
-    }
-    public void GetNextWaveData()
-    {
-
     }
 
     #endregion
