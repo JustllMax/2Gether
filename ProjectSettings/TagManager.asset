@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Terrain
   - Way_Anchor
+  - MainBase
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - Guns
   - Enemy
   - Building
-  - 
+  - AIBullet
   - 
   - 
   - 
