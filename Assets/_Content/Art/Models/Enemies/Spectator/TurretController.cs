@@ -8,7 +8,7 @@ public class TurretController : MonoBehaviour
     private AIController controller;
 
     [SerializeField]
-    private float attackRange = 5f;
+    private float maxRange = 20f;
 
     [SerializeField]
     private float projectileDamage = 10f;
@@ -46,7 +46,13 @@ public class TurretController : MonoBehaviour
             return;
         }
 
-        Vector3 dir = (turret.transform.position - controller.GetCurrentTarget().transform.position).normalized;
+        Vector3 distance = turret.transform.position - controller.GetCurrentTarget().transform.position;
+        if (distance.magnitude > maxRange)
+        {
+            return;
+        }
+
+        Vector3 dir = distance.normalized;
         Quaternion q = Quaternion.LookRotation(dir);
 
         turret.transform.rotation = Quaternion.Euler(0, q.eulerAngles.y, 0);
@@ -54,8 +60,6 @@ public class TurretController : MonoBehaviour
 
         if (Time.time >= nextAttackTime)
         {
-
-
             nextAttackTime = Time.time + projectileCooldown;
             projectileBurstIndex++;
             if (projectileBurstIndex >= burstCount)

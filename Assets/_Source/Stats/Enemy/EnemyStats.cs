@@ -6,13 +6,16 @@ using NaughtyAttributes;
 public class EnemyStatistics : ScriptableObject
 {
     public float Health;
+    [Range(1.5f, 25f)]
     public float AttackRange;
     public float AttackDamage;
     [Tooltip("Time in seconds between attacks")]
     [Range(0.25f, 1.5f)]
     public float AttackFireRate;
-    public float AttackReloadTime;
+    [Tooltip("Radius of sphere that detects targets")] 
     public float AttackRadius;
-    public float AttackAmount;
     public float MovementSpeed;
+    [Foldout("ForRanged")] public float AttackReloadTime;
+    [Foldout("ForRanged")] public float AttackAmount;
+
 }
