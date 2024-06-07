@@ -54,10 +54,6 @@ public class GridBuilding : Building
             Debug.Log("Decoration " + _isDecorationCollision);
         }
     }
-    public override void OnCreate()
-    {
-        throw new System.NotImplementedException();
-    }
 
     public override void OnAttack()
     {
