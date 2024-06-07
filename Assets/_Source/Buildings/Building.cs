@@ -10,7 +10,7 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
     private const int LEVEL_LIMIT = 3;
 
     [SerializeField] protected float DestroyObjectDelay;
-    [SerializeField] protected Animator animator;
+    
     [SerializeField] private BuildingUpgradePath _upgradeTiers;
     [Header("Audio")]
     [SerializeField] protected AudioClip createDestroySound; // Played when building is created
@@ -34,10 +34,14 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
 
     protected float maxHealth;
     [HideInInspector] public float Health { get; set; }
-
+    protected Animator animator;
     public virtual void Awake()
     {
-        animator = GetComponentInChildren<Animator>();
+
+        
+        if(GetComponentInChildren<Animator>() != null)
+            animator = GetComponentInChildren<Animator>();
+
         IsTargetable = true;
         TargetType = TargetType.Building;
         _buildingStatistics = _upgradeTiers.GetStatsForLevel(currentLevel);

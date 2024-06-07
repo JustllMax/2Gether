@@ -14,6 +14,8 @@ public class BuildingOffensiveStatistics : BuildingStatistics
     public float AttackDamage;
     public float AttackRange;
     public float AttackFireRate;
+
+    /*
     [HideInInspector]public bool IsAOE;
     [HideInInspector]public GameObject P_AOE;
     [HideInInspector]public float AOERange;
@@ -21,9 +23,10 @@ public class BuildingOffensiveStatistics : BuildingStatistics
 
     [HideInInspector]public bool IsKnockback;
     [HideInInspector]public float AttackKnockback;
+    */
 }
 
-
+/*
 #if UNITY_EDITOR
 [CustomEditor(typeof(BuildingOffensiveStatistics))]
 public class BuildingOffensiveStatistics_Editor : Editor
@@ -51,7 +54,7 @@ public class BuildingOffensiveStatistics_Editor : Editor
         {
             EditorGUILayout.LabelField("AOE settings", GUILayout.Width(150));
 
-            script.P_AOE = EditorGUILayout.ObjectField("AOE Prefab", script.P_AOE, typeof(GameObject)) as GameObject;
+            //script.P_AOE = EditorGUILayout.ObjectField("AOE Prefab", script.P_AOE, typeof(GameObject)) as GameObject;
             script.AOEDamage = EditorGUILayout.FloatField("AOE Damage", script.AOEDamage);
             script.AOERange = EditorGUILayout.FloatField("AOE Range", script.AOERange);
 
@@ -59,3 +62,4 @@ public class BuildingOffensiveStatistics_Editor : Editor
     }
 }
 #endif
+*/

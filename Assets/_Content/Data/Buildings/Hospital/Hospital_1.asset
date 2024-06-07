@@ -9,18 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9502d80e3a749f746ad072aaadecdd98, type: 3}
-  m_Name: Building_Def
+  m_Script: {fileID: 11500000, guid: 6e7c82c255b51384c8c7f33c2ca82695, type: 3}
+  m_Name: Hospital_1
   m_EditorClassIdentifier: 
   CardType: 0
   Rarity: 0
-  Name: 
-  Description: 
-  BuildingType: 0
-  ActivationTime: 0
-  HealthPoints: 0
-  SellCost: 0
-  HasHealthRegen: 0
-  HealthRegen: 0
-  HasThorns: 0
-  ThornsDamage: 0
+  Name: Hospital
+  Description: Heals player if nearby
+  BuildingType: 2
+  ActivationTime: 3
+  HealthPoints: 150
+  SellCost: 50
+  AreaRange: 500
+  healAmount: 15
+  delayBetweenActivation: 2

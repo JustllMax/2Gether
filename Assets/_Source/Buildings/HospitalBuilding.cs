@@ -3,7 +3,7 @@ using UnityEngine;
 public class HospitalBuilding : Building
 {
   
-    public ParticleSystem particles;
+    public ParticleSystem healingParticles;
 
     BuildingHospitalStatistics statistics;
 
@@ -68,8 +68,8 @@ public class HospitalBuilding : Building
 
     public override void OnAttack()
     {
-        if (particles != null)
-            particles.Play();
+        if (healingParticles != null)
+            healingParticles.Play();
 
         var hits = Physics.OverlapSphere(transform.position, GetStatistics().AreaRange, targetLayerMask);
 
@@ -79,7 +79,7 @@ public class HospitalBuilding : Building
             {
                 damagable.TakeDamage(-GetStatistics().healAmount);
                 return;
-            }
+            } 
         }
     }
 

@@ -34,6 +34,7 @@ public class Mine : Building
     {
         if (explosionParticles != null)
             explosionParticles.Play();
+        audioSource.PlayOneShot(activationSound);
 
         ExplosionDamage();
         Kill();
@@ -55,12 +56,10 @@ public class Mine : Building
     public override void Kill()
     {
 
-        if (createDestroyParticles != null)
-            createDestroyParticles.Play();
 
         model.SetActive(false);
         IsTargetable = false;
-        audioSource.PlayOneShot(createDestroySound);
+
        
         Invoke("DestroyObj", DestroyObjectDelay);
     }
@@ -73,6 +72,11 @@ public class Mine : Building
     public override void OnSell()
     {
         base.OnSell();
+
+        if (createDestroyParticles != null)
+            createDestroyParticles.Play();
+
+        audioSource.PlayOneShot(createDestroySound);
         Kill();
     }
 
@@ -82,12 +86,12 @@ public class Mine : Building
     {
 
 
-        var hits = Physics.OverlapSphere(transform.position, GetStatistics().AOERange, targetLayerMask);
+        var hits = Physics.OverlapSphere(transform.position, GetStatistics().AttackRange, targetLayerMask);
         foreach (var hit in hits)
         { 
              if (hit.TryGetComponent(out AIController controller))
              {
-                controller.TakeDamage(statistics.AttackDamage);
+                controller.TakeDamage(GetStatistics().AttackDamage);
              }
         }
     }
