@@ -41,23 +41,19 @@ public class TurretController : MonoBehaviour
         turret.transform.rotation = Quaternion.Euler(0, q.eulerAngles.y, 0);
         turret2.transform.rotation = Quaternion.Euler(q.eulerAngles.x, q.eulerAngles.y, 0);
 
-        //if (Time.time >= nextAttackTime)
-        //{
-        //    nextAttackTime = Time.time + attackCooldown;
-        //    OnFire(dir);
-        //}
+        if (Time.time >= nextAttackTime)
+        {
+            nextAttackTime = Time.time + attackCooldown;
+            OnFire(dir, turret2.transform.TransformPoint(new Vector3(0.0f, 0.2f, -0.4f)));
+        }
     }
 
-    //void OnFire()
-    //{
-    //    GameObject projectile = Instantiate(projectilePrefab, turret2.transform.TransformPoint(new Vector3(0.0f, 0.2f, -0.4f)), turret2.transform.rotation);
-    //}
-    //
-    //void OnFire(in Vector3 dir)
-    //{
-    //    AIBullet bullet = AIBulletManager.Instance.Pool.Get();
-    //    bullet.SetDirection(dir);
-    //    bullet.SetDamage(controller.GetEnemyStats().AttackDamage);
-    //}
+    void OnFire(in Vector3 dir, in Vector3 pos)
+    {
+        AIBullet bullet = AIBulletManager.Instance.Pool.Get();
+        bullet.SetDirection(dir);
+        bullet.SetDamage(controller.GetEnemyStats().AttackDamage);
+        bullet.transform.position = pos;
+    }
 
 }
