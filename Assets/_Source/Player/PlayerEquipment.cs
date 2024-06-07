@@ -66,6 +66,7 @@ public class PlayerEquipment : MonoBehaviour
                 if (!_animator.GetNextAnimatorStateInfo(0).IsName(PlayerAnimNames.RELOADUP.ToString()))
                 {
                     _animator.CrossFade(PlayerAnimNames.RELOADUP.ToString(), 0.1f);
+
                 }
             }
         }
@@ -173,6 +174,7 @@ public class PlayerEquipment : MonoBehaviour
     public void ReloadDownStartAnimEvent()
     {
         isReloading = true;
+        AudioManager.Instance.PlaySFXAtSource(_currentGun.GetReloadSFX(), _currentGun.GetAudioSource() );
 
     }
 

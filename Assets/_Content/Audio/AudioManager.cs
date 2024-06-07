@@ -8,6 +8,10 @@ public class AudioManager : MonoBehaviour
     public Sound[] musicSounds, sfxSounds, ambientSounds;
     public AudioSource musicSource, sfxSource, loopSfxSource, ambientSource;
 
+    [SerializeField]
+    AudioLowPassFilter MusicAudioLowPassFilter;
+    [SerializeField]
+    AudioLowPassFilter AmbientAudioLowPassFilter;
     private void Awake()
     {
         if (Instance == null)
@@ -97,6 +101,20 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlaySFX(AudioClip name)
+    {
+       
+            sfxSource.PlayOneShot(name);
+        
+    }
+    public void PlaySFXAtSource(AudioClip name, AudioSource source)
+    {
+        source.volume = sfxSource.volume;
+        source.PlayOneShot(name);
+        
+
+    }
+
     public void PlaySFXLoop(string name)
     {
         Sound s = Array.Find(sfxSounds, x => x.name == name);
@@ -129,4 +147,11 @@ public class AudioManager : MonoBehaviour
         return musicSource.isPlaying && musicSource.clip == s.clip;
     }
 
+
+   public void EnableMusicLowPassFilter(bool enable)
+    {
+        MusicAudioLowPassFilter.enabled = enable;
+        AmbientAudioLowPassFilter.enabled = enable;
+
+    }
 }

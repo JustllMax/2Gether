@@ -60,6 +60,7 @@ public class PauseManager : MonoBehaviour
         // Pause
         if (isGamePaused == false)
         {
+            AudioManager.Instance.EnableMusicLowPassFilter(true);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             isGamePaused = true;
@@ -70,6 +71,7 @@ public class PauseManager : MonoBehaviour
         // Unpause
         else
         {
+            AudioManager.Instance.EnableMusicLowPassFilter(false);
             if (!DayNightCycleManager.Instance.IsDay)
             {
                 Cursor.lockState = CursorLockMode.Locked;
@@ -106,6 +108,7 @@ public class PauseManager : MonoBehaviour
         AudioManager.Instance.StopAmbient("A_DayUI_Ambient");
         AudioManager.Instance.StopMusic("A_DayUI_Music");
         SceneManager.LoadScene(0);
+        AudioManager.Instance.EnableMusicLowPassFilter(false);
     }
 }
 

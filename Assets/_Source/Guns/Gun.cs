@@ -5,8 +5,11 @@ abstract public class Gun : MonoBehaviour
     [SerializeField] GunData _SO_Stats;
     [SerializeField] GameObject _Model;
 
+
+    [SerializeField]protected AudioSource audioSource;
     [SerializeField]protected AudioClip firingSound;
     [SerializeField] protected AudioClip reloadSound;
+    [SerializeField] protected AudioClip noAmmoSound;
     [SerializeField] protected bool isAiming;
     [SerializeField] protected int ammoInMagazine;
 
@@ -42,4 +45,20 @@ abstract public class Gun : MonoBehaviour
     {
         return _Model;
     }
+
+    public AudioSource GetAudioSource()
+    {
+        return audioSource;
+    }
+
+    public AudioClip  GetReloadSFX()
+    {
+        return reloadSound;
+    }
+
+    public AudioClip GetNoAmmoSFX()
+    {
+        return noAmmoSound;
+    }
+
 }
