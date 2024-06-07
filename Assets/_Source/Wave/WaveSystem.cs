@@ -10,53 +10,116 @@ public class WaveSystem : MonoBehaviour
     private List<GameObject> _spawnPoints = new List<GameObject>();
 
     [Header("System state")]
-    private bool _isWaveActive = false;
-    
+    public bool isWaveActive = false;
+    public bool isSpawnActive = false;
     private float _elapsedTime = 0;
+    public float elapsedTime {get { return _elapsedTime; }}
     private float _spawnEnemyTimer;
+    public static int nightCount = 0;
+    public int enemyCount = 0;
 
-    private WaveData _waveData;
-    
-    private int _subWaveIndex;
-
-    private void Start()
-    {
-        BeginWave(Resources.Load<WaveData>("wave_test"));
-    }
-
+#region Wave handle
     public GameObject GetRandomSpawnPoint()
     {
+        if (_spawnPoints.Count == 0)
+        {
+            Debug.LogError("No spawn points available");
+            return null;
+        }
+
         return _spawnPoints[UnityEngine.Random.Range(0, _spawnPoints.Count)];
     }
-
+/*
     public void BeginWave(WaveData waveData)
     {
-        if (_isWaveActive)
+        if (isWaveActive)
             return;
 
-        _isWaveActive =true;
-        _waveData = waveData;
+        isWaveActive = true;
 
-        _ = handleWave(_waveData);
+        _ = handleWave(waveData);
+        //StartCoroutine(handleWaveCoroutine(_waveData));
+
+        nightCount++;
     }
-
     private async UniTaskVoid handleWave(WaveData data)
     {
         foreach (var wave in data.Waves)
         {
+            
             for (int i = 0; i < wave.EnemyPool.EnemyCount; i++)
             {
-                Instantiate(wave.EnemyPool.GetNextEnemy(i), GetRandomSpawnPoint().transform);
+                var spawnPoint = GetRandomSpawnPoint();
+                if (spawnPoint != null)
+                {
+                    Instantiate(wave.EnemyPool.GetNextEnemy(i), spawnPoint.transform.position + (Vector3.one*10) +  Vector3.up, Quaternion.identity);
+                    enemyCount++;
+                }
                 await UniTask.WaitForSeconds(wave.EnemySpawnInterval);
             }
-     
             await UniTask.WaitForSeconds(wave.Cooldown);
         }
+        isWaveActive = false;
     }
+
+    private IEnumerator handleWaveCoroutine(WaveData data)
+    {
+        foreach (var wave in data.Waves)
+        {
+            yield return new WaitForSeconds(wave.Cooldown);
+            for (int i = 0; i < wave.EnemyPool.EnemyCount; i++)
+            {
+                var spawnPoint = GetRandomSpawnPoint();
+                if (spawnPoint != null)
+                {
+                    Instantiate(wave.EnemyPool.GetNextEnemy(i), spawnPoint.transform.position + Vector3.up, Quaternion.identity);
+                    enemyCount++;
+                }
+                yield return new WaitForSeconds(wave.EnemySpawnInterval);
+            }
+        }
+        isWaveActive = false;
+    }
+
+*/
+
+    public void BeginWave(List<SingleWave> waveData)
+    {
+        if (isWaveActive)
+            return;
+
+        isWaveActive = true;
+        
+        _ = handleWave(waveData);
+        //StartCoroutine(handleWaveCoroutine(_waveData));
+
+        nightCount++;
+    }     
+    
+    private async UniTaskVoid handleWave(List<SingleWave> data)
+    {
+        isSpawnActive = true;
+        foreach (var wave in data)
+        {
+            for (int i = 0; i < wave.EnemyPool.Count; i++)
+            {
+                var spawnPoint = GetRandomSpawnPoint();
+                if (spawnPoint != null)
+                {
+                    Instantiate(wave.EnemyPool[i], spawnPoint.transform.position + new Vector3(10, 1, 10), Quaternion.identity);
+                    enemyCount++;
+                }
+                await UniTask.WaitForSeconds(wave.EnemySpawnInterval);
+            }
+            await UniTask.WaitForSeconds(wave.Cooldown);
+        }
+        isSpawnActive = false;
+    }
+#endregion
 
     private void Update()
     {
-        if (_isWaveActive)
+        if (isWaveActive)
         {
             _elapsedTime += Time.deltaTime;
         }
@@ -64,7 +127,13 @@ public class WaveSystem : MonoBehaviour
 
     public void AddSpawnPoint(GameObject spawnPoint)
     {
-        _spawnPoints.Add(spawnPoint);
+        if (spawnPoint != null)
+        {
+            _spawnPoints.Add(spawnPoint);
+        }
+        else
+        {
+            Debug.LogError("Attempted to add a null spawn point");
+        }
     }
-
 }

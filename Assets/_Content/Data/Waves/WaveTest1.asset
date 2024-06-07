@@ -10,12 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0ac6295ec1d97f4d895151f3ffc813c, type: 3}
-  m_Name: wave_test
+  m_Name: WaveTest1
   m_EditorClassIdentifier: 
   Waves:
-  - EnemyPool: {fileID: 11400000, guid: 062d209c6134348498cbd0b4828b0067, type: 2}
-    EnemySpawnInterval: 2
-    Cooldown: 5
-  - EnemyPool: {fileID: 11400000, guid: 062d209c6134348498cbd0b4828b0067, type: 2}
-    EnemySpawnInterval: 2
-    Cooldown: 5
+  - EnemyPool: {fileID: 11400000, guid: 375ab62577fbcb744bd96707b3f2eeda, type: 2}
+    EnemySpawnInterval: 1
+    Cooldown: 2

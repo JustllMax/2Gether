@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class GridController : MonoBehaviour
 {
@@ -40,28 +42,54 @@ public class GridController : MonoBehaviour
             }
         }
     }
-    public bool TryPlace(Vector2Int position, Building building)
+
+    void Update()
     {
-        if (!IsPlaceTaken(position.x, position.y))
+        if(Input.GetMouseButtonDown(0))
         {
-            GameObject newBuilding = Instantiate(building.gameObject, new Vector3(position.x, 0, position.y) * 10, Quaternion.identity);
-            _grid[position.x, position.y].IsTaken = true;
-            _grid[position.x, position.y].gridBuilding = newBuilding.GetComponent<Building>();
+            Debug.Log($"{GetGridPos().x} {GetGridPos().y}");
+        }
+    }
+    public bool TryPlace(Vector2Int pos, Building building)
+    {
+        if (!IsPlaceTaken(pos.x, pos.y))
+        {
+            GameObject newBuilding = Instantiate(building.gameObject, new Vector3(pos.x*10, building.transform.localScale.y/2, pos.y*10), Quaternion.identity);
+            _grid[math.abs(pos.x), math.abs(pos.y)].IsTaken = true;
+            _grid[math.abs(pos.x), math.abs(pos.y)].gridBuilding = newBuilding.GetComponent<Building>();
+
+            NavMeshSurfaceManager.Instance.BakeAllNavMeshes();
             return true;
         }
         return false;
     }
     public void SetGridSlot(Vector2Int position, GameObject terrain)
     {
-        _grid[position.x, position.y].slotPosition = position;
-        _grid[position.x, position.y].terrain = terrain;
+        _grid[math.abs(position.x), math.abs(position.y)].slotPosition = position;
+        _grid[math.abs(position.x), math.abs(position.y)].terrain = terrain;
     }
     public bool IsPlaceTaken(int x, int y)
     {
-        if (_grid[x, y].IsTaken)
+        if (_grid[math.abs(x), math.abs(y)].IsTaken)
         {
             return true;
         }
         return false;
+    }
+
+    public Vector2Int GetGridPos()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Vector2Int rayPosition = new Vector2Int();
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.gameObject.CompareTag("Terrain"))
+            {
+                rayPosition.x = Mathf.RoundToInt(hit.point.x/10);
+                rayPosition.y = Mathf.RoundToInt(hit.point.z/10);
+            }
+        }
+        return rayPosition;
     }
 }

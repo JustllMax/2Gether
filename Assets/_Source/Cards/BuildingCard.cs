@@ -12,10 +12,10 @@ public class BuildingCard : Card
 
     public override void OnSubmitCard(GameContext ctx)
     {
-        if (GridController.Instance.TryPlace(new Vector2Int(0,0), BuildingPrefab.GetComponent<Building>()))
+        /*if (GridController.Instance.TryPlace(new Vector2Int(0,0),new Vector2Int(0,0)*10, BuildingPrefab.GetComponent<Building>()))
         {
             // place building
-        }
+        }*/
     }
 
     private void OnValidate()
@@ -26,7 +26,7 @@ public class BuildingCard : Card
             {
                 BuildingPrefab = null;
 #if UNITY_EDITOR
-                EditorUtility.DisplayDialog("Niew³aœciwy prefab!", "Na prefabie brakuje komponentu Building!!", "Ok");
+                EditorUtility.DisplayDialog("Niewï¿½aï¿½ciwy prefab!", "Na prefabie brakuje komponentu Building!!", "Ok");
 #endif
             }
         }

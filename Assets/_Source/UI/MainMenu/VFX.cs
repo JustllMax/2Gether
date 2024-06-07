@@ -62,4 +62,15 @@ public class VFX : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         background.DOFade(fadeMin, fadeDuration);
     }
+
+    private void OnEnable()
+    {
+        foreach (var child in assets)
+        {
+            child.t.anchoredPosition = child.startPos;
+        }
+            
+
+        background.color = new Color (background.color.r, background.color.g, background.color.b, fadeMin);
+    }
 }
