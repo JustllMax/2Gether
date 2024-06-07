@@ -108,7 +108,7 @@ public class LaserBuilding : Building
         return false;
     }
 
-    public override void Kill(bool desintegrate = false)
+    public override void Kill()
     {
         IsTargetable = false;
         if(createDestroyParticles != null)

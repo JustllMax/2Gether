@@ -29,7 +29,7 @@ public class Target : MonoBehaviour, ITargetable, IDamagable
         return false;
     }
 
-    public void Kill(bool desintegrate = false)
+    public void Kill()
     {
         Debug.Log("I died!");
         IsTargetable = false;

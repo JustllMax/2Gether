@@ -85,7 +85,7 @@ public class BombBuilding : Building
         return false;
     }
 
-    public override void Kill(bool desintegrate = false)
+    public override void Kill()
     {
         IsTargetable = false;
         audioSource.PlayOneShot(createDestroySound);

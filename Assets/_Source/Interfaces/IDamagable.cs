@@ -6,6 +6,6 @@ public interface IDamagable
 {
     public bool TakeDamage(float damage);
     public bool Heal(float amount);
-    public void Kill(bool desintegrate);
+    public void Kill();
     public float Health { get; set; }
 }
