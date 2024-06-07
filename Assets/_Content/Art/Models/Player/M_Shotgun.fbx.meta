@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: d66d442fa7d356f46a8f7eba18580a2c
+guid: ba6e08122a82f0d499aabe93369f41cd
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: grubas_texture.png
-    second: {fileID: 2100000, guid: a42164fc070791b46bb929c373b83806, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

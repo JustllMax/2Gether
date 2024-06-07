@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: AIStats_DV7
   m_EditorClassIdentifier: 
   Health: 50
-  AttackRange: 1
+  AttackRange: 2.5
   AttackDamage: 15
-  AttackFireRate: 2
-  AttackReloadTime: 0.5
-  AttackRadius: 1
+  AttackFireRate: 0.5
+  AttackReloadTime: 1
+  AttackRadius: 1.5
   AttackAmount: 3
   MovementSpeed: 3

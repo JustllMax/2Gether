@@ -51,6 +51,7 @@ public class VFX : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         foreach(var child in assets)
             child.t.DOAnchorPosX(child.startPos.x + moveOffset, moveDuration);
+            
         
         background.DOFade(fadeMax, fadeDuration);
     }

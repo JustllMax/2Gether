@@ -15,12 +15,20 @@ MonoBehaviour:
   Waves:
   - Enemies:
     - {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1, type: 3}
-    EnemySpawnInterval: 0.5
-    Cooldown: 5
-  - Enemies:
+    - {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1, type: 3}
+    - {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1, type: 3}
+    - {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1, type: 3}
+    - {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1, type: 3}
+    - {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1, type: 3}
     - {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1, type: 3}
     EnemySpawnInterval: 0.5
-    Cooldown: 15
+    Cooldown: 8
+  - Enemies:
+    - {fileID: 6219354284539619549, guid: 427d3b5163b521946ad782cdf25aacc2, type: 3}
+    - {fileID: 6219354284539619549, guid: 427d3b5163b521946ad782cdf25aacc2, type: 3}
+    - {fileID: 6219354284539619549, guid: 427d3b5163b521946ad782cdf25aacc2, type: 3}
+    EnemySpawnInterval: 0.5
+    Cooldown: 14
   - Enemies:
     - {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1, type: 3}
     EnemySpawnInterval: 0.5

@@ -101,10 +101,6 @@ public class HUDManager : MonoBehaviour
             }
         }
 
-        foreach (var item in IconsDictionary)
-        {
-            Debug.Log("Dictionary: " + item.Value);
-        }
     }
 
     void SetupCrosshairsDictionary()
