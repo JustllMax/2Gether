@@ -86,6 +86,10 @@ public class WaveManager : MonoBehaviour
 
     void FixedUpdate()
     {
+
+        //TEMP, bo co chwile wywala
+        return;
+
         if (_waveSystem.enemyCount <= 0 && _waveSystem.isWaveActive && !_waveSystem.isSpawnActive)
         {
             EndNight();

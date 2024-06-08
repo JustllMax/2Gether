@@ -5,6 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ExplodeState", menuName = ("2Gether/AI/States/ExplodeState"))]
 public class Explode : AIState
 {
+    [Tooltip("Range to enter attack state")]
+    [Range(1.5f, 25f)]
+    public float AttackRange;
+
     public override void OnStart(AIController controller)
     {
 
@@ -12,10 +16,7 @@ public class Explode : AIState
 
     public override void OnUpdate(AIController controller)
     {
-        if (controller.lastAttackTime >= controller.GetEnemyStats().ComboDelay)
-        {
-            controller.Kill();
-        }
+        controller.Kill();
     }
 
     public override void OnExit(AIController controller)
@@ -31,7 +32,7 @@ public class Explode : AIState
 
     public override bool CanChangeToState(AIController controller)
     {
-        return controller.distanceToTarget <= controller.GetEnemyStats().AttackRange && controller.CanAttack();
+        return controller.distanceToTarget <= AttackRange && controller.CanAttack();
     }
 
 

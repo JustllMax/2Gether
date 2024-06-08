@@ -6,6 +6,7 @@ using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 using NaughtyAttributes;
 using UnityEngine.InputSystem.XR;
+using UnityEditor;
 
 
 [Serializable]
@@ -64,15 +65,15 @@ public class AIController : MonoBehaviour, IDamagable
     [Foldout("DEBUG INFO")]
     public bool isReloading;
 
-    [Foldout("DEBUG INFO")]
-    public float comboLength;
+
     [Foldout("DEBUG INFO")]
     [SerializeField] private float _health;
+
+    private float _rotationSpeed;
 
     public float Health { get => _health; set => _health = value; }
     public bool IsAlive { get => !isDead; }
 
-    public float maxHealth;
     private void Awake()
     {
         if(audioSource == null)
@@ -83,11 +84,8 @@ public class AIController : MonoBehaviour, IDamagable
         hitboxCollider = GetComponentInChildren<Collider>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
-        comboLength = GetEnemyStats().attackCombo.Length;
-        maxHealth = GetEnemyStats().Health;
-        Health = maxHealth;
-        _navMeshAgent.speed = GetEnemyStats().MovementSpeed;
-        Debug.Log("agent type id " + _navMeshAgent.agentTypeID);
+        Health = stats.Health;
+        ApplyDefaultMovement();
     }
 
     private void Start()
@@ -131,21 +129,17 @@ public class AIController : MonoBehaviour, IDamagable
     }
     public void Update()
     {
-
         if (isDead)
         {
             return;
         }
 
-        if (lastAttackTime < stats.ComboDelay)
+        lastAttackTime += Time.deltaTime;
+
+
+        if (!HasTarget())
         {
-            lastAttackTime += Time.deltaTime;
-
-        }
-
-
-        if (ShouldSearchForTarget())
-        {
+            _navMeshAgent.ResetPath();
             SearchForTarget();
         }
 
@@ -156,11 +150,19 @@ public class AIController : MonoBehaviour, IDamagable
 
         if (currentState != null)
         {
-            currentState.OnUpdate(this);
             ChangeState();
+            currentState.OnUpdate(this);
         }
 
-        _animator.SetFloat("walk_speed", _navMeshAgent.velocity.magnitude / stats.MovementSpeed);
+        if (_rotationSpeed != 0)
+        {
+            Vector3 lookrotation = currentTarget.transform.position - transform.position;
+            lookrotation.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), _rotationSpeed * Time.deltaTime);
+        }
+
+
+        _animator.SetFloat("walk_speed", _navMeshAgent.velocity.magnitude / stats.Movement.MovementSpeed);
     }
     void SetLayerTargeting(TargetType targetType)
     {
@@ -188,17 +190,9 @@ public class AIController : MonoBehaviour, IDamagable
         }
     }
 
-    private bool ShouldSearchForTarget()
+    public bool HasTarget()
     {
-        if (currentTarget.transform != null)
-        {
-            if (currentTarget.targetable != null)
-            {
-                if(currentTarget.targetable.IsTargetable)
-                    return false;
-            }
-        }
-        return true;
+        return (currentTarget.transform != null && currentTarget.targetable != null && currentTarget.targetable.IsTargetable);
     }
 
     private void SearchForTarget()
@@ -206,13 +200,8 @@ public class AIController : MonoBehaviour, IDamagable
         Transform target = null;
         ITargetable targetable = null;
 
-
-        float radius = GetEnemyStats().AttackRange*3f;
-
         float minDistance = float.MaxValue;
-
-
-        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), radius, targetLayerMask);
+        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), stats.SearchRange, targetLayerMask);
         foreach (Collider hit in hits)
         {
             if (hit.TryGetComponent(out ITargetable t))
@@ -304,18 +293,10 @@ public class AIController : MonoBehaviour, IDamagable
     public void RangedAttackPerformed()
     {
         attackTimer = 0f;
-        comboLength--;
     }
     public bool CanAttack()
     {
-        if (currentTarget.transform != null)
-        {
-            if (currentTarget.targetable != null && currentTarget.targetable.IsTargetable && comboLength > 0)
-            {
-                 return true;
-            }
-        }
-        return false;
+        return !isDead && HasTarget();
     }
 
     public bool TakeDamage(float damage)
@@ -344,7 +325,7 @@ public class AIController : MonoBehaviour, IDamagable
 
         WaveManager.Instance.waveSystem.enemyCount--;
     }
-
+    
     void Desintegrate()
     {
         _deathEffect.Execute();
@@ -354,7 +335,7 @@ public class AIController : MonoBehaviour, IDamagable
     {
 
         Health += amount;
-        Health = Mathf.Clamp(Health, 0f, maxHealth);
+        Health = Mathf.Clamp(Health, 0f, stats.Health);
         return true;
     }
 
@@ -372,14 +353,30 @@ public class AIController : MonoBehaviour, IDamagable
 
         if (!stateInfo.IsName(animName))
         {
-            Debug.LogError("test1");
             _animator.CrossFadeInFixedTime(animName, crossTime);
         } else if (stateInfo.normalizedTime >= 1 && !_animator.IsInTransition(0))
         {
-            Debug.LogError("test2");
             _animator.Play(animName, -1, 0);
-
         }
+    }
+
+    public void SetMovementStats(in EnemyMovement enemyMovement)
+    {
+        _navMeshAgent.speed = enemyMovement.MovementSpeed;
+        _navMeshAgent.angularSpeed = enemyMovement.TurnSpeed;
+        _navMeshAgent.acceleration = enemyMovement.Acceleration;
+        _rotationSpeed = enemyMovement.ExtraRotationSpeed;
+    }
+
+    public void ApplyDefaultMovement()
+    {
+        SetMovementStats(stats.Movement);
+    }
+
+    public void RefreshTargetPos()
+    {
+        if (HasTarget())
+            _navMeshAgent.SetDestination(currentTarget.transform.position);
     }
 
     public GameObject InstantiateGameObject(GameObject obj, Transform parent)
@@ -417,6 +414,7 @@ public class AIController : MonoBehaviour, IDamagable
     public void SetCurrentTarget(AITarget target)
     {
         currentTarget = target;
+        RefreshTargetPos();
     }
 
     public AITarget GetCurrentTarget()

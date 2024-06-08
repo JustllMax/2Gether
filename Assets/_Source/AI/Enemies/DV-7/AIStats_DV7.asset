@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0141a3b9c5960364fa1c0d12baf7cfae, type: 3}
+  m_Name: AIStats_DV7
+  m_EditorClassIdentifier: 
+  Health: 50
+  Movement:
+    MovementSpeed: 4
+    TurnSpeed: 240
+    Acceleration: 24
+    ExtraRotationSpeed: 0
+  SearchRange: 200
+  AttackRange: 2.5
+  ComboDelay: 2
+  StopOnAttack: 1
+  attackCombo:
+  - Damage: 15
+    Delay: 0.7
+    DamagerRadius: 1.5
+    DamagerOffset: {x: 0, y: 1, z: 1.25}
+    MovementModifier:
+      MovementSpeed: 0
+      TurnSpeed: 0
+      Acceleration: 0
+      ExtraRotationSpeed: 30
+  - Damage: 15
+    Delay: 0.2
+    DamagerRadius: 1.5
+    DamagerOffset: {x: 0, y: 1, z: 1.25}
+    MovementModifier:
+      MovementSpeed: 0
+      TurnSpeed: 0
+      Acceleration: 0
+      ExtraRotationSpeed: 30
+  - Damage: 25
+    Delay: 0.15
+    DamagerRadius: 2
+    DamagerOffset: {x: 0, y: 1, z: 1.5}
+    MovementModifier:
+      MovementSpeed: 0
+      TurnSpeed: 0
+      Acceleration: 0
+      ExtraRotationSpeed: 30

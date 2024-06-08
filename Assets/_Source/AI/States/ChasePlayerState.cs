@@ -6,44 +6,19 @@ using UnityEngine.AI;
 [CreateAssetMenu(fileName = "ChasePlayerState", menuName = ("2Gether/AI/States/ChasePlayer"))]
 public class ChasePlayerState : AIState
 {
-
-    Transform playerTransform;
-    AITarget playerTarget;
     public override void OnStart(AIController controller)
     {
-        if(playerTransform == null)
-        {
-            Debug.Log(this + " searching for player");
-            if (GameManager.Instance.GetPlayerController().transform != null)
-            {
-                playerTransform = GameManager.Instance.GetPlayerController().transform;
-                playerTarget = new AITarget(playerTransform, GameManager.Instance.GetPlayerController().GetComponent<ITargetable>());
-                controller.SetCurrentTarget(playerTarget);
-            }
-
-        }
-
-        if (controller.GetCurrentTarget().transform == null)
-        {
-            controller.SetCurrentTarget(playerTarget);
-        }
-
-   
         controller.PlayAnimation("WALK");
-
-        Debug.Log(this + " set destination to player");
-
-        controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().transform.position);
     }
 
     public override void OnUpdate(AIController controller)
     {
-        if(controller.GetCurrentTarget().transform != null)
-            controller.GetNavMeshAgent().SetDestination(controller.GetCurrentTarget().transform.position);
+        controller.ApplyDefaultMovement();
+        controller.RefreshTargetPos();    
     }
+
     public override void OnExit(AIController controller)
     {
-        controller.GetNavMeshAgent().ResetPath();
 
     }
 
@@ -54,7 +29,7 @@ public class ChasePlayerState : AIState
 
     public override bool CanChangeToState(AIController controller)
     {
-        return GameManager.Instance.IsPlayerAlive();
+        return controller.HasTarget();
     }
 }
     

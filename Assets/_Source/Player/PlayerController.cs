@@ -234,6 +234,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         }
         movement = movement.normalized;
 
+        Vector3 lastVelocity = _velocity;
         float time = Time.time + 0.15f;
         while (Time.time < time)
         {
@@ -242,9 +243,10 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
             await UniTask.Yield();
         }
 
-        _velocity = new Vector3(0,0,0);
+        _velocity = lastVelocity;
+        _velocity.y = 0;
 
-        time = Time.time + 0.025f;
+        time = Time.time + 0.05f;
         while (Time.time < time)
         {
             await UniTask.Yield();

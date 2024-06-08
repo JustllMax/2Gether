@@ -31,11 +31,11 @@ public class RangedAttackState : AIState
         //    }
         //}
 
-        if (firstAttackFlag || controller.lastAttackTime >= controller.GetEnemyStats().attackCombo[0].Delay )
-        {
-            controller.PlayAnimation("ATTACK");
-            controller.StartCoroutine(PerformAttack(controller));
-        }
+        //if (firstAttackFlag || controller.lastAttackTime >= controller.GetEnemyStats().attackCombo[0].Delay )
+        //{
+        //    controller.PlayAnimation("ATTACK");
+        //    controller.StartCoroutine(PerformAttack(controller));
+        //}
 
 
     }
@@ -52,7 +52,8 @@ public class RangedAttackState : AIState
 
     public override bool CanChangeToState(AIController controller)
     {
-        return  controller.distanceToTarget <= controller.GetEnemyStats().AttackRange && controller.CanAttack();
+        //return  controller.distanceToTarget <= controller.GetEnemyStats().AttackRange && controller.CanAttack();
+        return false;
     }
 
     private bool AttackAnimationComplete(AIController controller)
@@ -64,10 +65,10 @@ public class RangedAttackState : AIState
         controller.lastAttackTime = 0f;
         yield return new WaitForSeconds(AnimDelayForAttack);
 
-        Vector3 dir = (controller.GetCurrentPosition() - controller.GetCurrentTarget().transform.position).normalized;
-        AIBullet bullet = AIBulletManager.Instance.Pool.Get();
-        bullet.SetDirection(dir);
-        bullet.SetDamage(controller.GetEnemyStats().attackCombo[0].Damage);
-        controller.RangedAttackPerformed();
+        //Vector3 dir = (controller.GetCurrentPosition() - controller.GetCurrentTarget().transform.position).normalized;
+        //AIBullet bullet = AIBulletManager.Instance.Pool.Get();
+        //bullet.SetDirection(dir);
+        //bullet.SetDamage(controller.GetEnemyStats().attackCombo[0].Damage);
+        //controller.RangedAttackPerformed();
     }
 }
