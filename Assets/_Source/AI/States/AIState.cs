@@ -20,6 +20,7 @@ public abstract class AIState : ScriptableObject
     public abstract void OnStart(AIController controller);
     public abstract void OnExit(AIController controller);
     public abstract void OnUpdate(AIController controller);
+    public abstract void OnLateUpdate(AIController controller);
     public abstract bool CanChangeToState(AIController controller);
     public abstract bool CanExitState(AIController controller);
 }

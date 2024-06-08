@@ -52,6 +52,8 @@ public class PlayerDeadState : AIState
         return true;
     }
 
+    public override void OnLateUpdate(AIController controller)
+    {
 
-
+    }
 }

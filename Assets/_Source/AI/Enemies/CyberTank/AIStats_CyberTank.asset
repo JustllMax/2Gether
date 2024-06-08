@@ -12,23 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0141a3b9c5960364fa1c0d12baf7cfae, type: 3}
   m_Name: AIStats_CyberTank
   m_EditorClassIdentifier: 
-  Health: 200
+  Health: 250
   Movement:
     MovementSpeed: 3
     TurnSpeed: 120
     Acceleration: 8
     ExtraRotationSpeed: 0
   SearchRange: 200
-  AttackRange: 2
-  ComboDelay: 2
-  StopOnAttack: 1
-  attackCombo:
-  - Damage: 75
-    Delay: 0.5
-    DamagerRadius: 2
-    DamagerOffset: {x: 0, y: 0, z: 0}
-    MovementModifier:
-      MovementSpeed: 0
-      TurnSpeed: 0
-      Acceleration: 0
-      ExtraRotationSpeed: 0

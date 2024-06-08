@@ -2277,7 +2277,7 @@ MonoBehaviour:
   _movementSpeed: 6
   _jumpHeight: 1.5
   _dashSpeed: 20
-  _dashCooldown: 2
+  _dashCooldown: 1.25
   _maxDashCount: 3
   _isMoving: 0
 --- !u!114 &5254199356192977003
@@ -3256,7 +3256,7 @@ PrefabInstance:
     - target: {fileID: 2753117317975641421, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 33591
+      value: 35639
       objectReference: {fileID: 0}
     - target: {fileID: 3454108874929595213, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
@@ -3276,7 +3276,7 @@ PrefabInstance:
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.62999994
+      value: 0.6300001
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}

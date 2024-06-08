@@ -61,10 +61,14 @@ public class AIController : MonoBehaviour, IDamagable
     [Foldout("DEBUG INFO")]
     public float lastAttackTime = 0f;
 
+    [Foldout("DEBUG INFO")]
+    public uint ammoCount = 0;
 
     [Foldout("DEBUG INFO")]
     public bool isReloading;
 
+    [Foldout("DEBUG INFO")]
+    public Vector3 wanderTarget;
 
     [Foldout("DEBUG INFO")]
     [SerializeField] private float _health;
@@ -161,9 +165,22 @@ public class AIController : MonoBehaviour, IDamagable
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), _rotationSpeed * Time.deltaTime);
         }
 
-
-        _animator.SetFloat("walk_speed", _navMeshAgent.velocity.magnitude / stats.Movement.MovementSpeed);
+        _animator.SetFloat("walk_speed", _navMeshAgent.velocity.magnitude);
     }
+
+    public void LateUpdate()
+    {
+        if (isDead)
+        {
+            return;
+        }
+
+        if (currentState != null)
+        {
+            currentState.OnLateUpdate(this);
+        }
+    }
+
     void SetLayerTargeting(TargetType targetType)
     {
         int playerLayer = LayerMask.NameToLayer("Player");

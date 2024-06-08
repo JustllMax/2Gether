@@ -9,9 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 532f2d405792f8b47bf86c29369b8501, type: 3}
-  m_Name: SpectatorRangedState
+  m_Script: {fileID: 11500000, guid: 0141a3b9c5960364fa1c0d12baf7cfae, type: 3}
+  m_Name: AIStats_Spectator
   m_EditorClassIdentifier: 
-  weight: 0
-  animName: 0
-  AnimDelay: 0
+  Health: 250
+  Movement:
+    MovementSpeed: 6
+    TurnSpeed: 240
+    Acceleration: 32
+    ExtraRotationSpeed: 0
+  SearchRange: 200

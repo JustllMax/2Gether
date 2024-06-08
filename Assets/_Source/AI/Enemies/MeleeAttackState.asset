@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: MeleeAttackState
   m_EditorClassIdentifier: 
   weight: 3
-  animName: 1
-  AnimDelayForAttack: 0.1
-  mask:
+  AttackRange: 3
+  ComboDelay: 1
+  AttackMask:
     serializedVersion: 2
     m_Bits: 576
+  AttackCombo: []
+  MovementModifier: []

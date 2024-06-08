@@ -40,4 +40,9 @@ public class StunState : AIState
     {
         return controller.IsStunned();
     }
+
+    public override void OnLateUpdate(AIController controller)
+    {
+
+    }
 }

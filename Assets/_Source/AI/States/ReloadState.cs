@@ -38,4 +38,8 @@ public class ReloadState : AIState
         return false;
     }
 
+    public override void OnLateUpdate(AIController controller)
+    {
+        
+    }
 }

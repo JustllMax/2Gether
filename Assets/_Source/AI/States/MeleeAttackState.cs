@@ -126,4 +126,8 @@ public class MeleeAttackState : AIState
         }
     }
 
+    public override void OnLateUpdate(AIController controller)
+    {
+
+    }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1877903437062783630}
   - component: {fileID: 7849700123059360342}
   - component: {fileID: 4871293400492305862}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7285543042304572186}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: leg_left_back3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4051520684617931924}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: turret2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 5896066086521607759}
   - component: {fileID: 5456125038807979156}
   - component: {fileID: 7863272997951339939}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 7161289440130314928}
   - component: {fileID: 5090383965594880280}
   - component: {fileID: 6063977376318887885}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 8549980618228317943}
   - component: {fileID: 3870594987941723361}
   - component: {fileID: 1608051648310442191}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,7 +408,7 @@ GameObject:
   - component: {fileID: 6761696502962917387}
   - component: {fileID: 5579536667055680736}
   - component: {fileID: 1503837068942864896}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -491,7 +491,7 @@ GameObject:
   - component: {fileID: 6649762507874217148}
   - component: {fileID: 5145448917899032501}
   - component: {fileID: 7495534367748048187}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -574,7 +574,7 @@ GameObject:
   - component: {fileID: 2623523652615131277}
   - component: {fileID: 4618133391327022333}
   - component: {fileID: 1938233443063641957}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -655,7 +655,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 670552698292008635}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: leg_left_back2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -688,7 +688,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7851621180007727756}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: leg_left_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -721,7 +721,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1819187121327311296}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: leg_left_front3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -755,7 +755,7 @@ GameObject:
   - component: {fileID: 404926057447081619}
   - component: {fileID: 3051769676617085576}
   - component: {fileID: 7371997000011911218}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,7 +822,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.5, y: 3, z: 2.5}
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &5237651247430443886
 GameObject:
@@ -833,7 +833,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7891129356360748913}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: leg_right_back2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -868,7 +868,7 @@ GameObject:
   - component: {fileID: 618167279091085681}
   - component: {fileID: 6217419002536266837}
   - component: {fileID: 1194301028161068271}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -949,7 +949,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2397381720737914442}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: leg_right_back3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -981,7 +981,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7189167646973931774}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1014,7 +1014,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1271360247846162009}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: leg_left_front2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1049,7 +1049,7 @@ GameObject:
   - component: {fileID: 9197766177110582755}
   - component: {fileID: 7778099392479893516}
   - component: {fileID: 2575004308938342703}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1132,7 +1132,7 @@ GameObject:
   - component: {fileID: 2473785776370498459}
   - component: {fileID: 8750186161345438666}
   - component: {fileID: 1036699976484703638}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1213,7 +1213,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6929069256159688502}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: leg_right_front2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1248,7 +1248,7 @@ GameObject:
   - component: {fileID: 7421438895141088581}
   - component: {fileID: 1683135984857824851}
   - component: {fileID: 2428358441098792596}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1329,7 +1329,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4157965940376368878}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: leg_right_front3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1363,7 +1363,7 @@ GameObject:
   - component: {fileID: 6829322910987114359}
   - component: {fileID: 7084649797163992129}
   - component: {fileID: 4442142604222507141}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1444,7 +1444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8638372828815487851}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: turret_gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1478,7 +1478,7 @@ GameObject:
   - component: {fileID: 2439889226782791534}
   - component: {fileID: 3027149558697544631}
   - component: {fileID: 8136704089673946006}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1559,7 +1559,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4769395711603255757}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: leg_right_back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1592,7 +1592,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 90404499627000255}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: leg_right_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1625,7 +1625,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2920324640152064044}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1659,7 +1659,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8561518117008483069}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1693,7 +1693,7 @@ GameObject:
   - component: {fileID: 4619121779739613134}
   - component: {fileID: 97563163004712867}
   - component: {fileID: 1824054645776803018}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1776,7 +1776,7 @@ GameObject:
   - component: {fileID: 2069387014503205593}
   - component: {fileID: 1162509357200069671}
   - component: {fileID: 4677756902218625560}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1864,7 +1864,7 @@ GameObject:
   - component: {fileID: 3696250426505522073}
   - component: {fileID: -434106725898330045}
   - component: {fileID: 587523274808827257}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: P_Enemy_Spectator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1899,10 +1899,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6caa5531e1f463045acef6e84e0b2b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: 626a098941ea57e45837567fc6374b4b, type: 2}
+  stats: {fileID: 11400000, guid: af0bc90a047641a498c886c046f25028, type: 2}
   _AIStates:
   - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
-  - {fileID: 11400000, guid: eb1298214d79bd648a8b3e2d577b10e5, type: 2}
+  - {fileID: 11400000, guid: ec5ce51e025375444855d17ade63f85b, type: 2}
+  - {fileID: 11400000, guid: bb0a978585e353c4c9a3758f125bd3c8, type: 2}
   - {fileID: 11400000, guid: 7ff79690d78f3c14ca44a75e4afcac18, type: 2}
   AITargetFocus: 1
   hurtSound: {fileID: 0}
@@ -1915,10 +1916,10 @@ MonoBehaviour:
     transform: {fileID: 0}
   distanceToTarget: 0
   lastAttackTime: 0
+  ammoCount: 0
   isReloading: 0
-  remainingAttacks: 0
+  wanderTarget: {x: 0, y: 0, z: 0}
   _health: 0
-  maxHealth: 0
 --- !u!195 &1565273525350684312
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2011,14 +2012,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b8cfc6c1530a52428d1f8d56e3fd350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 5
-  projectileDamage: 10
-  projectileCooldown: 0.25
-  burstCooldown: 3
-  burstCount: 5
-  projectilePrefab: {fileID: 0}
   turret: {fileID: 5634618494101632747}
   turret2: {fileID: 692128910358468689}
+  turretSpinner: {fileID: 6744744238787194165}
 --- !u!82 &587523274808827257
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2126,7 +2122,7 @@ GameObject:
   - component: {fileID: 3660265936515041736}
   - component: {fileID: 6612235754644402712}
   - component: {fileID: 6022022570412669292}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cuboid_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2209,7 +2205,7 @@ GameObject:
   - component: {fileID: 587809648179954032}
   - component: {fileID: 8108998860340179860}
   - component: {fileID: 4680178192501299179}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cube_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2290,7 +2286,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8563061777615642809}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: leg_left_back
   m_TagString: Untagged
   m_Icon: {fileID: 0}

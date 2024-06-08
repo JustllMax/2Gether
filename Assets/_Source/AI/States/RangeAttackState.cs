@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "RangedAttackState", menuName = ("2Gether/AI/States/RangedAttack"))]
-public class RangedAttackState : AIState
+[CreateAssetMenu(fileName = "RangedAttackState_old", menuName = ("2Gether/AI/States/RangedAttackState_old"))]
+public class RangedAttackState_old : AIState
 {
     [SerializeField] float AnimDelayForAttack;
     GameObject P_Bullet;
@@ -70,5 +70,10 @@ public class RangedAttackState : AIState
         //bullet.SetDirection(dir);
         //bullet.SetDamage(controller.GetEnemyStats().attackCombo[0].Damage);
         //controller.RangedAttackPerformed();
+    }
+
+    public override void OnLateUpdate(AIController controller)
+    {
+
     }
 }

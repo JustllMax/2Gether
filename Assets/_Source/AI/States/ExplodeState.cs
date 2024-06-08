@@ -35,5 +35,8 @@ public class Explode : AIState
         return controller.distanceToTarget <= AttackRange && controller.CanAttack();
     }
 
+    public override void OnLateUpdate(AIController controller)
+    {
 
+    }
 }

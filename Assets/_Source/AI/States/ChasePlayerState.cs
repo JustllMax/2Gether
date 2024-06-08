@@ -31,5 +31,10 @@ public class ChasePlayerState : AIState
     {
         return controller.HasTarget();
     }
+
+    public override void OnLateUpdate(AIController controller)
+    {
+
+    }
 }
     
