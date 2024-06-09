@@ -69,6 +69,8 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     public TargetType TargetType { get; set; }
     public float Health { get; set; }
 
+    public Vector3 Velocity { get => _velocity; set => _velocity = value; }
+
     private void Awake()
     {
         Health = _health;

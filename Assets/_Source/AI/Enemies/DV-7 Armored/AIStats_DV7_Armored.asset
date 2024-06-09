@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0141a3b9c5960364fa1c0d12baf7cfae, type: 3}
-  m_Name: AIStats_Spectator
+  m_Name: AIStats_DV7_Armored
   m_EditorClassIdentifier: 
-  Health: 200
+  Health: 100
   Movement:
-    MovementSpeed: 7
-    TurnSpeed: 240
-    Acceleration: 32
+    MovementSpeed: 2.5
+    TurnSpeed: 120
+    Acceleration: 8
     ExtraRotationSpeed: 0
   SearchRange: 200

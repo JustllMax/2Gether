@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class GunShotgun : Gun
@@ -117,7 +118,8 @@ public class GunShotgun : Gun
                 
                 if (hit.transform.TryGetComponent<AIController>(out AIController controller))
                 {
-                    target = controller.GetComponent<IDamagable>();
+                    if (!controller.invulnerableColliders.Contains(hit.collider))
+                        target = controller.GetComponent<IDamagable>();
                 }
                 TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
                 StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true, target));

@@ -42,7 +42,6 @@ public class AIController : MonoBehaviour, IDamagable
     public AudioClip attackSound;
     [SerializeField] AudioClip deathSound;
     [HideInInspector] public AudioSource audioSource;
-    [SerializeField] protected Collider hitboxCollider;
     [SerializeField] protected float DeathInvokeTime = 2f;
     DisintegrationEffect _deathEffect;
     Animator _animator;
@@ -51,9 +50,16 @@ public class AIController : MonoBehaviour, IDamagable
     protected bool isDead = false;
     protected LayerMask targetLayerMask;
     protected float attackTimer = 0f;
+    
+    [SerializeField] public Collider[] invulnerableColliders;
 
     [Foldout("DEBUG INFO")]
     [SerializeField] private AITarget currentTarget = new AITarget();
+
+    [Foldout("DEBUG INFO")]
+    [SerializeField] protected Collider[] hitboxColliders;
+
+
 
     [Foldout("DEBUG INFO")]
     public float distanceToTarget;
@@ -70,6 +76,7 @@ public class AIController : MonoBehaviour, IDamagable
     [Foldout("DEBUG INFO")]
     public Vector3 wanderTarget;
 
+
     [Foldout("DEBUG INFO")]
     [SerializeField] private float _health;
 
@@ -85,7 +92,7 @@ public class AIController : MonoBehaviour, IDamagable
         _deathEffect = GetComponent<DisintegrationEffect>();
         _animator = GetComponentInChildren<Animator>();
 
-        hitboxCollider = GetComponentInChildren<Collider>();
+        hitboxColliders = GetComponentsInChildren<Collider>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
         Health = stats.Health;
@@ -334,7 +341,10 @@ public class AIController : MonoBehaviour, IDamagable
     public virtual void Kill()
     {
         isDead = true;
-        hitboxCollider.enabled = false;
+        foreach (Collider col in hitboxColliders)
+        {
+            col.enabled = false;
+        }
         GetNavMeshAgent().enabled = false;
 
         PlayAnimation("DEATH");
@@ -361,6 +371,13 @@ public class AIController : MonoBehaviour, IDamagable
         AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
         return !stateInfo.IsName(animName) || (stateInfo.normalizedTime >= 1 && !_animator.IsInTransition(0));
+    }
+
+    public bool AllAnimationsComplete()
+    {
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+        return (stateInfo.normalizedTime >= 1 && !_animator.IsInTransition(0));
     }
 
     public void PlayAnimation(string animName, float crossTime = 0.1f)
@@ -425,8 +442,6 @@ public class AIController : MonoBehaviour, IDamagable
     {
         isStunned = val;
     }
-
-
 
     public void SetCurrentTarget(AITarget target)
     {

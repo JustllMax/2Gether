@@ -36,6 +36,9 @@ public class RangedAttackState : AIState
     [SerializeField]
     private float OnBurstRelocateChance;
 
+    [SerializeField]
+    private bool ShootWhileMoving;
+
 
     public override void OnStart(AIController controller)
     {
@@ -73,10 +76,18 @@ public class RangedAttackState : AIState
 
     public override void OnLateUpdate(AIController controller)
     {
+        controller.GetAnimator().SetBool("is_shooting", false);
+
         if (!controller.CanAttack())
         {
             return;
         }
+
+        if (controller.GetNavMeshAgent().remainingDistance > 0.5 && !ShootWhileMoving)
+        {
+            return;
+        }
+        controller.GetAnimator().SetBool("is_shooting", true);
 
         IShooterPoint shooter = controller.GetComponent<IShooterPoint>();
         shooter.PositionShooter(controller.GetCurrentTarget().transform.position, out Vector3 direction, out Vector3 position);

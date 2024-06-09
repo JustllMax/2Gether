@@ -17,7 +17,10 @@ public class  BomberbotController : AIController
     public override void Kill() 
     {
         isDead = true;
-        hitboxCollider.enabled = false;
+        foreach (Collider col in hitboxColliders)
+        {
+            col.enabled = false;
+        }
         GetNavMeshAgent().enabled = false;
 
         PlayAnimation("DEATH");
@@ -33,14 +36,24 @@ public class  BomberbotController : AIController
         var hits = Physics.OverlapSphere(GetCurrentPosition(), explosionRadius, explosionMask);
         foreach (var hit in hits)
         {
-            if (hit.TryGetComponent(out IDamagable damagable))
+            if (hit.TryGetComponent(out IDamagable damagable1))
             {
-
-                if (damagable.TakeDamage(explosionDamage))
+                if (damagable1.TakeDamage(explosionDamage))
                 {
                     Debug.Log("Explosion hit target");
                 }
 
+                if (hit.TryGetComponent(out PlayerController player))
+                {
+                    player.Velocity = (player.transform.position - transform.position).normalized * 12;
+                }
+
+            } else if (hit.attachedRigidbody && hit.attachedRigidbody.TryGetComponent(out IDamagable damagable2))
+            {
+                if (damagable2.TakeDamage(explosionDamage))
+                {
+                    Debug.Log("Explosion hit target");
+                }
             }
         }
 

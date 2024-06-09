@@ -15,6 +15,10 @@ public class ChasePlayerState : AIState
     {
         controller.ApplyDefaultMovement();
         controller.RefreshTargetPos();    
+        if (controller.AllAnimationsComplete())
+        {
+            controller.PlayAnimation("WALK");
+        }
     }
 
     public override void OnExit(AIController controller)

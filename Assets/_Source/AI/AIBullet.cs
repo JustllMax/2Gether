@@ -5,6 +5,8 @@ using UnityEngine.Pool;
 
 public class AIBullet : MonoBehaviour
 {
+    [SerializeField] private float _activeDelay = 0.02f;
+
     private Vector3 direction;
     private Vector3 spawnPos;
     private float disappearDistance = 1000f;
@@ -15,6 +17,18 @@ public class AIBullet : MonoBehaviour
     void Start()
     {
         spawnPos = transform.position;
+        OnEnable();
+    }
+
+    void OnEnable()
+    {
+        GetComponent<Collider>().enabled = false;
+        Invoke("ActivateBullet", _activeDelay);
+    }
+
+    void ActivateBullet()
+    {
+        GetComponent<Collider>().enabled = true;
     }
 
     void Update()

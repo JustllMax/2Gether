@@ -2301,7 +2301,7 @@ MonoBehaviour:
   - type: 1
     amount: 60
   - type: 2
-    amount: 16
+    amount: 30
   - type: 3
     amount: 15
   _currentGun: {fileID: 5425135659821295255}
