@@ -3,7 +3,18 @@ guid: e0cbc76f1c59a034eb32efc5ac84d15f
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _SO_Stats: {instanceID: 0}
+  - _Model: {instanceID: 0}
+  - audioSource: {instanceID: 0}
+  - firingSound: {instanceID: 0}
+  - reloadSound: {instanceID: 0}
+  - noAmmoSound: {instanceID: 0}
+  - shootingSystem: {instanceID: 0}
+  - bulletSpawnPoint: {instanceID: 0}
+  - trailSpawnPoint: {instanceID: 0}
+  - impactParticleSystem: {instanceID: 0}
+  - bulletTrail: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

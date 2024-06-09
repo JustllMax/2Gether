@@ -1259,14 +1259,14 @@ MonoBehaviour:
   _SO_Stats: {fileID: 11400000, guid: fdbd9863112c6a648848c11f05caacb9, type: 2}
   _Model: {fileID: 7835294797450388986}
   audioSource: {fileID: 5546790273266884918}
-  firingSound: {fileID: 8300000, guid: 9e9efe18836ee1c48b87c3aab83c2d93, type: 3}
+  firingSound: {fileID: 8300000, guid: 60996cf1e379b3d4b80899a4f674bc79, type: 3}
   reloadSound: {fileID: 8300000, guid: 61c14cce20fb0464f9d48d29bf59ebf9, type: 3}
   noAmmoSound: {fileID: 8300000, guid: cd3eebcf6f5a27f4fa1942878fc7b722, type: 3}
   isAiming: 0
   ammoInMagazine: 0
-  pelletsPerShot: 6
+  pelletsPerShot: 8
   addBulletSpread: 1
-  bulletSpreadVariance: {x: 0.1, y: 0.1, z: 0.1}
+  bulletSpreadVariance: {x: 0.2, y: 0.2, z: 0.2}
   shootingSystem: {fileID: 198234346748616026, guid: ad2ab49d0a2a17148bd51c93d977bdbc,
     type: 3}
   bulletSpawnPoint: {fileID: 5376599401585661262}
@@ -1572,7 +1572,7 @@ MonoBehaviour:
   _SO_Stats: {fileID: 11400000, guid: c44288301eafa8a4b9cf8edf4b4fd34f, type: 2}
   _Model: {fileID: 917398745136601973}
   audioSource: {fileID: 1404773847532706812}
-  firingSound: {fileID: 8300000, guid: 9afb1bb980dd64548bdb22c530e1407d, type: 3}
+  firingSound: {fileID: 8300000, guid: 9e9efe18836ee1c48b87c3aab83c2d93, type: 3}
   reloadSound: {fileID: 8300000, guid: a1ed22c88dbaf284e8974d5013d8d275, type: 3}
   noAmmoSound: {fileID: 8300000, guid: cd3eebcf6f5a27f4fa1942878fc7b722, type: 3}
   isAiming: 0
@@ -1589,7 +1589,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 33587991
-  bulletSpeed: 100
+  bulletSpeed: 200
 --- !u!82 &1404773847532706812
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2270,10 +2270,10 @@ MonoBehaviour:
   _gunCamera: {fileID: 5159281564673271810}
   _cameraSensitivity: 0.1
   _velocity: {x: 0, y: 0, z: 0}
-  _gravityAcceleration: {x: 0, y: -9.81, z: 0}
+  _gravityAcceleration: {x: 0, y: -13, z: 0}
   _groundDrag: 0.3
   _groundControlFactor: 0.35
-  _airControlFactor: 0.1
+  _airControlFactor: 0.2
   _movementSpeed: 6
   _jumpHeight: 1.5
   _dashSpeed: 20
@@ -2301,7 +2301,7 @@ MonoBehaviour:
   - type: 1
     amount: 60
   - type: 2
-    amount: 10
+    amount: 16
   - type: 3
     amount: 15
   _currentGun: {fileID: 5425135659821295255}
