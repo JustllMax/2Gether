@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028328, g: 0.22571322, b: 0.30692163, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -467,7 +467,7 @@ PrefabInstance:
     - target: {fileID: 8116058673664128778, guid: d6259ac63592f4d4eb306f8c21dd3269,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -677,6 +677,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Enemy_DV7_Armored_3
       objectReference: {fileID: 0}
+    - target: {fileID: 4084334784099707750, guid: 14d53d09db65d4045a34b3885ac33f06,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8679559227394445513, guid: 14d53d09db65d4045a34b3885ac33f06,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -690,7 +695,7 @@ PrefabInstance:
     - target: {fileID: 8679559227394445513, guid: 14d53d09db65d4045a34b3885ac33f06,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -28.072538
+      value: -38.21
       objectReference: {fileID: 0}
     - target: {fileID: 8679559227394445513, guid: 14d53d09db65d4045a34b3885ac33f06,
         type: 3}
@@ -925,22 +930,22 @@ PrefabInstance:
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7858988
+      value: 0.78589875
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.4857124
+      value: 0.48571235
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.32552984
+      value: 0.32553
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.20118861
+      value: -0.20118871
       objectReference: {fileID: 0}
     - target: {fileID: 5830323962992596256, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
@@ -1442,6 +1447,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5425135659821295255, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
+      propertyPath: firingSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 6b0493ebaba10154cb1422239201f5c1, type: 3}
+    - target: {fileID: 5425135659821295255, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
+        type: 3}
       propertyPath: addBulletSpread
       value: 1
       objectReference: {fileID: 0}
@@ -1699,7 +1709,7 @@ PrefabInstance:
     - target: {fileID: 2303781138697332408, guid: 7ce58ef33dd26454e94930b8ca7a424b,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1808,6 +1818,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Enemy_DV7_Armored
       objectReference: {fileID: 0}
+    - target: {fileID: 4084334784099707750, guid: 14d53d09db65d4045a34b3885ac33f06,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4678274436163830128, guid: 14d53d09db65d4045a34b3885ac33f06,
         type: 3}
       propertyPath: invulnerableColliders.Array.data[0]
@@ -1826,7 +1841,7 @@ PrefabInstance:
     - target: {fileID: 8679559227394445513, guid: 14d53d09db65d4045a34b3885ac33f06,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -27.668463
+      value: -41.86
       objectReference: {fileID: 0}
     - target: {fileID: 8679559227394445513, guid: 14d53d09db65d4045a34b3885ac33f06,
         type: 3}
@@ -1881,6 +1896,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Enemy_DV7_Armored_2
       objectReference: {fileID: 0}
+    - target: {fileID: 4084334784099707750, guid: 14d53d09db65d4045a34b3885ac33f06,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8679559227394445513, guid: 14d53d09db65d4045a34b3885ac33f06,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1894,7 +1914,7 @@ PrefabInstance:
     - target: {fileID: 8679559227394445513, guid: 14d53d09db65d4045a34b3885ac33f06,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -28.311598
+      value: -40.46
       objectReference: {fileID: 0}
     - target: {fileID: 8679559227394445513, guid: 14d53d09db65d4045a34b3885ac33f06,
         type: 3}
@@ -2111,6 +2131,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Enemy_DV7_Armored_1
       objectReference: {fileID: 0}
+    - target: {fileID: 4084334784099707750, guid: 14d53d09db65d4045a34b3885ac33f06,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8679559227394445513, guid: 14d53d09db65d4045a34b3885ac33f06,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2124,7 +2149,7 @@ PrefabInstance:
     - target: {fileID: 8679559227394445513, guid: 14d53d09db65d4045a34b3885ac33f06,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -34.95299
+      value: -41.56
       objectReference: {fileID: 0}
     - target: {fileID: 8679559227394445513, guid: 14d53d09db65d4045a34b3885ac33f06,
         type: 3}
@@ -2639,7 +2664,7 @@ PrefabInstance:
     - target: {fileID: 6219354284539619549, guid: 427d3b5163b521946ad782cdf25aacc2,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2959,7 +2984,7 @@ PrefabInstance:
     - target: {fileID: 7685304744681281529, guid: 1dcb145c753befd4fbc21ef919f64b61,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

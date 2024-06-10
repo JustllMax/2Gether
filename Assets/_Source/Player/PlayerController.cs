@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     private float _dashCooldownTimer;
     private Vector3 _lastMovementDir;
     private float _cameraAngleX;
-    private bool _isAlive = true;
+    public bool CanMove { get; set; } = true;
     public bool IsTargetable { get; set; }
     public TargetType TargetType { get; set; }
     public float Health { get; set; }
@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
     public void Update()
     {
-        if(_isAlive == false)
+        if(CanMove == false)
         {
             return;
         }
@@ -281,7 +281,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     public void Kill()
     {
         IsTargetable = false;
-        _isAlive = false;
+        CanMove = false;
         //TODO: Change to event 
         
         GameManager.Instance.isPlayerAlive = false;
