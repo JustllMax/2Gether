@@ -26,23 +26,25 @@ public class SlotPlacer : MonoBehaviour
         set { _spawnSlots = value; }
     }
 
-    [SerializeField] private GameObject[] slotPrefabs;
-    [SerializeField] private GameObject[] emptySlotPrefabs;
-    [SerializeField] private PathSlot startingSlot;
+    [SerializeField] private GameObject[] _slotPrefabs;
+    [SerializeField] private GameObject[] _emptySlotPrefabs;
+    [SerializeField] private PathSlot _startingSlot;
     #endregion
 
     #region map
 
-    [SerializeField] private List<MapObject> maps;
-    [SerializeField] private int mapId;
-    [SerializeField] private bool isRandomGeneration = false;
+    [SerializeField] private List<MapObject> _maps;
+    [SerializeField] private int _mapId;
+    [SerializeField] private bool _isRandomGeneration = false;
+    [Header("Decoration Spawn Ration in Percent")]
+    [SerializeField] private int _decorationSpawnRation;
     #endregion
 
     #region private variables
 
     private float[] _angles = { 0f, 90f, 180f, 270f };
-    private Vector2Int mapSize;
-    private Vector2Int _startPos;
+    [SerializeField] private Vector2Int _mapSize;
+    [SerializeField] private Vector2Int _startPos;
     public Vector2Int startPos
     {
         get { return _startPos; }
@@ -50,7 +52,7 @@ public class SlotPlacer : MonoBehaviour
     private int[,] _map;
     #endregion
 
-    #region NavMeshVariables
+    #region Action
     public delegate void SlotPlacerGeneratedHandler();
     public static event Action OnMapGenerated;
 
@@ -68,8 +70,11 @@ public class SlotPlacer : MonoBehaviour
 
     void Start()
     {
-        mapSize = maps[mapId].mapSize;
-        _startPos = maps[mapId].startPos;
+        if (!_isRandomGeneration)
+        {
+            _mapSize = _maps[_mapId].mapSize;
+            _startPos = _maps[_mapId].startPos;
+        }
         Generate();
 
         Debug.Log("SlotPlacer Invoke");
@@ -78,15 +83,15 @@ public class SlotPlacer : MonoBehaviour
 
     void Generate()
     {
-        _spawnedSlots = new PathSlot[mapSize.x, mapSize.y];
-        if (isRandomGeneration)
+        _spawnedSlots = new PathSlot[_mapSize.x, _mapSize.y];
+        if (_isRandomGeneration)
         {
-            PathGenerator pathGenerator = new PathGenerator(mapSize, _startPos);
+            PathGenerator pathGenerator = new PathGenerator(_mapSize, _startPos);
             pathGenerator.GenerateMap();
             _map = (int[,])pathGenerator.map.Clone();
         }
         else
-            _map = (int[,])maps[mapId].map.Clone();
+            _map = (int[,])_maps[_mapId].map.Clone();
 
         GenerateMap();
     }
@@ -95,13 +100,13 @@ public class SlotPlacer : MonoBehaviour
     {
         int i = 0;
         PathSlot path = new();
-        for (int y = 0; y < mapSize.y; y++)
+        for (int y = 0; y < _mapSize.y; y++)
         {
-            for (int x = 0; x < mapSize.x; x++)
+            for (int x = 0; x < _mapSize.x; x++)
             {
                 if (y == _startPos.x && x == _startPos.y)
                 {
-                    path = Instantiate(startingSlot).GetComponent<PathSlot>();
+                    path = Instantiate(_startingSlot).GetComponent<PathSlot>();
                     path.gameObject.transform.position = new Vector3(x, 0, y) * 30;
                     path.slot.pos = new Vector2Int(x, y);
                     _spawnedSlots[x, y] = path;
@@ -112,30 +117,30 @@ public class SlotPlacer : MonoBehaviour
                     if (_map[x, y] == 2)
                     {
                         if (isCurved(x, y))
-                            path = Instantiate(slotPrefabs[5]).GetComponent<PathSlot>();
+                            path = Instantiate(_slotPrefabs[5]).GetComponent<PathSlot>();
                         else
-                            path = Instantiate(slotPrefabs[2]).GetComponent<PathSlot>();
+                            path = Instantiate(_slotPrefabs[2]).GetComponent<PathSlot>();
                     }
                     else if (_map[x, y] == 0 || _map[x, y] > 5)
                     {
-                        if (!isRandomGeneration && _map[x, y] > 5)
+                        if (!_isRandomGeneration && _map[x, y] > 5)
                         {
-                            path = Instantiate(emptySlotPrefabs[_map[x, y] - 5]).GetComponent<PathSlot>();
+                            path = Instantiate(_emptySlotPrefabs[_map[x, y] - 5]).GetComponent<PathSlot>();
                         }
-                        else if (isRandomGeneration)
+                        else if (_isRandomGeneration)
                         {
-                            if (emptySlotPrefabs.Length > 1)
+                            if (_emptySlotPrefabs.Length > 1)
                             {
-                                int randEmptySlot = Random.Range(0, 100);
-                                path = Instantiate(emptySlotPrefabs[randEmptySlot > 30 ? 0 : Random.Range(1, emptySlotPrefabs.Length)]).GetComponent<PathSlot>();
+                                int randEmptySlot = Random.Range(1, 100);
+                                path = Instantiate(_emptySlotPrefabs[randEmptySlot > _decorationSpawnRation ? 0 : Random.Range(1, _emptySlotPrefabs.Length)]).GetComponent<PathSlot>();
                             }
                         }
                         else
-                            path = Instantiate(emptySlotPrefabs[0]).GetComponent<PathSlot>();
+                            path = Instantiate(_emptySlotPrefabs[0]).GetComponent<PathSlot>();
                     }
                     else
                     {
-                        path = Instantiate(slotPrefabs[_map[x, y]]).GetComponent<PathSlot>();
+                        path = Instantiate(_slotPrefabs[_map[x, y]]).GetComponent<PathSlot>();
                     }
 
                     path.gameObject.transform.position = new Vector3(x, 0, y) * 30;
@@ -161,14 +166,12 @@ public class SlotPlacer : MonoBehaviour
                 _spawnedSlots[x, y] = path;
             }
         }
-        
-        
     }
 
     void RotatePath(int x, int y, PathSlot path)
     {
         int neighborDir = 0;
-        if (x >= 0 && x < mapSize.x && y >= 0 && y < mapSize.y)
+        if (x >= 0 && x < _mapSize.x && y >= 0 && y < _mapSize.y)
         {
             if (_map[x, y] == 1)
             {
@@ -176,12 +179,12 @@ public class SlotPlacer : MonoBehaviour
                 {
                     neighborDir = 1;
                 }
-                if (y == mapSize.y - 1 && isHaveNeighbor(_map[x, y - 1]))
+                if (y == _mapSize.y - 1 && isHaveNeighbor(_map[x, y - 1]))
                 {
                     neighborDir = 3;
                 }
 
-                if (x == mapSize.x - 1 && isHaveNeighbor(_map[x - 1, y]))
+                if (x == _mapSize.x - 1 && isHaveNeighbor(_map[x - 1, y]))
                 {
                     neighborDir = 0;
                 }
@@ -245,14 +248,14 @@ public class SlotPlacer : MonoBehaviour
     }
     private bool isHaveNeighbor(int val)
     {
-        if (val > 0 && val < slotPrefabs.Length)
+        if (val > 0 && val < _slotPrefabs.Length)
             return true;
         else
             return false;
     }
     bool isCurved(int x, int y)
     {
-        if (x > 0 && x < mapSize.x - 1 && y > 0 && y < mapSize.y - 1)
+        if (x > 0 && x < _mapSize.x - 1 && y > 0 && y < _mapSize.y - 1)
         {
             if (isHaveNeighbor(_map[x - 1, y]) && isHaveNeighbor(_map[x + 1, y])
             ||
