@@ -6,8 +6,9 @@ public class Minefield : Building
 {
     [SerializeField] List<Mine> mines;
 
-    public override void Start()
+    public override void Awake()
     {
+        base.Awake();
         IsTargetable = false;
         mines = new List<Mine>();
         mines = GetComponentsInChildren<Mine>().ToList();
