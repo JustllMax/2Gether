@@ -34,7 +34,7 @@ public class FenzyChaseState : AIState
 
     public override void OnExit(AIController controller)
     {
-
+        
     }
 
     public override bool CanExitState(AIController controller)
