@@ -1,4 +1,6 @@
+using System.Runtime.InteropServices;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +10,9 @@ public class WaveSystem : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> _spawnPoints = new List<GameObject>();
+
+    [SerializeField]
+    private List<GameObject> _particlesPrefab = new List<GameObject>();
 
     [Header("System state")]
     public bool isWaveActive = false;
@@ -106,10 +111,17 @@ public class WaveSystem : MonoBehaviour
                 var spawnPoint = GetRandomSpawnPoint();
                 if (spawnPoint != null)
                 {
+                    var riff = spawnPoint.transform.GetChild(1).GetComponent<ParticleSystem>();
+                    var outer = spawnPoint.transform.GetChild(2).GetComponent<ParticleSystem>();
+
+                    riff.Play();
+                    await UniTask.WaitForSeconds(wave.EnemySpawnInterval+1f);
+                    riff.Stop();
+                    outer.Play();
                     Instantiate(wave.EnemyPool[i], spawnPoint.transform.position + new Vector3(10, 1, 10), Quaternion.identity);
                     enemyCount++;
                 }
-                await UniTask.WaitForSeconds(wave.EnemySpawnInterval);
+                //await UniTask.WaitForSeconds(wave.EnemySpawnInterval);
             }
             
             do
@@ -135,6 +147,16 @@ public class WaveSystem : MonoBehaviour
     {
         if (spawnPoint != null)
         {
+            
+            var particleRiff = Instantiate(_particlesPrefab[0], spawnPoint.transform.position + new Vector3(10, 1, 10), Quaternion.identity);
+            var particleOut = Instantiate(_particlesPrefab[1], spawnPoint.transform.position + new Vector3(10, 1, 10), Quaternion.identity);
+            
+            particleRiff.transform.SetParent(spawnPoint.transform);
+            particleRiff.GetComponent<ParticleSystem>().Stop();
+
+            particleOut.transform.SetParent(spawnPoint.transform);
+            particleOut.GetComponent<ParticleSystem>().Stop();
+
             _spawnPoints.Add(spawnPoint);
         }
         else

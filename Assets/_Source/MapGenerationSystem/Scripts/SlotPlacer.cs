@@ -127,7 +127,7 @@ public class SlotPlacer : MonoBehaviour
                             if (emptySlotPrefabs.Length > 1)
                             {
                                 int randEmptySlot = Random.Range(0, 100);
-                                path = Instantiate(emptySlotPrefabs[randEmptySlot > 10 ? 0 : Random.Range(1, emptySlotPrefabs.Length)]).GetComponent<PathSlot>();
+                                path = Instantiate(emptySlotPrefabs[randEmptySlot > 30 ? 0 : Random.Range(1, emptySlotPrefabs.Length)]).GetComponent<PathSlot>();
                             }
                         }
                         else
@@ -161,6 +161,8 @@ public class SlotPlacer : MonoBehaviour
                 _spawnedSlots[x, y] = path;
             }
         }
+        
+        
     }
 
     void RotatePath(int x, int y, PathSlot path)
@@ -243,7 +245,7 @@ public class SlotPlacer : MonoBehaviour
     }
     private bool isHaveNeighbor(int val)
     {
-        if (val != 0 && val < 6)
+        if (val > 0 && val < slotPrefabs.Length)
             return true;
         else
             return false;

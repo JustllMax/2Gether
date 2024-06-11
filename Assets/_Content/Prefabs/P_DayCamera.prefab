@@ -51,8 +51,8 @@ MonoBehaviour:
   rotateSpeed: 90
   minDepth: 1
   maxDepth: 200
-  LeftRightDistance: -100
-  TopDownMovement: 55
+  LeftRightDistance: -5
+  TopDownMovement: 380
 --- !u!1 &3366036574672236721
 GameObject:
   m_ObjectHideFlags: 0
@@ -78,7 +78,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3366036574672236721}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.48571235, y: 0.32552996, z: -0.2011887, w: 0.7858988}
+  m_LocalRotation: {x: 0.4857124, y: 0.32552993, z: -0.2011887, w: 0.78589875}
   m_LocalPosition: {x: -93.43553, y: 88, z: -89.13553}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
