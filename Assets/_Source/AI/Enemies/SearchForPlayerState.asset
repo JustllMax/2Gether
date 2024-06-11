@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: SearchForPlayerState
   m_EditorClassIdentifier: 
   weight: 0
+  wanderRadius: 15
