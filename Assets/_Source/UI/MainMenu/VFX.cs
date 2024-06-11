@@ -40,7 +40,7 @@ public class VFX : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         foreach(RectTransform c in transformChildren)
         {
             assets.Add(new Combo(c, c.anchoredPosition));
-            Debug.Log(c.position);
+
         }
 
         background = transformChildren[0].GetComponent<Image>();

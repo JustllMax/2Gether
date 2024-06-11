@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5884ba9f708c78c448b3600ede4ef302, type: 3}
-  m_Name: Mine_1
+  m_Name: Mine_2
   m_EditorClassIdentifier: 
   CardType: 0
-  Rarity: 0
+  Rarity: 1
   Name: Mine
   Description: Explodes on touch
   BuildingType: 0
   ActivationTime: 0
-  HealthPoints: 100
-  SellCost: 5
-  AttackDamage: 15
-  AttackRange: 3
+  HealthPoints: 150
+  SellCost: 15
+  AttackDamage: 150
+  AttackRange: 3.5
   AttackFireRate: 0

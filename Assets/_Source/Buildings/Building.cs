@@ -84,6 +84,10 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
         GoldManager.Instance.GoldAdd(GetSellCost());
     }
 
+    public virtual void OnUpgrage()
+    {
+
+    }
 
     public bool CanAttack()
     {
@@ -123,6 +127,7 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
             currentLevel++;
             _buildingStatistics = _upgradeTiers.GetStatsForLevel(currentLevel);
             upgradeCounter = 0;
+            OnUpgrage();
         }     
     }
 
@@ -149,6 +154,11 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
     public Animator GetAnimator()
     {
         return animator;
+    }
+
+    public AudioClip GetActivationSFX()
+    {
+        return activationSound;
     }
 
     public AudioClip GetUpgradeSFX()
