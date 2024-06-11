@@ -11,7 +11,6 @@ abstract public class Gun : MonoBehaviour
     [SerializeField] protected AudioClip firingSound;
     [SerializeField] protected AudioClip reloadSound;
     [SerializeField] protected AudioClip noAmmoSound;
-    [SerializeField] protected bool isAiming;
     [SerializeField] protected int ammoInMagazine;
     [SerializeField] protected float bulletSpeed = 100;
     [SerializeField] protected bool addBulletSpread = true;
@@ -25,6 +24,8 @@ abstract public class Gun : MonoBehaviour
     protected float shootDelay;
     protected float lastShootTime;
     protected Animator animator;
+    public bool isAiming;
+
     public virtual void Start()
     {
         audioSource = GetComponent<AudioSource>();

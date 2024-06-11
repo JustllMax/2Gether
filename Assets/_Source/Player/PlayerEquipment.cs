@@ -14,7 +14,7 @@ public class PlayerEquipment : MonoBehaviour
 
     [SerializeField] AudioSource audioSource;
     Animator _animator;
-
+    PlayerGunController gunController;
     public Dictionary<GunType, int> AmmoStorage;
     public Gun _currentGun;
     public Gun _lastHeldGun;
@@ -34,6 +34,7 @@ public class PlayerEquipment : MonoBehaviour
 
     private void Awake()
     {
+        gunController = GetComponent<PlayerGunController>();
         AmmoStorage = new Dictionary<GunType, int>();
         foreach(GunAmmoStore gun in AmmoStore) {
             AmmoStorage.Add(gun.type, gun.amount);
@@ -96,9 +97,6 @@ public class PlayerEquipment : MonoBehaviour
     public void SwitchByScrolling()
     {
 
-        //TODO scroll is scrolling too fast
-        //Also might have to change to press to confirm weapon selection, not instantly changing
-
         int input = (int)Mathf.Clamp(_FPSController.Scroll.ReadValue<float>(), -1, 1);
 
         if (input == 0)
@@ -137,7 +135,8 @@ public class PlayerEquipment : MonoBehaviour
     {
         ResetReloadTimer();
         isSwitchingGun = true;
-
+        _currentGun.isAiming = false;
+        gunController.UnScope();
 
         if ( !_animator.GetNextAnimatorStateInfo(0).IsName(PlayerAnimNames.SWITCHDOWN.ToString()))
         {
@@ -161,7 +160,11 @@ public class PlayerEquipment : MonoBehaviour
         {
             gun.GetGunModel().SetActive(false);
         }
-        _currentGun.GetGunModel().SetActive(true); 
+        
+        _currentGun.GetGunModel().SetActive(true);
+        
+        
+
     }
     public void SwitchUpEndAnimEvent()
     {
@@ -178,6 +181,8 @@ public class PlayerEquipment : MonoBehaviour
     public void ReloadDownStartAnimEvent()
     {
         isReloading = true;
+        _currentGun.isAiming = false;
+        gunController.UnScope();
         AudioManager.Instance.PlaySFXAtSource(_currentGun.GetReloadSFX(), GetAudioSource());
 
     }
@@ -195,6 +200,11 @@ public class PlayerEquipment : MonoBehaviour
         int magSize = _currentGun.GetGunData().MagazineSize;
         int currentAmmo = _currentGun.GetAmmoInMagazine();
         int amountToReload = magSize - currentAmmo;
+
+        if(gunType == GunType.Sniper)
+        {
+            HUDManager.Instance.UnScope();
+        }
 
         switch (gunType)
         {

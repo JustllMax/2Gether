@@ -32,6 +32,9 @@ public class HUDManager : MonoBehaviour
     [Foldout("References")] [SerializeField] TMP_Text AmmoCurrentText;
     [Foldout("References")] [SerializeField] TMP_Text AmmoReserveText;
     [Foldout("References")] [SerializeField] Image IconImage;
+    [Foldout("References")] [SerializeField] Image ScopeImage;
+    [Foldout("References")] [SerializeField] GameObject GunCameraDisplay;
+
     #endregion Variables
     private void Awake()
     {
@@ -210,5 +213,21 @@ public class HUDManager : MonoBehaviour
         SetCrosshair(type);
     }
 
+    public void Scope()
+    {
+        GunCameraDisplay.SetActive(false);
+        CrosshairImage.gameObject.SetActive(false);
+        ScopeImage.gameObject.SetActive(true);
+    }
+
+    public void UnScope()
+    {
+        GunCameraDisplay.SetActive(true);
+        CrosshairImage.gameObject.SetActive(true);
+        ScopeImage.gameObject.SetActive(false);
+    }
+
     #endregion Gun
+
+
 }

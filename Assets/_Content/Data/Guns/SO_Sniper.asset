@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cbd0e1519788ed4ba8eae85f3be243d, type: 3}
   m_Name: SO_Sniper
   m_EditorClassIdentifier: 
-  CardType: 0
+  CardType: 2
   Rarity: 0
   Name: Sniper
   Description: Sniper Rifle

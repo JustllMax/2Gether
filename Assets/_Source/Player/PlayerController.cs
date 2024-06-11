@@ -287,4 +287,9 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         GameManager.Instance.isPlayerAlive = false;
         return;
     }
+    
+    public void SetCameraFOV(float value) 
+    {
+        Camera.main.fieldOfView = value;
+    }
 }
