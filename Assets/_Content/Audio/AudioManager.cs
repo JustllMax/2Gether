@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class AudioManager : MonoBehaviour
 
     public Sound[] musicSounds, sfxSounds, ambientSounds;
     public AudioSource musicSource, sfxSource, loopSfxSource, ambientSource;
+    public float MinDB;
+    public float MaxDB;
+    public AudioMixer AudioMixer;
 
     [SerializeField]
     AudioLowPassFilter MusicAudioLowPassFilter;
@@ -27,7 +31,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        // Mo¿esz tu dodaæ kod inicjalizacyjny, jeœli jest potrzebny.
+        LoadVolume();
     }
 
     public void PlayMusic(string clip)
@@ -162,8 +166,42 @@ public class AudioManager : MonoBehaviour
         return musicSource.isPlaying && musicSource.clip == s.clip;
     }
 
+    private void LoadVolume()
+    {
+        if (PlayerPrefs.HasKey("MasterVolume"))
+        {
+            float volume = 0f;
+            if (PlayerPrefs.GetFloat("MasterVolume") == 0)
+                volume = -80;
+            else
+                volume = Mathf.Lerp(MinDB, MaxDB, PlayerPrefs.GetFloat("MasterVolume") / 10f);
 
-   public void EnableMusicLowPassFilter(bool enable)
+            AudioMixer.SetFloat("MasterVolume", volume);
+        }
+
+        if (PlayerPrefs.HasKey("SFXVolume"))
+        {
+            float volume = 0f;
+            if (PlayerPrefs.GetFloat("SFXVolume") == 0)
+                volume = -80;
+            else
+                volume = Mathf.Lerp(MinDB, MaxDB, PlayerPrefs.GetFloat("SFXVolume") / 10f);
+
+            AudioMixer.SetFloat("SFXVolume", volume);
+        }
+
+        if (PlayerPrefs.HasKey("MusicVolume"))
+        {
+            float volume = 0f;
+            if (PlayerPrefs.GetFloat("MusicVolume") == 0)
+                volume = -80;
+            else
+                volume = Mathf.Lerp(MinDB, MaxDB, PlayerPrefs.GetFloat("MusicVolume") / 10f);
+
+            AudioMixer.SetFloat("MusicVolume", volume);
+        }
+    }
+    public void EnableMusicLowPassFilter(bool enable)
     {
         MusicAudioLowPassFilter.enabled = enable;
         AmbientAudioLowPassFilter.enabled = enable;
