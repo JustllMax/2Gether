@@ -13,7 +13,7 @@ public class BuildingOffensiveStatistics : BuildingStatistics
 {
     public float AttackDamage;
     public float AttackRange;
-    public float AttackFireRate;
+    public float AttackDelay;
 
     /*
     [HideInInspector]public bool IsAOE;

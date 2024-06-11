@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b3e054fa4bcce94684bdc93a62a070b, type: 3}
+  m_Name: UpgradePath_SmiteRod
+  m_EditorClassIdentifier: 
+  UpgradePairs:
+  - Level: 0
+    Statistics: {fileID: 11400000, guid: 2915e8cf54887af4f854811688da7f61, type: 2}
+  - Level: 1
+    Statistics: {fileID: 11400000, guid: 3a74726630fb6cb4da51ae5346cd1924, type: 2}
+  - Level: 2
+    Statistics: {fileID: 11400000, guid: c1e886028061a7145b41626112ff4c84, type: 2}

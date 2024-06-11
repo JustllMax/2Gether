@@ -13,7 +13,7 @@ public class  BomberbotController : AIController
     [SerializeField] LayerMask explosionMask;
     [SerializeField] float explosionRadius;
     [SerializeField] float explosionDamage;
-
+    [SerializeField] float particlesScale = 3f;
     public override void Kill() 
     {
         isDead = true;
@@ -24,8 +24,9 @@ public class  BomberbotController : AIController
         GetNavMeshAgent().enabled = false;
 
         PlayAnimation("DEATH");
-        Invoke("Explode", DeathInvokeTime);
-
+        //Invoke("Explode", DeathInvokeTime);
+        ExplosionSpawner.SpawnExplosion(transform.position).SetUpExplosion(explosionDamage, explosionRadius, explosionMask, particlesScale);
+        DestroyObj();
         WaveManager.Instance.waveSystem.enemyCount--;
     }
 
@@ -48,7 +49,8 @@ public class  BomberbotController : AIController
                     player.Velocity = (player.transform.position - transform.position).normalized * 12;
                 }
 
-            } else if (hit.attachedRigidbody && hit.attachedRigidbody.TryGetComponent(out IDamagable damagable2))
+            } 
+            else if (hit.attachedRigidbody && hit.attachedRigidbody.TryGetComponent(out IDamagable damagable2))
             {
                 if (damagable2.TakeDamage(explosionDamage))
                 {
