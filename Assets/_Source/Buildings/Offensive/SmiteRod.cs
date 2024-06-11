@@ -1,26 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class SmiteRod : Building
 {
     LineRenderer lineRenderer;
     [SerializeField] Transform firePoint;
-
     float attackTimer;
-
-    #region ChildrenMethods
-
     public override void Awake()
     {
+        attackTimer = GetStatistics().AttackDelay;
         base.Awake();
         lineRenderer = GetComponent<LineRenderer>();
     }
 
     private void Update()
     {
-        if(attackTimer < GetStatistics().AttackDelay)
+        if (attackTimer < GetStatistics().AttackDelay)
         {
             attackTimer += Time.deltaTime;
         }
@@ -30,6 +26,10 @@ public class SmiteRod : Building
             OnAttack();
         }
     }
+
+    #region ChildrenMethods
+
+
 
     public override void OnAttack()
     {

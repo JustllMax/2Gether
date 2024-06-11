@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class AudioManager : MonoBehaviour
 
     public Sound[] musicSounds, sfxSounds, ambientSounds;
     public AudioSource musicSource, sfxSource, loopSfxSource, ambientSource;
+    public float MinDB;
+    public float MaxDB;
+    public AudioMixer AudioMixer;
 
     [SerializeField]
     AudioLowPassFilter MusicAudioLowPassFilter;
@@ -27,12 +31,12 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        // Mo¿esz tu dodaæ kod inicjalizacyjny, jeœli jest potrzebny.
+        LoadVolume();
     }
 
-    public void PlayMusic(string name)
+    public void PlayMusic(string clip)
     {
-        Sound s = Array.Find(musicSounds, x => x.name == name);
+        Sound s = Array.Find(musicSounds, x => x.name == clip);
 
         if (s == null)
         {
@@ -45,9 +49,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void StopMusic(string name)
+    public void StopMusic(string clip)
     {
-        Sound s = Array.Find(musicSounds, x => x.name == name);
+        Sound s = Array.Find(musicSounds, x => x.name == clip);
 
         if (s == null)
         {
@@ -58,9 +62,9 @@ public class AudioManager : MonoBehaviour
             musicSource.Stop();
         }
     }
-    public void PlayAmbient(string name)
+    public void PlayAmbient(string clip)
     {
-        Sound s = Array.Find(ambientSounds, x => x.name == name);
+        Sound s = Array.Find(ambientSounds, x => x.name == clip);
 
         if (s == null)
         {
@@ -73,9 +77,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void StopAmbient(string name)
+    public void StopAmbient(string clip)
     {
-        Sound s = Array.Find(ambientSounds, x => x.name == name);
+        Sound s = Array.Find(ambientSounds, x => x.name == clip);
 
         if (s == null)
         {
@@ -87,9 +91,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySFX(string name)
+    public void PlaySFX(string clip)
     {
-        Sound s = Array.Find(sfxSounds, x => x.name == name);
+        Sound s = Array.Find(sfxSounds, x => x.name == clip);
 
         if (s == null)
         {
@@ -101,23 +105,38 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySFX(AudioClip name)
+    public void PlaySFX(AudioClip clip)
     {
        
-            sfxSource.PlayOneShot(name);
+        sfxSource.PlayOneShot(clip);
         
     }
-    public void PlaySFXAtSource(AudioClip name, AudioSource source)
+    public void PlaySFXAtSource(AudioClip clip, AudioSource source)
     {
         source.volume = sfxSource.volume;
-        source.PlayOneShot(name);
-        
+        source.PlayOneShot(clip);
 
     }
 
-    public void PlaySFXLoop(string name)
+    public void PlaySFXAtSourceOnce(AudioClip clip, AudioSource source)
     {
-        Sound s = Array.Find(sfxSounds, x => x.name == name);
+        if(source.clip != clip)
+        {
+            source.clip = clip;
+            source.volume = sfxSource.volume;
+            source.PlayOneShot(clip);
+        }
+        else if(source.clip == clip && source.isPlaying == false)
+        {
+            source.volume = sfxSource.volume;
+            source.Play();
+        }
+
+    }
+
+    public void PlaySFXLoop(string clip)
+    {
+        Sound s = Array.Find(sfxSounds, x => x.name == clip);
 
         if (s == null)
         {
@@ -136,9 +155,9 @@ public class AudioManager : MonoBehaviour
         loopSfxSource.Stop();
     }
 
-    public bool IsMusicPlaying(string name)
+    public bool IsMusicPlaying(string clip)
     {
-        Sound s = Array.Find(musicSounds, x => x.name == name);
+        Sound s = Array.Find(musicSounds, x => x.name == clip);
         if (s == null)
         {
             Debug.Log("Sound Not Found");
@@ -147,8 +166,42 @@ public class AudioManager : MonoBehaviour
         return musicSource.isPlaying && musicSource.clip == s.clip;
     }
 
+    private void LoadVolume()
+    {
+        if (PlayerPrefs.HasKey("MasterVolume"))
+        {
+            float volume = 0f;
+            if (PlayerPrefs.GetFloat("MasterVolume") == 0)
+                volume = -80;
+            else
+                volume = Mathf.Lerp(MinDB, MaxDB, PlayerPrefs.GetFloat("MasterVolume") / 10f);
 
-   public void EnableMusicLowPassFilter(bool enable)
+            AudioMixer.SetFloat("MasterVolume", volume);
+        }
+
+        if (PlayerPrefs.HasKey("SFXVolume"))
+        {
+            float volume = 0f;
+            if (PlayerPrefs.GetFloat("SFXVolume") == 0)
+                volume = -80;
+            else
+                volume = Mathf.Lerp(MinDB, MaxDB, PlayerPrefs.GetFloat("SFXVolume") / 10f);
+
+            AudioMixer.SetFloat("SFXVolume", volume);
+        }
+
+        if (PlayerPrefs.HasKey("MusicVolume"))
+        {
+            float volume = 0f;
+            if (PlayerPrefs.GetFloat("MusicVolume") == 0)
+                volume = -80;
+            else
+                volume = Mathf.Lerp(MinDB, MaxDB, PlayerPrefs.GetFloat("MusicVolume") / 10f);
+
+            AudioMixer.SetFloat("MusicVolume", volume);
+        }
+    }
+    public void EnableMusicLowPassFilter(bool enable)
     {
         MusicAudioLowPassFilter.enabled = enable;
         AmbientAudioLowPassFilter.enabled = enable;

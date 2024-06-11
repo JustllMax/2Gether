@@ -25,8 +25,9 @@ abstract public class Gun : MonoBehaviour
     protected float shootDelay;
     protected float lastShootTime;
     protected Animator animator;
-    void Start()
+    public virtual void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         animator = GetComponentInParent<Animator>();
         ammoInMagazine = GetMagazineSize();
         shootDelay = GetGunData().FireRate;
@@ -126,7 +127,6 @@ abstract public class Gun : MonoBehaviour
         return direction;
     }
 
-    //TO DO: FIX ANGLE OF TRAIL TO MATCH AIM POSITION
     protected virtual void CalculateFire(Transform bulletSpawnPoint)
     {
 
@@ -162,4 +162,9 @@ abstract public class Gun : MonoBehaviour
 
     }
 
+    public void StopSFX()
+    {
+        audioSource.Stop();
+        audioSource.clip = null;
+    }
 }

@@ -11,7 +11,8 @@ public class PlayerEquipment : MonoBehaviour
 
     [SerializeField]List<Gun> GunList = new List<Gun>();
     [SerializeField] List<GunAmmoStore> AmmoStore;
-    
+
+    [SerializeField] AudioSource audioSource;
     Animator _animator;
 
     public Dictionary<GunType, int> AmmoStorage;
@@ -142,7 +143,9 @@ public class PlayerEquipment : MonoBehaviour
         {
             _animator.CrossFade(PlayerAnimNames.SWITCHDOWN.ToString(), 0.1f);
         }
-        
+
+        GetAudioSource().Stop();
+
         _lastHeldGun = _currentGun;
         _currentGun = gun;
 
@@ -152,6 +155,7 @@ public class PlayerEquipment : MonoBehaviour
 
     public void SwitchDownEndAnimEvent()
     {
+
         Debug.Log(this + " anim down");
         foreach (Gun gun in GunList)
         {
@@ -174,7 +178,7 @@ public class PlayerEquipment : MonoBehaviour
     public void ReloadDownStartAnimEvent()
     {
         isReloading = true;
-        AudioManager.Instance.PlaySFXAtSource(_currentGun.GetReloadSFX(), _currentGun.GetAudioSource() );
+        AudioManager.Instance.PlaySFXAtSource(_currentGun.GetReloadSFX(), GetAudioSource());
 
     }
 
@@ -301,13 +305,21 @@ public class PlayerEquipment : MonoBehaviour
 
         if (isSwitchingGun)
             return false;
-
-        if (_currentGun.GetAmmoInMagazine() >= _currentGun.GetGunData().MagazineSize)
+        int currentAmmo = _currentGun.GetAmmoInMagazine();
+        int magSize = _currentGun.GetGunData().MagazineSize;
+        //ammo in magazine more than max || AmmoStorage is 0
+        if (currentAmmo >= magSize || AmmoStorage[_currentGun.GetGunData().GunType] == 0)
             return false;
 
         return true;
 
     }
+
+    public AudioSource GetAudioSource()
+    {
+        return audioSource;
+    }
+
     #endregion GetSet
     
 
