@@ -1302,6 +1302,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5018936977732420373}
+  - component: {fileID: 3780686830408244956}
   m_Layer: 8
   m_Name: head
   m_TagString: Untagged
@@ -1325,6 +1326,19 @@ Transform:
   - {fileID: 5426286172525502481}
   m_Father: {fileID: 4963140471770617203}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3780686830408244956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2382017240176646880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155dc238ecee2ac448bbaaacc44de7a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageModifier: 1.5
 --- !u!1 &2479873750852380742
 GameObject:
   m_ObjectHideFlags: 0
@@ -1711,8 +1725,6 @@ MonoBehaviour:
   deathSound: {fileID: 0}
   audioSource: {fileID: 0}
   DeathInvokeTime: 2
-  invulnerableColliders:
-  - {fileID: 5570481422499718473}
   currentTarget:
     transform: {fileID: 0}
   hitboxColliders: []
@@ -3510,6 +3522,7 @@ GameObject:
   - component: {fileID: 3074384908466209667}
   - component: {fileID: 5916263955052166997}
   - component: {fileID: 5570481422499718473}
+  - component: {fileID: 7469631819855182282}
   m_Layer: 8
   m_Name: shield
   m_TagString: Untagged
@@ -3604,6 +3617,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -1117082489390005245, guid: cdd5c67052d3f1b40ba5d3c613c4ec58, type: 3}
+--- !u!114 &7469631819855182282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8343827174969755217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155dc238ecee2ac448bbaaacc44de7a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageModifier: 0
 --- !u!1 &8408400691615184492
 GameObject:
   m_ObjectHideFlags: 0

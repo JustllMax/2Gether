@@ -38,20 +38,18 @@ public class AIController : MonoBehaviour, IDamagable
     [SerializeField] TargetType AITargetFocus;
 
     [Header("Audio")]
-    [SerializeField] AudioClip hurtSound;
+    [SerializeField] protected AudioClip hurtSound;
     public AudioClip attackSound;
-    [SerializeField] AudioClip deathSound;
+    [SerializeField] protected AudioClip deathSound;
     [HideInInspector] public AudioSource audioSource;
     [SerializeField] protected float DeathInvokeTime = 2f;
     DisintegrationEffect _deathEffect;
     Animator _animator;
-    NavMeshAgent _navMeshAgent;
+    protected NavMeshAgent _navMeshAgent;
     protected bool isStunned = false;
     protected bool isDead = false;
     protected LayerMask targetLayerMask;
     protected float attackTimer = 0f;
-    
-    [SerializeField] public Collider[] invulnerableColliders;
 
     [Foldout("DEBUG INFO")]
     [SerializeField] private AITarget currentTarget = new AITarget();
@@ -323,10 +321,11 @@ public class AIController : MonoBehaviour, IDamagable
         return !isDead && HasTarget();
     }
 
-    public bool TakeDamage(float damage)
+    public virtual bool TakeDamage(float damage)
     {
         if(isDead)
             return false;
+
         Health -= damage;
         AudioManager.Instance.PlaySFXAtSource(hurtSound, audioSource);
         if(Health <= 0)

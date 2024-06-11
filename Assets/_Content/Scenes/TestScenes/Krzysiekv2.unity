@@ -935,17 +935,17 @@ PrefabInstance:
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.48571235
+      value: 0.4857124
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.32553
+      value: 0.32552993
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.20118871
+      value: -0.2011887
       objectReference: {fileID: 0}
     - target: {fileID: 5830323962992596256, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
@@ -2991,6 +2991,44 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1dcb145c753befd4fbc21ef919f64b61, type: 3}
+--- !u!1 &1214626429 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8669766861633451264, guid: 542eff3b07a894f4bb5cb0369776e87b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6792560556835090785}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1214626438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214626429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2148798aa5fbfea46937106f51525539, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: fbb60b542b4324d40980a67c6327a059, type: 2}
+  _AIStates:
+  - {fileID: 11400000, guid: 95a1f67cad4fdab4bafef6da3a074790, type: 2}
+  - {fileID: 11400000, guid: 6bfc2566e3d2c5941abf5ab0d28ac86b, type: 2}
+  AITargetFocus: 1
+  hurtSound: {fileID: 0}
+  attackSound: {fileID: 0}
+  deathSound: {fileID: 0}
+  audioSource: {fileID: 0}
+  DeathInvokeTime: 2
+  currentTarget:
+    transform: {fileID: 0}
+  hitboxColliders: []
+  distanceToTarget: 0
+  lastAttackTime: 0
+  ammoCount: 0
+  isReloading: 0
+  wanderTarget: {x: 0, y: 0, z: 0}
+  _health: 0
+  receivedDamage: 0
 --- !u!1001 &1264561763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4113,22 +4151,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1933302746}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &179263776861441382
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 664016890822891484}
-  m_Layer: 0
-  m_Name: eldritch
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1001 &307216526146697813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4423,22 +4445,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38a205b375903984faaf05367604f11e, type: 3}
---- !u!4 &664016890822891484
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 179263776861441382}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.410923, y: 0.35202995, z: 4.9426665}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1401922764695434945}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1164914459283908375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4512,21 +4518,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 427bf0348ca5d7240b330a8fc5b100d1, type: 3}
---- !u!4 &1401922764695434945
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7474055406354314546}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 664016890822891484}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5108136314197345506
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4658,32 +4649,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6243877009496309678, guid: 542eff3b07a894f4bb5cb0369776e87b,
+        type: 3}
+      propertyPath: _AIStates.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 95a1f67cad4fdab4bafef6da3a074790,
+        type: 2}
     - target: {fileID: 8669766861633451264, guid: 542eff3b07a894f4bb5cb0369776e87b,
         type: 3}
       propertyPath: m_Name
       value: P_Enemy_Eldritch
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6243877009496309678, guid: 542eff3b07a894f4bb5cb0369776e87b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8669766861633451264, guid: 542eff3b07a894f4bb5cb0369776e87b,
+        type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1214626438}
   m_SourcePrefab: {fileID: 100100000, guid: 542eff3b07a894f4bb5cb0369776e87b, type: 3}
---- !u!1 &7474055406354314546
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1401922764695434945}
-  m_Layer: 0
-  m_Name: empty
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4717,4 +4703,3 @@ SceneRoots:
   - {fileID: 660755818}
   - {fileID: 606908781}
   - {fileID: 230053894}
-  - {fileID: 664016890822891484}
