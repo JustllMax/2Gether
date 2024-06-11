@@ -32,7 +32,7 @@ public class AIController : MonoBehaviour, IDamagable
     [SerializeField] List<AIState> _AIStates;
     AIState previousState;
     AIState nextState;
-    AIState currentState;
+    protected AIState currentState;
 
     [Header("CHANGE ACCORDINGLY TO CHASE/BUILDING. BOTH IS FOR BOSSES")]
     [SerializeField] TargetType AITargetFocus;
@@ -350,6 +350,10 @@ public class AIController : MonoBehaviour, IDamagable
         {
             col.enabled = false;
         }
+
+        if (currentState != null)
+            currentState.OnExit(this);
+
         GetNavMeshAgent().enabled = false;
 
         PlayAnimation("DEATH");

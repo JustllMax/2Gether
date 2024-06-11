@@ -23,6 +23,10 @@ public class EldritchController : AIController
         {
             col.enabled = false;
         }
+
+        if (currentState != null)
+            currentState.OnExit(this);
+
         GetNavMeshAgent().enabled = false;
 
         PlayAnimation("DEATH");
