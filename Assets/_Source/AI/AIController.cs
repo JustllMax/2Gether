@@ -410,6 +410,8 @@ public class AIController : MonoBehaviour, IDamagable
     {
         if (HasTarget())
             _navMeshAgent.SetDestination(currentTarget.transform.position);
+        else 
+            _navMeshAgent.ResetPath();
     }
 
     public GameObject InstantiateGameObject(GameObject obj, Transform parent)

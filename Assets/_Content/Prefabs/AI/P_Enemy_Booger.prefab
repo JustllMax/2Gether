@@ -745,6 +745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 8d6a648ff1a8fd142a81afe85196d688, type: 2}
   _AIStates:
+  - {fileID: 11400000, guid: d40ebfaa723545d4bbbac4b28c6610d1, type: 2}
   - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
   - {fileID: 11400000, guid: cdbbc91e4a6186a408d77c3dd79f5214, type: 2}
   - {fileID: 11400000, guid: 7ff79690d78f3c14ca44a75e4afcac18, type: 2}

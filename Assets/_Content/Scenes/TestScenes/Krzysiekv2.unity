@@ -953,7 +953,7 @@ PrefabInstance:
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.48571238
+      value: 0.4857124
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
@@ -963,7 +963,7 @@ PrefabInstance:
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.20118867
+      value: -0.2011887
       objectReference: {fileID: 0}
     - target: {fileID: 5830323962992596256, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
@@ -3106,7 +3106,6 @@ Transform:
   - {fileID: 1025217243}
   - {fileID: 1791585385}
   - {fileID: 1252281728}
-  - {fileID: 664016890822891484}
   - {fileID: 945343068}
   - {fileID: 207256894}
   m_Father: {fileID: 0}
@@ -3274,11 +3273,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: P_Enemy_Bomberbot_7
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4251,22 +4245,6 @@ Transform:
   - {fileID: 1405961394}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &179263776861441382
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 664016890822891484}
-  m_Layer: 0
-  m_Name: eldritch
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1001 &282383948556601483
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4476,22 +4454,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38a205b375903984faaf05367604f11e, type: 3}
---- !u!4 &664016890822891484
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 179263776861441382}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -24.434902, y: -14.164291, z: 6.2236295}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1401922764695434945}
-  m_Father: {fileID: 1200597550}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1164914459283908375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4590,21 +4552,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 427bf0348ca5d7240b330a8fc5b100d1, type: 3}
---- !u!4 &1401922764695434945
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7474055406354314546}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 664016890822891484}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5108136314197345506
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4751,22 +4698,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 542eff3b07a894f4bb5cb0369776e87b, type: 3}
---- !u!1 &7474055406354314546
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1401922764695434945}
-  m_Layer: 0
-  m_Name: empty
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

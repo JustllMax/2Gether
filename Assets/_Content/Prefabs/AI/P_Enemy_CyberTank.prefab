@@ -2604,6 +2604,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 69e20364e44e3cb4a83ca8375cfa4009, type: 2}
   _AIStates:
+  - {fileID: 11400000, guid: d40ebfaa723545d4bbbac4b28c6610d1, type: 2}
   - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
   - {fileID: 11400000, guid: 2f748463af1f41f48a05ce128cee2f4e, type: 2}
   - {fileID: 11400000, guid: 7ff79690d78f3c14ca44a75e4afcac18, type: 2}
@@ -2612,14 +2613,15 @@ MonoBehaviour:
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}
   audioSource: {fileID: 0}
-  hitboxCollider: {fileID: 3128003461943696154}
   DeathInvokeTime: 2
   currentTarget:
     transform: {fileID: 0}
+  hitboxColliders: []
   distanceToTarget: 0
   lastAttackTime: 0
   ammoCount: 0
   isReloading: 0
+  wanderTarget: {x: 0, y: 0, z: 0}
   _health: 0
 --- !u!195 &4612321007652048329
 NavMeshAgent:

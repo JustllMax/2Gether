@@ -24,62 +24,17 @@ public class  BomberbotController : AIController
         GetNavMeshAgent().enabled = false;
 
         PlayAnimation("DEATH");
-        //Invoke("Explode", DeathInvokeTime);
-        ExplosionSpawner.SpawnExplosion(transform.position).SetUpExplosion(explosionDamage, explosionRadius, explosionMask, particlesScale);
-        DestroyObj();
-        WaveManager.Instance.waveSystem.enemyCount--;
+        Invoke("Explode", DeathInvokeTime);
     }
 
     private void Explode()
     {
-        Debug.Log(this + " attack performed");
-
-        var hits = Physics.OverlapSphere(GetCurrentPosition(), explosionRadius, explosionMask);
-        foreach (var hit in hits)
-        {
-            if (hit.TryGetComponent(out IDamagable damagable1))
-            {
-                if (damagable1.TakeDamage(explosionDamage))
-                {
-                    Debug.Log("Explosion hit target");
-                }
-
-                if (hit.TryGetComponent(out PlayerController player))
-                {
-                    player.Velocity = (player.transform.position - transform.position).normalized * 12;
-                }
-
-            } 
-            else if (hit.attachedRigidbody && hit.attachedRigidbody.TryGetComponent(out IDamagable damagable2))
-            {
-                if (damagable2.TakeDamage(explosionDamage))
-                {
-                    Debug.Log("Explosion hit target");
-                }
-            }
-        }
-
-        Renderer[] renderers = GetComponentsInChildren<Renderer>();
-        foreach (var renderer in renderers)
-            renderer.enabled = false;
-
-        if (explosionParticles != null)
-        {
-            InstantiateGameObject(explosionParticles.gameObject, transform).transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
-        }
-
-
-        AudioManager.Instance.PlaySFXAtSource(attackSound, audioSource);
-
-
-        Invoke("DestroyObj", 2);
-
-    }
-
-    void DestroyObj()
-    {
+        ExplosionSpawner.SpawnExplosion(transform.position).SetUpExplosion(explosionDamage, explosionRadius, explosionMask, particlesScale);
         Destroy(gameObject);
+        WaveManager.Instance.waveSystem.enemyCount--;
+
     }
+
 
 }
 
