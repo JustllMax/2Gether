@@ -8,10 +8,6 @@ public class GunPistol : Gun
     bool isParryOnCD = false;
 
 
-    void Start()
-    {
-    }
-
     public override bool Fire(bool isSameButtonPress, Transform bulletSpawnPoint)
     {
         if (lastShootTime + shootDelay < Time.time)

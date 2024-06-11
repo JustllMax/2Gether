@@ -23,7 +23,6 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
     [SerializeField] protected ParticleSystem upgradeParticles;
 
     private BuildingStatistics _buildingStatistics;
-    private float attackTimer = 0;
     private int currentLevel = 0;
     private int upgradeCounter = 0;
     protected float AttackCoolDownTimer = 5f;
@@ -88,11 +87,6 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
     {
         maxHealth = GetBaseStatistics().HealthPoints;
         Health = maxHealth;
-    }
-
-    public bool CanAttack()
-    {
-        return (attackTimer >= _buildingStatistics.ActivationTime);
     }
     #endregion ChildrenMethods
 

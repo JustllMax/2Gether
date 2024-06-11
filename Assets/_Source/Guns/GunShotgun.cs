@@ -31,9 +31,13 @@ public class GunShotgun : Gun
 
         if (lastShootTime + shootDelay < Time.time)
         {
-            ammoInMagazine -= 2;
-            CalculateFire(bulletSpawnPoint);
-            CalculateFire(bulletSpawnPoint);
+            int maxAmmo = ammoInMagazine;
+            for(int i = 0; i<maxAmmo; i++)
+            {
+                Debug.Log("Shotgun shoot " + ammoInMagazine);
+                ammoInMagazine--;
+                CalculateFire(bulletSpawnPoint);
+            }
             lastShootTime = Time.time;
 
             HUDManager.Instance.SetCurrentAmmo(ammoInMagazine);
@@ -47,42 +51,45 @@ public class GunShotgun : Gun
         return false;
     }
 
-    private void OnDrawGizmos()
-    {
-        Debug.DrawRay(bulletSpawnPoint.position, bulletSpawnPoint.forward * GetGunData().Range, Color.green);
-    }
 
     public override bool CanAim()
     {
-        if (isAiming)
-            return false;
-
-        if (ammoInMagazine > 1)
-            return true;
-
-        return false;
+        return TryShooting();
     }
 
     public override bool CanFire()
+    {
+        return TryShooting();
+    } 
+
+    bool TryShooting()
     {
         if (isAiming)
             return false;
 
         if (ammoInMagazine > 0)
             return true;
-  
-        GameManager.Instance.GetPlayerController().GetComponent<PlayerGunController>().ReloadWeapon();
+
+        if (GameManager.Instance.GetPlayerController().GetComponent<PlayerGunController>().ReloadWeapon() == false)
+        {
+            AudioManager.Instance.PlaySFXAtSourceOnce(GetNoAmmoSFX(), GetAudioSource());
+        }
         return false;
     }
 
     protected override void CalculateFire(Transform bulletSpawnPoint)
     {
         AudioManager.Instance.PlaySFXAtSource(firingSound, audioSource);
-        Debug.Log(this + " Fire " + (ammoInMagazine - 1));
+
 
         for (int i = 0; i < pelletsPerShot; i++)
         {
             base.CalculateFire(bulletSpawnPoint);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Debug.DrawRay(bulletSpawnPoint.position, bulletSpawnPoint.forward * GetGunData().Range, Color.green);
     }
 }

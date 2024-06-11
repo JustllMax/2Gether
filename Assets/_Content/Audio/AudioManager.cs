@@ -30,9 +30,9 @@ public class AudioManager : MonoBehaviour
         // Mo¿esz tu dodaæ kod inicjalizacyjny, jeœli jest potrzebny.
     }
 
-    public void PlayMusic(string name)
+    public void PlayMusic(string clip)
     {
-        Sound s = Array.Find(musicSounds, x => x.name == name);
+        Sound s = Array.Find(musicSounds, x => x.name == clip);
 
         if (s == null)
         {
@@ -45,9 +45,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void StopMusic(string name)
+    public void StopMusic(string clip)
     {
-        Sound s = Array.Find(musicSounds, x => x.name == name);
+        Sound s = Array.Find(musicSounds, x => x.name == clip);
 
         if (s == null)
         {
@@ -58,9 +58,9 @@ public class AudioManager : MonoBehaviour
             musicSource.Stop();
         }
     }
-    public void PlayAmbient(string name)
+    public void PlayAmbient(string clip)
     {
-        Sound s = Array.Find(ambientSounds, x => x.name == name);
+        Sound s = Array.Find(ambientSounds, x => x.name == clip);
 
         if (s == null)
         {
@@ -73,9 +73,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void StopAmbient(string name)
+    public void StopAmbient(string clip)
     {
-        Sound s = Array.Find(ambientSounds, x => x.name == name);
+        Sound s = Array.Find(ambientSounds, x => x.name == clip);
 
         if (s == null)
         {
@@ -87,9 +87,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySFX(string name)
+    public void PlaySFX(string clip)
     {
-        Sound s = Array.Find(sfxSounds, x => x.name == name);
+        Sound s = Array.Find(sfxSounds, x => x.name == clip);
 
         if (s == null)
         {
@@ -101,23 +101,38 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySFX(AudioClip name)
+    public void PlaySFX(AudioClip clip)
     {
        
-            sfxSource.PlayOneShot(name);
+        sfxSource.PlayOneShot(clip);
         
     }
-    public void PlaySFXAtSource(AudioClip name, AudioSource source)
+    public void PlaySFXAtSource(AudioClip clip, AudioSource source)
     {
         source.volume = sfxSource.volume;
-        source.PlayOneShot(name);
-        
+        source.PlayOneShot(clip);
 
     }
 
-    public void PlaySFXLoop(string name)
+    public void PlaySFXAtSourceOnce(AudioClip clip, AudioSource source)
     {
-        Sound s = Array.Find(sfxSounds, x => x.name == name);
+        if(source.clip != clip)
+        {
+            source.clip = clip;
+            source.volume = sfxSource.volume;
+            source.PlayOneShot(clip);
+        }
+        else if(source.clip == clip && source.isPlaying == false)
+        {
+            source.volume = sfxSource.volume;
+            source.Play();
+        }
+
+    }
+
+    public void PlaySFXLoop(string clip)
+    {
+        Sound s = Array.Find(sfxSounds, x => x.name == clip);
 
         if (s == null)
         {
@@ -136,9 +151,9 @@ public class AudioManager : MonoBehaviour
         loopSfxSource.Stop();
     }
 
-    public bool IsMusicPlaying(string name)
+    public bool IsMusicPlaying(string clip)
     {
-        Sound s = Array.Find(musicSounds, x => x.name == name);
+        Sound s = Array.Find(musicSounds, x => x.name == clip);
         if (s == null)
         {
             Debug.Log("Sound Not Found");

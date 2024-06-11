@@ -20,7 +20,7 @@ public class PlayerGunController : MonoBehaviour
     bool flagOneShot = true;
     private void Awake()
     {
-        _equipment = GetComponent<PlayerEquipment>();
+        _equipment = GetComponentInChildren<PlayerEquipment>();
     }
 
     void Start()
@@ -104,10 +104,9 @@ public class PlayerGunController : MonoBehaviour
 
             }
         }
-        
     }
 
-    public void ReloadWeapon()
+    public bool ReloadWeapon()
     {
         if (_equipment != null)
         {
@@ -116,10 +115,12 @@ public class PlayerGunController : MonoBehaviour
                 if (!_animator.GetNextAnimatorStateInfo(0).IsName(PlayerAnimNames.RELOADDOWN.ToString()))
                 {
                     _animator.CrossFade(PlayerAnimNames.RELOADDOWN.ToString(), 0.1f);
+                    return true;
                 }
 
             }
         }
+        return false;
     }
 
     void CheckForIdleAnimation()
