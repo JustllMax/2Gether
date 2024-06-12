@@ -2424,7 +2424,7 @@ MonoBehaviour:
   HUDAppearanceDelay: 2
   Icons:
   - {fileID: 21300000, guid: ea1a2670ce00e684ba9619cd710e4603, type: 3}
-  - {fileID: 21300000, guid: 9d217c40e986a5c4baca8ced562d52d9, type: 3}
+  - {fileID: 21300000, guid: 8c7d8390402f2944bb1df7bee5af2ff9, type: 3}
   - {fileID: 21300000, guid: eade2a7773bff0740901c0e93b77fe42, type: 3}
   - {fileID: 21300000, guid: a76710bbab08b38418061a7afc76e560, type: 3}
   Crosshairs:
@@ -2459,7 +2459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathScreen: {fileID: 8884785372477358060}
-  slowdownDuration: 1
+  slowdownDuration: 2
   appearDuration: 0.5
   appearCurve:
     serializedVersion: 2
