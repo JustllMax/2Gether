@@ -5,9 +5,6 @@ using UnityEngine;
 public class GunSniper : Gun
 {
 
-    bool isParryOnCD = false;
-
-
     public override bool Fire(bool isSameButtonPress, Transform bulletSpawnPoint)
     {
         if (lastShootTime + shootDelay < Time.time)
@@ -30,11 +27,13 @@ public class GunSniper : Gun
     {
         if (isAiming)
         {
+            addBulletSpread = true;
             GameManager.Instance.GetPlayerController().GetComponent<PlayerGunController>().StartUnScoping();
             isAiming = false;
         }
         else
         {
+            addBulletSpread = false;
             GameManager.Instance.GetPlayerController().GetComponent<PlayerGunController>().StartScoping();
             isAiming = true;
         }
@@ -63,5 +62,11 @@ public class GunSniper : Gun
         GameManager.Instance.GetPlayerController().GetComponent<PlayerGunController>().ReloadWeapon();
 
         return false;
+    }
+
+    public override void SetIsAiming(bool val)
+    {
+        base.SetIsAiming(val);
+        addBulletSpread = !val;
     }
 }

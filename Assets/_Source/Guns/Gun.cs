@@ -174,5 +174,9 @@ abstract public class Gun : MonoBehaviour
     {
         return weaponIKConfig;
     }
+    public virtual void SetIsAiming(bool val)
+    {
+        isAiming = val;
+    }
 
 }

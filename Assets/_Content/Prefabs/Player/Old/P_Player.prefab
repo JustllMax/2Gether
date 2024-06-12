@@ -524,7 +524,7 @@ MonoBehaviour:
   noAmmoSound: {fileID: 8300000, guid: cd3eebcf6f5a27f4fa1942878fc7b722, type: 3}
   ammoInMagazine: 0
   bulletSpeed: 100
-  addBulletSpread: 0
+  addBulletSpread: 1
   bulletSpreadVariance: {x: 0.1, y: 0.1, z: 0.1}
   shootingSystem: {fileID: 7022478843008030562}
   bulletSpawnPoint: {fileID: 5376599401585661262}
@@ -2386,7 +2386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf41519b8b3551349bd88bb772b0fa03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 10
+  _maxHealth: 100
   invincibilityDuration: 1
   _nightCamera: {fileID: 823719554601124883}
   _gunCamera: {fileID: 5159281564673271810}
