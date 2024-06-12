@@ -878,8 +878,8 @@ MonoBehaviour:
   _maxStep: 0.06
   _rotStep: 4
   _maxRotStep: 5
-  _smooth: 10
-  _smoothRot: 12
+  _smooth: 3
+  _smoothRot: 4
   speedCurve: 0
   travelLimit: {x: 0.025, y: 0.025, z: 0.025}
   bobLimit: {x: 0.01, y: 0.01, z: 0.01}
