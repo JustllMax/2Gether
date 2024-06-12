@@ -51,14 +51,7 @@ public class DeathScreenManager : MonoBehaviour
     public void EnterDayMode()
     {
         AudioManager.Instance.SetMusicPitch(1.0f);
-        if (!DayNightCycleManager.Instance.IsDay)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
         deathScreen.SetActive(false);
-        Time.timeScale = 1f;
-        InputManager.Instance.EnableControllers();
         IsScreenActive = false;
     }
 
@@ -76,7 +69,6 @@ public class DeathScreenManager : MonoBehaviour
         Time.timeScale = 0.0f;
         Cursor.visible = true;
         deathScreen.SetActive(true);
-        deathScreen.transform.localScale = new Vector3(2f, 2f, 2f);
         elapsedTime = 0;
 
         List<float> defaultOpacities = StoreDefaultOpacity(deathScreen);
