@@ -37,7 +37,7 @@ public class PauseManager : MonoBehaviour
     private void Update()
     {
         //TODO: DELETE AFTER INPUT MANAGER FIX
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !DeathScreenManager.Instance.IsScreenActive)
         {
             if (isInSettingsMenu)
             {

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028328, g: 0.22571322, b: 0.30692163, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -954,17 +954,17 @@ PrefabInstance:
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.78589875
+      value: 0.7858988
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.4857124
+      value: 0.48571235
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.32552993
+      value: 0.32552996
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
@@ -993,18 +993,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &335800118 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7983283315794187044, guid: 293efeebfd6a48c43b33fde8d7a3329f,
-    type: 3}
-  m_PrefabInstance: {fileID: 341955467}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &341955467
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1021,6 +1009,66 @@ PrefabInstance:
     - target: {fileID: 74941447628621544, guid: 293efeebfd6a48c43b33fde8d7a3329f,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268472566791032597, guid: 293efeebfd6a48c43b33fde8d7a3329f,
+        type: 3}
+      propertyPath: appearCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268472566791032597, guid: 293efeebfd6a48c43b33fde8d7a3329f,
+        type: 3}
+      propertyPath: appearCurve.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268472566791032597, guid: 293efeebfd6a48c43b33fde8d7a3329f,
+        type: 3}
+      propertyPath: appearCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268472566791032597, guid: 293efeebfd6a48c43b33fde8d7a3329f,
+        type: 3}
+      propertyPath: appearCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268472566791032597, guid: 293efeebfd6a48c43b33fde8d7a3329f,
+        type: 3}
+      propertyPath: appearCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268472566791032597, guid: 293efeebfd6a48c43b33fde8d7a3329f,
+        type: 3}
+      propertyPath: appearCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268472566791032597, guid: 293efeebfd6a48c43b33fde8d7a3329f,
+        type: 3}
+      propertyPath: appearCurve.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268472566791032597, guid: 293efeebfd6a48c43b33fde8d7a3329f,
+        type: 3}
+      propertyPath: appearCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268472566791032597, guid: 293efeebfd6a48c43b33fde8d7a3329f,
+        type: 3}
+      propertyPath: appearCurve.m_Curve.Array.data[1].inWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268472566791032597, guid: 293efeebfd6a48c43b33fde8d7a3329f,
+        type: 3}
+      propertyPath: appearCurve.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268472566791032597, guid: 293efeebfd6a48c43b33fde8d7a3329f,
+        type: 3}
+      propertyPath: appearCurve.m_Curve.Array.data[0].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268472566791032597, guid: 293efeebfd6a48c43b33fde8d7a3329f,
+        type: 3}
+      propertyPath: appearCurve.m_Curve.Array.data[1].tangentMode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3372559965030970709, guid: 293efeebfd6a48c43b33fde8d7a3329f,
@@ -1113,16 +1161,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8699143655812073838, guid: 293efeebfd6a48c43b33fde8d7a3329f,
-        type: 3}
-      propertyPath: ScopeImage
-      value: 
-      objectReference: {fileID: 335800118}
-    - target: {fileID: 8699143655812073838, guid: 293efeebfd6a48c43b33fde8d7a3329f,
-        type: 3}
-      propertyPath: GunCameraDisplay
-      value: 
-      objectReference: {fileID: 341955469}
     - target: {fileID: 8803116966782000820, guid: 293efeebfd6a48c43b33fde8d7a3329f,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -4620,7 +4658,7 @@ PrefabInstance:
     - target: {fileID: 8669766861633451264, guid: 542eff3b07a894f4bb5cb0369776e87b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

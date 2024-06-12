@@ -285,6 +285,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         //TODO: Change to event 
         
         GameManager.Instance.isPlayerAlive = false;
+        DeathScreenManager.Instance.ShowDeathScreen();
         return;
     }
     
