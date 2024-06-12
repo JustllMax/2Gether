@@ -137,7 +137,8 @@ public class PlayerEquipment : MonoBehaviour
     {
         ResetReloadTimer();
         isSwitchingGun = true;
-        _currentGun.isAiming = false;
+        _currentGun.SetIsAiming(false);
+        
         gunController.UnScope();
 
         if ( !_animator.GetNextAnimatorStateInfo(0).IsName(PlayerAnimNames.SWITCHDOWN.ToString()))
@@ -154,7 +155,7 @@ public class PlayerEquipment : MonoBehaviour
             AmmoStorage[_currentGun.GetGunData().GunType], _currentGun.GetGunData().GunType);
     }
 
-    public void SwitchDownEndAnimEvent()
+    public void SwitchUpStartAnimEvent()
     {
 
         Debug.Log(this + " anim down");
@@ -190,7 +191,7 @@ public class PlayerEquipment : MonoBehaviour
     public void ReloadDownStartAnimEvent()
     {
         isReloading = true;
-        _currentGun.isAiming = false;
+        _currentGun.SetIsAiming(false);
         gunController.UnScope();
         AudioManager.Instance.PlaySFXAtSource(_currentGun.GetReloadSFX(), GetAudioSource());
 
@@ -213,6 +214,7 @@ public class PlayerEquipment : MonoBehaviour
         if(gunType == GunType.Sniper)
         {
             HUDManager.Instance.UnScope();
+            
         }
 
         switch (gunType)

@@ -114,7 +114,7 @@ public class PlayerGunController : MonoBehaviour
             {
                 if (!_animator.GetNextAnimatorStateInfo(0).IsName(PlayerAnimNames.RELOADDOWN.ToString()))
                 {
-                    _animator.CrossFade(PlayerAnimNames.RELOADDOWN.ToString(), 0.1f);
+                    _animator.CrossFade(PlayerAnimNames.RELOADDOWN.ToString(), 0.5f);
                     return true;
                 }
 
