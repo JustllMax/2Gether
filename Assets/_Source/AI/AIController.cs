@@ -303,7 +303,7 @@ public class AIController : MonoBehaviour, IDamagable
             if (state.CanChangeToState(this) && state.weight == highestWeight)
             {
                 states.Add(state);
-                Debug.Log(state.name);
+                //Debug.Log(state.name);
             }
         }
 
