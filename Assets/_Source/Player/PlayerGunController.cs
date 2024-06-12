@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using Cinemachine;
 public class PlayerGunController : MonoBehaviour
 {
-    [SerializeField] Transform nightCamera;
+    [SerializeField] CinemachineVirtualCamera nightCamera;
     [SerializeField] Transform FirePoint;
     PlayerInputAction.FPSControllerActions _FPScontroller;
     PlayerEquipment _equipment;
@@ -16,11 +16,11 @@ public class PlayerGunController : MonoBehaviour
     bool isHoldingFire = false;
     [SerializeField]
     bool isDuringAnimation = false;
-
     bool flagOneShot = true;
+
     private void Awake()
     {
-        _equipment = GetComponent<PlayerEquipment>();
+        _equipment = GetComponentInChildren<PlayerEquipment>();
     }
 
     void Start()
@@ -37,7 +37,7 @@ public class PlayerGunController : MonoBehaviour
 
     private void Update()
     {
-        FirePoint.rotation = nightCamera.rotation;
+        FirePoint.rotation = nightCamera.transform.rotation;
 
         CheckForIdleAnimation();
 
@@ -104,10 +104,9 @@ public class PlayerGunController : MonoBehaviour
 
             }
         }
-        
     }
 
-    public void ReloadWeapon()
+    public bool ReloadWeapon()
     {
         if (_equipment != null)
         {
@@ -116,15 +115,17 @@ public class PlayerGunController : MonoBehaviour
                 if (!_animator.GetNextAnimatorStateInfo(0).IsName(PlayerAnimNames.RELOADDOWN.ToString()))
                 {
                     _animator.CrossFade(PlayerAnimNames.RELOADDOWN.ToString(), 0.1f);
+                    return true;
                 }
 
             }
         }
+        return false;
     }
 
     void CheckForIdleAnimation()
     {
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimNames.IDLE.ToString()))
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimNames.IDLE.ToString()) || _animator.GetCurrentAnimatorStateInfo(0).IsName(PlayerAnimNames.SCOPE.ToString()))
         {
             isDuringAnimation = false;
         }
@@ -163,4 +164,37 @@ public class PlayerGunController : MonoBehaviour
         }
     }
 
+    public bool StartScoping()
+    {
+        if (!_animator.GetNextAnimatorStateInfo(0).IsName(PlayerAnimNames.SCOPE.ToString()))
+        {
+            _animator.CrossFade(PlayerAnimNames.SCOPE.ToString(), 0.1f);
+            return true;
+        }
+        return false;
+    }
+
+    public bool StartUnScoping()
+    {
+        if (!_animator.GetNextAnimatorStateInfo(0).IsName(PlayerAnimNames.UNSCOPE.ToString()))
+        {
+            _animator.CrossFade(PlayerAnimNames.UNSCOPE.ToString(), 0.1f);
+            return true;
+        }
+        return false;
+    }
+
+    //Called by event
+    public void Scope()
+    {
+        HUDManager.Instance.Scope();
+        nightCamera.m_Lens.FieldOfView = 30;
+    }
+
+    //Called by event and eq
+    public void UnScope()
+    {
+        nightCamera.m_Lens.FieldOfView = 90;
+        HUDManager.Instance.UnScope();
+    }
 }

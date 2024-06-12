@@ -32,7 +32,7 @@ public class AIController : MonoBehaviour, IDamagable
     [SerializeField] List<AIState> _AIStates;
     AIState previousState;
     AIState nextState;
-    AIState currentState;
+    protected AIState currentState;
 
     [Header("CHANGE ACCORDINGLY TO CHASE/BUILDING. BOTH IS FOR BOSSES")]
     [SerializeField] TargetType AITargetFocus;
@@ -214,7 +214,16 @@ public class AIController : MonoBehaviour, IDamagable
 
     public bool HasTarget()
     {
-        return (currentTarget.transform != null && currentTarget.targetable != null && currentTarget.targetable.IsTargetable);
+        //W Unity nie mo¿na robiæ (currentTarget.targetable != null && currentTarget.targetable) bo jak jest null to wywali b³¹d
+        if (currentTarget.transform != null && currentTarget.targetable != null)
+        {
+            if (currentTarget.targetable.IsTargetable)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void SearchForTarget()
@@ -277,7 +286,6 @@ public class AIController : MonoBehaviour, IDamagable
         List<AIState> states = new List<AIState>();
         StateWeight highestWeight = StateWeight.Lowest;
 
-        // Find the highest state weight
         foreach (var state in _AIStates)
         {
             if (state.CanChangeToState(this))
@@ -290,24 +298,22 @@ public class AIController : MonoBehaviour, IDamagable
             }
         }
 
-        // Collect all states with the highest weight
         foreach (var state in _AIStates)
         {
             if (state.CanChangeToState(this) && state.weight == highestWeight)
             {
                 states.Add(state);
-                Debug.Log(state.name);
+                //Debug.Log(state.name);
             }
         }
 
-        // Choose a random state from the collected states
         if (states.Count > 0)
         {
             int randomIndex = Random.Range(0, states.Count);
             return states[randomIndex];
         }
 
-        return null; // Return null if no state is found
+        return null;
 
 
     }
@@ -344,6 +350,10 @@ public class AIController : MonoBehaviour, IDamagable
         {
             col.enabled = false;
         }
+
+        if (currentState != null)
+            currentState.OnExit(this);
+
         GetNavMeshAgent().enabled = false;
 
         PlayAnimation("DEATH");
@@ -410,6 +420,8 @@ public class AIController : MonoBehaviour, IDamagable
     {
         if (HasTarget())
             _navMeshAgent.SetDestination(currentTarget.transform.position);
+        else 
+            _navMeshAgent.ResetPath();
     }
 
     public GameObject InstantiateGameObject(GameObject obj, Transform parent)

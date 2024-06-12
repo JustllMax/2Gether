@@ -11,7 +11,6 @@ abstract public class Gun : MonoBehaviour
     [SerializeField] protected AudioClip firingSound;
     [SerializeField] protected AudioClip reloadSound;
     [SerializeField] protected AudioClip noAmmoSound;
-    [SerializeField] protected bool isAiming;
     [SerializeField] protected int ammoInMagazine;
     [SerializeField] protected float bulletSpeed = 100;
     [SerializeField] protected bool addBulletSpread = true;
@@ -22,11 +21,15 @@ abstract public class Gun : MonoBehaviour
     [SerializeField] protected ParticleSystem impactParticleSystem;
     [SerializeField] protected TrailRenderer bulletTrail;
     [SerializeField] protected LayerMask mask;
+    [SerializeField] protected WeaponIKConfig weaponIKConfig;
     protected float shootDelay;
     protected float lastShootTime;
     protected Animator animator;
-    void Start()
+    public bool isAiming;
+
+    public virtual void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         animator = GetComponentInParent<Animator>();
         ammoInMagazine = GetMagazineSize();
         shootDelay = GetGunData().FireRate;
@@ -126,7 +129,6 @@ abstract public class Gun : MonoBehaviour
         return direction;
     }
 
-    //TO DO: FIX ANGLE OF TRAIL TO MATCH AIM POSITION
     protected virtual void CalculateFire(Transform bulletSpawnPoint)
     {
 
@@ -160,6 +162,17 @@ abstract public class Gun : MonoBehaviour
             lastShootTime = Time.time;
         }
 
+    }
+
+    public void StopSFX()
+    {
+        audioSource.Stop();
+        audioSource.clip = null;
+    }
+
+    public WeaponIKConfig GetIKConfig()
+    {
+        return weaponIKConfig;
     }
 
 }

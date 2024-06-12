@@ -13,6 +13,8 @@ public class EldritchController : AIController
     [Foldout("DEBUG INFO")]
     public float receivedDamage = 0;
 
+    [SerializeField]
+    AudioClip teleportSound;
 
     public override void Kill() 
     {
@@ -21,16 +23,24 @@ public class EldritchController : AIController
         {
             col.enabled = false;
         }
+
+        if (currentState != null)
+            currentState.OnExit(this);
+
         GetNavMeshAgent().enabled = false;
 
         PlayAnimation("DEATH");
-        Invoke("DestroyObj", DeathInvokeTime);
 
         WaveManager.Instance.waveSystem.enemyCount--;
+        StartCoroutine(KillEffects());
     }
 
-    void DestroyObj()
+    IEnumerator KillEffects()
     {
+        yield return new WaitForSeconds(DeathInvokeTime);
+        TpEffect(transform.position - new Vector3(0, 20, 0));
+
+        yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }
 
@@ -55,15 +65,32 @@ public class EldritchController : AIController
             {
                 if (Vector3.Distance(GetCurrentTarget().transform.position, hit.position) >= minDistance)
                 {
-                    _navMeshAgent.Warp(hit.position);
-                    Debug.Log("Enemy teleported to: " + hit.position);
-                    return;
+                    TpEffect(hit.position);
+                    Debug.Log("Eldritch teleported to: " + hit.position);
+                    break;
                 }
             }
         }
 
-        SetCurrentTarget(new AITarget(null, null));
         Debug.LogWarning("Could not find a valid position after " + maxAttempts + " attempts.");
+    }
+
+    private void TpEffect(in Vector3 pos)
+    {
+        AudioManager.Instance.PlaySFXAtSource(teleportSound, audioSource);
+        var particles = GetComponentsInChildren<ParticleSystem>();
+        foreach (var particle in particles)
+        {
+            particle.Play();
+        }
+        StartCoroutine(Warp(pos));
+    }
+
+    IEnumerator Warp(Vector3 position)
+    {
+        yield return null;
+        SetCurrentTarget(new AITarget(null, null));
+        _navMeshAgent.Warp(position);
     }
 
     public override bool TakeDamage(float damage)

@@ -9,5 +9,7 @@ public enum PlayerAnimNames
     SWITCHDOWN,
     SWITCHUP,
     RELOADDOWN,
-    RELOADUP
+    RELOADUP,
+    SCOPE,
+    UNSCOPE
 }

@@ -2221,18 +2221,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: a7c2e041215d4ac448a89f1d2c9b23f5, type: 2}
   _AIStates:
+  - {fileID: 11400000, guid: d40ebfaa723545d4bbbac4b28c6610d1, type: 2}
   - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
   - {fileID: 11400000, guid: d7317b2390809ab40bd383fcda9bd2e6, type: 2}
   - {fileID: 11400000, guid: 5e86318e4d1d92b4db74c429847a6db9, type: 2}
   AITargetFocus: 1
   hurtSound: {fileID: 0}
-  attackSound: {fileID: 8300000, guid: d8983d0c9ac980444897c57e1e11bb06, type: 3}
-  deathSound: {fileID: 8300000, guid: d8983d0c9ac980444897c57e1e11bb06, type: 3}
+  attackSound: {fileID: 0}
+  deathSound: {fileID: 0}
   audioSource: {fileID: 0}
-  hitboxCollider: {fileID: 0}
   DeathInvokeTime: 0.45
   currentTarget:
     transform: {fileID: 0}
+  hitboxColliders: []
   distanceToTarget: 0
   lastAttackTime: 0
   ammoCount: 0
@@ -2244,8 +2245,9 @@ MonoBehaviour:
   explosionMask:
     serializedVersion: 2
     m_Bits: 832
-  explosionRadius: 4
+  explosionRadius: 5
   explosionDamage: 75
+  particlesScale: 3
 --- !u!195 &1600096481173909209
 NavMeshAgent:
   m_ObjectHideFlags: 0

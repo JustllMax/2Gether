@@ -1,3 +1,4 @@
+using System.Collections;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,8 +9,9 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
     [SerializeField]
     float _maxHealth = 100f;
-
-    float _health = 100f;
+    [SerializeField]
+    [Range(0.1f, 3f)]
+    float invincibilityDuration = 1;
 
     [SerializeField]
     private Transform _nightCamera;
@@ -53,6 +55,9 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     [SerializeField]
     private bool _isMoving;
 
+    [SerializeField]
+    Animator _animator;
+
     private PlayerInputAction.FPSControllerActions FPSController;
     private CharacterController _characterController;
     private AudioSource _audioSource;
@@ -64,6 +69,8 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     private float _dashCooldownTimer;
     private Vector3 _lastMovementDir;
     private float _cameraAngleX;
+    [SerializeField]
+    private bool canBeHit = true;
     public bool CanMove { get; set; } = true;
     public bool IsTargetable { get; set; }
     public TargetType TargetType { get; set; }
@@ -73,7 +80,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
     private void Awake()
     {
-        Health = _health;
+        Health = _maxHealth;
         IsTargetable = true;
         TargetType = TargetType.Player;
         _characterController = GetComponent<CharacterController>();
@@ -110,6 +117,11 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
     public void Update()
     {
+        if (transform.position.y < -50f)
+        {
+            Kill();
+        }
+
         if(CanMove == false)
         {
             return;
@@ -256,16 +268,29 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         _isDashing = false;
     }
 
+    private async UniTaskVoid InvincibilityFramesCounter()
+    {
+        await UniTask.WaitForSeconds(invincibilityDuration);
+
+        canBeHit = true;
+    }
+
     public bool TakeDamage(float damage)
     {
+        if (!canBeHit)
+            return false;
+
+        canBeHit = false;
         Debug.Log(this + "took " + damage + " damage");
         Health -= damage;
+        HUDManager.Instance.PlayerGotHit(invincibilityDuration);
         HUDManager.Instance.SetCurrentHealth(Health);
         if(Health <= 0)
         {
             Kill();
             return true;
         }
+        _ = InvincibilityFramesCounter();
         return false;
     }
 
@@ -274,6 +299,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         Health += amount;
         Health = Mathf.Clamp(Health, 0, _maxHealth);
         HUDManager.Instance.SetCurrentHealth(Health);
+        HUDManager.Instance.PlayerGotHealed(invincibilityDuration);
 
         return true;
     }
@@ -285,6 +311,30 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         //TODO: Change to event 
         
         GameManager.Instance.isPlayerAlive = false;
+        StartCoroutine(DeathAnimation());
         return;
+    }
+
+    IEnumerator DeathAnimation()
+    {
+        yield return new WaitForSeconds(0.1f);
+        DeathScreenManager.Instance.ShowDeathScreen();
+
+        float elapsedTime = 0;
+        float deathTime = 0.75f;
+        while (elapsedTime < deathTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float angle = Mathf.Clamp01(elapsedTime / deathTime) * 90;
+
+            Vector3 euler = transform.rotation.eulerAngles;
+            transform.rotation = Quaternion.Euler(new Vector3(euler.x, euler.y, angle));
+            transform.position += new Vector3(0, -0.8f * Time.deltaTime, 0);
+            yield return null;
+        }
+    }
+    public void SetCameraFOV(float value) 
+    {
+        Camera.main.fieldOfView = value;
     }
 }

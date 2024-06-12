@@ -10,4 +10,13 @@ public struct EnemyMovement
     public float Acceleration;
 
     public float ExtraRotationSpeed;
+
+    public static EnemyMovement operator *(EnemyMovement a, float b)
+    {
+        a.MovementSpeed *= b;
+        a.TurnSpeed *= b;
+        a.Acceleration *= b;
+        a.ExtraRotationSpeed *= b;
+        return a;
+    }
 }
