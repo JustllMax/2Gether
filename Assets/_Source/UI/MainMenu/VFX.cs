@@ -15,17 +15,12 @@ public class VFX : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         public RectTransform t;
         public Vector3 startPos;
-        public bool isPointerOn;
         public Combo(RectTransform t, Vector3 startPos)
         {
             this.t = t;
             this.startPos = startPos;
-            this.isPointerOn = false;
         }
-        public void SetIsPointer(bool val)
-        {
-            isPointerOn = val;
-        }
+
     }
 
     [Header("Offset")]
@@ -58,17 +53,10 @@ public class VFX : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         StopAllCoroutines();
         foreach (var child in assets)
         {
-            //child.t.DOAnchorPosX(child.startPos.x + moveOffset, moveDuration);
-            
             StartCoroutine(MoveForwardComponent(child));
-            //float dest = child.t.anchoredPosition.x + moveOffset;
-            //child.t.anchoredPosition = new Vector2(Mathf.Lerp(child.t.anchoredPosition.x, dest, Time.unscaledDeltaTime), child.t.anchoredPosition.y);
-      
         }
         StartCoroutine(FadeComponent(fadeMax));
 
-
-        //background.DOFade(fadeMax, fadeDuration);
     }
 
     private IEnumerator MoveForwardComponent(Combo child)
@@ -101,7 +89,6 @@ public class VFX : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
 
         StartCoroutine(FadeComponent(fadeMin));
-        //background.DOFade(fadeMin, fadeDuration);
     }
 
     private IEnumerator MoveBackwardComponent(Combo child)
