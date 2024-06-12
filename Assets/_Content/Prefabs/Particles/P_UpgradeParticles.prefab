@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3316945329460787115}
   - component: {fileID: 7189597526390380324}
   m_Layer: 0
-  m_Name: P_lvlUp
+  m_Name: P_UpgradeParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

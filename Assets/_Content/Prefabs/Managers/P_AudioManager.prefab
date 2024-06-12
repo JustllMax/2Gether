@@ -75,6 +75,9 @@ MonoBehaviour:
   sfxSource: {fileID: 8001940368556336893}
   loopSfxSource: {fileID: 1234309167280218188}
   ambientSource: {fileID: 5234663322375001573}
+  MinDB: -40
+  MaxDB: 5
+  AudioMixer: {fileID: 24100000, guid: e36732c6242d4b04a974f76d36fb6d00, type: 2}
   MusicAudioLowPassFilter: {fileID: 1543892050332279436}
   AmbientAudioLowPassFilter: {fileID: 1123133185558252980}
 --- !u!1 &4151397402739781573
@@ -480,7 +483,7 @@ AudioLowPassFilter:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.082673945
+      value: 0.09049568
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -635,7 +638,7 @@ AudioLowPassFilter:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.030104592
+      value: 0.09049568
       inSlope: 0
       outSlope: 0
       tangentMode: 0
