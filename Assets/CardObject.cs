@@ -23,6 +23,7 @@ public class CardObject : MonoBehaviour
     {
         GameContext ctx = new GameContext();
         ctx.buildingPlacer = BuildingPlacer.Instance;
+        ctx.cardUi = UIFlow.Instance;
         _card.OnBeginUseCard(ctx);
     }
 

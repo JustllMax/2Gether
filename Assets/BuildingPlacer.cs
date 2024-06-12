@@ -28,6 +28,9 @@ public class BuildingPlacer : MonoBehaviour
     [SerializeField] private const int gridOffset = 10;
 
 
+    private BuildingCard _selectedBuildingCard;
+    private GameContext _gameContext;
+
     [SerializeField]
     private GridController _gridController;
 
@@ -92,15 +95,18 @@ public class BuildingPlacer : MonoBehaviour
                     if (_gridController.TryPlace(pos, _draggingBuilding.GetComponent<Building>()))
                     {
                         Debug.Log("Place ok");
-                        Destroy(_draggingBuilding);
+                        _selectedBuildingCard.OnCardSubmitted(_gameContext);
+                        EndPlaceMode();
                     }
                 }
             }
         }
     }
 
-    public void StartPlaceMode(BuildingCard bc)
+    public void StartPlaceMode(BuildingCard bc, GameContext ctx)
     {
+        _selectedBuildingCard = bc;
+        _gameContext = ctx;
         _isPlacing = true;
         _draggingBuilding = Instantiate(bc.BuildingPrefab);
     }

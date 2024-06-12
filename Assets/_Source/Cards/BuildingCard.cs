@@ -12,7 +12,7 @@ public class BuildingCard : Card
 
     public override void OnBeginUseCard(GameContext ctx)
     {
-        ctx.buildingPlacer.StartPlaceMode(this);
+        ctx.buildingPlacer.StartPlaceMode(this, ctx);
     }
 
     public override void OnCardSubmitted(GameContext ctx)

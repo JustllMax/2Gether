@@ -8,6 +8,8 @@ using System;
 
 public class UIFlow : MonoBehaviour
 {
+    public static UIFlow Instance;
+
     public Button boosterPackButton;
     public Button rerollButton;
     public Button continueButton;
@@ -23,8 +25,13 @@ public class UIFlow : MonoBehaviour
     [SerializeField, ReadOnly]
     private CardPoolData _currentCardPoolData;
 
+    [SerializeField, ReadOnly]
+    List<UICards> _cards = new List<UICards>();
+
     void Awake()
     {
+        Instance = this;
+
         gamePanel.SetActive(false);
         cardpackPanel.SetActive(false);
         rerollButton.gameObject.SetActive(false);
@@ -56,8 +63,8 @@ public class UIFlow : MonoBehaviour
         continueButton.gameObject.SetActive(true);
         rerollButton.transform.DOScale(0, 0);
         continueButton.transform.DOScale(0, 0);
-        rerollButton.transform.DOScale(1, 1).SetDelay(1f);
-        continueButton.transform.DOScale(1, 1).SetDelay(3f);
+        rerollButton.transform.DOScale(1, 1);
+        continueButton.transform.DOScale(1, 1);
     }
 
     void Reroll()
@@ -98,8 +105,8 @@ public class UIFlow : MonoBehaviour
                 continueButton.interactable = false;
                 UnityEngine.UI.Image rerollButtonImage = rerollButton.GetComponent<UnityEngine.UI.Image>();
                 UnityEngine.UI.Image continueButtonImage = continueButton.GetComponent<UnityEngine.UI.Image>();
-                rerollButtonImage.DOFade(0f, 1f);
-                continueButtonImage.DOFade(0f, 1f);
+                rerollButtonImage.DOFade(0f, 0.1f);
+                continueButtonImage.DOFade(0f, 0.1f);
             });
 
         DOTween.Sequence()
@@ -130,7 +137,7 @@ public class UIFlow : MonoBehaviour
             });
 
         DOTween.Sequence()
-            .AppendInterval(3f)
+            .AppendInterval(1f)
             .OnComplete(() =>
             {
                 gamePanel.SetActive(true);
@@ -144,8 +151,11 @@ public class UIFlow : MonoBehaviour
         foreach (var card in _currentCardPoolData.Cards)
         {
             GameObject gocard = Instantiate(cardPrefab, cardpackOpenPanel.transform);
-            gocard.GetComponent<CardObject>().PopulateCard(card);
+            var cardObject = gocard.GetComponent<CardObject>();
+            cardObject.PopulateCard(card);
             gocard.name = "Card " + card.CardName;
+
+            _cards.Add(gocard.GetComponent<UICards>());
         }
 
         HorizontalLayoutGroup layoutGroup = cardpackOpenPanel.GetComponent<HorizontalLayoutGroup>();
@@ -210,6 +220,7 @@ public class UIFlow : MonoBehaviour
 
     public void DiscardCard(Card buildingCard)
     {
-
+        Destroy(currentClickedCard.gameObject);
+        currentClickedCard = null;
     }
 }

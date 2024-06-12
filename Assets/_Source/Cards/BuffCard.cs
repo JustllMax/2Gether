@@ -7,17 +7,15 @@ public class BuffCard : Card
 {
     public override void OnBeginUseCard(GameContext ctx)
     {
-        throw new System.NotImplementedException();
+        ctx.cardUi.DiscardCard(this);
     }
 
     public override void OnCardSubmitted(GameContext ctx)
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnEndUseCard(GameContext ctx)
     {
-        throw new System.NotImplementedException();
     }
 
 
