@@ -64670,7 +64670,7 @@ GameObject:
   - component: {fileID: 8072026581411749640}
   m_Layer: 8
   m_Name: P_Enemy_Eldritch
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -42,7 +42,6 @@ public class PathGenerator
 
             if (newPos.x == 0 || newPos.y == 0 || newPos.x == _mapSize.x - 1 || newPos.y == _mapSize.y - 1)
             {
-                Debug.LogErrorFormat($"{newPos.x}; {newPos.y}");
                 map[newPos.x, newPos.y] = 1;
                 map[pos.x, pos.y] += 1;
                 /*

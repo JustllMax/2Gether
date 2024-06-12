@@ -710,7 +710,7 @@ GameObject:
   - component: {fileID: 312039951582671535}
   m_Layer: 8
   m_Name: P_Enemy_Booger
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

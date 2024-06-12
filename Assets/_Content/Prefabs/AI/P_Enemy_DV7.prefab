@@ -499,7 +499,7 @@ GameObject:
   - component: {fileID: 2888291538053662771}
   m_Layer: 8
   m_Name: P_Enemy_DV7
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

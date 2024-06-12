@@ -53,6 +53,7 @@ public class DeathScreenManager : MonoBehaviour
         AudioManager.Instance.SetMusicPitch(1.0f);
         deathScreen.SetActive(false);
         IsScreenActive = false;
+        DayNightCycleManager.Instance.EndNightCycle();
     }
 
     private IEnumerator DisplayAnim()

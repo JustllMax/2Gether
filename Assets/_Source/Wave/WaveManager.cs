@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
 public struct SingleWave
@@ -20,23 +17,18 @@ public struct SingleWave
 
 public class WaveManager : MonoBehaviour
 {
-
     #region variables
     private static WaveManager _instance;
     public static WaveManager Instance { get { return _instance; } }
-    [SerializeField] int waveMaxCount;
     [SerializeField] List<GameObject> _enemyFollowPrefabs;
     [SerializeField] List<GameObject> _enemyAttackPrefabs;
     [SerializeField] List<GameObject> _enemyBossPrefabs;
     List<SingleWave> waves = new List<SingleWave>();
     private WaveSystem _waveSystem;
     public WaveSystem waveSystem { get { return _waveSystem; } }
-
-    #region Wave Spawn hard system
     private float waveClearExpected = 240;
     private float waveClear = 0;
 
-    #endregion
     #endregion
 
     #region On start 
@@ -50,9 +42,10 @@ public class WaveManager : MonoBehaviour
         }
         _instance = this;
         _waveSystem = GetComponent<WaveSystem>();
+        WaveSystem.nightCount = 0;
         WaveData waveData = Resources.Load<WaveData>("Waves/wave_data");
 
-        foreach(var wave in waveData.Waves)
+        foreach (var wave in waveData.Waves)
         {
             waves.Add(new SingleWave(new List<GameObject>(wave.Enemies), wave.EnemySpawnInterval, wave.Cooldown));
             waveClearExpected += wave.Cooldown;
@@ -60,10 +53,13 @@ public class WaveManager : MonoBehaviour
     }
     void OnEnable()
     {
+        DayNightCycleManager.NightEnd += EndNightCycle;
+        DayNightCycleManager.NightBegin += NightBeginCycle;
         GameManager.OnGameManagerReady += OnStart;
     }
     void OnDisable()
     {
+        DayNightCycleManager.NightEnd -= EndNightCycle;
         GameManager.OnGameManagerReady -= OnStart;
     }
     private void OnStart()
@@ -92,14 +88,7 @@ public class WaveManager : MonoBehaviour
 
         if (_waveSystem.enemyCount <= 0 && _waveSystem.isWaveActive && !_waveSystem.isSpawnActive)
         {
-            EndNight();
-        }
-
-        if (DayNightCycleManager.Instance.nightBeginTasks <= 0)
-        {
-            Debug.LogWarning("Wave start " + DayNightCycleManager.Instance.nightBeginTasks);
-            DayNightCycleManager.Instance.nightBeginTasks = 3;
-            StartWave();
+            DayNightCycleManager.Instance.EndNightCycle();
         }
         waveClear = _waveSystem.elapsedTime;
     }
@@ -117,7 +106,7 @@ public class WaveManager : MonoBehaviour
 
         if (waveClear >= waveClearExpected)
         {
-            
+
             return;
         }
         else
@@ -225,19 +214,34 @@ public class WaveManager : MonoBehaviour
 
     }
     #endregion
-    public void EndNight()
-    {
-        _waveSystem.isWaveActive = false;
-        DayNightCycleManager.Instance.EndNightCycle();
-        NextNightWaveData();
-    }
 
-    void StartWave()
+    #region Wave start/End
+
+    private void NightBeginCycle()
+    {
+        StartWave();
+    }
+    private void StartWave()
     {
         _waveSystem.BeginWave(waves);
     }
 
+    public void EndNightCycle()
+    {
+        _waveSystem.isWaveActive = false;
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (enemies.Length > 0)
+        {
+            foreach (GameObject enemy in enemies)
+            {
+                Destroy(enemy);
+            }
+        }
+        _waveSystem.enemyCount = 0;
+
+        if (WaveSystem.nightCount > 0)
+            NextNightWaveData();
+    }
     #endregion
-
-
+    #endregion
 }
