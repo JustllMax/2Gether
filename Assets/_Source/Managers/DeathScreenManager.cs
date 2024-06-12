@@ -34,7 +34,6 @@ public class DeathScreenManager : MonoBehaviour
 
     public void ShowDeathScreen()
     {
-        AudioManager.Instance.EnableMusicLowPassFilter(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = false;
         InputManager.Instance.DisableControllers();
@@ -51,7 +50,7 @@ public class DeathScreenManager : MonoBehaviour
 
     public void EnterDayMode()
     {
-        AudioManager.Instance.EnableMusicLowPassFilter(false);
+        AudioManager.Instance.SetMusicPitch(1.0f);
         if (!DayNightCycleManager.Instance.IsDay)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -70,6 +69,7 @@ public class DeathScreenManager : MonoBehaviour
         {
             elapsedTime += Time.unscaledDeltaTime;
             Time.timeScale = Mathf.Clamp01(1.0f - (elapsedTime / slowdownDuration));
+            AudioManager.Instance.SetMusicPitch(Time.timeScale);
             yield return null;
         }
 

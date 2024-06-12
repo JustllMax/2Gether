@@ -1,3 +1,4 @@
+using System.Collections;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
@@ -52,6 +53,9 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
     [SerializeField]
     private bool _isMoving;
+
+    [SerializeField]
+    Animator _animator;
 
     private PlayerInputAction.FPSControllerActions FPSController;
     private CharacterController _characterController;
@@ -110,6 +114,11 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
     public void Update()
     {
+        if (transform.position.y < -50f)
+        {
+            Kill();
+        }
+
         if(CanMove == false)
         {
             return;
@@ -285,10 +294,28 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         //TODO: Change to event 
         
         GameManager.Instance.isPlayerAlive = false;
-        DeathScreenManager.Instance.ShowDeathScreen();
+        StartCoroutine(DeathAnimation());
         return;
     }
-    
+
+    IEnumerator DeathAnimation()
+    {
+        yield return new WaitForSeconds(0.1f);
+        DeathScreenManager.Instance.ShowDeathScreen();
+
+        float elapsedTime = 0;
+        float deathTime = 0.75f;
+        while (elapsedTime < deathTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float angle = Mathf.Clamp01(elapsedTime / deathTime) * 90;
+
+            Vector3 euler = transform.rotation.eulerAngles;
+            transform.rotation = Quaternion.Euler(new Vector3(euler.x, euler.y, angle));
+            transform.position += new Vector3(0, -0.8f * Time.deltaTime, 0);
+            yield return null;
+        }
+    }
     public void SetCameraFOV(float value) 
     {
         Camera.main.fieldOfView = value;

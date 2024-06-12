@@ -105,6 +105,7 @@ public class GrabAttackState : AIState
             //Player died
             if (player.TakeDamage(Attack.Damage))
             {
+                yield return new WaitForSeconds(ReleaseDelay);
                 AttackFailed(controller, grabController);
             } else {
                 //Player survived

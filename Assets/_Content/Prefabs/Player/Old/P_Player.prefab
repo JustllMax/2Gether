@@ -321,6 +321,7 @@ GameObject:
   - component: {fileID: 798092581204340326}
   - component: {fileID: 9109908220171186289}
   - component: {fileID: 4069124828040571552}
+  - component: {fileID: 8595014690446685525}
   m_Layer: 19
   m_Name: Sniper
   m_TagString: Untagged
@@ -462,6 +463,39 @@ MonoBehaviour:
   ammoInMagazine: 0
   bulletSpeed: 100
   addBulletSpread: 0
+  bulletSpreadVariance: {x: 0.1, y: 0.1, z: 0.1}
+  shootingSystem: {fileID: 7022478843008030562}
+  bulletSpawnPoint: {fileID: 5376599401585661262}
+  trailSpawnPoint: {fileID: 7186576311434618412}
+  impactParticleSystem: {fileID: 9064919875212695174, guid: a5e1e2c4d2cd81f4abed6272a2b8187a,
+    type: 3}
+  bulletTrail: {fileID: 328621789431213768, guid: b8a13779f1d497b46ace27143250e1f7,
+    type: 3}
+  mask:
+    serializedVersion: 2
+    m_Bits: 63249
+  isAiming: 0
+--- !u!114 &8595014690446685525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139438102727488711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8dde86547c503419e8a382156b630b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _SO_Stats: {fileID: 11400000, guid: 5cab93f09bdff9b468d6f8833889f64c, type: 2}
+  _Model: {fileID: 8949418372680502028}
+  audioSource: {fileID: 9109908220171186289}
+  firingSound: {fileID: 8300000, guid: 5e427fbeb0d7f72419f7d8f84f7e0215, type: 3}
+  reloadSound: {fileID: 8300000, guid: a1ed22c88dbaf284e8974d5013d8d275, type: 3}
+  noAmmoSound: {fileID: 8300000, guid: cd3eebcf6f5a27f4fa1942878fc7b722, type: 3}
+  ammoInMagazine: 0
+  bulletSpeed: 100
+  addBulletSpread: 1
   bulletSpreadVariance: {x: 0.1, y: 0.1, z: 0.1}
   shootingSystem: {fileID: 7022478843008030562}
   bulletSpawnPoint: {fileID: 5376599401585661262}
@@ -2008,6 +2042,7 @@ MonoBehaviour:
   _dashCooldown: 1.25
   _maxDashCount: 3
   _isMoving: 0
+  _animator: {fileID: 5939401838147078560}
 --- !u!114 &9078178050116245136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2039,7 +2074,7 @@ MonoBehaviour:
   GunList:
   - {fileID: 5425135659821295255}
   - {fileID: 4542388386687634158}
-  - {fileID: 4069124828040571552}
+  - {fileID: 8595014690446685525}
   AmmoStore:
   - type: 0
     amount: 9999
@@ -3556,17 +3591,17 @@ PrefabInstance:
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -16.397
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -7.022
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 16.206
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

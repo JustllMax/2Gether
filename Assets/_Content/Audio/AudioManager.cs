@@ -207,4 +207,9 @@ public class AudioManager : MonoBehaviour
         AmbientAudioLowPassFilter.enabled = enable;
 
     }
+
+    public void SetMusicPitch(float pitch)
+    {
+        musicSource.pitch = pitch;
+    }
 }
