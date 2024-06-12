@@ -21,6 +21,7 @@ abstract public class Gun : MonoBehaviour
     [SerializeField] protected ParticleSystem impactParticleSystem;
     [SerializeField] protected TrailRenderer bulletTrail;
     [SerializeField] protected LayerMask mask;
+    [SerializeField] protected WeaponIKConfig weaponIKConfig;
     protected float shootDelay;
     protected float lastShootTime;
     protected Animator animator;
@@ -168,4 +169,10 @@ abstract public class Gun : MonoBehaviour
         audioSource.Stop();
         audioSource.clip = null;
     }
+
+    public WeaponIKConfig GetIKConfig()
+    {
+        return weaponIKConfig;
+    }
+
 }

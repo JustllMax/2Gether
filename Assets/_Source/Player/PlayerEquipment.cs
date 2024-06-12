@@ -13,6 +13,8 @@ public class PlayerEquipment : MonoBehaviour
     [SerializeField] List<GunAmmoStore> AmmoStore;
 
     [SerializeField] AudioSource audioSource;
+    [SerializeField] private HandIKController _ikController;
+
     Animator _animator;
     PlayerGunController gunController;
     public Dictionary<GunType, int> AmmoStorage;
@@ -160,12 +162,19 @@ public class PlayerEquipment : MonoBehaviour
         {
             gun.GetGunModel().SetActive(false);
         }
-        
-        _currentGun.GetGunModel().SetActive(true);
-        
-        
 
+        var ikConfig = _currentGun.GetIKConfig();
+        if (ikConfig != null)
+        {
+            _ikController.ChangeActiveConfig(ikConfig);
+        }
+        else
+        {
+            Debug.LogWarning("Gun: " + _currentGun.name + " does not have an IK config attached!, will use last weapon's config");
+        }
+        _currentGun.GetGunModel().SetActive(true);
     }
+
     public void SwitchUpEndAnimEvent()
     {
         isSwitchingGun = false;
