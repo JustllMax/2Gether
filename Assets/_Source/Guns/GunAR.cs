@@ -4,7 +4,21 @@ using UnityEngine;
 
 public class GunAR : Gun
 {
+    [Header("Grenade Launcher")]
+    [SerializeField] GameObject P_PlayerGrenade;
+    [SerializeField] float projectileSpeed;
+    [SerializeField] float explosionDamage;
+    [SerializeField] float explosionRadius;
+    [SerializeField] LayerMask explosionMask;
 
+
+    PlayerEquipment playerEQ;
+
+    public override void Start()
+    {
+        base.Start();
+        playerEQ.GetComponentInParent<PlayerEquipment>();
+    }
 
     public override bool Fire(bool isSameButtonPress, Transform bulletSpawnPoint)
     {
@@ -23,10 +37,11 @@ public class GunAR : Gun
     public override bool Aim()
     {
         isAiming = true;
-        
 
-
+        ShootGrenadeLauncher();
+        playerEQ.GrenadesLeft--;
         isAiming = false;
+
         return true;
     }
 
@@ -37,7 +52,11 @@ public class GunAR : Gun
     }
     public override bool CanAim()
     {
-       return true;
+        if(playerEQ.GrenadesLeft > 0)
+        {
+            return true;
+        }    
+       return false;
     }
 
     public override bool CanFire()
@@ -52,4 +71,27 @@ public class GunAR : Gun
         GameManager.Instance.GetPlayerController().GetComponent<PlayerGunController>().ReloadWeapon();
         return false;
     }
+
+
+    void ShootGrenadeLauncher()
+    {
+
+        RaycastHit hit;
+        Vector3 direction = bulletSpawnPoint.forward;
+        Vector3 endPoint = Vector3.zero;
+        PlayerGrenade grenade = Instantiate(P_PlayerGrenade, trailSpawnPoint).GetComponent<PlayerGrenade>();
+        if (Physics.Raycast(bulletSpawnPoint.position, direction, out hit, GetGunData().Range, mask))
+        {
+            endPoint = hit.transform.position;
+            direction = endPoint.normalized;
+        }
+        else{
+
+            endPoint = bulletSpawnPoint.position + GetDirection() * 100;
+            direction = endPoint.normalized;
+        }
+        grenade.SetUp(projectileSpeed, direction, GetGunData().Range, explosionDamage, explosionRadius, mask);
+
+    }
+
 }

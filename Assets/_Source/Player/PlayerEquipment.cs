@@ -74,6 +74,7 @@ public class PlayerEquipment : MonoBehaviour
                 }
             }
         }
+        RegenerateGrenades();
     }
 
     #region SwitchGun
@@ -257,6 +258,15 @@ public class PlayerEquipment : MonoBehaviour
     {
         isReloading = false;
         reloadTimer = 0f;
+    }
+
+
+    void RegenerateGrenades()
+    {
+        if(GrenadesLeft < 1)
+        {
+
+        }
     }
 
     #endregion Reload
