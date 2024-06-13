@@ -23,7 +23,7 @@ public class UIFlow : MonoBehaviour
     private UICards currentClickedCard = null;
 
     [SerializeField, ReadOnly]
-    private CardPoolData _currentCardPoolData;
+    private List<Card> _currentCardPool;
 
     [SerializeField, ReadOnly]
     List<UICards> _cards = new List<UICards>();
@@ -50,7 +50,12 @@ public class UIFlow : MonoBehaviour
 
     public void ShowPanel(CardPoolData pd)
     {
-        _currentCardPoolData = pd;
+        ShowPanel(pd.Cards);
+    }
+
+    public void ShowPanel(List<Card> pd)
+    {
+        _currentCardPool = pd;
 
         gamePanel.SetActive(false);
         cardpackPanel.SetActive(true);
@@ -165,7 +170,7 @@ public class UIFlow : MonoBehaviour
 
     void SpawnCards()
     {
-        foreach (var card in _currentCardPoolData.Cards)
+        foreach (var card in _currentCardPool)
         {
             GameObject gocard = Instantiate(cardPrefab, cardpackOpenPanel.transform);
             var cardObject = gocard.GetComponent<CardObject>();
@@ -249,7 +254,7 @@ public class UIFlow : MonoBehaviour
 
     void OnDayStart()
     {
-        ShowPanel(_currentCardPoolData);
+        ShowPanel(_currentCardPool);
     }
 
 }
