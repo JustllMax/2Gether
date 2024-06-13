@@ -1,12 +1,15 @@
 using System;
 using UnityEngine;
+using NaughtyAttributes;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
     public static GameManager Instance { get { return _instance; } }
 
+    [Foldout("Debug")]
     [SerializeField] PlayerController _playerController;
+    [Foldout("Debug")]
     [SerializeField] Transform mainBaseTransform;
     [SerializeField] UIFlow _cardManager;
 
@@ -43,8 +46,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Application.targetFrameRate = 75;
-
-        _cardManager.ShowPanel(InitialCardPool);
 
     }
     void OnDisable()

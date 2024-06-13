@@ -38,6 +38,16 @@ public class UIFlow : MonoBehaviour
         continueButton.gameObject.SetActive(false);
     }
 
+    private void OnEnable()
+    {
+        DayNightCycleManager.DayBegin += OnDayStart;
+    }
+
+    private void OnDisable()
+    {
+        DayNightCycleManager.DayBegin -= OnDayStart;
+    }
+
     public void ShowPanel(CardPoolData pd)
     {
         _currentCardPoolData = pd;
@@ -235,6 +245,11 @@ public class UIFlow : MonoBehaviour
     public bool HasCardSelected()
     {
         return currentClickedCard != null;
+    }
+
+    void OnDayStart()
+    {
+        ShowPanel(_currentCardPoolData);
     }
 
 }
