@@ -111,81 +111,6 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
-            /*
-            night
-                waves - 1, 2, 3
-
-
-            List<List<int>> difEnemyPrefab = 
-            followPrefId +1  [1, 2, 3]  [1, 2, 3]
-            attackPrefId +3  [3, 4, 5]  [3]
-            bossPrefId   +5  [5, 6, 7]  [5]
-
-            List<List<int>> difEnemy 
-            [1, 1, 1]
-            [1, 1, 1, 3]
-            [1, 1, 3, 2]
-            
-            sumDif = sum(difEnemy)
-            absDif = sumDif
-
-            absDif += Round(waveClearAvg*nightCount*balanceCoefficient)
-
-            while sumDif <= absDif
-            {
-                enemyIndex = UnityEngine.Random.Range(0, 100) < 30 ? 1:0;
-                (waveIndex < 3) ?  waveIndex++:0
-                if(absDis - sumDif > 10)
-                {
-                    if(enemyIndex == 0)
-                    {
-                        difEnemy[waveIndex].Add(followPrefab[Range(2, absDis - sumDif % followPrefab.Count)]);
-                    }
-
-                    if(enemyIndex == 1)
-                    {
-                        difEnemy[waveIndex].Add(attackPrefab[0, absDis - sumDif % followPrefab.Count]);
-                    }
-                }
-                else
-                {
-                    difEnemy[0].Add(followPrefab[Range(2, absDis - sumDif % followPrefab.Count)]);
-                }
-                sumDif = sum(difEnemy)
-            }
-
-
-            
-    private int SumDif()
-    {
-        int sumDif = 0;
-        foreach (var enemies in difEnemy)
-        {
-            foreach (var enemy in enemies)
-            {
-                sumDif += enemy;
-            }
-        }
-        return sumDif;
-    }
-
-    private void GetStartDif()
-    {
-        for (int wave = 0; wave < _waveData.Waves.Count; wave++)
-        {
-            difEnemy.Add(new List<int>());
-            for (int f = 1; f < _enemyFollowPrefabs.Count; f++)
-            {
-                difEnemy[wave].Add(f);
-            }
-            for (int a = 0; a < _enemyAttackPrefabs.Count; a++)
-            {
-                difEnemy[wave].Add(a);
-            }
-        }
-    }
-            */
-
             foreach (var wave in waves)
             {
                 //wave.Cooldown += followEnemiesNumberToAdd+attackEnemiesNumberToAdd;
@@ -205,13 +130,12 @@ public class WaveManager : MonoBehaviour
             }
             waveClearExpected += followEnemiesNumberToAdd + attackEnemiesNumberToAdd;
         }
-
         if (WaveSystem.nightCount % 5 == 0)
         {
             bossToAdd = UnityEngine.Random.Range(0, _enemyBossPrefabs.Count);
             waves[waves.Count - 1].EnemyPool.Add(_enemyBossPrefabs[bossToAdd]);
         }
-
+        waveClearExpected += followEnemiesNumberToAdd + attackEnemiesNumberToAdd;
     }
     #endregion
 
@@ -221,7 +145,7 @@ public class WaveManager : MonoBehaviour
     {
         StartWave();
     }
-    private void StartWave()
+    public void StartWave()
     {
         _waveSystem.BeginWave(waves);
     }

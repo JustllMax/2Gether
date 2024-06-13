@@ -137,5 +137,5 @@ MonoBehaviour:
   _mapId: 0
   _isRandomGeneration: 1
   _decorationSpawnRation: 20
-  _mapSize: {x: 13, y: 13}
-  _startPos: {x: 6, y: 6}
+  _mapSize: {x: 7, y: 7}
+  _startPos: {x: 3, y: 3}

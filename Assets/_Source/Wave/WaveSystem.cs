@@ -123,6 +123,10 @@ public class WaveSystem : MonoBehaviour
                         return;
                     }
                     Instantiate(wave.EnemyPool[i], spawnPoint.transform.position + new Vector3(10, 1, 10), Quaternion.identity);
+                    if (wave.EnemyPool[i].name == "P_Enemy_Eldritch")
+                    {
+                        wave.EnemyPool.Remove(wave.EnemyPool[i]);
+                    }
                     enemyCount++;
                 }
                 //await UniTask.WaitForSeconds(wave.EnemySpawnInterval);

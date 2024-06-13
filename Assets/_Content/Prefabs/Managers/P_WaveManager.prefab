@@ -45,16 +45,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0155e627fa78a474db633ae6ba9a9d06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveMaxCount: 0
   _enemyFollowPrefabs:
   - {fileID: 2303781138697332408, guid: 7ce58ef33dd26454e94930b8ca7a424b, type: 3}
   - {fileID: 4084334784099707750, guid: 14d53d09db65d4045a34b3885ac33f06, type: 3}
   - {fileID: 8116058673664128778, guid: d6259ac63592f4d4eb306f8c21dd3269, type: 3}
+  - {fileID: 7685304744681281529, guid: 1dcb145c753befd4fbc21ef919f64b61, type: 3}
   _enemyAttackPrefabs:
   - {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1, type: 3}
   - {fileID: 6219354284539619549, guid: 427d3b5163b521946ad782cdf25aacc2, type: 3}
   _enemyBossPrefabs:
-  - {fileID: 8110336767031240090, guid: 754d478aa9d24e84e85d91c6480a5622, type: 3}
+  - {fileID: 8669766861633451264, guid: 542eff3b07a894f4bb5cb0369776e87b, type: 3}
 --- !u!114 &1440359551500882747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,6 +68,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnPoints: []
+  _particlesPrefab:
+  - {fileID: 2108609105544464945, guid: 3ef91c0dbb5de8e4c8b693ffacea1a0c, type: 3}
+  - {fileID: 6723271489475600451, guid: 336088f1e9b7597449973ac1f9b51579, type: 3}
   isWaveActive: 0
   isSpawnActive: 0
   enemyCount: 0
