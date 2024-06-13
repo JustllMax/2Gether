@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     //TODO: Change to event 
     public bool isPlayerAlive = true;
-
+    public static Action OnPlayerDeath;
     public delegate void GameManagerReadyHandler();
     public static event GameManagerReadyHandler OnGameManagerReady;
     private bool isMapReady = false;
@@ -31,6 +31,9 @@ public class GameManager : MonoBehaviour
 
     void OnEnable()
     {
+        DayNightCycleManager.NightBegin += OnNightStart;
+        DayNightCycleManager.NightEnd += OnNightEnd;
+        SpectatorModeManager.SpectatorModeOn += OnSpectatorModeStart;
         SlotPlacer.OnMapGenerated += OnMapGenerated;
         NavMeshSurfaceManager.OnNavMeshGenerated += OnNavMeshGenerated;
 
@@ -43,6 +46,8 @@ public class GameManager : MonoBehaviour
     }
     void OnDisable()
     {
+        DayNightCycleManager.NightBegin += OnNightStart;
+        SpectatorModeManager.SpectatorModeOn += OnSpectatorModeStart;
         SlotPlacer.OnMapGenerated -= OnMapGenerated;
         NavMeshSurfaceManager.OnNavMeshGenerated -= OnNavMeshGenerated;
     }
@@ -74,9 +79,29 @@ public class GameManager : MonoBehaviour
     public void SetMainBaseTransform(Transform mainBase) { mainBaseTransform = mainBase; }
     public bool IsPlayerAlive() { return isPlayerAlive; }
 
-    public void OnPlayerDeath()
+    public void OnPlayerDeathInvoke()
     {
         isPlayerAlive = false;
+        if (OnPlayerDeath != null)
+        {
+            OnPlayerDeath();
+        }
     }
 
+    void OnSpectatorModeStart()
+    {
+        InputManager.Instance.StartDayCycle();
+        _playerController.transform.position = mainBaseTransform.GetComponent<MainBase>().playerSpawnPoint.position;
+        _playerController.GetPlayerModel().SetActive(false);
+        Time.timeScale = 2f;
+    }
+
+    void OnNightStart()
+    {
+        _playerController.GetPlayerModel().SetActive(true);
+    }
+    void OnNightEnd()
+    {
+        Time.timeScale = 1f;
+    }
 }

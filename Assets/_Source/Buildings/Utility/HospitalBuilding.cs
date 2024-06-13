@@ -9,7 +9,6 @@ public class HospitalBuilding : Building
     float activationTimer = 0f;
     float healingTimer = 0f;
 
-    PlayerController player;
     bool isPlayerInRange = false;
     bool healOnce;
     public override void Start()

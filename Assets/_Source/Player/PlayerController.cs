@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 {
-
+    [SerializeField]
+    GameObject playerModel;
     [SerializeField]
     float _maxHealth = 100f;
     [SerializeField]
@@ -336,5 +337,10 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     public void SetCameraFOV(float value) 
     {
         Camera.main.fieldOfView = value;
+    }
+
+    public GameObject GetPlayerModel()
+    {
+        return playerModel;
     }
 }

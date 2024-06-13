@@ -53,6 +53,7 @@ public class DeathScreenManager : MonoBehaviour
         AudioManager.Instance.SetMusicPitch(1.0f);
         deathScreen.SetActive(false);
         IsScreenActive = false;
+        SpectatorModeManager.Instance.StartSpectatorMode();
     }
 
     private IEnumerator DisplayAnim()
