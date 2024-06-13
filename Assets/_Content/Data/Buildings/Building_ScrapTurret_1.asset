@@ -18,14 +18,8 @@ MonoBehaviour:
   Description: ab
   BuildingType: 0
   ActivationTime: 5
-  BaseHealthPoints: 12
-  BaseSellCost: 10
-  Level: 1
+  HealthPoints: 0
+  SellCost: 0
   AttackDamage: 10
   AttackRange: 1
-  IsAOE: 0
-  P_AOE: {fileID: 0}
-  AOERange: 0
-  AOEDamage: 0
-  IsKnockback: 0
-  AttackKnockback: 5
+  AttackDelay: 0

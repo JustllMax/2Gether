@@ -15,6 +15,6 @@ MonoBehaviour:
   CardName: Laser
   CardSprite: {fileID: 21300000, guid: d7acbbcc6360f2a4ebf678f7831d48c3, type: 3}
   CardDescription: Shoots a laser at near enemies
-  CardStatisticsData: {fileID: 11400000, guid: a07c20b9b59085a409e8231e6f0601ce, type: 2}
+  CardStatisticsData: {fileID: 11400000, guid: f13357988ed0d1f4385403286501a5ed, type: 2}
   BuildingPrefab: {fileID: 7591932275088343701, guid: 427bf0348ca5d7240b330a8fc5b100d1,
     type: 3}
