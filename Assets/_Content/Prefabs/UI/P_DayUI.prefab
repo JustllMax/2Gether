@@ -329,7 +329,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2603276742075021909}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2041508524997333165}
+        m_TargetAssemblyTypeName: UIFlow, Assembly-CSharp
+        m_MethodName: ContinueToNight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3093764763919084589
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,7 +893,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 859
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &2553250818686713250
 MonoBehaviour:
@@ -944,7 +956,7 @@ MonoBehaviour:
   gamePanel: {fileID: 8487038027572920808}
   cardsPanel: {fileID: 4194653210181819695}
   currentClickedCard: {fileID: 0}
-  _currentCardPoolData: {fileID: 0}
+  _currentCardPool: []
   _cards: []
 --- !u!1 &6919359485066595142
 GameObject:
