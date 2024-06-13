@@ -36,6 +36,10 @@ public class UIFlow : MonoBehaviour
         cardpackPanel.SetActive(false);
         rerollButton.gameObject.SetActive(false);
         continueButton.gameObject.SetActive(false);
+
+        boosterPackButton.onClick.AddListener(OpenBoosterPack);
+        rerollButton.onClick.AddListener(Reroll);
+        continueButton.onClick.AddListener(Continue);
     }
 
     private void OnEnable()
@@ -62,9 +66,6 @@ public class UIFlow : MonoBehaviour
         rerollButton.gameObject.SetActive(false);
         continueButton.gameObject.SetActive(false);
 
-        boosterPackButton.onClick.AddListener(OpenBoosterPack);
-        rerollButton.onClick.AddListener(Reroll);
-        continueButton.onClick.AddListener(Continue);
     }
 
     void OpenBoosterPack()
@@ -250,6 +251,23 @@ public class UIFlow : MonoBehaviour
     public bool HasCardSelected()
     {
         return currentClickedCard != null;
+    }
+
+    public void ContinueToNight()
+    {
+        DayNightCycleManager.Instance.EndDayCycle();
+        Cleanup();
+    }
+
+    private void Cleanup()
+    {
+        DestroyCards();
+        _cards.Clear();
+
+        gamePanel.SetActive(false);
+        cardpackPanel.SetActive(false);
+        rerollButton.gameObject.SetActive(false);
+        continueButton.gameObject.SetActive(false);
     }
 
     void OnDayStart()
