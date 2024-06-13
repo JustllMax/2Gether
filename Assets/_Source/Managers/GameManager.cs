@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
     void OnMapGenerated()
     {
         isMapReady = true;
-        mainBaseTransform = SlotPlacer.Instance.spawnedSlots[SlotPlacer.Instance.startPos.x, SlotPlacer.Instance.startPos.y].transform;
+        mainBaseTransform = SlotPlacer.Instance.spawnedSlots[SlotPlacer.Instance.startPos.x, SlotPlacer.Instance.startPos.y].transform.GetChild(1).transform;
         CheckIfReady();
     }
 
