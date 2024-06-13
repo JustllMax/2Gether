@@ -1377,9 +1377,9 @@ MonoBehaviour:
   _SO_Stats: {fileID: 11400000, guid: e1fd46c668b8bc74fa5f17c929713ee1, type: 2}
   _Model: {fileID: 5192519862357467155}
   audioSource: {fileID: 3231617775913850226}
-  firingSound: {fileID: 0}
-  reloadSound: {fileID: 0}
-  noAmmoSound: {fileID: 0}
+  firingSound: {fileID: 8300000, guid: bdce81c929d85b2459c986cd055f6508, type: 3}
+  reloadSound: {fileID: 8300000, guid: 61c14cce20fb0464f9d48d29bf59ebf9, type: 3}
+  noAmmoSound: {fileID: 8300000, guid: cd3eebcf6f5a27f4fa1942878fc7b722, type: 3}
   ammoInMagazine: 0
   bulletSpeed: 100
   addBulletSpread: 1
@@ -1405,7 +1405,8 @@ AudioSource:
   m_GameObject: {fileID: 5996681186342680069}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3669003013915305990, guid: e36732c6242d4b04a974f76d36fb6d00,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
