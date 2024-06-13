@@ -64780,7 +64780,8 @@ AudioSource:
   m_GameObject: {fileID: 8669766861633451264}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7319856629499587537, guid: e36732c6242d4b04a974f76d36fb6d00,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -64900,8 +64901,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6bfc2566e3d2c5941abf5ab0d28ac86b, type: 2}
   AITargetFocus: 1
   hurtSound: {fileID: 0}
-  attackSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  attackSound: {fileID: 8300000, guid: 30c8b1904830a3046a00ffb74c6f9d7e, type: 3}
+  deathSound: {fileID: 8300000, guid: 86757ea04bdd614458912c7772153bad, type: 3}
   audioSource: {fileID: 0}
   DeathInvokeTime: 2.5
   currentTarget:

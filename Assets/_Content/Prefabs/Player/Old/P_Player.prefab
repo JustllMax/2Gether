@@ -417,16 +417,17 @@ AudioSource:
   m_GameObject: {fileID: 2139438102727488711}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -179720925567120511, guid: e36732c6242d4b04a974f76d36fb6d00,
+    type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 200
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -519,7 +520,7 @@ MonoBehaviour:
   _SO_Stats: {fileID: 11400000, guid: 5cab93f09bdff9b468d6f8833889f64c, type: 2}
   _Model: {fileID: 8949418372680502028}
   audioSource: {fileID: 9109908220171186289}
-  firingSound: {fileID: 8300000, guid: 5e427fbeb0d7f72419f7d8f84f7e0215, type: 3}
+  firingSound: {fileID: 8300000, guid: bfe9fd24d2fadd442a7c4f317c1964d2, type: 3}
   reloadSound: {fileID: 8300000, guid: a1ed22c88dbaf284e8974d5013d8d275, type: 3}
   noAmmoSound: {fileID: 8300000, guid: cd3eebcf6f5a27f4fa1942878fc7b722, type: 3}
   ammoInMagazine: 0
@@ -1405,7 +1406,8 @@ AudioSource:
   m_GameObject: {fileID: 5640439485512940884}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5950784169870292337, guid: e36732c6242d4b04a974f76d36fb6d00,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1685,7 +1687,8 @@ AudioSource:
   m_GameObject: {fileID: 6245915551581433762}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2664506169908013453, guid: e36732c6242d4b04a974f76d36fb6d00,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
