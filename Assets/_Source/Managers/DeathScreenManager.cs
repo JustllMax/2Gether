@@ -48,7 +48,7 @@ public class DeathScreenManager : MonoBehaviour
             PauseManager.Instance.PauseGame();
     }
 
-    public void EnterDayMode()
+    public void EnterSpectatorMode()
     {
         AudioManager.Instance.SetMusicPitch(1.0f);
         deathScreen.SetActive(false);

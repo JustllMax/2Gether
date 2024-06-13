@@ -79,16 +79,25 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
     public Vector3 Velocity { get => _velocity; set => _velocity = value; }
 
+
+    #region SetUp
     private void Awake()
     {
-        Health = _maxHealth;
-        IsTargetable = true;
-        TargetType = TargetType.Player;
+        SetUpPlayer();
         _characterController = GetComponent<CharacterController>();
         _audioSource = GetComponent<AudioSource>();
-        _dashCount = _maxDashCount;
+        
     }
 
+    private void OnEnable()
+    {
+        DayNightCycleManager.DayEnd += OnDayEnd;
+    }
+
+    private void OnDisable()
+    {
+        DayNightCycleManager.DayEnd -= OnDayEnd;
+    }
     private void OnValidate()
     {
         if (TargetType != TargetType.Player)
@@ -100,16 +109,35 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         FPSController = InputManager.Instance.GetPlayerInputAction().FPSController;
 
         FPSController.Jump.performed += OnJump;
+        SetUpHUD();
+    }
+
+    private void SetUpPlayer()
+    {
+        canBeHit = true;
+        CanMove = true;
+        Health = _maxHealth;
+        IsTargetable = true;
+        TargetType = TargetType.Player;
+        _dashCount = _maxDashCount;
+    }
+
+    private void SetUpHUD()
+    {
         HUDManager.Instance.SetMaxHealth(Health);
         HUDManager.Instance.SetCurrentHealth(Health);
 
         HUDManager.Instance.SetAllDashesMaxTimer(_dashCooldown);
-        for(int i = 0; i < _maxDashCount; i++)
+        for (int i = 0; i < _maxDashCount; i++)
         {
             HUDManager.Instance.SetDashCurrentTimer(i, _dashCooldown);
 
         }
     }
+
+   
+
+    #endregion
 
     private void FixedUpdate()
     {
@@ -197,7 +225,11 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
         _nightCamera.localRotation = Quaternion.Euler(new Vector3(-_cameraAngleX, 0, 0));
 
-        _gunCamera.rotation = _nightCamera.rotation;
+        if(_gunCamera != null && _gunCamera.gameObject.active)
+        {
+            _gunCamera.rotation = _nightCamera.rotation;
+        }
+        
 
     }
 
@@ -309,9 +341,9 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     {
         IsTargetable = false;
         CanMove = false;
-        //TODO: Change to event 
         
-        GameManager.Instance.isPlayerAlive = false;
+        GameManager.Instance.OnPlayerDeathInvoke();
+
         StartCoroutine(DeathAnimation());
         return;
     }
@@ -343,4 +375,14 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     {
         return playerModel;
     }
+
+    public void OnDayEnd()
+    {
+        SetUpPlayer();
+        SetUpHUD();
+        transform.rotation = Quaternion.identity;
+        playerModel.SetActive(true);
+    }
+
+
 }

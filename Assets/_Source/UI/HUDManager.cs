@@ -87,6 +87,11 @@ public class HUDManager : MonoBehaviour
         NightUI.SetActive(enabled);
     }
 
+    public void StartSpectatorMode()
+    {
+        _ = SetNightUIActivation(false);
+    }
+
     #region Setup
 
     void SetupIconsDictionary()

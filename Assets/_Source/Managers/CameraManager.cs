@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cinemachine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class CameraManager : MonoBehaviour
 {
@@ -12,7 +13,18 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     private GameObject groundFog;
 
-    bool isSpectatorModeOn = false;
+    private static CameraManager _instance;
+    public static CameraManager Instance { get { return _instance; } }
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+        _instance = this;
+    }
     private void Start()
     {
         UpdateCrosshairVisibility();
@@ -20,14 +32,12 @@ public class CameraManager : MonoBehaviour
 
     private void OnEnable()
     {
-        SpectatorModeManager.SpectatorModeOn += SpectatorMode;
         DayNightCycleManager.DayBegin += StartDayCycle;
         DayNightCycleManager.NightBegin += StartNightCycle;
     }
 
     private void OnDisable()
     {
-        SpectatorModeManager.SpectatorModeOn -= SpectatorMode;
         DayNightCycleManager.DayBegin -= StartDayCycle;
         DayNightCycleManager.NightBegin -= StartNightCycle;
     }
@@ -86,7 +96,7 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    public void SpectatorMode()
+    public void StartSpectatorMode()
     {
         StartDayCycle();
     }

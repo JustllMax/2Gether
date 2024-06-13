@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -31,9 +29,7 @@ public class GameManager : MonoBehaviour
 
     void OnEnable()
     {
-        DayNightCycleManager.NightBegin += OnNightStart;
         DayNightCycleManager.NightEnd += OnNightEnd;
-        SpectatorModeManager.SpectatorModeOn += OnSpectatorModeStart;
         SlotPlacer.OnMapGenerated += OnMapGenerated;
         NavMeshSurfaceManager.OnNavMeshGenerated += OnNavMeshGenerated;
 
@@ -46,8 +42,7 @@ public class GameManager : MonoBehaviour
     }
     void OnDisable()
     {
-        DayNightCycleManager.NightBegin += OnNightStart;
-        SpectatorModeManager.SpectatorModeOn += OnSpectatorModeStart;
+        
         SlotPlacer.OnMapGenerated -= OnMapGenerated;
         NavMeshSurfaceManager.OnNavMeshGenerated -= OnNavMeshGenerated;
     }
@@ -86,19 +81,6 @@ public class GameManager : MonoBehaviour
         {
             OnPlayerDeath();
         }
-    }
-
-    void OnSpectatorModeStart()
-    {
-        InputManager.Instance.StartDayCycle();
-        _playerController.transform.position = mainBaseTransform.GetComponent<MainBase>().playerSpawnPoint.position;
-        _playerController.GetPlayerModel().SetActive(false);
-        Time.timeScale = 2f;
-    }
-
-    void OnNightStart()
-    {
-        _playerController.GetPlayerModel().SetActive(true);
     }
     void OnNightEnd()
     {

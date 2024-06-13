@@ -523,7 +523,7 @@ MonoBehaviour:
   reloadSound: {fileID: 8300000, guid: a1ed22c88dbaf284e8974d5013d8d275, type: 3}
   noAmmoSound: {fileID: 8300000, guid: cd3eebcf6f5a27f4fa1942878fc7b722, type: 3}
   ammoInMagazine: 0
-  bulletSpeed: 100
+  bulletSpeed: 300
   addBulletSpread: 1
   bulletSpreadVariance: {x: 0.1, y: 0.1, z: 0.1}
   shootingSystem: {fileID: 7022478843008030562}
@@ -2419,7 +2419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerModel: {fileID: 8889202465182205452}
-  _maxHealth: 100
+  _maxHealth: 10
   invincibilityDuration: 1
   _nightCamera: {fileID: 823719554601124883}
   _gunCamera: {fileID: 5159281564673271810}
@@ -4007,7 +4007,7 @@ PrefabInstance:
     - target: {fileID: 2753117317975641421, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 35639
+      value: 65335
       objectReference: {fileID: 0}
     - target: {fileID: 3454108874929595213, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
