@@ -31,8 +31,8 @@ public class Navigation : MonoBehaviour
         AudioManager.Instance.PlaySFX("A_UI_Correct_Button_Down");
         AudioManager.Instance.StopMusic("A_Menu_Music");
         SceneManager.LoadScene(1);
-        AudioManager.Instance.PlayAmbient("A_DayUI_Ambient");
-        AudioManager.Instance.PlayMusic("A_DayUI_Music");
+        //AudioManager.Instance.PlayAmbient("A_DayUI_Ambient");
+        //AudioManager.Instance.PlayMusic("A_DayUI_Music");
     }
 
     public void OpenSettings()

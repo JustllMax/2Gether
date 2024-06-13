@@ -14,6 +14,7 @@ public class DayNightCycleManager : MonoBehaviour
     {
         if (_instance != null && _instance != this)
         {
+            
             Destroy(this);
             return;
         }
@@ -37,29 +38,13 @@ public class DayNightCycleManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
-            if (AudioManager.Instance.IsMusicPlaying("A_NightUI_Music"))
-            {
-                AudioManager.Instance.StopMusic("A_NightUI_Music");
-            }
-            if (!AudioManager.Instance.IsMusicPlaying("A_DayUI_Music"))
-            {
-                AudioManager.Instance.PlayMusic("A_DayUI_Music");
-            }
-            AudioManager.Instance.PlayAmbient("A_DayUI_Ambient");
+
             EndNightCycle();
         }
 
         if (Input.GetKeyDown(KeyCode.J))
         {
-            if (AudioManager.Instance.IsMusicPlaying("A_DayUI_Music"))
-            {
-                AudioManager.Instance.StopMusic("A_DayUI_Music");
-            }
-            if (!AudioManager.Instance.IsMusicPlaying("A_NightUI_Music"))
-            {
-                AudioManager.Instance.PlayMusic("A_NightUI_Music");
-            }
-            AudioManager.Instance.StopAmbient("A_DayUI_Ambient");
+
             EndDayCycle();
         }
     }
@@ -69,6 +54,8 @@ public class DayNightCycleManager : MonoBehaviour
         IsDay = false;
         DayEnd?.Invoke();
         NightBegin?.Invoke();
+        AudioManager.Instance.OnStartNight();
+
     }
 
     public void EndNightCycle()
@@ -76,5 +63,6 @@ public class DayNightCycleManager : MonoBehaviour
         IsDay = true;
         NightEnd?.Invoke();
         DayBegin?.Invoke();
+        AudioManager.Instance.OnStartDay();
     }
 }

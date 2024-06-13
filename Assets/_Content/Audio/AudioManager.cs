@@ -21,13 +21,13 @@ public class AudioManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
     }
+
 
     private void Start()
     {
@@ -201,6 +201,33 @@ public class AudioManager : MonoBehaviour
             AudioMixer.SetFloat("MusicVolume", volume);
         }
     }
+
+    public void OnStartDay()
+    {
+        if (IsMusicPlaying("A_NightUI_Music"))
+        {
+            StopMusic("A_NightUI_Music");
+        }
+        if (!IsMusicPlaying("A_DayUI_Music"))
+        {
+            PlayMusic("A_DayUI_Music");
+        }
+        PlayAmbient("A_DayUI_Ambient");
+    }
+
+    public void OnStartNight()
+    {
+        if (IsMusicPlaying("A_DayUI_Music"))
+        {
+            StopMusic("A_DayUI_Music");
+        }
+        if (!IsMusicPlaying("A_NightUI_Music"))
+        {
+            PlayMusic("A_NightUI_Music");
+        }
+        StopAmbient("A_DayUI_Ambient");
+    }
+
     public void EnableMusicLowPassFilter(bool enable)
     {
         MusicAudioLowPassFilter.enabled = enable;
