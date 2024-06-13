@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cinemachine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class CameraManager : MonoBehaviour
 {
@@ -12,6 +13,18 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     private GameObject groundFog;
 
+    private static CameraManager _instance;
+    public static CameraManager Instance { get { return _instance; } }
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+        _instance = this;
+    }
     private void Start()
     {
         UpdateCrosshairVisibility();
@@ -29,31 +42,19 @@ public class CameraManager : MonoBehaviour
         DayNightCycleManager.NightBegin -= StartNightCycle;
     }
 
-    private void Update()
-    {
-        // Change map to nightcycle
-        if (Input.GetKeyDown(KeyCode.F5))
-        {
-            SwitchCameraPriority(dayCamera, 10);
-            SwitchCameraPriority(nightCamera, 20);
-        }
-        // Change map to daycycle
-        else if (Input.GetKeyDown(KeyCode.F6))
-        {
-            SwitchCameraPriority(dayCamera, 20);
-            SwitchCameraPriority(nightCamera, 10);
-        }
-    }
-
     private void StartDayCycle()
     {
         SwitchCameraPriority(dayCamera, 20);
         SwitchCameraPriority(nightCamera, 10);
+        UpdateCrosshairVisibility();
+        UpdateFogSystemVisibility();
     }
     private void StartNightCycle()
     {
         SwitchCameraPriority(dayCamera, 10);
         SwitchCameraPriority(nightCamera, 20);
+        UpdateCrosshairVisibility();
+        UpdateFogSystemVisibility();
     }
 
     private void SwitchCameraPriority(CinemachineVirtualCamera camera, int priority)
@@ -61,8 +62,7 @@ public class CameraManager : MonoBehaviour
         if (camera != null)
         {
             camera.Priority = priority;
-            UpdateCrosshairVisibility();
-            UpdateFogSystemVisibility();
+            
         }
     }
 
@@ -76,15 +76,13 @@ public class CameraManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             GunCameraObj.SetActive(true);
-            //Fire event that camera changed to night
 
         }
-        else //Day Camera
+        else if(!isNightCameraActive) //Day Camera
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             GunCameraObj.SetActive(false);
-            //Fire event that camera changed to day
         }
     }
     private void UpdateFogSystemVisibility()
@@ -94,5 +92,10 @@ public class CameraManager : MonoBehaviour
         {
             groundFog.SetActive(nightCamera.Priority > dayCamera.Priority);
         }
+    }
+
+    public void StartSpectatorMode()
+    {
+        StartDayCycle();
     }
 }

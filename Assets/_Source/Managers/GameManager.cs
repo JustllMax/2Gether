@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     //TODO: Change to event 
     public bool isPlayerAlive = true;
-
+    public static Action OnPlayerDeath;
     public delegate void GameManagerReadyHandler();
     public static event GameManagerReadyHandler OnGameManagerReady;
     private bool isMapReady = false;
@@ -31,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     void OnEnable()
     {
+        DayNightCycleManager.NightEnd += OnNightEnd;
         SlotPlacer.OnMapGenerated += OnMapGenerated;
         NavMeshSurfaceManager.OnNavMeshGenerated += OnNavMeshGenerated;
 
@@ -43,6 +42,7 @@ public class GameManager : MonoBehaviour
     }
     void OnDisable()
     {
+        
         SlotPlacer.OnMapGenerated -= OnMapGenerated;
         NavMeshSurfaceManager.OnNavMeshGenerated -= OnNavMeshGenerated;
     }
@@ -74,9 +74,16 @@ public class GameManager : MonoBehaviour
     public void SetMainBaseTransform(Transform mainBase) { mainBaseTransform = mainBase; }
     public bool IsPlayerAlive() { return isPlayerAlive; }
 
-    public void OnPlayerDeath()
+    public void OnPlayerDeathInvoke()
     {
         isPlayerAlive = false;
+        if (OnPlayerDeath != null)
+        {
+            OnPlayerDeath();
+        }
     }
-
+    void OnNightEnd()
+    {
+        Time.timeScale = 1f;
+    }
 }
