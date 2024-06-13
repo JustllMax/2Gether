@@ -745,17 +745,17 @@ PrefabInstance:
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.78589875
+      value: 0.7858988
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.4857124
+      value: 0.48571235
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.32552993
+      value: 0.32552996
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
@@ -3381,6 +3381,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: '###MANAGERS###'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7008277718226531040, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7994146590566364991, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
         type: 3}
