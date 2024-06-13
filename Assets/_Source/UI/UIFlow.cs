@@ -61,10 +61,10 @@ public class UIFlow : MonoBehaviour
 
         rerollButton.gameObject.SetActive(true);
         continueButton.gameObject.SetActive(true);
-        rerollButton.transform.DOScale(0, 0);
-        continueButton.transform.DOScale(0, 0);
-        rerollButton.transform.DOScale(1, 1);
-        continueButton.transform.DOScale(1, 1);
+        //rerollButton.transform.DOScale(0, 0);
+        //continueButton.transform.DOScale(0, 0);
+        //rerollButton.transform.DOScale(1, 1);
+        //continueButton.transform.DOScale(1, 1);
     }
 
     void Reroll()
@@ -74,8 +74,8 @@ public class UIFlow : MonoBehaviour
         continueButton.interactable = false;
         UnityEngine.UI.Image rerollButtonImage = rerollButton.GetComponent<UnityEngine.UI.Image>();
         UnityEngine.UI.Image continueButtonImage = continueButton.GetComponent<UnityEngine.UI.Image>();
-        rerollButtonImage.DOFade(0f, 1f);
-        continueButtonImage.DOFade(0f, 1f);
+        rerollButtonImage.gameObject.SetActive(true);
+        continueButtonImage.gameObject.SetActive(true);
 
         DOTween.Sequence()
             .AppendInterval(1f)
@@ -96,18 +96,25 @@ public class UIFlow : MonoBehaviour
 
     void Continue()
     {
-        DOTween.Sequence()
-            .AppendInterval(1f)
-            .OnComplete(() =>
-            {
-                //FadeOutCards();
-                rerollButton.interactable = false;
-                continueButton.interactable = false;
-                UnityEngine.UI.Image rerollButtonImage = rerollButton.GetComponent<UnityEngine.UI.Image>();
-                UnityEngine.UI.Image continueButtonImage = continueButton.GetComponent<UnityEngine.UI.Image>();
-                rerollButtonImage.DOFade(0f, 0.1f);
-                continueButtonImage.DOFade(0f, 0.1f);
-            });
+    //    DOTween.Sequence()
+    //        .AppendInterval(1f)
+    //        .OnComplete(() =>
+    //        {
+    //            //FadeOutCards();
+    //            rerollButton.interactable = false;
+    //            continueButton.interactable = false;
+    //            UnityEngine.UI.Image rerollButtonImage = rerollButton.GetComponent<UnityEngine.UI.Image>();
+    //            UnityEngine.UI.Image continueButtonImage = continueButton.GetComponent<UnityEngine.UI.Image>();
+    //            rerollButtonImage.gameObject.SetActive(false);
+    //            continueButtonImage.gameObject.SetActive(false);
+    //        });
+
+        rerollButton.interactable = false;
+        continueButton.interactable = false;
+        UnityEngine.UI.Image rerollButtonImage = rerollButton.GetComponent<UnityEngine.UI.Image>();
+        UnityEngine.UI.Image continueButtonImage = continueButton.GetComponent<UnityEngine.UI.Image>();
+        rerollButtonImage.gameObject.SetActive(false);
+        continueButtonImage.gameObject.SetActive(false);
 
         DOTween.Sequence()
             .AppendInterval(3f)
@@ -120,7 +127,7 @@ public class UIFlow : MonoBehaviour
                     if (card.transform != cardpackOpenPanel.transform)
                     {
                         card.transform.SetParent(cardsPanel.transform, false);
-                        card.SetUIFlowRef(this);
+                        //  card.SetUIFlowRef(this);
                     }
                 }
                 cardpackPanel.SetActive(false);
@@ -156,6 +163,7 @@ public class UIFlow : MonoBehaviour
             gocard.name = "Card " + card.CardName;
 
             _cards.Add(gocard.GetComponent<UICards>());
+            _cards[_cards.Count - 1].SetUIFlowRef(this);
         }
 
         HorizontalLayoutGroup layoutGroup = cardpackOpenPanel.GetComponent<HorizontalLayoutGroup>();
@@ -223,4 +231,10 @@ public class UIFlow : MonoBehaviour
         Destroy(currentClickedCard.gameObject);
         currentClickedCard = null;
     }
+
+    public bool HasCardSelected()
+    {
+        return currentClickedCard != null;
+    }
+
 }
