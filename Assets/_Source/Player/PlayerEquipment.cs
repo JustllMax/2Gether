@@ -343,5 +343,8 @@ public class PlayerEquipment : MonoBehaviour
 
     #endregion GetSet
     
-
+    public void AddAmmoToAmmoStorage(GunType gunType, int amountOfAmmo)
+    {
+        AmmoStorage[gunType] += amountOfAmmo;
+    }
 }

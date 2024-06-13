@@ -58,7 +58,7 @@ public class HospitalBuilding : Building
         if (healingParticles != null)
             healingParticles.Play();
 
-        var hits = Physics.OverlapSphere(transform.position, GetStatistics().AreaRange, targetLayerMask);
+        var hits = Physics.OverlapSphere(transform.position, GetStatistics().AttackRange, targetLayerMask);
 
         AudioManager.Instance.PlaySFXAtSource(activationSound, audioSource);
 
@@ -112,7 +112,7 @@ public class HospitalBuilding : Building
     void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, GetStatistics().AreaRange);
+        Gizmos.DrawWireSphere(transform.position, GetStatistics().AttackRange);
 
     }
 

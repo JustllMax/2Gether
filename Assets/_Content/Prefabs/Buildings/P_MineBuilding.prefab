@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8696543111338083955}
   - component: {fileID: 7602616585702769570}
   - component: {fileID: 7672894143303368609}
+  - component: {fileID: 8189326144909707354}
   m_Layer: 9
   m_Name: P_MineBuilding
   m_TagString: Untagged
@@ -92,6 +93,21 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &8189326144909707354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227704562741578186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5cdfafce35dd2543a95f038891bdfba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buildingSize: {x: 0, y: 0, z: 0}
+  _renderer: {fileID: 692867431039638564}
+  isCanBePlacedOnRoad: 0
 --- !u!1001 &27567944849386597
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -382,6 +398,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 845449df11c37d74ebb9d21659d7af50, type: 3}
+--- !u!23 &692867431039638564 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2517838290804107666, guid: 845449df11c37d74ebb9d21659d7af50,
+    type: 3}
+  m_PrefabInstance: {fileID: 3129060370943014326}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2013779594915331603 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3503455312568175525, guid: 845449df11c37d74ebb9d21659d7af50,

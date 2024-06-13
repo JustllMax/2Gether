@@ -17,12 +17,9 @@ MonoBehaviour:
   Name: AR
   Description: Automatic Rifle
   GunType: 1
-  P_Bullet: {fileID: 0}
-  BulletGroundHitSound: {fileID: 0}
-  BulletEnemyHitSound: {fileID: 0}
-  IsAutomatic: 0
+  IsAutomatic: 1
   MagazineSize: 30
-  FireRate: 1
+  FireRate: 0.1
   Range: 15
   ReloadTime: 2
   BulletDamage: 5

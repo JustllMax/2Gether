@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6850343061751828473}
   - component: {fileID: 1526264327568062677}
   - component: {fileID: 1385571718272116731}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: P_EmptyOldHouse
-  m_TagString: Terrain
+  m_TagString: Decoration
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -345,25 +345,50 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: -6010214945015627077, guid: 372a2b2ffff9766468f30f7dc730d139,
+        type: 3}
+      propertyPath: m_TagString
+      value: Decoration
+      objectReference: {fileID: 0}
     - target: {fileID: -5247734691026946976, guid: 372a2b2ffff9766468f30f7dc730d139,
         type: 3}
       propertyPath: m_Layer
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -5247734691026946976, guid: 372a2b2ffff9766468f30f7dc730d139,
+        type: 3}
+      propertyPath: m_TagString
+      value: Decoration
       objectReference: {fileID: 0}
     - target: {fileID: -5001966527300728049, guid: 372a2b2ffff9766468f30f7dc730d139,
         type: 3}
       propertyPath: m_Layer
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: -5001966527300728049, guid: 372a2b2ffff9766468f30f7dc730d139,
+        type: 3}
+      propertyPath: m_TagString
+      value: Decoration
+      objectReference: {fileID: 0}
     - target: {fileID: -4965263779917480084, guid: 372a2b2ffff9766468f30f7dc730d139,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -4965263779917480084, guid: 372a2b2ffff9766468f30f7dc730d139,
+        type: 3}
+      propertyPath: m_TagString
+      value: Decoration
+      objectReference: {fileID: 0}
+    - target: {fileID: -2554208564644110125, guid: 372a2b2ffff9766468f30f7dc730d139,
         type: 3}
       propertyPath: m_Layer
       value: 13
       objectReference: {fileID: 0}
     - target: {fileID: -2554208564644110125, guid: 372a2b2ffff9766468f30f7dc730d139,
         type: 3}
-      propertyPath: m_Layer
-      value: 13
+      propertyPath: m_TagString
+      value: Decoration
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 372a2b2ffff9766468f30f7dc730d139,
         type: 3}
@@ -385,35 +410,69 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 2330059762348181710, guid: 372a2b2ffff9766468f30f7dc730d139,
+        type: 3}
+      propertyPath: m_TagString
+      value: Decoration
+      objectReference: {fileID: 0}
     - target: {fileID: 4423045620967985251, guid: 372a2b2ffff9766468f30f7dc730d139,
         type: 3}
       propertyPath: m_Layer
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423045620967985251, guid: 372a2b2ffff9766468f30f7dc730d139,
+        type: 3}
+      propertyPath: m_TagString
+      value: Decoration
       objectReference: {fileID: 0}
     - target: {fileID: 5808535091626691410, guid: 372a2b2ffff9766468f30f7dc730d139,
         type: 3}
       propertyPath: m_Layer
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 5808535091626691410, guid: 372a2b2ffff9766468f30f7dc730d139,
+        type: 3}
+      propertyPath: m_TagString
+      value: Decoration
+      objectReference: {fileID: 0}
     - target: {fileID: 7376259102722240122, guid: 372a2b2ffff9766468f30f7dc730d139,
         type: 3}
       propertyPath: m_Layer
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7376259102722240122, guid: 372a2b2ffff9766468f30f7dc730d139,
+        type: 3}
+      propertyPath: m_TagString
+      value: Decoration
       objectReference: {fileID: 0}
     - target: {fileID: 7512687335075297100, guid: 372a2b2ffff9766468f30f7dc730d139,
         type: 3}
       propertyPath: m_Layer
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 7512687335075297100, guid: 372a2b2ffff9766468f30f7dc730d139,
+        type: 3}
+      propertyPath: m_TagString
+      value: Decoration
+      objectReference: {fileID: 0}
     - target: {fileID: 9118269603187502570, guid: 372a2b2ffff9766468f30f7dc730d139,
         type: 3}
       propertyPath: m_Layer
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 9118269603187502570, guid: 372a2b2ffff9766468f30f7dc730d139,
+        type: 3}
+      propertyPath: m_TagString
+      value: Decoration
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 372a2b2ffff9766468f30f7dc730d139,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6847725784084510059}
     - targetCorrespondingSourceObject: {fileID: 5808535091626691410, guid: 372a2b2ffff9766468f30f7dc730d139,
         type: 3}
       insertIndex: -1
@@ -633,6 +692,34 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3928374579680430851}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4198773274291467858 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 372a2b2ffff9766468f30f7dc730d139,
+    type: 3}
+  m_PrefabInstance: {fileID: 3928374579680430851}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &6847725784084510059
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4198773274291467858}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &5192362544714311401 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9118269603187502570, guid: 372a2b2ffff9766468f30f7dc730d139,

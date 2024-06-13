@@ -64780,21 +64780,22 @@ AudioSource:
   m_GameObject: {fileID: 8669766861633451264}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3500195842038351120, guid: e36732c6242d4b04a974f76d36fb6d00,
+    type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 204
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 1000
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -64899,9 +64900,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 95a1f67cad4fdab4bafef6da3a074790, type: 2}
   - {fileID: 11400000, guid: 6bfc2566e3d2c5941abf5ab0d28ac86b, type: 2}
   AITargetFocus: 1
-  hurtSound: {fileID: 0}
-  attackSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  hurtSound: {fileID: 8300000, guid: 977744f402828ab48aaf83b0711ab2a4, type: 3}
+  attackSound: {fileID: 8300000, guid: 30c8b1904830a3046a00ffb74c6f9d7e, type: 3}
+  deathSound: {fileID: 8300000, guid: 86757ea04bdd614458912c7772153bad, type: 3}
   audioSource: {fileID: 0}
   DeathInvokeTime: 2.5
   currentTarget:

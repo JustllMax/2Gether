@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 2196177476950198739}
   - component: {fileID: 1449759878486256795}
   - component: {fileID: 7737263179810947440}
+  - component: {fileID: -7460689606926886167}
   m_Layer: 0
   m_Name: P_SmiteRod
   m_TagString: Untagged
@@ -197,6 +198,21 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &-7460689606926886167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5821364103949504362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5cdfafce35dd2543a95f038891bdfba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buildingSize: {x: 0, y: 0, z: 0}
+  _renderer: {fileID: 7737263179810947440}
+  isCanBePlacedOnRoad: 0
 --- !u!1001 &7329343834618758801
 PrefabInstance:
   m_ObjectHideFlags: 0
