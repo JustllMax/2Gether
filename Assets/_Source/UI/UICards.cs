@@ -5,7 +5,7 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 {
     public CardObject CardData;
 
-    private Vector3 upOffset = new Vector3(0f, 200f, 0f);
+    private Vector3 upOffset = new Vector3(0f, 280f, 0f);
     private Vector3 originalScale;
     private bool isClicked = false;
 
@@ -22,6 +22,9 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (_flowRef.HasCardSelected())
+            return;
+
         if (!isClicked && transform.parent != null && transform.parent.name == "cardsPanel")
         {
             transform.localPosition += upOffset;
@@ -31,6 +34,9 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (_flowRef.HasCardSelected())
+            return;
+
         if (!isClicked && transform.parent != null && transform.parent.name == "cardsPanel")
         {
             transform.localPosition -= upOffset;
@@ -40,6 +46,9 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (_flowRef.HasCardSelected())
+            return;
+
         if (!isClicked && transform.parent != null && transform.parent.name == "cardsPanel")
         {
             _flowRef.SetSelectedCard(this);

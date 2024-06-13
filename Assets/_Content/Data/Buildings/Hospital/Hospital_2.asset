@@ -20,6 +20,8 @@ MonoBehaviour:
   ActivationTime: 2.5
   HealthPoints: 200
   SellCost: 75
-  AreaRange: 15
+  AttackDamage: 0
+  AttackRange: 20
+  AttackDelay: 0
   healAmount: 20
   delayBetweenActivation: 1.75
