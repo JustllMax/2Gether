@@ -55,8 +55,6 @@ public class CameraManager : MonoBehaviour
         SwitchCameraPriority(nightCamera, 20);
         UpdateCrosshairVisibility();
         UpdateFogSystemVisibility();
-        DayNightCycleManager.Instance.nightBeginTasks--;
-        Debug.LogWarning("Camera " + DayNightCycleManager.Instance.nightBeginTasks);
     }
 
     private void SwitchCameraPriority(CinemachineVirtualCamera camera, int priority)

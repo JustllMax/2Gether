@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using NaughtyAttributes;
+using System;
 
 public class UIFlow : MonoBehaviour
 {
+    public static UIFlow Instance;
+
     public Button boosterPackButton;
     public Button rerollButton;
     public Button continueButton;
@@ -15,8 +19,29 @@ public class UIFlow : MonoBehaviour
     public GameObject gamePanel;
     public GameObject cardsPanel;
 
-    void Start()
+    [SerializeField]
+    private UICards currentClickedCard = null;
+
+    [SerializeField, ReadOnly]
+    private CardPoolData _currentCardPoolData;
+
+    [SerializeField, ReadOnly]
+    List<UICards> _cards = new List<UICards>();
+
+    void Awake()
     {
+        Instance = this;
+
+        gamePanel.SetActive(false);
+        cardpackPanel.SetActive(false);
+        rerollButton.gameObject.SetActive(false);
+        continueButton.gameObject.SetActive(false);
+    }
+
+    public void ShowPanel(CardPoolData pd)
+    {
+        _currentCardPoolData = pd;
+
         gamePanel.SetActive(false);
         cardpackPanel.SetActive(true);
         rerollButton.gameObject.SetActive(false);
@@ -25,7 +50,6 @@ public class UIFlow : MonoBehaviour
         boosterPackButton.onClick.AddListener(OpenBoosterPack);
         rerollButton.onClick.AddListener(Reroll);
         continueButton.onClick.AddListener(Continue);
-
     }
 
     void OpenBoosterPack()
@@ -39,8 +63,8 @@ public class UIFlow : MonoBehaviour
         continueButton.gameObject.SetActive(true);
         rerollButton.transform.DOScale(0, 0);
         continueButton.transform.DOScale(0, 0);
-        rerollButton.transform.DOScale(1, 1).SetDelay(1f);
-        continueButton.transform.DOScale(1, 1).SetDelay(3f);
+        rerollButton.transform.DOScale(1, 1);
+        continueButton.transform.DOScale(1, 1);
     }
 
     void Reroll()
@@ -76,43 +100,44 @@ public class UIFlow : MonoBehaviour
             .AppendInterval(1f)
             .OnComplete(() =>
             {
-                FadeOutCards();
+                //FadeOutCards();
                 rerollButton.interactable = false;
                 continueButton.interactable = false;
                 UnityEngine.UI.Image rerollButtonImage = rerollButton.GetComponent<UnityEngine.UI.Image>();
                 UnityEngine.UI.Image continueButtonImage = continueButton.GetComponent<UnityEngine.UI.Image>();
-                rerollButtonImage.DOFade(0f, 1f);
-                continueButtonImage.DOFade(0f, 1f);
+                rerollButtonImage.DOFade(0f, 0.1f);
+                continueButtonImage.DOFade(0f, 0.1f);
             });
 
         DOTween.Sequence()
             .AppendInterval(3f)
             .OnComplete(() =>
             {
-                Transform[] cards = cardpackOpenPanel.GetComponentsInChildren<Transform>();
+                UICards[] cards = cardpackOpenPanel.GetComponentsInChildren<UICards>();
 
-                foreach (Transform card in cards)
+                foreach (var card in cards)
                 {
-                    if (card != cardpackOpenPanel.transform)
+                    if (card.transform != cardpackOpenPanel.transform)
                     {
-                        card.SetParent(cardsPanel.transform, false);
+                        card.transform.SetParent(cardsPanel.transform, false);
+                        card.SetUIFlowRef(this);
                     }
                 }
                 cardpackPanel.SetActive(false);
 
-                foreach (Transform card in cards)
+                foreach (var card in cards)
                 {
-                    if (card != cardsPanel.transform)
+                    if (card.transform != cardsPanel.transform)
                     {
-                        UnityEngine.UI.Image cardImage = card.GetComponent<UnityEngine.UI.Image>();
-                        cardImage.color = new Color(cardImage.color.r, cardImage.color.g, cardImage.color.b, 0f);
-                        cardImage.DOFade(1f, 1f).SetDelay(0.5f);
+                        //UnityEngine.UI.Image cardImage = card.GetComponent<UnityEngine.UI.Image>();
+                        //cardImage.color = new Color(cardImage.color.r, cardImage.color.g, cardImage.color.b, 0f);
+                        //cardImage.DOFade(1f, 1f).SetDelay(0.5f);
                     }
                 }
             });
 
         DOTween.Sequence()
-            .AppendInterval(3f)
+            .AppendInterval(1f)
             .OnComplete(() =>
             {
                 gamePanel.SetActive(true);
@@ -123,10 +148,14 @@ public class UIFlow : MonoBehaviour
 
     void SpawnCards()
     {
-        for (int i = 0; i < 5; i++)
+        foreach (var card in _currentCardPoolData.Cards)
         {
-            GameObject card = Instantiate(cardPrefab, cardpackOpenPanel.transform);
-            card.name = "Card " + (i + 1);
+            GameObject gocard = Instantiate(cardPrefab, cardpackOpenPanel.transform);
+            var cardObject = gocard.GetComponent<CardObject>();
+            cardObject.PopulateCard(card);
+            gocard.name = "Card " + card.CardName;
+
+            _cards.Add(gocard.GetComponent<UICards>());
         }
 
         HorizontalLayoutGroup layoutGroup = cardpackOpenPanel.GetComponent<HorizontalLayoutGroup>();
@@ -154,9 +183,9 @@ public class UIFlow : MonoBehaviour
         {
             if (card != cardpackOpenPanel.transform)
             {
-                UnityEngine.UI.Image cardImage = card.GetComponent<UnityEngine.UI.Image>();
-                cardImage.color = new Color(cardImage.color.r, cardImage.color.g, cardImage.color.b, 0f);
-                cardImage.DOFade(1f, 1f).SetDelay(0.5f);
+                //UnityEngine.UI.Image cardImage = card.GetComponent<UnityEngine.UI.Image>();
+                //cardImage.color = new Color(cardImage.color.r, cardImage.color.g, cardImage.color.b, 0f);
+                //cardImage.DOFade(1f, 1f).SetDelay(0.5f);
             }
         }
     }
@@ -173,5 +202,25 @@ public class UIFlow : MonoBehaviour
                 cardImage.DOFade(0f, 1f).SetDelay(0.5f);
             }
         }
+    }
+
+    public void SetSelectedCard(UICards card)
+    {
+        if (currentClickedCard == card) return;
+
+        if (currentClickedCard != null)
+        {
+            currentClickedCard.ResetPosition();
+            currentClickedCard.CardData.EndExecute();
+        }
+
+        currentClickedCard = card;
+        currentClickedCard.CardData.Execute();
+    }
+
+    public void DiscardCard(Card buildingCard)
+    {
+        Destroy(currentClickedCard.gameObject);
+        currentClickedCard = null;
     }
 }

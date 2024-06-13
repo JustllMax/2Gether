@@ -56,8 +56,6 @@ public class InputManager : MonoBehaviour
         playerInputAction.BuilderController.Disable();
         playerInputAction.FPSController.Enable();
         Debug.Log(this + " fps enabled");
-        DayNightCycleManager.Instance.nightBeginTasks--;
-        Debug.LogWarning("Input " + DayNightCycleManager.Instance.nightBeginTasks);
     }
 
     public void DisableControllers()

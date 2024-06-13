@@ -26,17 +26,16 @@ public class DayNightCycleManager : MonoBehaviour
 
     public static event Action NightBegin;
     public static event Action NightEnd;
-    public int nightBeginTasks = 3;
-    
+
     public bool IsDay;
     private void Start()
     {
-        EndNightCycle();        
+        EndNightCycle();
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             if (AudioManager.Instance.IsMusicPlaying("A_NightUI_Music"))
             {
@@ -78,5 +77,4 @@ public class DayNightCycleManager : MonoBehaviour
         NightEnd?.Invoke();
         DayBegin?.Invoke();
     }
-
 }

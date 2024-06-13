@@ -1,12 +1,19 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IDeselectHandler
+public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+    public CardObject CardData;
+
     private Vector3 upOffset = new Vector3(0f, 200f, 0f);
     private Vector3 originalScale;
     private bool isClicked = false;
-    private static UICards currentClickedCard = null;
+
+    private UIFlow _flowRef;
+
+    public void SetUIFlowRef(UIFlow flowRef)
+        { this._flowRef = flowRef; }
+
 
     void Start()
     {
@@ -35,21 +42,15 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     {
         if (!isClicked && transform.parent != null && transform.parent.name == "cardsPanel")
         {
-            if (currentClickedCard != null)
-            {
-                currentClickedCard.ResetPosition();
-            }
+            _flowRef.SetSelectedCard(this);
+            //if (currentClickedCard != null)
+            //{
+            //    currentClickedCard.ResetPosition();
+            //}
             isClicked = true;
-            currentClickedCard = this;
-        }
-    }
+            //currentClickedCard = this;
 
-    public void OnDeselect(BaseEventData eventData)
-    {
-        if (currentClickedCard != null)
-        {
-            currentClickedCard.ResetPosition();
-            currentClickedCard = null;
+
         }
     }
 

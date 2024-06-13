@@ -5,7 +5,5 @@ using UnityEngine;
 public enum CardType
 {
     Building,
-    Ability,
-    Gun
-
+    Buff
 }

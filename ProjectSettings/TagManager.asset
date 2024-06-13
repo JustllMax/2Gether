@@ -9,6 +9,7 @@ TagManager:
   - Way
   - Way_Anchor
   - MainBase
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -30,7 +31,6 @@ TagManager:
   - 
   - 
   - Guns
-  - 
   - 
   - 
   - 

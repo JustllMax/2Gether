@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridBuilding : Building
+public class GridBuilding : MonoBehaviour
 {
     [SerializeField] private Vector3 _buildingSize;
     [SerializeField] private Renderer _renderer;
@@ -53,35 +53,5 @@ public class GridBuilding : Building
             _isDecorationCollision = false;
             Debug.Log("Decoration " + _isDecorationCollision);
         }
-    }
-
-    public override void OnAttack()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override bool TakeDamage(float damage)
-    {
-        audioSource.PlayOneShot(takeHitSound);
-        Health -= damage;
-        if (Health <= 0)
-        {
-            Kill();
-            return true;
-        }
-        return false;
-    }
-
-    public override void Kill()
-    {
-        IsTargetable = false;
-        audioSource.PlayOneShot(createDestroySound);
-        createDestroyParticles.Play();
-        Invoke("DestroyObj", DestroyObjectDelay);
-    }
-
-    void DestroyObj()
-    {
-        Destroy(gameObject);
     }
 }

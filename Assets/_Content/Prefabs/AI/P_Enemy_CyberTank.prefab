@@ -1970,7 +1970,7 @@ GameObject:
   - component: {fileID: 7191807237346684156}
   m_Layer: 8
   m_Name: P_Enemy_CyberTank
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

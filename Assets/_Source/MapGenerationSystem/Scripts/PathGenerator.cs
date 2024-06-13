@@ -25,7 +25,7 @@ public class PathGenerator
         {
             GeneratePath(i, i);
         }
-
+        map[_startPos.x, _startPos.y] = 4;
         return map;
     }
     void GeneratePath(int curDirection, int direction)
@@ -40,9 +40,11 @@ public class PathGenerator
             if (pos != _startPos)
                 curDirection = GetRandomDirection(direction, newPos);
 
-            if (newPos.x < 0 || newPos.y < 0 || newPos.x > _mapSize.x - 1 || newPos.y > _mapSize.y - 1)
+            if (newPos.x == 0 || newPos.y == 0 || newPos.x == _mapSize.x - 1 || newPos.y == _mapSize.y - 1)
             {
-                map[pos.x, pos.y] = 1;
+                map[newPos.x, newPos.y] = 1;
+                map[pos.x, pos.y] += 1;
+                /*
                 if (curDirection == 0)
                 {
                     map[pos.x + 1, pos.y] += 1;
@@ -59,9 +61,11 @@ public class PathGenerator
                 {
                     map[pos.x, pos.y + 1] += 1;
                 }
+                */
                 isEnd = true;
+                return;
             }
-            if (newPos.x > 0 && newPos.x < _mapSize.x - 1 && newPos.y > 0 && newPos.y < _mapSize.y - 1)
+            else if (newPos.x > 0 && newPos.x < _mapSize.x - 1 && newPos.y > 0 && newPos.y < _mapSize.y - 1)
             {
                 map[newPos.x, newPos.y] = 1;
 
@@ -75,13 +79,13 @@ public class PathGenerator
     {
         int count = 0;
 
-        if (x - 1 >= 0 && map[x - 1, y] > 0)
+        if (x - 1 >= 0 && map[x - 1, y] > 0 && map[x - 1, y] < 6)
             count++;
-        if (x + 1 < _mapSize.x && map[x + 1, y] > 0)
+        if (x + 1 < _mapSize.x && map[x + 1, y] > 0 && map[x + 1, y] < 6)
             count++;
         if (y - 1 >= 0 && map[x, y - 1] > 0)
             count++;
-        if (y + 1 < _mapSize.y && map[x, y + 1] > 0)
+        if (y + 1 < _mapSize.y && map[x, y + 1] > 0 && map[x, y + 1] < 6)
             count++;
         return count;
     }
