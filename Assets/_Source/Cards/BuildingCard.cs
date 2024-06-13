@@ -10,13 +10,27 @@ public class BuildingCard : Card
 {
     public GameObject BuildingPrefab;
 
-    public override void OnSubmitCard(GameContext ctx)
+    public override void OnBeginUseCard(GameContext ctx)
     {
-        /*if (GridController.Instance.TryPlace(new Vector2Int(0,0),new Vector2Int(0,0)*10, BuildingPrefab.GetComponent<Building>()))
-        {
-            // place building
-        }*/
+        ctx.buildingPlacer.StartPlaceMode(this, ctx);
     }
+
+    public override void OnCardSubmitted(GameContext ctx)
+    {
+        ctx.cardUi.DiscardCard(this);
+    }
+
+    public override void OnEndUseCard(GameContext ctx)
+    {
+    }
+
+    //public override void OnSubmitCard(GameContext ctx)
+    //{
+    //    /*if (GridController.Instance.TryPlace(new Vector2Int(0,0),new Vector2Int(0,0)*10, BuildingPrefab.GetComponent<Building>()))
+    //    {
+    //        // place building
+    //    }*/
+    //}
 
     private void OnValidate()
     {

@@ -18,14 +18,14 @@ public class CardSystem : MonoBehaviour
 
     private void OnGUI()
     {
-        if (GUI.Button(new Rect(10, 10, 150, 100), "Use Sample Buff Card"))
-        {
-            Resources.Load<Card>("Cards/BuffCard").OnSubmitCard(new GameContext());
-        }
+        //if (GUI.Button(new Rect(10, 10, 150, 100), "Use Sample Buff Card"))
+        //{
+        //    Resources.Load<Card>("Cards/BuffCard").OnSubmitCard(new GameContext());
+        //}
 
-        if (GUI.Button(new Rect(170, 10, 150, 100), "Use Sample Building Card"))
-        {
-            Resources.Load<Card>("Cards/BuildingCard").OnSubmitCard(new GameContext());
-        }
+        //if (GUI.Button(new Rect(170, 10, 150, 100), "Use Sample Building Card"))
+        //{
+        //    Resources.Load<Card>("Cards/BuildingCard").OnSubmitCard(new GameContext());
+        //}
     }
 }

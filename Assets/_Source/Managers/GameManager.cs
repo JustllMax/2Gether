@@ -8,8 +8,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] PlayerController _playerController;
     [SerializeField] Transform mainBaseTransform;
+    [SerializeField] UIFlow _cardManager;
 
-    //TODO: Change to event 
+    public CardPoolData InitialCardPool;
+
+	//TODO: Change to event 
     public bool isPlayerAlive = true;
     public static Action OnPlayerDeath;
     public delegate void GameManagerReadyHandler();
@@ -35,10 +38,14 @@ public class GameManager : MonoBehaviour
 
         _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
+
     }
     private void Start()
     {
-        Application.targetFrameRate = 300;
+        Application.targetFrameRate = 75;
+
+        _cardManager.ShowPanel(InitialCardPool);
+
     }
     void OnDisable()
     {

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1155050633523703832}
   - component: {fileID: 6228821174951417382}
   - component: {fileID: 8232995071450534597}
+  - component: {fileID: 4013985282309673572}
   m_Layer: 9
   m_Name: P_Hospital
   m_TagString: Untagged
@@ -157,6 +158,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4013985282309673572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7451416433290410760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5cdfafce35dd2543a95f038891bdfba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buildingSize: {x: 0, y: 0, z: 0}
+  _renderer: {fileID: 8082580740081381208}
+  isCanBePlacedOnRoad: 0
 --- !u!1001 &5678914288509080146
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -332,6 +348,12 @@ Rigidbody:
 --- !u!4 &5279686647586502073 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f008bcc514a9676458ff37fa5b8f532f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5678914288509080146}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8082580740081381208 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4531912228224351498, guid: f008bcc514a9676458ff37fa5b8f532f,
     type: 3}
   m_PrefabInstance: {fileID: 5678914288509080146}
   m_PrefabAsset: {fileID: 0}

@@ -77,9 +77,11 @@ public class WeaponAnimation : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         _lookInput = _fps.Look.ReadValue<Vector2>();
+
+        //Debug.Log(_lookInput);
 
         _moveInput = _fps.Movement.ReadValue<Vector2>();
         _moveInput.Normalize();
