@@ -254,7 +254,7 @@ public class UIFlow : MonoBehaviour
 
     void OnDayStart()
     {
-        ShowPanel(_currentCardPool);
+        ShowPanel(UICardManager.Instance.GetRandomCards(5));
     }
 
 }

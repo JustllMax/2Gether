@@ -74,10 +74,18 @@ public class UICardManager : MonoBehaviour
         int randomCardIndex = Random.Range(0, deck.Count-1);
         card = deck[randomCardIndex];
 
+        int a = 0;
         while(card.CardStatisticsData.Rarity != rarity)
         {
+            a++;
             randomCardIndex = Random.Range(0, deck.Count - 1);
             card = deck[randomCardIndex];
+            if (a > 100)
+            {
+                // we cant find rarity we wanted, so just give up
+                card = deck[randomCardIndex];
+                break;
+            }
         }
 
         return card;
