@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
             return;
+            
         }
         _instance = this;
     }
