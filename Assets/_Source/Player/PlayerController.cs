@@ -1,3 +1,4 @@
+using System.Collections;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
@@ -5,11 +6,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 {
-
+    [SerializeField]
+    GameObject playerModel;
     [SerializeField]
     float _maxHealth = 100f;
-
-    float _health = 100f;
+    [SerializeField]
+    [Range(0.1f, 3f)]
+    float invincibilityDuration = 1;
 
     [SerializeField]
     private Transform _nightCamera;
@@ -53,6 +56,9 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     [SerializeField]
     private bool _isMoving;
 
+    [SerializeField]
+    Animator _animator;
+
     private PlayerInputAction.FPSControllerActions FPSController;
     private CharacterController _characterController;
     private AudioSource _audioSource;
@@ -64,21 +70,34 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     private float _dashCooldownTimer;
     private Vector3 _lastMovementDir;
     private float _cameraAngleX;
-    private bool _isAlive = true;
+    [SerializeField]
+    private bool canBeHit = true;
+    public bool CanMove { get; set; } = true;
     public bool IsTargetable { get; set; }
     public TargetType TargetType { get; set; }
     public float Health { get; set; }
 
+    public Vector3 Velocity { get => _velocity; set => _velocity = value; }
+
+
+    #region SetUp
     private void Awake()
     {
-        Health = _health;
-        IsTargetable = true;
-        TargetType = TargetType.Player;
+        SetUpPlayer();
         _characterController = GetComponent<CharacterController>();
         _audioSource = GetComponent<AudioSource>();
-        _dashCount = _maxDashCount;
+        
     }
 
+    private void OnEnable()
+    {
+        DayNightCycleManager.DayEnd += OnDayEnd;
+    }
+
+    private void OnDisable()
+    {
+        DayNightCycleManager.DayEnd -= OnDayEnd;
+    }
     private void OnValidate()
     {
         if (TargetType != TargetType.Player)
@@ -90,16 +109,35 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         FPSController = InputManager.Instance.GetPlayerInputAction().FPSController;
 
         FPSController.Jump.performed += OnJump;
+        SetUpHUD();
+    }
+
+    private void SetUpPlayer()
+    {
+        canBeHit = true;
+        CanMove = true;
+        Health = _maxHealth;
+        IsTargetable = true;
+        TargetType = TargetType.Player;
+        _dashCount = _maxDashCount;
+    }
+
+    private void SetUpHUD()
+    {
         HUDManager.Instance.SetMaxHealth(Health);
         HUDManager.Instance.SetCurrentHealth(Health);
 
         HUDManager.Instance.SetAllDashesMaxTimer(_dashCooldown);
-        for(int i = 0; i < _maxDashCount; i++)
+        for (int i = 0; i < _maxDashCount; i++)
         {
             HUDManager.Instance.SetDashCurrentTimer(i, _dashCooldown);
 
         }
     }
+
+   
+
+    #endregion
 
     private void FixedUpdate()
     {
@@ -108,7 +146,12 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
     public void Update()
     {
-        if(_isAlive == false)
+        if (transform.position.y < -50f)
+        {
+            Kill();
+        }
+
+        if(CanMove == false)
         {
             return;
         }
@@ -182,7 +225,11 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
         _nightCamera.localRotation = Quaternion.Euler(new Vector3(-_cameraAngleX, 0, 0));
 
-        _gunCamera.rotation = _nightCamera.rotation;
+        if(_gunCamera != null && _gunCamera.gameObject.active)
+        {
+            _gunCamera.rotation = _nightCamera.rotation;
+        }
+        
 
     }
 
@@ -234,6 +281,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         }
         movement = movement.normalized;
 
+        Vector3 lastVelocity = _velocity;
         float time = Time.time + 0.15f;
         while (Time.time < time)
         {
@@ -241,12 +289,11 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
             _velocity.z = movement.z * _dashSpeed;
             await UniTask.Yield();
         }
-        _isDashing = false;
-        return;
 
-        _velocity = new Vector3(0,0,0);
+        _velocity = lastVelocity;
+        _velocity.y = 0;
 
-        time = Time.time + 0.025f;
+        time = Time.time + 0.05f;
         while (Time.time < time)
         {
             await UniTask.Yield();
@@ -254,16 +301,29 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         _isDashing = false;
     }
 
+    private async UniTaskVoid InvincibilityFramesCounter()
+    {
+        await UniTask.WaitForSeconds(invincibilityDuration);
+
+        canBeHit = true;
+    }
+
     public bool TakeDamage(float damage)
     {
+        if (!canBeHit)
+            return false;
+
+        canBeHit = false;
         Debug.Log(this + "took " + damage + " damage");
         Health -= damage;
+        HUDManager.Instance.PlayerGotHit(invincibilityDuration);
         HUDManager.Instance.SetCurrentHealth(Health);
         if(Health <= 0)
         {
             Kill();
             return true;
         }
+        _ = InvincibilityFramesCounter();
         return false;
     }
 
@@ -272,6 +332,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         Health += amount;
         Health = Mathf.Clamp(Health, 0, _maxHealth);
         HUDManager.Instance.SetCurrentHealth(Health);
+        HUDManager.Instance.PlayerGotHealed(invincibilityDuration);
 
         return true;
     }
@@ -279,10 +340,49 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     public void Kill()
     {
         IsTargetable = false;
-        _isAlive = false;
-        //TODO: Change to event 
+        CanMove = false;
         
-        GameManager.Instance.isPlayerAlive = false;
+        GameManager.Instance.OnPlayerDeathInvoke();
+
+        StartCoroutine(DeathAnimation());
         return;
     }
+
+    IEnumerator DeathAnimation()
+    {
+        yield return new WaitForSeconds(0.1f);
+        DeathScreenManager.Instance.ShowDeathScreen();
+
+        float elapsedTime = 0;
+        float deathTime = 0.75f;
+        while (elapsedTime < deathTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float angle = Mathf.Clamp01(elapsedTime / deathTime) * 90;
+
+            Vector3 euler = transform.rotation.eulerAngles;
+            transform.rotation = Quaternion.Euler(new Vector3(euler.x, euler.y, angle));
+            transform.position += new Vector3(0, -0.8f * Time.deltaTime, 0);
+            yield return null;
+        }
+    }
+    public void SetCameraFOV(float value) 
+    {
+        Camera.main.fieldOfView = value;
+    }
+
+    public GameObject GetPlayerModel()
+    {
+        return playerModel;
+    }
+
+    public void OnDayEnd()
+    {
+        SetUpPlayer();
+        SetUpHUD();
+        transform.rotation = Quaternion.identity;
+        playerModel.SetActive(true);
+    }
+
+
 }

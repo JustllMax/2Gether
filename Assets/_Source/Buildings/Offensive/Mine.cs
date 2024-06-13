@@ -2,95 +2,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mine : Building
+public class Mine : MonoBehaviour
 {
-    [SerializeField] ParticleSystem explosionParticles;
     [SerializeField] GameObject model;
-    BuildingOffensiveStatistics statistics;
+    Minefield minefield;
 
 
-    public override void Start()
+    private void Awake()
     {
-        IsTargetable = false;
-        statistics = GetBaseStatistics() as BuildingOffensiveStatistics;
+        minefield = GetComponentInParent<Minefield>();
     }
 
-
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (other.TryGetComponent(out AIController controller))
+      
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        AIController temp = other.GetComponentInParent<AIController>();
+        if (temp != null)
         {
             OnAttack();
         }
     }
 
-    #region ChildrenMethods
-
-    public override void OnAttack()
+    void OnAttack()
     {
-        if (explosionParticles != null)
-            explosionParticles.Play();
-        AudioManager.Instance.PlaySFXAtSource(activationSound, audioSource);
-        ExplosionDamage();
+        ExplosionSpawner.SpawnExplosion(transform.position).SetUpExplosion(GetStatistics().AttackDamage, GetStatistics().AttackRange, minefield.GetTargetLayerMask());
         Kill();
     }
 
-
-    public override bool TakeDamage(float damage)
+    void Kill()
     {
-        AudioManager.Instance.PlaySFXAtSource(takeHitSound, audioSource);
-
-        Health -= damage;
-        if (Health <= 0)
-        {
-            Kill();
-            return true;
-        }
-        return false;
+        gameObject.SetActive(false);
+        minefield.OnAttack();
     }
 
-    public override void Kill()
-    {
 
-        model.SetActive(false);
-        IsTargetable = false;
-        Invoke("DestroyObj", DestroyObjectDelay);
-    }
-
-    void DestroyObj()
-    {
-        Destroy(gameObject);
-    }
-
-    public override void OnSell()
-    {
-        base.OnSell();
-
-        if (createDestroyParticles != null)
-            createDestroyParticles.Play();
-
-        AudioManager.Instance.PlaySFX(createDestroySound);
-        Kill();
-    }
-
-    #endregion ChildrenMethods
-
-    private void ExplosionDamage()
-    {
-
-
-        var hits = Physics.OverlapSphere(transform.position, GetStatistics().AttackRange, targetLayerMask);
-        foreach (var hit in hits)
-        { 
-             if (hit.TryGetComponent(out AIController controller))
-             {
-                controller.TakeDamage(GetStatistics().AttackDamage);
-             }
-        }
-    }
     BuildingOffensiveStatistics GetStatistics()
     {
-        statistics = GetBaseStatistics() as BuildingOffensiveStatistics;
-        return statistics;
+        return minefield.GetStatistics();
+    }
+
+    public void SetMineUp()
+    {
+        gameObject.SetActive(true);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 2f);
     }
 }

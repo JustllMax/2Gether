@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e4857590362998428ed34807f4a8085, type: 3}
+  m_Name: GrabAttackState
+  m_EditorClassIdentifier: 
+  weight: 3
+  AttackRange: 4
+  Attack:
+    Damage: 150
+    Delay: 0.2
+    DamagerRadius: 3
+    DamagerOffset: {x: 0, y: 1, z: 2}
+  DamageDelay: 2.8
+  ReleaseDelay: 1
+  AttackMask:
+    serializedVersion: 2
+    m_Bits: 64
+  AttackDelay: 6

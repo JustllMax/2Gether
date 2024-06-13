@@ -3,7 +3,12 @@ guid: 4bc2f909b80a82048ae14749ad6996cd
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gun.png
+    second: {fileID: 2100000, guid: bb6b7357242becd4f95df7121d37f6cf, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

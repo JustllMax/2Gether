@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &493728972826963629
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5526732238566711873}
+  m_Layer: 0
+  m_Name: Slots
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5526732238566711873
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493728972826963629}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9133913315564266118}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4495904896795113161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3939965440043714767}
+  m_Layer: 0
+  m_Name: SpawnSlots
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3939965440043714767
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4495904896795113161}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9133913315564266118}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4686551718329389538
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9133913315564266118}
+  - component: {fileID: 6459217188130242328}
+  m_Layer: 0
+  m_Name: P_MapGeneratorManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9133913315564266118
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4686551718329389538}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5526732238566711873}
+  - {fileID: 3939965440043714767}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6459217188130242328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4686551718329389538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14348e7af86b90d4685b1b3c2525333b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotPrefabs:
+  - {fileID: 2921056365862328451, guid: efbb994236c1fdb4881d72c0bb9345b6, type: 3}
+  - {fileID: 1245027202219669942, guid: c8b16af095ce2314494fee32dc440593, type: 3}
+  - {fileID: 1245027202219669942, guid: 34b2b36e7dc7fa24c855b9e288e9b32f, type: 3}
+  - {fileID: 1245027202219669942, guid: c00fc4b72e3fe5e498ac8895ddf8f631, type: 3}
+  - {fileID: 1245027202219669942, guid: 440da7e4c06890d49af4400266af4282, type: 3}
+  - {fileID: 1245027202219669942, guid: 9e2e81003956054488282ea90422df5e, type: 3}
+  emptySlotPrefabs:
+  - {fileID: 2921056365862328451, guid: efbb994236c1fdb4881d72c0bb9345b6, type: 3}
+  - {fileID: 2921056365862328451, guid: cdb73b6e23444174897cd894623f4e21, type: 3}
+  - {fileID: 2921056365862328451, guid: 10d90131f522cb14ea4562387827af06, type: 3}
+  - {fileID: 2921056365862328451, guid: 1c92d126e1c27ae449f0244a3bc44a1d, type: 3}
+  - {fileID: 2921056365862328451, guid: e89c12ca4002cac45ae8374765aae1f1, type: 3}
+  - {fileID: 2921056365862328451, guid: d442fd7520f56dc4fb89c7b980e1d519, type: 3}
+  - {fileID: 2921056365862328451, guid: bc4f8068d71747442b6513c3cc1d750a, type: 3}
+  - {fileID: 2921056365862328451, guid: ebb56f53b98f6924687ef6d0e257fe45, type: 3}
+  - {fileID: 2921056365862328451, guid: ec6b96bc62e19954c92997cbe04d3d24, type: 3}
+  - {fileID: 2921056365862328451, guid: 19fe959436efc55459454edea9e97e48, type: 3}
+  - {fileID: 2921056365862328451, guid: cdb73b6e23444174897cd894623f4e21, type: 3}
+  - {fileID: 2921056365862328451, guid: cdb73b6e23444174897cd894623f4e21, type: 3}
+  - {fileID: 2921056365862328451, guid: cdb73b6e23444174897cd894623f4e21, type: 3}
+  - {fileID: 2921056365862328451, guid: cdb73b6e23444174897cd894623f4e21, type: 3}
+  startingSlot: {fileID: 2229698089831652448, guid: 27093c5f5d5bb8f4bbf11a4a777c6404,
+    type: 3}
+  maps:
+  - {fileID: 11400000, guid: c2b841090844d5348bbbead1cea17cb2, type: 2}
+  - {fileID: 11400000, guid: c6862cbbf4c089e42a87d3a0ba7a8c8f, type: 2}
+  mapId: 0
+  isRandomGeneration: 1

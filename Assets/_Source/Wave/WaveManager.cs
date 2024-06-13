@@ -87,9 +87,12 @@ public class WaveManager : MonoBehaviour
     void FixedUpdate()
     {
 
+        //TEMP, bo co chwile wywala
+        return;
+
         if (_waveSystem.enemyCount <= 0 && _waveSystem.isWaveActive && !_waveSystem.isSpawnActive)
         {
-            EndWave();
+            EndNight();
         }
 
         if (DayNightCycleManager.Instance.nightBeginTasks <= 0)
@@ -213,15 +216,16 @@ public class WaveManager : MonoBehaviour
             }
             waveClearExpected += followEnemiesNumberToAdd + attackEnemiesNumberToAdd;
         }
-
+/*
         if (WaveSystem.nightCount % 5 == 0)
         {
             bossToAdd = UnityEngine.Random.Range(0, _enemyBossPrefabs.Count);
             waves[waves.Count - 1].EnemyPool.Add(_enemyBossPrefabs[bossToAdd]);
         }
+*/
     }
     #endregion
-    public void EndWave()
+    public void EndNight()
     {
         _waveSystem.isWaveActive = false;
         DayNightCycleManager.Instance.EndNightCycle();

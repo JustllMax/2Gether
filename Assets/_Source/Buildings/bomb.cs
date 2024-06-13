@@ -9,6 +9,7 @@ public class Bomb : MonoBehaviour
     [SerializeField] private float overlapRadius = 0.15f;
     private AIController controller;
     private float speed = 30f;
+    private float damage = 60f;
     Vector3 direction;
     float distance;
     private bool exploded = false;
@@ -78,7 +79,7 @@ public class Bomb : MonoBehaviour
             if (hitCollider.TryGetComponent(out AIController controller))
             {
 
-                controller.TakeDamage(controller.GetEnemyStats().AttackDamage);
+                controller.TakeDamage(damage);
 
             }
         }

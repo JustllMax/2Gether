@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5014b6606fc8904086fa78d61a1338d, type: 3}
+  m_Name: RangedAttackState
+  m_EditorClassIdentifier: 
+  weight: 3
+  AttackRange: 20
+  MinAttackRange: 0
+  ProjectileSpeed: 40
+  ProjectileDamage: 10
+  ProjectileCooldown: 0.2
+  BurstCooldown: 3.5
+  BurstCount: 4
+  ProjectilePrefab: {fileID: 7727711388741772700, guid: 863f1f01d8597a942b50ea10505592e2,
+    type: 3}
+  OnBurstRelocateChance: 0.33
+  ShootWhileMoving: 0

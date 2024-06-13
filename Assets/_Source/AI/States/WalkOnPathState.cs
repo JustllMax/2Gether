@@ -18,11 +18,8 @@ public class WalkOnPathState : AIState
         }
 
         Debug.Log("WalkStateOnStarted");
+        controller.PlayAnimation("WALK");
 
-        if (!controller.GetAnimator().GetNextAnimatorStateInfo(0).IsName(animName.ToString()))
-        {
-            controller.GetAnimator().CrossFade(animName.ToString(), 0.1f);
-        }
     }
 
     public override void OnUpdate(AIController controller)
@@ -37,6 +34,8 @@ public class WalkOnPathState : AIState
             }
 
         }
+
+        controller.PlayAnimation("WALK");
     }
 
 
@@ -56,6 +55,8 @@ public class WalkOnPathState : AIState
         return true;
     }
 
-   
-    
+    public override void OnLateUpdate(AIController controller)
+    {
+
+    }
 }

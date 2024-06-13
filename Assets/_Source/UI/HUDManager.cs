@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using NaughtyAttributes;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 
 public class HUDManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class HUDManager : MonoBehaviour
     Dictionary<GunType, Sprite> CrosshairsDictionary;
     
     [Foldout("References")][SerializeField] GameObject NightUI;
+    [Foldout("References")][SerializeField] Image HelmetOverlay;
 
     [Header("Character")]
     [Foldout("References")][SerializeField] Slider HealthBar;
@@ -32,6 +34,11 @@ public class HUDManager : MonoBehaviour
     [Foldout("References")] [SerializeField] TMP_Text AmmoCurrentText;
     [Foldout("References")] [SerializeField] TMP_Text AmmoReserveText;
     [Foldout("References")] [SerializeField] Image IconImage;
+    [Foldout("References")] [SerializeField] Image ScopeImage;
+    [Foldout("References")] [SerializeField] GameObject GunCameraDisplay;
+
+    private Color originalHelmetColor;
+
     #endregion Variables
     private void Awake()
     {
@@ -46,7 +53,7 @@ public class HUDManager : MonoBehaviour
 
         SetupIconsDictionary();
         SetupCrosshairsDictionary();
-
+        originalHelmetColor = HelmetOverlay.color;
     }
 
     private void OnEnable()
@@ -78,6 +85,11 @@ public class HUDManager : MonoBehaviour
         if(enabled)
             await UniTask.WaitForSeconds(HUDAppearanceDelay);
         NightUI.SetActive(enabled);
+    }
+
+    public void StartSpectatorMode()
+    {
+        _ = SetNightUIActivation(false);
     }
 
     #region Setup
@@ -155,10 +167,23 @@ public class HUDManager : MonoBehaviour
 
     #region Health
 
+    public void PlayerGotHit(float lerpDuration)
+    {
+        HelmetOverlay.color = Color.red;
+        HelmetOverlay.DOColor(originalHelmetColor, lerpDuration);
+    }
+
+    public void PlayerGotHealed(float lerpDuration)
+    {
+        HelmetOverlay.color = Color.green;
+        HelmetOverlay.DOColor(originalHelmetColor, lerpDuration);
+    }
+    
     public void SetMaxHealth(float maxHealth)
     {
         HealthBar.maxValue = maxHealth;
     }
+
     public void SetCurrentHealth(float currentHealth)
     {
         currentHealth = Mathf.Clamp(currentHealth, HealthBar.minValue, HealthBar.maxValue);
@@ -210,5 +235,21 @@ public class HUDManager : MonoBehaviour
         SetCrosshair(type);
     }
 
+    public void Scope()
+    {
+        GunCameraDisplay.SetActive(false);
+        CrosshairImage.gameObject.SetActive(false);
+        ScopeImage.gameObject.SetActive(true);
+    }
+
+    public void UnScope()
+    {
+        GunCameraDisplay.SetActive(true);
+        CrosshairImage.gameObject.SetActive(true);
+        ScopeImage.gameObject.SetActive(false);
+    }
+
     #endregion Gun
+
+
 }

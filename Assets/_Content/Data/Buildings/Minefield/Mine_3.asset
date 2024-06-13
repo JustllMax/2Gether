@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5884ba9f708c78c448b3600ede4ef302, type: 3}
+  m_Name: Mine_3
+  m_EditorClassIdentifier: 
+  CardType: 0
+  Rarity: 2
+  Name: Mine
+  Description: Explodes on touch
+  BuildingType: 0
+  ActivationTime: 0
+  HealthPoints: 200
+  SellCost: 20
+  AttackDamage: 200
+  AttackRange: 4
+  AttackFireRate: 0

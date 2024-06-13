@@ -26,7 +26,7 @@ public class LaserBuilding : Building
     float laserOriginalDamage;
     float laserDamageDiff = 2f;
 
-
+    float searchForTargetTimer;
     BuildingOffensiveStatistics GetStatistics()
     {
         return GetBaseStatistics() as BuildingOffensiveStatistics;
@@ -47,11 +47,19 @@ public class LaserBuilding : Building
     {
         Debug.Log(this + " jebany start");
         base.Start();
-        InvokeRepeating("UpdateTarget", 0f, 0.5f);
     }
 
     public void Update()
     {
+
+        if(searchForTargetTimer < 0.5f){
+            searchForTargetTimer+= Time.time;
+        }
+        else{
+            searchForTargetTimer = 0f;
+            UpdateTarget();
+        }
+
         LockOnTarget();
         if (target == null && useLaser && lineRenderer.enabled == true) { 
             lineRenderer.enabled = false;
@@ -172,6 +180,8 @@ public class LaserBuilding : Building
         }
     }
 
+
+RaycastHit hitInfo;
     void UpdateTarget()
     {
 
@@ -182,22 +192,23 @@ public class LaserBuilding : Building
         
         foreach (var hit in hits)
         {
-            Debug.Log(" znalaz³em " + hit.name);
+            Debug.Log(" find " + hit.name);
             if (hit.TryGetComponent(out AIController controller))
             {
                 if (controller.IsDead() == false)
                 {
-                    Debug.Log(" znalaz³em AIController " + controller.name);
-                    Vector3 directionToTarget = (controller.GetCurrentPosition() - transform.position).normalized; 
+                    Debug.Log(" find AIController " + controller.name);
+                    Vector3 directionToTarget = (controller.GetCurrentPosition() - firePoint.position).normalized; 
                     float distanceToTarget = Vector3.Distance(transform.position, controller.GetCurrentPosition());
-                    if (!Physics.Raycast(firePoint.position, directionToTarget, distanceToTarget, obstructionMask))
+                    if (!Physics.Raycast(firePoint.position, directionToTarget, out hitInfo, distanceToTarget, obstructionMask))
                     {
+                        Debug.LogWarning("Raycast enter " + controller.name + " " + Time.time);
                         enemies.Add(controller);
 
                     }
                     else
                     {
-                        Debug.Log(this + " trafilem sciane przy controllerze " + controller.name);
+                        Debug.LogWarning(this + " trafilem sciane przy controllerze " + controller.name + " " + Time.time);
                         if(controller == target)
                         {
                             target = null;
@@ -227,6 +238,11 @@ public class LaserBuilding : Building
         target = null;
     }
 
+void OnDrawGizmos()
+{
+    Gizmos.color = Color.red;
+    Gizmos.DrawLine(firePoint.position, hitInfo.point);
+}
 
     void OnDrawGizmosSelected()
     {

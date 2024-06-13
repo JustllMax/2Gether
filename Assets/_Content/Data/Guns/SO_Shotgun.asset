@@ -25,5 +25,5 @@ MonoBehaviour:
   FireRate: 0.075
   Range: 10
   ReloadTime: 1.2
-  BulletDamage: 5
-  AmountOfPelletsInShot: 6
+  BulletDamage: 4
+  AmountOfPelletsInShot: 8

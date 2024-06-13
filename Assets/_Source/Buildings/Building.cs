@@ -23,7 +23,6 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
     [SerializeField] protected ParticleSystem upgradeParticles;
 
     private BuildingStatistics _buildingStatistics;
-    private float attackTimer = 0;
     private int currentLevel = 0;
     private int upgradeCounter = 0;
     protected float AttackCoolDownTimer = 5f;
@@ -84,10 +83,10 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
         GoldManager.Instance.GoldAdd(GetSellCost());
     }
 
-
-    public bool CanAttack()
+    public virtual void OnUpgrage()
     {
-        return (attackTimer >= _buildingStatistics.ActivationTime);
+        maxHealth = GetBaseStatistics().HealthPoints;
+        Health = maxHealth;
     }
     #endregion ChildrenMethods
 
@@ -123,6 +122,7 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
             currentLevel++;
             _buildingStatistics = _upgradeTiers.GetStatsForLevel(currentLevel);
             upgradeCounter = 0;
+            OnUpgrage();
         }     
     }
 
@@ -143,12 +143,17 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
 
     public int GetSellCost()
     {
-        return _buildingStatistics.SellCost + _buildingStatistics.SellCost * upgradeCounter / 2;
+        return GetBaseStatistics().SellCost;
     }
 
     public Animator GetAnimator()
     {
         return animator;
+    }
+
+    public AudioClip GetActivationSFX()
+    {
+        return activationSound;
     }
 
     public AudioClip GetUpgradeSFX()

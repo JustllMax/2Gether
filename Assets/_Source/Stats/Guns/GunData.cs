@@ -13,9 +13,6 @@ public enum GunType
 public abstract class GunData : CardStatistics
 {
     public GunType GunType;
-    public GameObject P_Bullet;
-    public AudioClip BulletGroundHitSound;
-    public AudioClip BulletEnemyHitSound;
     public bool IsAutomatic;
     public int MagazineSize;
     public float FireRate;

@@ -5,6 +5,8 @@ using UnityEngine.AI;
 using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 using NaughtyAttributes;
+using UnityEngine.InputSystem.XR;
+using UnityEditor;
 
 
 [Serializable]
@@ -30,28 +32,32 @@ public class AIController : MonoBehaviour, IDamagable
     [SerializeField] List<AIState> _AIStates;
     AIState previousState;
     AIState nextState;
-    AIState currentState;
+    protected AIState currentState;
 
     [Header("CHANGE ACCORDINGLY TO CHASE/BUILDING. BOTH IS FOR BOSSES")]
     [SerializeField] TargetType AITargetFocus;
 
     [Header("Audio")]
-    [SerializeField] AudioClip hurtSound;
+    [SerializeField] protected AudioClip hurtSound;
     public AudioClip attackSound;
-    [SerializeField] AudioClip deathSound;
+    [SerializeField] protected AudioClip deathSound;
     [HideInInspector] public AudioSource audioSource;
-    [SerializeField] Collider hitboxCollider;
-    [SerializeField] float DeathInvokeTime = 2f;
+    [SerializeField] protected float DeathInvokeTime = 2f;
     DisintegrationEffect _deathEffect;
     Animator _animator;
-    NavMeshAgent _navMeshAgent;
-    bool isStunned = false;
-    bool isDead = false;
-    LayerMask targetLayerMask;
-    private float attackTimer = 0f;
+    protected NavMeshAgent _navMeshAgent;
+    protected bool isStunned = false;
+    protected bool isDead = false;
+    protected LayerMask targetLayerMask;
+    protected float attackTimer = 0f;
 
     [Foldout("DEBUG INFO")]
     [SerializeField] private AITarget currentTarget = new AITarget();
+
+    [Foldout("DEBUG INFO")]
+    [SerializeField] protected Collider[] hitboxColliders;
+
+
 
     [Foldout("DEBUG INFO")]
     public float distanceToTarget;
@@ -59,19 +65,24 @@ public class AIController : MonoBehaviour, IDamagable
     [Foldout("DEBUG INFO")]
     public float lastAttackTime = 0f;
 
+    [Foldout("DEBUG INFO")]
+    public uint ammoCount = 0;
 
     [Foldout("DEBUG INFO")]
     public bool isReloading;
 
     [Foldout("DEBUG INFO")]
-    public float remainingAttacks;
+    public Vector3 wanderTarget;
+
+
     [Foldout("DEBUG INFO")]
     [SerializeField] private float _health;
+
+    private float _rotationSpeed;
 
     public float Health { get => _health; set => _health = value; }
     public bool IsAlive { get => !isDead; }
 
-    public float maxHealth;
     private void Awake()
     {
         if(audioSource == null)
@@ -79,14 +90,11 @@ public class AIController : MonoBehaviour, IDamagable
         _deathEffect = GetComponent<DisintegrationEffect>();
         _animator = GetComponentInChildren<Animator>();
 
-        hitboxCollider = GetComponentInChildren<Collider>();
+        hitboxColliders = GetComponentsInChildren<Collider>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
-        remainingAttacks = GetEnemyStats().AttackAmount;
-        maxHealth = GetEnemyStats().Health;
-        Health = maxHealth;
-        _navMeshAgent.speed = GetEnemyStats().MovementSpeed;
-        Debug.Log("agent type id " + _navMeshAgent.agentTypeID);
+        Health = stats.Health;
+        ApplyDefaultMovement();
     }
 
     private void Start()
@@ -130,21 +138,17 @@ public class AIController : MonoBehaviour, IDamagable
     }
     public void Update()
     {
-
         if (isDead)
         {
             return;
         }
 
-        if (lastAttackTime < stats.AttackFireRate)
+        lastAttackTime += Time.deltaTime;
+
+
+        if (!HasTarget())
         {
-            lastAttackTime += Time.deltaTime;
-
-        }
-
-
-        if (ShouldSearchForTarget())
-        {
+            _navMeshAgent.ResetPath();
             SearchForTarget();
         }
 
@@ -155,14 +159,34 @@ public class AIController : MonoBehaviour, IDamagable
 
         if (currentState != null)
         {
-            currentState.OnUpdate(this);
             ChangeState();
+            currentState.OnUpdate(this);
         }
 
+        if (_rotationSpeed != 0)
+        {
+            Vector3 lookrotation = currentTarget.transform.position - transform.position;
+            lookrotation.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), _rotationSpeed * Time.deltaTime);
+        }
 
-    } 
+        _animator.SetFloat("walk_speed", _navMeshAgent.velocity.magnitude);
+    }
 
-    void SetLayerTargeting(TargetType targetType) 
+    public void LateUpdate()
+    {
+        if (isDead)
+        {
+            return;
+        }
+
+        if (currentState != null)
+        {
+            currentState.OnLateUpdate(this);
+        }
+    }
+
+    void SetLayerTargeting(TargetType targetType)
     {
         int playerLayer = LayerMask.NameToLayer("Player");
         int buildingLayer = LayerMask.NameToLayer("Building");
@@ -188,17 +212,18 @@ public class AIController : MonoBehaviour, IDamagable
         }
     }
 
-    private bool ShouldSearchForTarget()
+    public bool HasTarget()
     {
-        if (GetCurrentTarget().transform != null)
+        //W Unity nie mo¿na robiæ (currentTarget.targetable != null && currentTarget.targetable) bo jak jest null to wywali b³¹d
+        if (currentTarget.transform != null && currentTarget.targetable != null)
         {
-            if (GetCurrentTarget().targetable != null)
+            if (currentTarget.targetable.IsTargetable)
             {
-                if(GetCurrentTarget().targetable.IsTargetable)
-                    return false;
+                return true;
             }
         }
-        return true;
+
+        return false;
     }
 
     private void SearchForTarget()
@@ -206,13 +231,8 @@ public class AIController : MonoBehaviour, IDamagable
         Transform target = null;
         ITargetable targetable = null;
 
-
-        float radius = GetEnemyStats().AttackRange*3f;
-
         float minDistance = float.MaxValue;
-
-
-        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), radius, targetLayerMask);
+        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), stats.SearchRange, targetLayerMask);
         foreach (Collider hit in hits)
         {
             if (hit.TryGetComponent(out ITargetable t))
@@ -266,7 +286,6 @@ public class AIController : MonoBehaviour, IDamagable
         List<AIState> states = new List<AIState>();
         StateWeight highestWeight = StateWeight.Lowest;
 
-        // Find the highest state weight
         foreach (var state in _AIStates)
         {
             if (state.CanChangeToState(this))
@@ -279,24 +298,22 @@ public class AIController : MonoBehaviour, IDamagable
             }
         }
 
-        // Collect all states with the highest weight
         foreach (var state in _AIStates)
         {
             if (state.CanChangeToState(this) && state.weight == highestWeight)
             {
                 states.Add(state);
-                Debug.Log(state.name);
+                //Debug.Log(state.name);
             }
         }
 
-        // Choose a random state from the collected states
         if (states.Count > 0)
         {
             int randomIndex = Random.Range(0, states.Count);
             return states[randomIndex];
         }
 
-        return null; // Return null if no state is found
+        return null;
 
 
     }
@@ -304,24 +321,17 @@ public class AIController : MonoBehaviour, IDamagable
     public void RangedAttackPerformed()
     {
         attackTimer = 0f;
-        remainingAttacks--;
     }
     public bool CanAttack()
     {
-        if (currentTarget.transform != null)
-        {
-            if (currentTarget.targetable.IsTargetable && remainingAttacks > 0)
-            {
-                 return true;
-            }
-        }
-        return false;
+        return !isDead && HasTarget();
     }
 
-    public bool TakeDamage(float damage)
+    public virtual bool TakeDamage(float damage)
     {
         if(isDead)
             return false;
+
         Health -= damage;
         AudioManager.Instance.PlaySFXAtSource(hurtSound, audioSource);
         if(Health <= 0)
@@ -333,23 +343,26 @@ public class AIController : MonoBehaviour, IDamagable
         return false;
     }
 
-    public void Kill()
+    public virtual void Kill()
     {
         isDead = true;
-        hitboxCollider.enabled = false;
-        GetNavMeshAgent().enabled = false;
-        
-        if (!GetAnimator().GetNextAnimatorStateInfo(0).IsName(AIAnimNames.DEATH.ToString()))
+        foreach (Collider col in hitboxColliders)
         {
-            GetAnimator().CrossFade(AIAnimNames.DEATH.ToString(), 0.1f);
+            col.enabled = false;
         }
-        
-        Invoke("DestroyObj", DeathInvokeTime);
+
+        if (currentState != null)
+            currentState.OnExit(this);
+
+        GetNavMeshAgent().enabled = false;
+
+        PlayAnimation("DEATH");
+        Invoke("Desintegrate", DeathInvokeTime);
 
         WaveManager.Instance.waveSystem.enemyCount--;
     }
-
-    void DestroyObj()
+    
+    void Desintegrate()
     {
         _deathEffect.Execute();
     }
@@ -358,14 +371,62 @@ public class AIController : MonoBehaviour, IDamagable
     {
 
         Health += amount;
-        Health = Mathf.Clamp(Health, 0f, maxHealth);
+        Health = Mathf.Clamp(Health, 0f, stats.Health);
         return true;
     }
 
-
-    public void InstantiateGameObject(GameObject obj, Transform parent)
+    public bool AnimationComplete(string animName)
     {
-        Instantiate(obj, parent);
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+        return !stateInfo.IsName(animName) || (stateInfo.normalizedTime >= 1 && !_animator.IsInTransition(0));
+    }
+
+    public bool AllAnimationsComplete()
+    {
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+        return (stateInfo.normalizedTime >= 1 && !_animator.IsInTransition(0));
+    }
+
+    public void PlayAnimation(string animName, float crossTime = 0.1f)
+    {
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+
+        if (!stateInfo.IsName(animName))
+        {
+            _animator.CrossFadeInFixedTime(animName, crossTime);
+        } else if (stateInfo.normalizedTime >= 1 && !_animator.IsInTransition(0))
+        {
+            _animator.Play(animName, -1, 0);
+        }
+    }
+
+    public void SetMovementStats(in EnemyMovement enemyMovement)
+    {
+        _navMeshAgent.speed = enemyMovement.MovementSpeed;
+        _navMeshAgent.angularSpeed = enemyMovement.TurnSpeed;
+        _navMeshAgent.acceleration = enemyMovement.Acceleration;
+        _rotationSpeed = enemyMovement.ExtraRotationSpeed;
+    }
+
+    public void ApplyDefaultMovement()
+    {
+        SetMovementStats(stats.Movement);
+    }
+
+    public void RefreshTargetPos()
+    {
+        if (HasTarget())
+            _navMeshAgent.SetDestination(currentTarget.transform.position);
+        else 
+            _navMeshAgent.ResetPath();
+    }
+
+    public GameObject InstantiateGameObject(GameObject obj, Transform parent)
+    {
+        return Instantiate(obj, parent);
     }
     #region GetSet
 
@@ -393,11 +454,10 @@ public class AIController : MonoBehaviour, IDamagable
         isStunned = val;
     }
 
-
-
     public void SetCurrentTarget(AITarget target)
     {
         currentTarget = target;
+        RefreshTargetPos();
     }
 
     public AITarget GetCurrentTarget()

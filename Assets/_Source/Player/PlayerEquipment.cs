@@ -11,9 +11,12 @@ public class PlayerEquipment : MonoBehaviour
 
     [SerializeField]List<Gun> GunList = new List<Gun>();
     [SerializeField] List<GunAmmoStore> AmmoStore;
-    
-    Animator _animator;
 
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] private HandIKController _ikController;
+
+    Animator _animator;
+    PlayerGunController gunController;
     public Dictionary<GunType, int> AmmoStorage;
     public Gun _currentGun;
     public Gun _lastHeldGun;
@@ -33,6 +36,7 @@ public class PlayerEquipment : MonoBehaviour
 
     private void Awake()
     {
+        gunController = GetComponent<PlayerGunController>();
         AmmoStorage = new Dictionary<GunType, int>();
         foreach(GunAmmoStore gun in AmmoStore) {
             AmmoStorage.Add(gun.type, gun.amount);
@@ -95,9 +99,6 @@ public class PlayerEquipment : MonoBehaviour
     public void SwitchByScrolling()
     {
 
-        //TODO scroll is scrolling too fast
-        //Also might have to change to press to confirm weapon selection, not instantly changing
-
         int input = (int)Mathf.Clamp(_FPSController.Scroll.ReadValue<float>(), -1, 1);
 
         if (input == 0)
@@ -136,13 +137,17 @@ public class PlayerEquipment : MonoBehaviour
     {
         ResetReloadTimer();
         isSwitchingGun = true;
-
+        _currentGun.SetIsAiming(false);
+        
+        gunController.UnScope();
 
         if ( !_animator.GetNextAnimatorStateInfo(0).IsName(PlayerAnimNames.SWITCHDOWN.ToString()))
         {
             _animator.CrossFade(PlayerAnimNames.SWITCHDOWN.ToString(), 0.1f);
         }
-        
+
+        GetAudioSource().Stop();
+
         _lastHeldGun = _currentGun;
         _currentGun = gun;
 
@@ -150,15 +155,27 @@ public class PlayerEquipment : MonoBehaviour
             AmmoStorage[_currentGun.GetGunData().GunType], _currentGun.GetGunData().GunType);
     }
 
-    public void SwitchDownEndAnimEvent()
+    public void SwitchUpStartAnimEvent()
     {
+
         Debug.Log(this + " anim down");
         foreach (Gun gun in GunList)
         {
             gun.GetGunModel().SetActive(false);
         }
-        _currentGun.GetGunModel().SetActive(true); 
+
+        var ikConfig = _currentGun.GetIKConfig();
+        if (ikConfig != null)
+        {
+            _ikController.ChangeActiveConfig(ikConfig);
+        }
+        else
+        {
+            Debug.LogWarning("Gun: " + _currentGun.name + " does not have an IK config attached!, will use last weapon's config");
+        }
+        _currentGun.GetGunModel().SetActive(true);
     }
+
     public void SwitchUpEndAnimEvent()
     {
         isSwitchingGun = false;
@@ -174,7 +191,9 @@ public class PlayerEquipment : MonoBehaviour
     public void ReloadDownStartAnimEvent()
     {
         isReloading = true;
-        AudioManager.Instance.PlaySFXAtSource(_currentGun.GetReloadSFX(), _currentGun.GetAudioSource() );
+        _currentGun.SetIsAiming(false);
+        gunController.UnScope();
+        AudioManager.Instance.PlaySFXAtSource(_currentGun.GetReloadSFX(), GetAudioSource());
 
     }
 
@@ -191,6 +210,12 @@ public class PlayerEquipment : MonoBehaviour
         int magSize = _currentGun.GetGunData().MagazineSize;
         int currentAmmo = _currentGun.GetAmmoInMagazine();
         int amountToReload = magSize - currentAmmo;
+
+        if(gunType == GunType.Sniper)
+        {
+            HUDManager.Instance.UnScope();
+            
+        }
 
         switch (gunType)
         {
@@ -301,13 +326,21 @@ public class PlayerEquipment : MonoBehaviour
 
         if (isSwitchingGun)
             return false;
-
-        if (_currentGun.GetAmmoInMagazine() >= _currentGun.GetGunData().MagazineSize)
+        int currentAmmo = _currentGun.GetAmmoInMagazine();
+        int magSize = _currentGun.GetGunData().MagazineSize;
+        //ammo in magazine more than max || AmmoStorage is 0
+        if (currentAmmo >= magSize || AmmoStorage[_currentGun.GetGunData().GunType] == 0)
             return false;
 
         return true;
 
     }
+
+    public AudioSource GetAudioSource()
+    {
+        return audioSource;
+    }
+
     #endregion GetSet
     
 
