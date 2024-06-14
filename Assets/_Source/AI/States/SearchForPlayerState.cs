@@ -21,9 +21,7 @@ public class SearchForPlayerState : AIState
             controller.PlayAnimation("WALK");
         }
 
-        controller.GetNavMeshAgent().SetDestination(controller.wanderTarget);
-
-        if (controller.GetNavMeshAgent().remainingDistance <= 1f)
+        if (controller.ShouldChangePath())
         {
             RelocateWanderTarget(controller);
         }
@@ -31,7 +29,6 @@ public class SearchForPlayerState : AIState
 
     public override void OnExit(AIController controller)
     {
-
     }
 
     public override bool CanExitState(AIController controller)
@@ -63,7 +60,8 @@ public class SearchForPlayerState : AIState
         float angle = Random.Range(0f, Mathf.PI * 2);
         float x = Mathf.Cos(angle) * wanderRadius;
         float z = Mathf.Sin(angle) * wanderRadius;
-        controller.wanderTarget = new Vector3(center.x + x, center.y, center.z + z);
+        Vector3 wanderTarget = controller.ProjectToNavSurface(new Vector3(center.x + x, center.y, center.z + z), wanderRadius);
+        controller.GetNavMeshAgent().SetDestination(wanderTarget);
     }
 }
     

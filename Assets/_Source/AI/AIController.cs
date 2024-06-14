@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 using NaughtyAttributes;
 using UnityEngine.InputSystem.XR;
 using UnityEditor;
+using UnityEngine.UIElements;
 
 
 [Serializable]
@@ -14,13 +15,23 @@ public struct AITarget
 {
     public Transform transform;
     public ITargetable targetable;
+    public Vector3 positionOffset;
 
-    
+    public AITarget(Transform transform, ITargetable targetable, Vector3 positionOffset)
+    {
+        this.transform = transform;
+        this.targetable = targetable;
+        this.positionOffset = positionOffset;
+    }
+
     public AITarget(Transform transform, ITargetable targetable)
     {
         this.transform = transform;
         this.targetable = targetable;
+        this.positionOffset = Vector3.zero;
     }
+
+    public Vector3 Position => transform.position + positionOffset;
 };
 
 public class AIController : MonoBehaviour, IDamagable
@@ -32,7 +43,8 @@ public class AIController : MonoBehaviour, IDamagable
     [SerializeField] List<AIState> _AIStates;
     AIState previousState;
     AIState nextState;
-    protected AIState currentState;
+    [Foldout("DEBUG INFO")]
+    [SerializeField] protected AIState currentState;
 
     [Header("Audio")]
     [SerializeField] protected AudioClip hurtSound;
@@ -56,6 +68,9 @@ public class AIController : MonoBehaviour, IDamagable
     private static LayerMask[] targetMasks;
 
     [Foldout("DEBUG INFO")]
+    public bool isWalking;
+
+    [Foldout("DEBUG INFO")]
     public float distanceToTarget;
 
     [Foldout("DEBUG INFO")]
@@ -66,9 +81,6 @@ public class AIController : MonoBehaviour, IDamagable
 
     [Foldout("DEBUG INFO")]
     public bool isReloading;
-
-    [Foldout("DEBUG INFO")]
-    public Vector3 wanderTarget;
 
     [Foldout("DEBUG INFO")]
     public bool canSwitchTarget;
@@ -155,13 +167,12 @@ public class AIController : MonoBehaviour, IDamagable
 
         if (!HasTarget())
         {
-            _navMeshAgent.ResetPath();
             SearchForTarget();
         }
 
         if (HasTarget())
         {
-            distanceToTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
+            distanceToTarget = Vector3.Distance(currentTarget.Position, transform.position);
 
             //Try to switch target
             if (canSwitchTarget)
@@ -244,9 +255,11 @@ public class AIController : MonoBehaviour, IDamagable
     {
         Transform target = null;
         ITargetable targetable = null;
-
+        Vector3 closestPoint = Vector3.zero;
         float minDistance = float.MaxValue;
-        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), range, layer);
+
+        //Check for targets in range
+        Collider[] hits = Physics.OverlapSphere(transform.position, range, layer);
         foreach (Collider hit in hits)
         {
             ITargetable newTarget;
@@ -264,16 +277,35 @@ public class AIController : MonoBehaviour, IDamagable
 
             if (newTarget != null && newTarget.IsTargetable)
             {
-                float distanceToTarget = Vector3.Distance(hit.transform.position, transform.position);
+                Vector3 newClosestPoint = hit.ClosestPointOnBounds(transform.position);
+                float distanceToTarget = Vector3.Distance(newClosestPoint, transform.position);
                 if (distanceToTarget < range && distanceToTarget < minDistance)
                 {
                     target = newTransform;
                     targetable = newTarget;
+                    closestPoint = newClosestPoint;
                     minDistance = distanceToTarget;
                 }
             }
         }
-        return new AITarget(target, targetable);
+
+        if (target != null)
+        {
+            //Project hitpoint onto navmesh surface
+            closestPoint = ProjectToNavSurface(closestPoint) - target.position;
+        }
+
+
+        return new AITarget(target, targetable, closestPoint);
+    }
+
+    public Vector3 ProjectToNavSurface(in Vector3 point, float maxDistance = 2.5f)
+    {
+        if (NavMesh.SamplePosition(point, out NavMeshHit navhit, maxDistance, _navMeshAgent.areaMask))
+        {
+            return navhit.position;
+        }
+        return point;
     }
 
     public void ChangeState()
@@ -341,10 +373,6 @@ public class AIController : MonoBehaviour, IDamagable
 
     }
 
-    public void RangedAttackPerformed()
-    {
-        attackTimer = 0f;
-    }
     public bool CanAttack()
     {
         return !isDead && HasTarget();
@@ -442,9 +470,14 @@ public class AIController : MonoBehaviour, IDamagable
     public void RefreshTargetPos()
     {
         if (HasTarget())
-            _navMeshAgent.SetDestination(currentTarget.transform.position);
+            _navMeshAgent.SetDestination(currentTarget.Position);
         else 
             _navMeshAgent.ResetPath();
+    }
+
+    public bool ShouldChangePath()
+    {
+        return !_navMeshAgent.hasPath || !_navMeshAgent.pathPending && (_navMeshAgent.remainingDistance <= 1f || _navMeshAgent.isPathStale);
     }
 
     public GameObject InstantiateGameObject(GameObject obj, Transform parent)

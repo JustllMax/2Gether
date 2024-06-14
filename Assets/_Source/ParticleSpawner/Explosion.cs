@@ -45,8 +45,8 @@ public class Explosion : MonoBehaviour
             explosionParticles.Play();
         }
             
-
-        AudioManager.Instance.PlaySFXAtSource(source.clip, source);
+        if (source != null)
+            AudioManager.Instance.PlaySFXAtSource(source.clip, source);
         Explode();
     }
     void Explode()
