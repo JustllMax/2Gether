@@ -1377,7 +1377,7 @@ MonoBehaviour:
   _SO_Stats: {fileID: 11400000, guid: e1fd46c668b8bc74fa5f17c929713ee1, type: 2}
   _Model: {fileID: 5192519862357467155}
   audioSource: {fileID: 3231617775913850226}
-  firingSound: {fileID: 8300000, guid: a5049ffdea203974589f7583ca145236, type: 3}
+  firingSound: {fileID: 8300000, guid: bdce81c929d85b2459c986cd055f6508, type: 3}
   reloadSound: {fileID: 8300000, guid: 61c14cce20fb0464f9d48d29bf59ebf9, type: 3}
   noAmmoSound: {fileID: 8300000, guid: cd3eebcf6f5a27f4fa1942878fc7b722, type: 3}
   ammoInMagazine: 0
