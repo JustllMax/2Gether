@@ -13,4 +13,5 @@ abstract public class CardStatistics : ScriptableObject
     public string Name;
     public string Description;
 
+    public abstract Dictionary<string, string> GetStatistics();
 }
