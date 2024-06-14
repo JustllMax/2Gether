@@ -20,5 +20,5 @@ MonoBehaviour:
     ExtraRotationSpeed: 0
   PrimaryTarget: 1
   SearchRange: 50
-  SecondaryTarget: 1
-  SwitchRange: 0
+  SecondaryTarget: 2
+  SwitchRange: 20

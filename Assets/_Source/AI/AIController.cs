@@ -98,10 +98,11 @@ public class AIController : MonoBehaviour, IDamagable
 
         if (targetMasks == null)
         {
-            targetMasks = new LayerMask[3];
-            targetMasks[0] = LayerMask.GetMask("Building", "MainBuilding");
+            targetMasks = new LayerMask[4];
+            targetMasks[0] = LayerMask.GetMask("Building");
             targetMasks[1] = LayerMask.GetMask("Player");
-            targetMasks[2] = LayerMask.GetMask("Player", "Building", "MainBuilding");
+            targetMasks[2] = LayerMask.GetMask("MainBuilding");
+            targetMasks[3] = LayerMask.GetMask("Building", "MainBuilding");
         }
     }
 
@@ -158,7 +159,7 @@ public class AIController : MonoBehaviour, IDamagable
             SearchForTarget();
         }
 
-        if (currentTarget.transform != null)
+        if (HasTarget())
         {
             distanceToTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
 
@@ -200,7 +201,8 @@ public class AIController : MonoBehaviour, IDamagable
 
     private void SwitchTarget()
     {
-        if (currentTarget.targetable.TargetType != stats.SecondaryTarget)
+        //Try to switch if current target is not searched for in secondary mask
+        if ((targetMasks[(int)currentTarget.targetable.TargetType].value & targetMasks[(int)stats.SecondaryTarget].value) == 0)
         {
             AITarget secondaryTarget = GetClosestTarget(stats.SwitchRange, targetMasks[(int)stats.SecondaryTarget]);
             if (secondaryTarget.transform != null)
@@ -247,17 +249,27 @@ public class AIController : MonoBehaviour, IDamagable
         Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), range, layer);
         foreach (Collider hit in hits)
         {
-            if (hit.TryGetComponent(out ITargetable t))
+            ITargetable newTarget;
+            Transform newTransform;
+
+            if (hit.attachedRigidbody != null)
             {
-                if (t.IsTargetable)
+                hit.attachedRigidbody.TryGetComponent<ITargetable>(out newTarget);
+                newTransform = hit.attachedRigidbody.transform;
+            } else
+            {
+                hit.TryGetComponent<ITargetable>(out newTarget);
+                newTransform = hit.transform;
+            }
+
+            if (newTarget != null && newTarget.IsTargetable)
+            {
+                float distanceToTarget = Vector3.Distance(hit.transform.position, transform.position);
+                if (distanceToTarget < range && distanceToTarget < minDistance)
                 {
-                    float distanceToTarget = Vector3.Distance(hit.transform.position, transform.position);
-                    if (distanceToTarget < range && distanceToTarget < minDistance)
-                    {
-                        target = hit.transform;
-                        targetable = t;
-                        minDistance = distanceToTarget;
-                    }
+                    target = newTransform;
+                    targetable = newTarget;
+                    minDistance = distanceToTarget;
                 }
             }
         }

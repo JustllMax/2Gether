@@ -18,7 +18,7 @@ MonoBehaviour:
     TurnSpeed: 240
     Acceleration: 24
     ExtraRotationSpeed: 0
-  PrimaryTarget: 0
+  PrimaryTarget: 3
   SearchRange: 200
   SecondaryTarget: 1
   SwitchRange: 15

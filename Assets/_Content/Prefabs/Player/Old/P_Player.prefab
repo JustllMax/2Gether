@@ -1389,7 +1389,7 @@ MonoBehaviour:
   trailSpawnPoint: {fileID: 5950397636405686742}
   impactParticleSystem: {fileID: 9064919875212695174, guid: a5e1e2c4d2cd81f4abed6272a2b8187a,
     type: 3}
-  bulletTrail: {fileID: 328621789431213768, guid: b8a13779f1d497b46ace27143250e1f7,
+  bulletTrail: {fileID: 328621789431213768, guid: d3431d1bce2b0b7408d2a6d79e0613bb,
     type: 3}
   mask:
     serializedVersion: 2
@@ -4213,17 +4213,17 @@ PrefabInstance:
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.48571235
+      value: 0.4857124
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.32552996
+      value: 0.32552984
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.2011887
+      value: -0.20118861
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
