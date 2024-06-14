@@ -27,6 +27,7 @@ public class HUDManager : MonoBehaviour
     [Foldout("References")][SerializeField] Slider HealthBar;
     [Foldout("References")] [SerializeField] TMP_Text HealthCurrentText;
     [Foldout("References")][SerializeField] List<Slider> Dashes;
+    [Foldout("References")][SerializeField] Slider Grenade;
 
     [Header("Gun")]
     [Foldout("References")][SerializeField] Image CrosshairImage;
@@ -249,5 +250,19 @@ public class HUDManager : MonoBehaviour
 
     #endregion Gun
 
+    #region Grenade
+    public void SetGrenadeMaxTimer(float maxTimer)
+    {
+        Grenade.maxValue = maxTimer;
+        Grenade.value = maxTimer;
+    }
 
+    public void SetGrenadeCurrentTimer(float timerValue)
+    {
+
+        timerValue = Mathf.Clamp(timerValue, Grenade.minValue, Grenade.maxValue);
+
+        Grenade.value = timerValue;
+    }
+    #endregion Grenade
 }

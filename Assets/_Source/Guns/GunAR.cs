@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GunAR : Gun
 {
+    [SerializeField] PlayerEquipment playerEQ;
+
     [Header("Grenade Launcher")]
     [SerializeField] GameObject P_PlayerGrenade;
     [SerializeField] float projectileSpeed;
@@ -12,14 +14,7 @@ public class GunAR : Gun
     [SerializeField] LayerMask explosionMask;
 
 
-    PlayerEquipment playerEQ;
-
-    public override void Start()
-    {
-        base.Start();
-        playerEQ.GetComponentInParent<PlayerEquipment>();
-    }
-
+    
     public override bool Fire(bool isSameButtonPress, Transform bulletSpawnPoint)
     {
         if (lastShootTime + shootDelay < Time.time)
@@ -47,8 +42,8 @@ public class GunAR : Gun
 
     private void OnDrawGizmos()
     {
-
         Debug.DrawRay(bulletSpawnPoint.position, bulletSpawnPoint.forward * GetGunData().Range, Color.green);
+        Debug.DrawRay(trailSpawnPoint.position, bulletSpawnPoint.forward * GetGunData().Range, Color.green);
     }
     public override bool CanAim()
     {
@@ -79,19 +74,19 @@ public class GunAR : Gun
         RaycastHit hit;
         Vector3 direction = bulletSpawnPoint.forward;
         Vector3 endPoint = Vector3.zero;
-        PlayerGrenade grenade = Instantiate(P_PlayerGrenade, trailSpawnPoint).GetComponent<PlayerGrenade>();
+        
         if (Physics.Raycast(bulletSpawnPoint.position, direction, out hit, GetGunData().Range, mask))
         {
             endPoint = hit.transform.position;
-            direction = endPoint.normalized;
+            direction = (endPoint - trailSpawnPoint.position).normalized;
         }
         else{
 
-            endPoint = bulletSpawnPoint.position + GetDirection() * 100;
-            direction = endPoint.normalized;
+            endPoint = bulletSpawnPoint.position + direction * 100;
+            direction = (endPoint - trailSpawnPoint.position).normalized;
         }
+        PlayerGrenade grenade = Instantiate(P_PlayerGrenade, trailSpawnPoint.position, Quaternion.identity).GetComponent<PlayerGrenade>();
         grenade.SetUp(projectileSpeed, direction, GetGunData().Range, explosionDamage, explosionRadius, mask);
-
     }
 
 }

@@ -21,8 +21,10 @@ public class PlayerEquipment : MonoBehaviour
     public Gun _currentGun;
     public Gun _lastHeldGun;
 
+    [Header("Grenades")]
     public int GrenadesLeft;
-
+    public float GrenadeRegenerationDelay;
+    float grenadeRegenTimer =0f;
     private bool isSwitchingGun;
     private bool isReloading;
     private float reloadTimer;
@@ -36,6 +38,7 @@ public class PlayerEquipment : MonoBehaviour
 
     private void Awake()
     {
+        GrenadesLeft = 1;
         gunController = GetComponent<PlayerGunController>();
         AmmoStorage = new Dictionary<GunType, int>();
         foreach(GunAmmoStore gun in AmmoStore) {
@@ -46,6 +49,7 @@ public class PlayerEquipment : MonoBehaviour
     void Start()
     {
 
+        HUDManager.Instance.SetGrenadeMaxTimer(GrenadeRegenerationDelay);
         _FPSController = InputManager.Instance.GetPlayerInputAction().FPSController;
 
 
@@ -265,7 +269,14 @@ public class PlayerEquipment : MonoBehaviour
     {
         if(GrenadesLeft < 1)
         {
+            grenadeRegenTimer += Time.deltaTime;
+            HUDManager.Instance.SetGrenadeCurrentTimer(grenadeRegenTimer);
+            if(grenadeRegenTimer >= GrenadeRegenerationDelay)
+            {
+                grenadeRegenTimer = 0f;
+                GrenadesLeft++;
 
+            }
         }
     }
 
