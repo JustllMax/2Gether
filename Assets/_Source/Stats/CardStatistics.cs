@@ -13,4 +13,5 @@ abstract public class CardStatistics : ScriptableObject
     public string Name;
     public string Description;
 
+    public virtual List<(string, string)> GetStatistics() { return new List<(string, string)>(); }
 }
