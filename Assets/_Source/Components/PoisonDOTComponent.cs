@@ -5,8 +5,7 @@ using UnityEngine.AI;
 
 public class PoisonDOTComponent : MonoBehaviour
 {
-    GameObject P_PoisonParticles;
-    ParticleSystem particles;
+    [SerializeField]ParticleSystem particles;
     float effectDuration;
     float effectTimer = 0f;
     float tickTimer = 1f;
@@ -32,9 +31,16 @@ public class PoisonDOTComponent : MonoBehaviour
     {
 
         this.enabled = true;
+
+
         if(particles == null)
         {
-            particles = Instantiate(P_PoisonParticles, transform).GetComponent<ParticleSystem>();
+            GameObject poisonPartcilesPrefab = Resources.Load<GameObject>("P_PoisonEffectParticles");
+            if (poisonPartcilesPrefab == null)
+            {
+                Debug.LogError($"Prefab 'P_PoisonEffectParticles' not found in Resources folder.");
+            }
+            particles = Instantiate(poisonPartcilesPrefab, transform).GetComponent<ParticleSystem>();
             particles.transform.localScale *= particlesScaleModifier;
             particles.Play();
         }

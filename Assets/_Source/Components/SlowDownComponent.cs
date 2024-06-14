@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.ParticleSystem;
 
 public class SlowDownComponent : MonoBehaviour
 {
+    [SerializeField]ParticleSystem particles;
     NavMeshAgent agent;
     float originalSpeed;
     float effectDuration;
@@ -31,9 +33,24 @@ public class SlowDownComponent : MonoBehaviour
         }
     }
 
-    public void SetUpSlowEffect(float speedModifier, float duration)
+    public void SetUpSlowEffect(float speedModifier, float duration, float particlesScaleModifier = 1f)
     {
         this.enabled = true;
+        if (particles == null)
+        {
+            GameObject poisonPartcilesPrefab =  Resources.Load<GameObject>("P_SlowEffectParticles");
+            if (poisonPartcilesPrefab == null)
+            {
+                Debug.LogError($"Prefab 'P_SlowEffectParticles' not found in Resources folder.");
+            }
+            particles = Instantiate(poisonPartcilesPrefab, transform).GetComponent<ParticleSystem>();
+            particles.transform.localScale *= particlesScaleModifier;
+            particles.Play();
+        }
+        else
+        {
+            particles.Play();
+        }
         effectDuration = duration;
         effectTimer = 0f;
         if (speedModifier >= 100)
@@ -51,6 +68,10 @@ public class SlowDownComponent : MonoBehaviour
     }
     void DeactivateEffect()
     {
+        if (particles != null)
+        {
+            particles.Stop();
+        }
         effectTimer = 0f;
         if(agent != null)
         {
