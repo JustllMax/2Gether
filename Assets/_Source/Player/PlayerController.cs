@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
             }
         }
 
-        if (FPSController.Dash.IsPressed())
+        if (FPSController.Dash.WasPressedThisFrame())
             OnDash();
 
         if (!_isDashing)
