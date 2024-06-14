@@ -127,5 +127,5 @@ NavMeshProjectSettings:
       m_Flags: 0
   m_SettingNames:
   - Humanoid
-  - PlayerChase
-  - BuildingChase
+  - Full_Default
+  - Path_Default

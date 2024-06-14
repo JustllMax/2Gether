@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum NavAgentTypeNames
+public enum NavAgentType
 {
-    PlayerChase,
-    BuildingChase
+    Full_Default,
+    Path_Default
 }

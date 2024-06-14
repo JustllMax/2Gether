@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 250
   Movement:
-    MovementSpeed: 3
+    MovementSpeed: 4
     TurnSpeed: 120
     Acceleration: 8
     ExtraRotationSpeed: 0

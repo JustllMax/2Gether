@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 6951531701113342401}
   - component: {fileID: 8009158269872010652}
   m_Layer: 14
-  m_Name: PlayerNavMeshSurface
+  m_Name: FullNavMeshSurface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 5688025672265690856}
   - component: {fileID: 8380461665688259437}
   m_Layer: 13
-  m_Name: BuildingNavMeshSurface
+  m_Name: PathNavMeshSurface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

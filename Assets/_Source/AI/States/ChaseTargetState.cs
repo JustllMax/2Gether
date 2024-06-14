@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[CreateAssetMenu(fileName = "ChasePlayerState", menuName = ("2Gether/AI/States/ChasePlayer"))]
-public class ChasePlayerState : AIState
+[CreateAssetMenu(fileName = "ChaseTargetState", menuName = ("2Gether/AI/States/ChaseTarget"))]
+public class ChaseTargetState : AIState
 {
     public override void OnStart(AIController controller)
     {

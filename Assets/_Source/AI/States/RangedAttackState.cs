@@ -73,7 +73,7 @@ public class RangedAttackState : AIState
 
     public override bool CanChangeToState(AIController controller)
     {
-        return controller.distanceToTarget > MinAttackRange && controller.distanceToTarget <= AttackRange && controller.CanAttack();
+        return controller.distanceToTarget >= MinAttackRange && controller.distanceToTarget <= AttackRange && controller.CanAttack();
     }
 
     public override void OnLateUpdate(AIController controller)
@@ -130,8 +130,11 @@ public class RangedAttackState : AIState
 
         controller.isWalking = false;
         Vector3 center = controller.transform.position;
-        Vector3 wanderTarget = controller.ProjectToNavSurface(new Vector3(center.x + x, center.y, center.z + z), controller.distanceToTarget * 0.5f);
-        controller.GetNavMeshAgent().SetDestination(wanderTarget);
+
+        if (controller.SampleNavSurface(new Vector3(center.x + x, center.y, center.z + z), out var surfacePoint))
+        {
+            controller.GetNavMeshAgent().SetDestination(surfacePoint);
+        }
     }
 }
     

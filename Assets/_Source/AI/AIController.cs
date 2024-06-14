@@ -66,6 +66,7 @@ public class AIController : MonoBehaviour, IDamagable
     [SerializeField] protected Collider[] hitboxColliders;
 
     private static LayerMask[] targetMasks;
+    private static int[] agentTypeIDs;
 
     [Foldout("DEBUG INFO")]
     public bool isWalking;
@@ -115,32 +116,23 @@ public class AIController : MonoBehaviour, IDamagable
             targetMasks[1] = LayerMask.GetMask("Player");
             targetMasks[2] = LayerMask.GetMask("MainBuilding");
             targetMasks[3] = LayerMask.GetMask("Building", "MainBuilding");
+
+            agentTypeIDs = new int[2];
+            agentTypeIDs[0] = GetNavMeshAgentID(NavAgentType.Full_Default.ToString()).Value;
+            agentTypeIDs[1] = GetNavMeshAgentID(NavAgentType.Path_Default.ToString()).Value;
         }
     }
 
     private void Start()
     {
-        SetNavMeshAgentType(stats.PrimaryTarget);
+        SetNavMeshAgentType(NavAgentType.Full_Default);
         currentState = _AIStates[0];
         currentState.OnStart(this);
     }
 
-    void SetNavMeshAgentType(TargetType focus)
+    void SetNavMeshAgentType(NavAgentType type)
     {
-        string agentTypeName = "";
-        if(focus == TargetType.Player)
-        {
-            agentTypeName = NavAgentTypeNames.PlayerChase.ToString();
-        }
-        else
-        {
-            agentTypeName = NavAgentTypeNames.BuildingChase.ToString();
-        }
-        int? agentType = GetNavMeshAgentID(agentTypeName);
-        if(agentType != null)
-        {
-            _navMeshAgent.agentTypeID = (int)agentType;
-        }
+        _navMeshAgent.agentTypeID = agentTypeIDs[(int)type];
     }
 
     private int? GetNavMeshAgentID(string name)
@@ -289,23 +281,26 @@ public class AIController : MonoBehaviour, IDamagable
             }
         }
 
-        if (target != null)
+        if (target != null && SampleNavSurface(closestPoint, out var surfacePoint))
         {
             //Project hitpoint onto navmesh surface
-            closestPoint = ProjectToNavSurface(closestPoint) - target.position;
+            closestPoint = surfacePoint - target.position;
         }
 
 
         return new AITarget(target, targetable, closestPoint);
     }
 
-    public Vector3 ProjectToNavSurface(in Vector3 point, float maxDistance = 2.5f)
+    public bool SampleNavSurface(in Vector3 point, out Vector3 pointOnSurface, float maxDistance = 2.5f)
     {
         if (NavMesh.SamplePosition(point, out NavMeshHit navhit, maxDistance, _navMeshAgent.areaMask))
         {
-            return navhit.position;
+            pointOnSurface = navhit.position;
+            return true;
         }
-        return point;
+
+        pointOnSurface = Vector3.zero;
+        return false;
     }
 
     public void ChangeState()

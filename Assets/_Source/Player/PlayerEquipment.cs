@@ -158,6 +158,9 @@ public class PlayerEquipment : MonoBehaviour
 
         HUDManager.Instance.SwitchGunOnHUD(_currentGun.GetAmmoInMagazine(), _currentGun.GetGunData().MagazineSize, 
             AmmoStorage[_currentGun.GetGunData().GunType], _currentGun.GetGunData().GunType);
+
+        //Reload on weapon change
+        Reload();
     }
 
     public void SwitchUpStartAnimEvent()

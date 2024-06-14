@@ -60,8 +60,11 @@ public class SearchForPlayerState : AIState
         float angle = Random.Range(0f, Mathf.PI * 2);
         float x = Mathf.Cos(angle) * wanderRadius;
         float z = Mathf.Sin(angle) * wanderRadius;
-        Vector3 wanderTarget = controller.ProjectToNavSurface(new Vector3(center.x + x, center.y, center.z + z), wanderRadius);
-        controller.GetNavMeshAgent().SetDestination(wanderTarget);
+
+        if (controller.SampleNavSurface(new Vector3(center.x + x, center.y, center.z + z), out var surfacePoint))
+        {
+            controller.GetNavMeshAgent().SetDestination(surfacePoint);
+        }
     }
 }
     
