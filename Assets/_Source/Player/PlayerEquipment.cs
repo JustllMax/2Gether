@@ -336,6 +336,8 @@ public class PlayerEquipment : MonoBehaviour
 
         if (isSwitchingGun)
             return false;
+        if (isReloading)
+            return false;
 
         return _currentGun.CanAim();
     }

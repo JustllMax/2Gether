@@ -26,6 +26,7 @@ public class Explosion : MonoBehaviour
     {
         if(explosionParticles.isEmitting == false)
         {
+            source.Stop();
             Destroy(gameObject);
         }
     }
@@ -74,69 +75,6 @@ public class Explosion : MonoBehaviour
         if (player != null)
         {
             player.Velocity = (player.transform.position - transform.position).normalized * knockbackForce;
-        }
-    }
-    void ChooseTargeting()
-    {
-        if(targetLayerMask == AIMask)
-        {
-            CheckForAICollision();
-        }
-        else if(targetLayerMask == PlayerBuildingMask)
-        {
-            CheckForPlayerBuildingCollision();
-        }
-    }
-
-    void CheckForAICollision()
-    {
-        var hits = Physics.OverlapSphere(transform.position, explosionRadius, targetLayerMask);
-        HashSet<AIController> controllers = new HashSet<AIController>();
-        foreach (var hit in hits)
-        {
-
-            AIController controller = hit.GetComponentInParent<AIController>();
-            if (controller != null)
-            {
-                controllers.Add(controller);
-            }
-        }
-
-        foreach (var c in controllers)
-        {
-            c.TakeDamage(explosionDamage);
-        }
-    }
-
-   
-
-    void CheckForPlayerBuildingCollision()
-    {
-        var hits = Physics.OverlapSphere(transform.position, explosionRadius, targetLayerMask);
-        HashSet<Building> buildings = new HashSet<Building>();
-        PlayerController player = null;
-        foreach (var hit in hits)
-        {
-
-            Building building = hit.GetComponentInParent<Building>();
-            if (building != null)
-            {
-                buildings.Add(building);
-            }
-            else
-            {
-                player = hit.GetComponent<PlayerController>();
-                if(player != null)
-                {
-                    player.TakeDamage(explosionDamage);
-                    player.Velocity = (player.transform.position - transform.position).normalized * knockbackForce;
-                }
-            }
-        }
-
-        foreach (var b in buildings)
-        {
-            b.TakeDamage(explosionDamage);
         }
     }
 }
