@@ -22,6 +22,9 @@ public class HUDManager : MonoBehaviour
     
     [Foldout("References")][SerializeField] GameObject NightUI;
     [Foldout("References")][SerializeField] Image HelmetOverlay;
+    [Header("MainBase")]
+    [Foldout("References")][SerializeField] Slider MainbaseHPBar;
+    [Foldout("References")][SerializeField] TMP_Text MainbaseHPText;
 
     [Header("Character")]
     [Foldout("References")][SerializeField] Slider HealthBar;
@@ -265,4 +268,20 @@ public class HUDManager : MonoBehaviour
         Grenade.value = timerValue;
     }
     #endregion Grenade
+
+    #region Mainbase
+
+    public void SetMainBasesMaxHealth(float maxHealth)
+    {
+        HealthBar.maxValue = maxHealth;
+    }
+
+    public void SetMainBaseCurrentHealth(float currentHealth)
+    {
+        float slierVal = Mathf.Clamp(currentHealth, HealthBar.minValue, HealthBar.maxValue);
+        HealthBar.value = slierVal;
+        HealthCurrentText.text = currentHealth.ToString();
+    }
+
+    #endregion MainBase
 }

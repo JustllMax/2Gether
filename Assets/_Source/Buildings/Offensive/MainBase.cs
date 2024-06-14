@@ -15,6 +15,13 @@ public class MainBase : Building
         lineRenderer = GetComponent<LineRenderer>();
     }
 
+    public override void Start()
+    {
+        base.Start();
+        HUDManager.Instance.SetMainBasesMaxHealth(GetBaseStatistics().HealthPoints);
+        HUDManager.Instance.SetMainBaseCurrentHealth(Health);
+    }
+
     private void Update()
     {
         if (attackTimer < GetStatistics().AttackDelay)
@@ -60,6 +67,7 @@ public class MainBase : Building
         AudioManager.Instance.PlaySFXAtSource(takeHitSound, audioSource);
 
         Health -= damage;
+        HUDManager.Instance.SetMainBaseCurrentHealth(Health);
         if (Health <= 0)
         {
             AudioManager.Instance.PlaySFXAtSource(createDestroySound, audioSource);
