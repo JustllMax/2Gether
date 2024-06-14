@@ -46,7 +46,7 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (_flowRef.HasCardSelected())
+        if (_flowRef.HasCardSelected() && eventData.button == PointerEventData.InputButton.Left)
             return;
 
         if (!isClicked && transform.parent != null && transform.parent.name == "cardsPanel")
