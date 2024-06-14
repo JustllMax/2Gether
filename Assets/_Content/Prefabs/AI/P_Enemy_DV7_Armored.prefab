@@ -1720,7 +1720,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
   - {fileID: 11400000, guid: ce0aaed74f85d7d48b72310b8bd8aec4, type: 2}
   - {fileID: 11400000, guid: 7ff79690d78f3c14ca44a75e4afcac18, type: 2}
-  AITargetFocus: 1
   hurtSound: {fileID: 0}
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}
@@ -1734,6 +1733,7 @@ MonoBehaviour:
   ammoCount: 0
   isReloading: 0
   wanderTarget: {x: 0, y: 0, z: 0}
+  canSwitchTarget: 0
   _health: 0
 --- !u!195 &5668742816811135882
 NavMeshAgent:
@@ -1824,7 +1824,8 @@ AudioSource:
   m_GameObject: {fileID: 4084334784099707750}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -5230589128150782786, guid: e36732c6242d4b04a974f76d36fb6d00,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1871,7 +1872,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
