@@ -72,17 +72,22 @@ public class PauseManager : MonoBehaviour
         else
         {
             AudioManager.Instance.EnableMusicLowPassFilter(false);
-            if (!DayNightCycleManager.Instance.IsDay)
+            if (DayNightCycleManager.Instance.IsDay == false)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+                InputManager.Instance.EnableFPSController();
+            }
+            else
+            {
+                InputManager.Instance.EnableBuilderController();
             }
             isGamePaused = false;
             pauseMenu.SetActive(false);
             settingsMenu.SetActive(false);
             isInSettingsMenu = false;       
             Time.timeScale = 1f;
-            InputManager.Instance.EnableControllers();
+            
         }
     }
 

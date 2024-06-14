@@ -70,4 +70,23 @@ public class InputManager : MonoBehaviour
         playerInputAction.FPSController.Enable();
     }
 
+    public void EnableFPSController()
+    {
+        playerInputAction.FPSController.Enable();
+    }
+
+    public void DisableFPSController()
+    {
+        playerInputAction.FPSController.Disable();
+    }
+
+    public void EnableBuilderController()
+    {
+        playerInputAction.BuilderController.Enable();
+    }
+
+    public void DisableBuilderController()
+    {
+        playerInputAction.BuilderController.Disable();
+    }
 }
