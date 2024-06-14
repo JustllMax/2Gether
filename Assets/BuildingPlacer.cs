@@ -19,7 +19,7 @@ public class BuildingPlacer : MonoBehaviour
 
    
 
-    private float y;
+    private float y = 0f;
     GameObject _terrain;
     private Vector2Int rayPosition;
     public LayerMask layerMask;
@@ -34,11 +34,25 @@ public class BuildingPlacer : MonoBehaviour
     [SerializeField]
     private GridController _gridController;
 
+    [SerializeField]
+    private GameObject _rangeIndicatorPrefab;
+
+    private GameObject _rangeIndicatorInstance;
+
+    private void Start()
+    {
+        _rangeIndicatorInstance = Instantiate(_rangeIndicatorPrefab);
+        _rangeIndicatorInstance.transform.position = Vector3.up * 1000;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (_isPlacing)
         {
+            _rangeIndicatorInstance.transform.position = _draggingBuilding.transform.position;
+            _rangeIndicatorInstance.transform.localScale = Vector3.one * ((BuildingOffensiveStatistics)_selectedBuildingCard.CardStatisticsData).AttackRange;
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
@@ -114,6 +128,7 @@ public class BuildingPlacer : MonoBehaviour
     public void EndPlaceMode()
     {
         _isPlacing = false;
+        _rangeIndicatorInstance.transform.position = Vector3.up * 1000;
         Destroy( _draggingBuilding );
     }
 }

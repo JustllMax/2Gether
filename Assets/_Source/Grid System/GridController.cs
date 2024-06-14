@@ -54,7 +54,7 @@ public class GridController : MonoBehaviour
     {
         if (!IsPlaceTaken(pos.x, pos.y))
         {
-            GameObject newBuilding = Instantiate(building.gameObject, new Vector3(pos.x*10, building.transform.localScale.y/2, pos.y*10), Quaternion.identity);
+            GameObject newBuilding = Instantiate(building.gameObject, new Vector3(pos.x*10, 0, pos.y*10), Quaternion.identity);
             _grid[math.abs(pos.x), math.abs(pos.y)].IsTaken = true;
             _grid[math.abs(pos.x), math.abs(pos.y)].gridBuilding = newBuilding.GetComponent<Building>();
 

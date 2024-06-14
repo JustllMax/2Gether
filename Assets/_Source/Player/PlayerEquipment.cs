@@ -21,8 +21,10 @@ public class PlayerEquipment : MonoBehaviour
     public Gun _currentGun;
     public Gun _lastHeldGun;
 
+    [Header("Grenades")]
     public int GrenadesLeft;
-
+    public float GrenadeRegenerationDelay;
+    float grenadeRegenTimer =0f;
     private bool isSwitchingGun;
     private bool isReloading;
     private float reloadTimer;
@@ -36,6 +38,7 @@ public class PlayerEquipment : MonoBehaviour
 
     private void Awake()
     {
+        GrenadesLeft = 1;
         gunController = GetComponent<PlayerGunController>();
         AmmoStorage = new Dictionary<GunType, int>();
         foreach(GunAmmoStore gun in AmmoStore) {
@@ -46,6 +49,7 @@ public class PlayerEquipment : MonoBehaviour
     void Start()
     {
 
+        HUDManager.Instance.SetGrenadeMaxTimer(GrenadeRegenerationDelay);
         _FPSController = InputManager.Instance.GetPlayerInputAction().FPSController;
 
 
@@ -74,6 +78,7 @@ public class PlayerEquipment : MonoBehaviour
                 }
             }
         }
+        RegenerateGrenades();
     }
 
     #region SwitchGun
@@ -259,6 +264,22 @@ public class PlayerEquipment : MonoBehaviour
         reloadTimer = 0f;
     }
 
+
+    void RegenerateGrenades()
+    {
+        if(GrenadesLeft < 1)
+        {
+            grenadeRegenTimer += Time.deltaTime;
+            HUDManager.Instance.SetGrenadeCurrentTimer(grenadeRegenTimer);
+            if(grenadeRegenTimer >= GrenadeRegenerationDelay)
+            {
+                grenadeRegenTimer = 0f;
+                GrenadesLeft++;
+
+            }
+        }
+    }
+
     #endregion Reload
 
     #region Utils
@@ -315,6 +336,8 @@ public class PlayerEquipment : MonoBehaviour
 
         if (isSwitchingGun)
             return false;
+        if (isReloading)
+            return false;
 
         return _currentGun.CanAim();
     }
@@ -343,5 +366,8 @@ public class PlayerEquipment : MonoBehaviour
 
     #endregion GetSet
     
-
+    public void AddAmmoToAmmoStorage(GunType gunType, int amountOfAmmo)
+    {
+        AmmoStorage[gunType] += amountOfAmmo;
+    }
 }

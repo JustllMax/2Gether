@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 2196177476950198739}
   - component: {fileID: 1449759878486256795}
   - component: {fileID: 7737263179810947440}
+  - component: {fileID: -7460689606926886167}
   m_Layer: 0
   m_Name: P_SmiteRod
   m_TagString: Untagged
@@ -59,7 +60,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.67, y: 6.2, z: -24.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.5387442, y: 2.5387442, z: 2.5387442}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8456257733563555059}
@@ -197,6 +198,22 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &-7460689606926886167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5821364103949504362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5cdfafce35dd2543a95f038891bdfba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buildingSize: {x: 0, y: 0, z: 0}
+  _renderers:
+  - {fileID: 2947358096965970394}
+  isCanBePlacedOnRoad: 0
 --- !u!1001 &7329343834618758801
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -213,7 +230,7 @@ PrefabInstance:
     - target: {fileID: 1219814664898222690, guid: b60263f9b26f6c74b96539a51254c4ee,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 1219814664898222690, guid: b60263f9b26f6c74b96539a51254c4ee,
         type: 3}
@@ -268,8 +285,46 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9132842800042508596, guid: b60263f9b26f6c74b96539a51254c4ee,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3711302232556739497}
   m_SourcePrefab: {fileID: 100100000, guid: b60263f9b26f6c74b96539a51254c4ee, type: 3}
+--- !u!1 &1948210639132559269 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9132842800042508596, guid: b60263f9b26f6c74b96539a51254c4ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 7329343834618758801}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &3711302232556739497
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948210639132559269}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8334073581038260804, guid: e330c4d8284db6543928fd8f860cf446, type: 3}
+--- !u!23 &2947358096965970394 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5570972463034117963, guid: b60263f9b26f6c74b96539a51254c4ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 7329343834618758801}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8456257733563555059 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1219814664898222690, guid: b60263f9b26f6c74b96539a51254c4ee,

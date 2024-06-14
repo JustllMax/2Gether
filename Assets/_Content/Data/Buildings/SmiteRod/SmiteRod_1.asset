@@ -20,8 +20,8 @@ MonoBehaviour:
   ActivationTime: 1
   HealthPoints: 120
   SellCost: 80
-  AttackDamage: 5
-  AttackRange: 15
+  AttackDamage: 3
+  AttackRange: 30
   AttackDelay: 2
   slowModifier: 0.25
   slowDuration: 2

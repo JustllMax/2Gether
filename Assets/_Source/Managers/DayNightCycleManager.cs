@@ -33,7 +33,7 @@ public class DayNightCycleManager : MonoBehaviour
     {
         EndNightCycle();
     }
-
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.H))

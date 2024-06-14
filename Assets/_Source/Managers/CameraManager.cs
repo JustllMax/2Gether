@@ -1,6 +1,5 @@
 using UnityEngine;
 using Cinemachine;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class CameraManager : MonoBehaviour
 {

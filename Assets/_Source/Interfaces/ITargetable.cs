@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TargetType
+public enum TargetType : int
 {
     Building,
     Player,

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 348d1c825f36b1e41b692c8e6b142b4d, type: 3}
+  m_Name: Card_Building_Laser
+  m_EditorClassIdentifier: 
+  CardName: Laser
+  CardSprite: {fileID: 21300000, guid: d7acbbcc6360f2a4ebf678f7831d48c3, type: 3}
+  CardDescription: Shoots a laser at near enemies
+  CardStatisticsData: {fileID: 11400000, guid: f13357988ed0d1f4385403286501a5ed, type: 2}
+  BuildingPrefab: {fileID: 7591932275088343701, guid: 427bf0348ca5d7240b330a8fc5b100d1,
+    type: 3}

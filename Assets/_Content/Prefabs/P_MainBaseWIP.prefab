@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8245826650786503778}
   - component: {fileID: 3954679811581966035}
-  - component: {fileID: 803110440029829182}
+  - component: {fileID: -296052202719157287}
   m_Layer: 10
   m_Name: P_MainBaseWIP
   m_TagString: MainBase
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 16.35, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4.962166, y: 4.962166, z: 4.962166}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 416041309346594078}
@@ -64,7 +64,7 @@ MonoBehaviour:
     m_Bits: 57856
   firePoint: {fileID: 8767450887702037407}
   playerSpawnPoint: {fileID: 5781223897751113078}
---- !u!120 &803110440029829182
+--- !u!120 &-296052202719157287
 LineRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
