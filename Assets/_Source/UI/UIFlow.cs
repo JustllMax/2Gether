@@ -72,7 +72,8 @@ public class UIFlow : MonoBehaviour
         SpawnCards();
         FadeInCards();
 
-        rerollButton.gameObject.SetActive(true);
+        // TODO: add it back later
+        rerollButton.gameObject.SetActive(false);
         rerollButton.interactable = true;
         continueButton.gameObject.SetActive(true);
         continueButton.interactable = true;
@@ -166,6 +167,19 @@ public class UIFlow : MonoBehaviour
             });
 
         
+    }
+
+    private void Update()
+    {
+        if (currentClickedCard != null)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                currentClickedCard.ResetPosition();
+                currentClickedCard.CardData.EndExecute();
+                currentClickedCard = null;
+            }
+        }
     }
 
     void SpawnCards()

@@ -19,6 +19,9 @@ public class CardObject : MonoBehaviour
     [SerializeField]
     private Image _thumbnail;
 
+    [SerializeField]
+    private CardStatDisplay _statDisplay;
+
     public void Execute()
     {
         GameContext ctx = new GameContext();
@@ -41,5 +44,7 @@ public class CardObject : MonoBehaviour
         _title.text = card.CardName;
         _description.text = card.CardDescription;
         _thumbnail.sprite = card.CardSprite;
+
+        _statDisplay.Display(card.CardStatisticsData.GetStatistics());
     }
 }
