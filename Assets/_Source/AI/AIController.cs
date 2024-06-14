@@ -34,9 +34,6 @@ public class AIController : MonoBehaviour, IDamagable
     AIState nextState;
     protected AIState currentState;
 
-    [Header("CHANGE ACCORDINGLY TO CHASE/BUILDING. BOTH IS FOR BOSSES")]
-    [SerializeField] TargetType AITargetFocus;
-
     [Header("Audio")]
     [SerializeField] protected AudioClip hurtSound;
     public AudioClip attackSound;
@@ -48,7 +45,6 @@ public class AIController : MonoBehaviour, IDamagable
     protected NavMeshAgent _navMeshAgent;
     protected bool isStunned = false;
     protected bool isDead = false;
-    protected LayerMask targetLayerMask;
     protected float attackTimer = 0f;
 
     [Foldout("DEBUG INFO")]
@@ -57,7 +53,7 @@ public class AIController : MonoBehaviour, IDamagable
     [Foldout("DEBUG INFO")]
     [SerializeField] protected Collider[] hitboxColliders;
 
-
+    private static LayerMask[] targetMasks;
 
     [Foldout("DEBUG INFO")]
     public float distanceToTarget;
@@ -74,6 +70,8 @@ public class AIController : MonoBehaviour, IDamagable
     [Foldout("DEBUG INFO")]
     public Vector3 wanderTarget;
 
+    [Foldout("DEBUG INFO")]
+    public bool canSwitchTarget;
 
     [Foldout("DEBUG INFO")]
     [SerializeField] private float _health;
@@ -95,13 +93,21 @@ public class AIController : MonoBehaviour, IDamagable
 
         Health = stats.Health;
         ApplyDefaultMovement();
+
+        canSwitchTarget = stats.PrimaryTarget != stats.SecondaryTarget;
+
+        if (targetMasks == null)
+        {
+            targetMasks = new LayerMask[3];
+            targetMasks[0] = LayerMask.GetMask("Building", "MainBuilding");
+            targetMasks[1] = LayerMask.GetMask("Player");
+            targetMasks[2] = LayerMask.GetMask("Player", "Building", "MainBuilding");
+        }
     }
 
     private void Start()
     {
-
-        SetLayerTargeting(AITargetFocus);
-        SetNavMeshAgentType(AITargetFocus);
+        SetNavMeshAgentType(stats.PrimaryTarget);
         currentState = _AIStates[0];
         currentState.OnStart(this);
     }
@@ -109,7 +115,7 @@ public class AIController : MonoBehaviour, IDamagable
     void SetNavMeshAgentType(TargetType focus)
     {
         string agentTypeName = "";
-        if(focus.ToString() == TargetType.Player.ToString())
+        if(focus == TargetType.Player)
         {
             agentTypeName = NavAgentTypeNames.PlayerChase.ToString();
         }
@@ -154,7 +160,13 @@ public class AIController : MonoBehaviour, IDamagable
 
         if (currentTarget.transform != null)
         {
-             distanceToTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
+            distanceToTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
+
+            //Try to switch target
+            if (canSwitchTarget)
+            {
+                SwitchTarget();
+            }
         }
 
         if (currentState != null)
@@ -186,29 +198,20 @@ public class AIController : MonoBehaviour, IDamagable
         }
     }
 
-    void SetLayerTargeting(TargetType targetType)
+    private void SwitchTarget()
     {
-        int playerLayer = LayerMask.NameToLayer("Player");
-        int buildingLayer = LayerMask.NameToLayer("Building");
-        LayerMask mask;
-
-        switch (targetType)
+        if (currentTarget.targetable.TargetType != stats.SecondaryTarget)
         {
-            case TargetType.Building:
-                mask = (1 << buildingLayer);
-                targetLayerMask = mask;
-                return;
-
-            case TargetType.Player:
-                mask = (1 << playerLayer);
-                targetLayerMask = mask;
-                return;
-
-            case TargetType.Both:
-                mask = (1 << playerLayer) | (1 << buildingLayer);
-                targetLayerMask = mask;
-                return;
-
+            AITarget secondaryTarget = GetClosestTarget(stats.SwitchRange, targetMasks[(int)stats.SecondaryTarget]);
+            if (secondaryTarget.transform != null)
+            {
+                SetCurrentTarget(secondaryTarget);
+            }
+        }
+        //Remove target if it is out of range
+        else if (distanceToTarget > stats.SwitchRange)
+        {
+            SetCurrentTarget(new AITarget());
         }
     }
 
@@ -228,11 +231,20 @@ public class AIController : MonoBehaviour, IDamagable
 
     private void SearchForTarget()
     {
+        AITarget target = GetClosestTarget(stats.SearchRange, targetMasks[(int)stats.PrimaryTarget]);
+        if (target.transform != null)
+        {
+            SetCurrentTarget(target);
+        }
+    }
+
+    private AITarget GetClosestTarget(float range, LayerMask layer)
+    {
         Transform target = null;
         ITargetable targetable = null;
 
         float minDistance = float.MaxValue;
-        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), stats.SearchRange, targetLayerMask);
+        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), range, layer);
         foreach (Collider hit in hits)
         {
             if (hit.TryGetComponent(out ITargetable t))
@@ -240,7 +252,7 @@ public class AIController : MonoBehaviour, IDamagable
                 if (t.IsTargetable)
                 {
                     float distanceToTarget = Vector3.Distance(hit.transform.position, transform.position);
-                    if (distanceToTarget < minDistance)
+                    if (distanceToTarget < range && distanceToTarget < minDistance)
                     {
                         target = hit.transform;
                         targetable = t;
@@ -249,8 +261,7 @@ public class AIController : MonoBehaviour, IDamagable
                 }
             }
         }
-        if(target != null)
-            SetCurrentTarget(new AITarget(target, targetable));
+        return new AITarget(target, targetable);
     }
 
     public void ChangeState()

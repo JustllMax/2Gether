@@ -18,6 +18,7 @@ public class PlayerDeadState : AIState
             mainBase = GameManager.Instance.GetMainBaseTransform();
             mainBaseTarget = new AITarget(mainBase, mainBase.GetComponent<ITargetable>());
             controller.SetCurrentTarget(mainBaseTarget);
+            controller.canSwitchTarget = false;
             Debug.Log(this + " Target set to " + mainBaseTarget.transform);
 
             controller.GetNavMeshAgent().SetDestination(mainBase.position);

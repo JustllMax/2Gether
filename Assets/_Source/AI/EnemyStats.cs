@@ -10,7 +10,15 @@ public class EnemyStatistics : ScriptableObject
     public float Health;
     public EnemyMovement Movement;
 
-    [Tooltip("Range to detect a target")]
+    public TargetType PrimaryTarget;
+
+    [Tooltip("Range to detect a primary target")]
     [Range(5f, 200f)]
     public float SearchRange;
+
+    public TargetType SecondaryTarget;
+
+    [Tooltip("Range to switch to a secondary target")]
+    [Range(1f, 100f)]
+    public float SwitchRange;
 }
