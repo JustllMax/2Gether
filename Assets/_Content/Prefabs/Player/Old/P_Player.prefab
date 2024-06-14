@@ -1377,7 +1377,7 @@ MonoBehaviour:
   _SO_Stats: {fileID: 11400000, guid: e1fd46c668b8bc74fa5f17c929713ee1, type: 2}
   _Model: {fileID: 5192519862357467155}
   audioSource: {fileID: 3231617775913850226}
-  firingSound: {fileID: 8300000, guid: bdce81c929d85b2459c986cd055f6508, type: 3}
+  firingSound: {fileID: 8300000, guid: a5049ffdea203974589f7583ca145236, type: 3}
   reloadSound: {fileID: 8300000, guid: 61c14cce20fb0464f9d48d29bf59ebf9, type: 3}
   noAmmoSound: {fileID: 8300000, guid: cd3eebcf6f5a27f4fa1942878fc7b722, type: 3}
   ammoInMagazine: 0
@@ -1396,6 +1396,15 @@ MonoBehaviour:
     m_Bits: 63233
   weaponIKConfig: {fileID: 5345095839709660213}
   isAiming: 0
+  playerEQ: {fileID: 3735655559337534896}
+  P_PlayerGrenade: {fileID: 7727711388741772700, guid: 47a19d8904bdf854695ae983f3ec9cdb,
+    type: 3}
+  projectileSpeed: 75
+  explosionDamage: 25
+  explosionRadius: 5
+  explosionMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!82 &3231617775913850226
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2321,8 +2330,8 @@ MonoBehaviour:
   GunList:
   - {fileID: 5425135659821295255}
   - {fileID: 4542388386687634158}
-  - {fileID: 4069124828040571552}
   - {fileID: 2461275144498019277}
+  - {fileID: 4069124828040571552}
   AmmoStore:
   - type: 0
     amount: 9999
@@ -2336,7 +2345,8 @@ MonoBehaviour:
   _ikController: {fileID: 7159847689036973338}
   _currentGun: {fileID: 5425135659821295255}
   _lastHeldGun: {fileID: 0}
-  GrenadesLeft: 0
+  GrenadesLeft: 1
+  GrenadeRegenerationDelay: 5
 --- !u!114 &7159847689036973338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4183,37 +4193,37 @@ PrefabInstance:
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -93.43553
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.6300001
+      value: 87.024
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -89.13553
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7858988
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0.4857124
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.32552987
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.20118861
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}

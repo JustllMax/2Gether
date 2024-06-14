@@ -52,17 +52,14 @@ public class UIFlow : MonoBehaviour
         DayNightCycleManager.DayBegin -= OnDayStart;
     }
 
-    public void ShowPanel(CardPoolData pd)
-    {
-        ShowPanel(pd.Cards);
-    }
-
     public void ShowPanel(List<Card> pd)
     {
+        _currentCardPool = new List<Card>();
         _currentCardPool = pd;
 
         gamePanel.SetActive(false);
         cardpackPanel.SetActive(true);
+        boosterPackButton.gameObject.SetActive(true);
         rerollButton.gameObject.SetActive(false);
         continueButton.gameObject.SetActive(false);
 
@@ -76,7 +73,9 @@ public class UIFlow : MonoBehaviour
         FadeInCards();
 
         rerollButton.gameObject.SetActive(true);
+        rerollButton.interactable = true;
         continueButton.gameObject.SetActive(true);
+        continueButton.interactable = true;
         //rerollButton.transform.DOScale(0, 0);
         //continueButton.transform.DOScale(0, 0);
         //rerollButton.transform.DOScale(1, 1);
@@ -197,6 +196,15 @@ public class UIFlow : MonoBehaviour
         {
             Destroy(cards[i].gameObject);
         }
+
+        cards = cardsPanel.GetComponentsInChildren<Transform>();
+
+        for (int i = 1; i < cards.Length; i++)
+        {
+            Destroy(cards[i].gameObject);
+        }
+
+
     }
 
     void FadeInCards()
