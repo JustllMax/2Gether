@@ -15,6 +15,7 @@ public class BuildingOffensiveStatistics : BuildingStatistics
     public float AttackRange;
     public float AttackDelay;
 
+
     /*
     [HideInInspector]public bool IsAOE;
     [HideInInspector]public GameObject P_AOE;
