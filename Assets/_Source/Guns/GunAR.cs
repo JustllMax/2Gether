@@ -1,4 +1,4 @@
-using System.Collections;
+  using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -77,7 +77,7 @@ public class GunAR : Gun
         
         if (Physics.Raycast(bulletSpawnPoint.position, direction, out hit, GetGunData().Range, mask))
         {
-            endPoint = hit.transform.position;
+            endPoint = hit.point;
             direction = (endPoint - trailSpawnPoint.position).normalized;
         }
         else{

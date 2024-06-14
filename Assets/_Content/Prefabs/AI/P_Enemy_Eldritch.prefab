@@ -64828,7 +64828,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -64899,7 +64899,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d40ebfaa723545d4bbbac4b28c6610d1, type: 2}
   - {fileID: 11400000, guid: 95a1f67cad4fdab4bafef6da3a074790, type: 2}
   - {fileID: 11400000, guid: 6bfc2566e3d2c5941abf5ab0d28ac86b, type: 2}
-  AITargetFocus: 1
   hurtSound: {fileID: 8300000, guid: 977744f402828ab48aaf83b0711ab2a4, type: 3}
   attackSound: {fileID: 8300000, guid: 30c8b1904830a3046a00ffb74c6f9d7e, type: 3}
   deathSound: {fileID: 8300000, guid: 86757ea04bdd614458912c7772153bad, type: 3}
@@ -64913,6 +64912,7 @@ MonoBehaviour:
   ammoCount: 0
   isReloading: 0
   wanderTarget: {x: 0, y: 0, z: 0}
+  canSwitchTarget: 0
   _health: 0
   receivedDamage: 0
   teleportSound: {fileID: 8300000, guid: a34799feb063ba747b23b1bcf0a20ef3, type: 3}

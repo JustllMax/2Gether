@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/_Content/Scenes/MainMenu.unity
     guid: 0d63f4fe705be304c97c36058fd3ad0f
   - enabled: 1
+    path: Assets/_Content/Scenes/TestScenes/Krzysiekv2.unity
+    guid: e71294261e810b340a8873288c83d323
+  - enabled: 1
     path: Assets/_Content/Scenes/demo.unity
     guid: 3133c7a303b2ac64a8d2219411f75a40
   m_configObjects: {}

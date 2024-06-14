@@ -19,6 +19,8 @@ public class WeaponAnimation : MonoBehaviour
     private float _maxStep = 0.06f;
     private Vector3 _swayPos;
 
+
+
     [SerializeField]
     private float _rotStep = 4f;
     [SerializeField]
