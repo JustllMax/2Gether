@@ -10,6 +10,7 @@ TagManager:
   - Way_Anchor
   - MainBase
   - Enemy
+  - Building
   layers:
   - Default
   - TransparentFX

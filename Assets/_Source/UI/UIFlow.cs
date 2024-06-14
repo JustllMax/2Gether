@@ -28,6 +28,9 @@ public class UIFlow : MonoBehaviour
     [SerializeField, ReadOnly]
     List<UICards> _cards = new List<UICards>();
 
+    [SerializeField]
+    private BuildingDetailHandler _buildingDetailHandler;
+
     void Awake()
     {
         Instance = this;
@@ -63,6 +66,11 @@ public class UIFlow : MonoBehaviour
         rerollButton.gameObject.SetActive(false);
         continueButton.gameObject.SetActive(false);
 
+    }
+
+    public bool IsPlacingCard()
+    {
+        return currentClickedCard != null;
     }
 
     void OpenBoosterPack()
@@ -253,6 +261,8 @@ public class UIFlow : MonoBehaviour
     public void SetSelectedCard(UICards card)
     {
         if (currentClickedCard == card) return;
+
+        _buildingDetailHandler.CloseDetailPanel();
 
         if (currentClickedCard != null)
         {
