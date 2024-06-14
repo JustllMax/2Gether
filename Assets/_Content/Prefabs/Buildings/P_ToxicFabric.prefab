@@ -79,7 +79,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buildingSize: {x: 0, y: 0, z: 0}
-  _renderer: {fileID: 982300661693202637}
+  _renderers:
+  - {fileID: 982300661693202637}
+  - {fileID: 1647279135080695532}
+  - {fileID: 4243133991886605013}
+  - {fileID: 6231000775629004007}
   isCanBePlacedOnRoad: 0
 --- !u!1 &5349061106581624510
 GameObject:
@@ -395,6 +399,12 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 4066657952294888969}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &1647279135080695532 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3365284558171283685, guid: 90e6e48f076aa7a448fac5b36537d6f9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4066657952294888969}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1689437844436045470 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5828294431060809577, guid: 90e6e48f076aa7a448fac5b36537d6f9,
@@ -423,6 +433,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4632596647708219413, guid: 90e6e48f076aa7a448fac5b36537d6f9, type: 3}
+--- !u!23 &4243133991886605013 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -9039559810432586532, guid: 90e6e48f076aa7a448fac5b36537d6f9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4066657952294888969}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6231000775629004007 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1290459492525196562, guid: 90e6e48f076aa7a448fac5b36537d6f9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4066657952294888969}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7656075024904244714 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3291994475376301085, guid: 90e6e48f076aa7a448fac5b36537d6f9,

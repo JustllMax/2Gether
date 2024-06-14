@@ -5,35 +5,54 @@ using UnityEngine;
 public class GridBuilding : MonoBehaviour
 {
     [SerializeField] private Vector3 _buildingSize;
-    [SerializeField] private Renderer _renderer;
+    [SerializeField] private List<Renderer> _renderers;
     [SerializeField] public bool isCanBePlacedOnRoad = false;
+    private List<Color> _rootColor; 
     private bool _isDecorationCollision;
     public bool IsDecorationCollision
     {
         get { return _isDecorationCollision; }
     }
-    public Vector3 buildingSize {get => _buildingSize; set{;}}
+    public Vector3 buildingSize { get => _buildingSize; set {; } }
 
+    void Awake()
+    {
+        _rootColor = new List<Color>();
+        foreach(var renderer in _renderers)
+        {
+            _rootColor.Add(renderer.material.color);
+        }
+    }
     public void SetColor(bool isAvailableToBuild)
     {
-        if(isAvailableToBuild)
+        
+        if (isAvailableToBuild)
         {
-            _renderer.material.color = Color.green;
+            foreach (var renderer in _renderers)
+            {
+                renderer.material.color = Color.green;
+            }
         }
         else
         {
-            _renderer.material.color = Color.red;
+            foreach (var renderer in _renderers)
+            {
+                renderer.material.color = Color.red;
+            }
         }
     }
 
     public void ResetColor()
     {
-        _renderer.material.color = Color.white;
+        for(int i = 0; i < _renderers.Count; i++)
+        {
+            _renderers[i].material.color = _rootColor[i];
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        
+
     }
 
     void OnTriggerEnter(Collider other)

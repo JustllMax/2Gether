@@ -19,7 +19,7 @@ public class BuildingPlacer : MonoBehaviour
 
    
 
-    private float y;
+    private float y = 0f;
     GameObject _terrain;
     private Vector2Int rayPosition;
     public LayerMask layerMask;
