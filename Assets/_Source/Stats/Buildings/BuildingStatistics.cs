@@ -11,4 +11,10 @@ abstract public class BuildingStatistics : CardStatistics
     public float HealthPoints;
     public int SellCost;
 
+    public override List<(string, string)> GetStatistics()
+    {
+        addStat("Sell Cost", SellCost.ToString());
+        addStat("HP", HealthPoints.ToString());
+        return collectStat();
+    }
 }

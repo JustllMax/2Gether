@@ -13,6 +13,14 @@ public class LaserBuildingStatistics : BuildingOffensiveStatistics
 {
     public float laserDamageAmplification;
 
+    public override List<(string, string)> GetStatistics()
+    {
+        statistics = base.GetStatistics();
+
+        addStat("Laser Amp", laserDamageAmplification.ToString());
+        return collectStat();
+    }
+
 
 }
 

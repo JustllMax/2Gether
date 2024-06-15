@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     float _maxHealth = 100f;
     [SerializeField]
     [Range(0.1f, 3f)]
-    float invincibilityDuration = 1;
+    float invincibilityDuration = 0.4f;
 
     [SerializeField]
     private Transform _nightCamera;
@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
             }
         }
 
-        if (FPSController.Dash.IsPressed())
+        if (FPSController.Dash.WasPressedThisFrame())
             OnDash();
 
         if (!_isDashing)
@@ -291,7 +291,8 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         }
 
         _velocity = lastVelocity;
-        _velocity.y = 0;
+        if (_velocity.y < 0f)
+            _velocity.y = 0;
 
         time = Time.time + 0.05f;
         while (Time.time < time)

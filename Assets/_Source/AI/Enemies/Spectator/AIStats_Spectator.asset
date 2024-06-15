@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 200
   Movement:
-    MovementSpeed: 7
+    MovementSpeed: 9
     TurnSpeed: 240
     Acceleration: 32
     ExtraRotationSpeed: 0
-  PrimaryTarget: 0
+  PrimaryTarget: 2
   SearchRange: 200
   SecondaryTarget: 1
   SwitchRange: 15

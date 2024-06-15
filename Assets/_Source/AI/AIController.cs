@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 using NaughtyAttributes;
 using UnityEngine.InputSystem.XR;
 using UnityEditor;
+using UnityEngine.UIElements;
 
 
 [Serializable]
@@ -14,13 +15,23 @@ public struct AITarget
 {
     public Transform transform;
     public ITargetable targetable;
+    public Vector3 positionOffset;
 
-    
+    public AITarget(Transform transform, ITargetable targetable, Vector3 positionOffset)
+    {
+        this.transform = transform;
+        this.targetable = targetable;
+        this.positionOffset = positionOffset;
+    }
+
     public AITarget(Transform transform, ITargetable targetable)
     {
         this.transform = transform;
         this.targetable = targetable;
+        this.positionOffset = Vector3.zero;
     }
+
+    public Vector3 Position => transform.position + positionOffset;
 };
 
 public class AIController : MonoBehaviour, IDamagable
@@ -32,7 +43,8 @@ public class AIController : MonoBehaviour, IDamagable
     [SerializeField] List<AIState> _AIStates;
     AIState previousState;
     AIState nextState;
-    protected AIState currentState;
+    [Foldout("DEBUG INFO")]
+    [SerializeField] protected AIState currentState;
 
     [Header("Audio")]
     [SerializeField] protected AudioClip hurtSound;
@@ -54,6 +66,10 @@ public class AIController : MonoBehaviour, IDamagable
     [SerializeField] protected Collider[] hitboxColliders;
 
     private static LayerMask[] targetMasks;
+    private static int[] agentTypeIDs;
+
+    [Foldout("DEBUG INFO")]
+    public bool isWalking;
 
     [Foldout("DEBUG INFO")]
     public float distanceToTarget;
@@ -66,9 +82,6 @@ public class AIController : MonoBehaviour, IDamagable
 
     [Foldout("DEBUG INFO")]
     public bool isReloading;
-
-    [Foldout("DEBUG INFO")]
-    public Vector3 wanderTarget;
 
     [Foldout("DEBUG INFO")]
     public bool canSwitchTarget;
@@ -98,36 +111,28 @@ public class AIController : MonoBehaviour, IDamagable
 
         if (targetMasks == null)
         {
-            targetMasks = new LayerMask[3];
-            targetMasks[0] = LayerMask.GetMask("Building", "MainBuilding");
+            targetMasks = new LayerMask[4];
+            targetMasks[0] = LayerMask.GetMask("Building");
             targetMasks[1] = LayerMask.GetMask("Player");
-            targetMasks[2] = LayerMask.GetMask("Player", "Building", "MainBuilding");
+            targetMasks[2] = LayerMask.GetMask("MainBuilding");
+            targetMasks[3] = LayerMask.GetMask("Building", "MainBuilding");
+
+            agentTypeIDs = new int[2];
+            agentTypeIDs[0] = GetNavMeshAgentID(NavAgentType.Full_Default.ToString()).Value;
+            agentTypeIDs[1] = GetNavMeshAgentID(NavAgentType.Path_Default.ToString()).Value;
         }
     }
 
     private void Start()
     {
-        SetNavMeshAgentType(stats.PrimaryTarget);
+        SetNavMeshAgentType(NavAgentType.Full_Default);
         currentState = _AIStates[0];
         currentState.OnStart(this);
     }
 
-    void SetNavMeshAgentType(TargetType focus)
+    void SetNavMeshAgentType(NavAgentType type)
     {
-        string agentTypeName = "";
-        if(focus == TargetType.Player)
-        {
-            agentTypeName = NavAgentTypeNames.PlayerChase.ToString();
-        }
-        else
-        {
-            agentTypeName = NavAgentTypeNames.BuildingChase.ToString();
-        }
-        int? agentType = GetNavMeshAgentID(agentTypeName);
-        if(agentType != null)
-        {
-            _navMeshAgent.agentTypeID = (int)agentType;
-        }
+        _navMeshAgent.agentTypeID = agentTypeIDs[(int)type];
     }
 
     private int? GetNavMeshAgentID(string name)
@@ -154,13 +159,12 @@ public class AIController : MonoBehaviour, IDamagable
 
         if (!HasTarget())
         {
-            _navMeshAgent.ResetPath();
             SearchForTarget();
         }
 
-        if (currentTarget.transform != null)
+        if (HasTarget())
         {
-            distanceToTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
+            distanceToTarget = Vector3.Distance(currentTarget.Position, transform.position);
 
             //Try to switch target
             if (canSwitchTarget)
@@ -200,7 +204,8 @@ public class AIController : MonoBehaviour, IDamagable
 
     private void SwitchTarget()
     {
-        if (currentTarget.targetable.TargetType != stats.SecondaryTarget)
+        //Try to switch if current target is not searched for in secondary mask
+        if ((targetMasks[(int)currentTarget.targetable.TargetType].value & targetMasks[(int)stats.SecondaryTarget].value) == 0)
         {
             AITarget secondaryTarget = GetClosestTarget(stats.SwitchRange, targetMasks[(int)stats.SecondaryTarget]);
             if (secondaryTarget.transform != null)
@@ -242,26 +247,60 @@ public class AIController : MonoBehaviour, IDamagable
     {
         Transform target = null;
         ITargetable targetable = null;
-
+        Vector3 closestPoint = Vector3.zero;
         float minDistance = float.MaxValue;
-        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), range, layer);
+
+        //Check for targets in range
+        Collider[] hits = Physics.OverlapSphere(transform.position, range, layer);
         foreach (Collider hit in hits)
         {
-            if (hit.TryGetComponent(out ITargetable t))
+            ITargetable newTarget;
+            Transform newTransform;
+
+            if (hit.attachedRigidbody != null)
             {
-                if (t.IsTargetable)
+                hit.attachedRigidbody.TryGetComponent<ITargetable>(out newTarget);
+                newTransform = hit.attachedRigidbody.transform;
+            } else
+            {
+                hit.TryGetComponent<ITargetable>(out newTarget);
+                newTransform = hit.transform;
+            }
+
+            if (newTarget != null && newTarget.IsTargetable)
+            {
+                Vector3 newClosestPoint = hit.ClosestPointOnBounds(transform.position);
+                float distanceToTarget = Vector3.Distance(newClosestPoint, transform.position);
+                if (distanceToTarget < range && distanceToTarget < minDistance)
                 {
-                    float distanceToTarget = Vector3.Distance(hit.transform.position, transform.position);
-                    if (distanceToTarget < range && distanceToTarget < minDistance)
-                    {
-                        target = hit.transform;
-                        targetable = t;
-                        minDistance = distanceToTarget;
-                    }
+                    target = newTransform;
+                    targetable = newTarget;
+                    closestPoint = newClosestPoint;
+                    minDistance = distanceToTarget;
                 }
             }
         }
-        return new AITarget(target, targetable);
+
+        if (target != null && SampleNavSurface(closestPoint, out var surfacePoint))
+        {
+            //Project hitpoint onto navmesh surface
+            closestPoint = surfacePoint - target.position;
+        }
+
+
+        return new AITarget(target, targetable, closestPoint);
+    }
+
+    public bool SampleNavSurface(in Vector3 point, out Vector3 pointOnSurface, float maxDistance = 2.5f)
+    {
+        if (NavMesh.SamplePosition(point, out NavMeshHit navhit, maxDistance, _navMeshAgent.areaMask))
+        {
+            pointOnSurface = navhit.position;
+            return true;
+        }
+
+        pointOnSurface = Vector3.zero;
+        return false;
     }
 
     public void ChangeState()
@@ -329,10 +368,6 @@ public class AIController : MonoBehaviour, IDamagable
 
     }
 
-    public void RangedAttackPerformed()
-    {
-        attackTimer = 0f;
-    }
     public bool CanAttack()
     {
         return !isDead && HasTarget();
@@ -430,9 +465,14 @@ public class AIController : MonoBehaviour, IDamagable
     public void RefreshTargetPos()
     {
         if (HasTarget())
-            _navMeshAgent.SetDestination(currentTarget.transform.position);
+            _navMeshAgent.SetDestination(currentTarget.Position);
         else 
             _navMeshAgent.ResetPath();
+    }
+
+    public bool ShouldChangePath()
+    {
+        return !_navMeshAgent.hasPath || !_navMeshAgent.pathPending && (_navMeshAgent.remainingDistance <= 1f || _navMeshAgent.isPathStale);
     }
 
     public GameObject InstantiateGameObject(GameObject obj, Transform parent)

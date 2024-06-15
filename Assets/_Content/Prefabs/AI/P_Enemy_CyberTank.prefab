@@ -2009,7 +2009,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
   - {fileID: 11400000, guid: 2f748463af1f41f48a05ce128cee2f4e, type: 2}
   - {fileID: 11400000, guid: 7ff79690d78f3c14ca44a75e4afcac18, type: 2}
-  AITargetFocus: 1
+  currentState: {fileID: 0}
   hurtSound: {fileID: 0}
   attackSound: {fileID: 8300000, guid: 0e2e58df257e7b54fbe9b2efc40a9224, type: 3}
   deathSound: {fileID: 8300000, guid: 88000d726d86da74fad10ec71e0dc153, type: 3}
@@ -2017,12 +2017,14 @@ MonoBehaviour:
   DeathInvokeTime: 2
   currentTarget:
     transform: {fileID: 0}
+    positionOffset: {x: 0, y: 0, z: 0}
   hitboxColliders: []
+  isWalking: 0
   distanceToTarget: 0
   lastAttackTime: 0
   ammoCount: 0
   isReloading: 0
-  wanderTarget: {x: 0, y: 0, z: 0}
+  canSwitchTarget: 0
   _health: 0
 --- !u!195 &4612321007652048329
 NavMeshAgent:
@@ -2184,7 +2186,7 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.011011124
       value: 1
       inSlope: 0
       outSlope: 0

@@ -64,6 +64,7 @@ public class CameraDayController : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         if (Application.isPlaying)
@@ -72,6 +73,7 @@ public class CameraDayController : MonoBehaviour
             Handles.Label(_rotatePivot, "Pivot rotation origin");
         }
     }
+#endif
 
     private void MoveByMouse()
     {
