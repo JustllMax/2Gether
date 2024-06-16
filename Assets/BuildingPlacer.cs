@@ -53,6 +53,11 @@ public class BuildingPlacer : MonoBehaviour
             _rangeIndicatorInstance.transform.position = _draggingBuilding.transform.position;
             _rangeIndicatorInstance.transform.localScale = Vector3.one * ((BuildingOffensiveStatistics)_selectedBuildingCard.CardStatisticsData).AttackRange;
 
+            if(Input.GetKeyUp(KeyCode.R))
+            {
+                _draggingBuilding.transform.Rotate(Vector3.up, 90f);
+            }
+            
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
@@ -69,7 +74,6 @@ public class BuildingPlacer : MonoBehaviour
                         _isAvailableToBuild = false;
                     else if (_terrain.CompareTag("Way") && !_draggingBuilding.GetComponent<GridBuilding>().isCanBePlacedOnRoad)
                     {
-
                         _isAvailableToBuild = false;
                     }
                     else if (
