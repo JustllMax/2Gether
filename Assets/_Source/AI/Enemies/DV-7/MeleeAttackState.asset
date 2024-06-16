@@ -40,9 +40,9 @@ MonoBehaviour:
     Delay: 0
     ResetMomentum: 1
   - Movement:
-      MovementSpeed: 100
+      MovementSpeed: 150
       TurnSpeed: 0
-      Acceleration: 150
+      Acceleration: 200
       ExtraRotationSpeed: 0
     Delay: 0.35
     ResetMomentum: 0
@@ -54,9 +54,9 @@ MonoBehaviour:
     Delay: 0.25
     ResetMomentum: 1
   - Movement:
-      MovementSpeed: 50
+      MovementSpeed: 75
       TurnSpeed: 0
-      Acceleration: 100
+      Acceleration: 150
       ExtraRotationSpeed: 0
     Delay: 0.05
     ResetMomentum: 0
@@ -68,9 +68,9 @@ MonoBehaviour:
     Delay: 0.15
     ResetMomentum: 1
   - Movement:
-      MovementSpeed: 50
+      MovementSpeed: 75
       TurnSpeed: 0
-      Acceleration: 100
+      Acceleration: 150
       ExtraRotationSpeed: 10
     Delay: 0.05
     ResetMomentum: 0

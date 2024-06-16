@@ -44,6 +44,7 @@ public class RangedAttackState : AIState
     {
         controller.PlayAnimation("WALK");
         controller.ammoCount = BurstCount;
+        controller.isWalking = true;
     }
 
     public override void OnUpdate(AIController controller)
@@ -51,11 +52,12 @@ public class RangedAttackState : AIState
         controller.ApplyDefaultMovement();
         if (controller.distanceToTarget >= 0.75 * AttackRange)
         {
+            controller.isWalking = true;
             controller.RefreshTargetPos();
-            controller.wanderTarget = controller.transform.position;
-        } else
+        } else if (controller.isWalking)
         {
-            controller.GetNavMeshAgent().SetDestination(controller.wanderTarget);
+            controller.GetNavMeshAgent().ResetPath();
+            controller.isWalking = false;
         }
     }
 
@@ -71,7 +73,7 @@ public class RangedAttackState : AIState
 
     public override bool CanChangeToState(AIController controller)
     {
-        return controller.distanceToTarget > MinAttackRange && controller.distanceToTarget <= AttackRange && controller.CanAttack();
+        return controller.distanceToTarget >= MinAttackRange && controller.distanceToTarget <= AttackRange && controller.CanAttack();
     }
 
     public override void OnLateUpdate(AIController controller)
@@ -83,7 +85,7 @@ public class RangedAttackState : AIState
             return;
         }
 
-        if (controller.GetNavMeshAgent().remainingDistance > 0.5 && !ShootWhileMoving)
+        if (!controller.ShouldChangePath() && !ShootWhileMoving)
         {
             return;
         }
@@ -126,8 +128,13 @@ public class RangedAttackState : AIState
         float x = Mathf.Cos(angle) * controller.distanceToTarget;
         float z = Mathf.Sin(angle) * controller.distanceToTarget;
 
+        controller.isWalking = false;
         Vector3 center = controller.transform.position;
-        controller.wanderTarget = new Vector3(center.x + x, center.y, center.z + z);
+
+        if (controller.SampleNavSurface(new Vector3(center.x + x, center.y, center.z + z), out var surfacePoint))
+        {
+            controller.GetNavMeshAgent().SetDestination(surfacePoint);
+        }
     }
 }
     

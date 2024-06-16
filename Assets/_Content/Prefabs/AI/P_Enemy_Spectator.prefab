@@ -2207,8 +2207,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb0a978585e353c4c9a3758f125bd3c8, type: 2}
   - {fileID: 11400000, guid: 7ff79690d78f3c14ca44a75e4afcac18, type: 2}
   hurtSound: {fileID: 8300000, guid: 7e79a33e4296bb64bbd7b70bc26657cd, type: 3}
-  attackSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  attackSound: {fileID: 8300000, guid: beba0afe1cd801e409aa8e07397c1ad0, type: 3}
+  deathSound: {fileID: 8300000, guid: 2a695230adfcc7a4cbe51488296edbdb, type: 3}
   audioSource: {fileID: 0}
   DeathInvokeTime: 2
   currentTarget:
@@ -2325,7 +2325,8 @@ AudioSource:
   m_GameObject: {fileID: 8116058673664128778}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -1702304735344281208, guid: e36732c6242d4b04a974f76d36fb6d00,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

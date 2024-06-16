@@ -28,6 +28,9 @@ public class UIFlow : MonoBehaviour
     [SerializeField, ReadOnly]
     List<UICards> _cards = new List<UICards>();
 
+    [SerializeField]
+    private BuildingDetailHandler _buildingDetailHandler;
+
     void Awake()
     {
         Instance = this;
@@ -65,6 +68,11 @@ public class UIFlow : MonoBehaviour
 
     }
 
+    public bool IsPlacingCard()
+    {
+        return currentClickedCard != null;
+    }
+
     void OpenBoosterPack()
     {
         boosterPackButton.gameObject.SetActive(false);
@@ -72,7 +80,8 @@ public class UIFlow : MonoBehaviour
         SpawnCards();
         FadeInCards();
 
-        rerollButton.gameObject.SetActive(true);
+        // TODO: add it back later
+        rerollButton.gameObject.SetActive(false);
         rerollButton.interactable = true;
         continueButton.gameObject.SetActive(true);
         continueButton.interactable = true;
@@ -168,6 +177,19 @@ public class UIFlow : MonoBehaviour
         
     }
 
+    private void Update()
+    {
+        if (currentClickedCard != null)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                currentClickedCard.ResetPosition();
+                currentClickedCard.CardData.EndExecute();
+                currentClickedCard = null;
+            }
+        }
+    }
+
     void SpawnCards()
     {
         foreach (var card in _currentCardPool)
@@ -239,6 +261,8 @@ public class UIFlow : MonoBehaviour
     public void SetSelectedCard(UICards card)
     {
         if (currentClickedCard == card) return;
+
+        _buildingDetailHandler.CloseDetailPanel();
 
         if (currentClickedCard != null)
         {

@@ -22,6 +22,7 @@ public class BuildingCard : Card
 
     public override void OnEndUseCard(GameContext ctx)
     {
+        ctx.buildingPlacer.EndPlaceMode();
     }
 
     //public override void OnSubmitCard(GameContext ctx)

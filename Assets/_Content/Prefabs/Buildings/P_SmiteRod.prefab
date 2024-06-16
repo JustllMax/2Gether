@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5721141180015762087}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FirePoint
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5721141180015762087
 Transform:
@@ -279,12 +279,13 @@ GameObject:
   - component: {fileID: 1449759878486256795}
   - component: {fileID: 7737263179810947440}
   - component: {fileID: -7460689606926886167}
-  m_Layer: 0
+  - component: {fileID: 1285753149908093754}
+  m_Layer: 9
   m_Name: P_SmiteRod
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2196177476950198739
 Transform:
@@ -452,6 +453,33 @@ MonoBehaviour:
   _renderers:
   - {fileID: 2947358096965970394}
   isCanBePlacedOnRoad: 0
+--- !u!54 &1285753149908093754
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5821364103949504362}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &7329343834618758801
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -517,8 +545,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1992409992797503704, guid: b60263f9b26f6c74b96539a51254c4ee,
         type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1992409992797503704, guid: b60263f9b26f6c74b96539a51254c4ee,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1992409992797503704, guid: b60263f9b26f6c74b96539a51254c4ee,
+        type: 3}
+      propertyPath: m_TagString
+      value: Building
+      objectReference: {fileID: 0}
+    - target: {fileID: 1992409992797503704, guid: b60263f9b26f6c74b96539a51254c4ee,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132842800042508596, guid: b60263f9b26f6c74b96539a51254c4ee,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132842800042508596, guid: b60263f9b26f6c74b96539a51254c4ee,
+        type: 3}
+      propertyPath: m_TagString
+      value: Building
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132842800042508596, guid: b60263f9b26f6c74b96539a51254c4ee,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

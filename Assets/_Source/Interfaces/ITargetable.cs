@@ -6,7 +6,8 @@ public enum TargetType : int
 {
     Building,
     Player,
-    Both // ONLY FOR AI TO PICK
+    MainBase,
+    BuildingAll
 }
 
 
