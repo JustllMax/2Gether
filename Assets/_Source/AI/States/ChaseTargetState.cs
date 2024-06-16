@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,17 +10,12 @@ public class ChaseTargetState : AIState
     public override void OnStart(AIController controller)
     {
         controller.PlayAnimation("WALK");
-        controller.ApplyDefaultMovement();
+        controller.ApplyTargetMovement();
     }
 
-    public override void OnUpdate(AIController controller)
+    public override void OnTick(AIController controller)
     {
-        
         controller.RefreshTargetPos();    
-        if (controller.AllAnimationsComplete())
-        {
-            controller.PlayAnimation("WALK");
-        }
     }
 
     public override void OnExit(AIController controller)
@@ -38,6 +34,14 @@ public class ChaseTargetState : AIState
     }
 
     public override void OnLateUpdate(AIController controller)
+    {
+        if (controller.AllAnimationsComplete())
+        {
+            controller.PlayAnimation("WALK");
+        }
+    }
+
+    public override void OnTargetChanged(AIController controller)
     {
 
     }

@@ -14,6 +14,8 @@ public class Explosion : MonoBehaviour
     LayerMask PlayerBuildingMask;
     LayerMask targetLayerMask;
 
+    float lifeTime = 3.0f;
+
     private void Awake()
     {
         explosionParticles = GetComponent<ParticleSystem>();
@@ -24,7 +26,8 @@ public class Explosion : MonoBehaviour
 
     void Update()
     {
-        if(explosionParticles.isEmitting == false)
+        lifeTime -= Time.deltaTime;
+        if (lifeTime <= 0f)
         {
             source.Stop();
             Destroy(gameObject);

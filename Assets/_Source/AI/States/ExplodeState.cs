@@ -14,7 +14,7 @@ public class Explode : AIState
 
     }
 
-    public override void OnUpdate(AIController controller)
+    public override void OnTick(AIController controller)
     {
         controller.Kill();
     }
@@ -36,6 +36,11 @@ public class Explode : AIState
     }
 
     public override void OnLateUpdate(AIController controller)
+    {
+
+    }
+
+    public override void OnTargetChanged(AIController controller)
     {
 
     }

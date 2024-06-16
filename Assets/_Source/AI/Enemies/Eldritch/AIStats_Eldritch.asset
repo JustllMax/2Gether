@@ -22,3 +22,5 @@ MonoBehaviour:
   SearchRange: 20
   SecondaryTarget: 1
   SwitchRange: 1
+  agentType: 2
+  startOnPath: 0
