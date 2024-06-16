@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        Application.targetFrameRate = 75;
+        Application.targetFrameRate = 300;
 
     }
     void OnDisable()

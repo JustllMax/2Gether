@@ -1,22 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [System.Serializable]
 public struct EnemyMovement
 {
-    public float MovementSpeed;
-    public float TurnSpeed;
-    public float Acceleration;
+    public float movementSpeed;
+    public float turnSpeed;
+    public float acceleration;
 
-    public float ExtraRotationSpeed;
+    public float extraRotationSpeed;
 
     public static EnemyMovement operator *(EnemyMovement a, float b)
     {
-        a.MovementSpeed *= b;
-        a.TurnSpeed *= b;
-        a.Acceleration *= b;
-        a.ExtraRotationSpeed *= b;
+        a.movementSpeed *= b;
+        a.turnSpeed *= b;
+        a.acceleration *= b;
+        a.extraRotationSpeed *= b;
         return a;
     }
 }

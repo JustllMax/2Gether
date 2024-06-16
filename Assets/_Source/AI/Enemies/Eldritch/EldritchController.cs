@@ -58,12 +58,12 @@ public class EldritchController : AIController
         for (int i = 0; i < maxAttempts; i++)
         {
             Vector3 randomPos = UnityEngine.Random.insideUnitSphere * maxDistance;
-            randomPos += GetCurrentTarget().transform.position;
+            randomPos += CurrentTarget.transform.position;
 
             NavMeshHit hit;
             if (NavMesh.SamplePosition(randomPos, out hit, maxDistance, 1))
             {
-                if (Vector3.Distance(GetCurrentTarget().transform.position, hit.position) >= minDistance)
+                if (Vector3.Distance(CurrentTarget.transform.position, hit.position) >= minDistance)
                 {
                     TpEffect(hit.position);
                     Debug.Log("Eldritch teleported to: " + hit.position);
@@ -89,7 +89,7 @@ public class EldritchController : AIController
     IEnumerator Warp(Vector3 position)
     {
         yield return null;
-        SetCurrentTarget(new AITarget(null, null));
+        CurrentTarget = null;
         _navMeshAgent.Warp(position);
     }
 

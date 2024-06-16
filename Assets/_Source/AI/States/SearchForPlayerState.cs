@@ -10,17 +10,12 @@ public class SearchForPlayerState : AIState
 
     public override void OnStart(AIController controller)
     {
-        controller.SetMovementStats(controller.GetEnemyStats().Movement * 0.5f);
+        controller.ApplyDefaultMovement();
         controller.PlayAnimation("WALK");
     }
 
-    public override void OnUpdate(AIController controller)
-    { 
-        if (controller.AllAnimationsComplete())
-        {
-            controller.PlayAnimation("WALK");
-        }
-
+    public override void OnTick(AIController controller)
+    {
         if (controller.ShouldChangePath())
         {
             RelocateWanderTarget(controller);
@@ -43,7 +38,10 @@ public class SearchForPlayerState : AIState
 
     public override void OnLateUpdate(AIController controller)
     {
-
+        if (controller.AllAnimationsComplete())
+        {
+            controller.PlayAnimation("WALK");
+        }
     }
 
     void RelocateWanderTarget(AIController controller)
@@ -65,6 +63,11 @@ public class SearchForPlayerState : AIState
         {
             controller.GetNavMeshAgent().SetDestination(surfacePoint);
         }
+    }
+
+    public override void OnTargetChanged(AIController controller)
+    {
+
     }
 }
     

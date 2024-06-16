@@ -10,7 +10,7 @@ ModelImporter:
       name: No Name
     second: {fileID: 2100000, guid: b537c54ebfa9ee447927fb1b2476b28b, type: 2}
   materials:
-    materialImportMode: 2
+    materialImportMode: 0
     materialName: 3
     materialSearch: 1
     materialLocation: 1
@@ -46,10 +46,10 @@ ModelImporter:
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 0
-    importVisibility: 0
+    importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     nodeNameCollisionStrategy: 0
     fileIdsGeneration: 1
     swapUVChannels: 0
@@ -106,7 +106,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 0
-  importBlendShapeDeformPercent: 0
+  importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 

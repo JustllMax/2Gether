@@ -16,7 +16,7 @@ public class FenzyChaseState : AIState
         (controller as EldritchController).receivedDamage = 0;
     }
 
-    public override void OnUpdate(AIController controller)
+    public override void OnTick(AIController controller)
     {
         controller.ApplyDefaultMovement();
         controller.RefreshTargetPos();    
@@ -48,6 +48,11 @@ public class FenzyChaseState : AIState
     }
 
     public override void OnLateUpdate(AIController controller)
+    {
+
+    }
+
+    public override void OnTargetChanged(AIController controller)
     {
 
     }
