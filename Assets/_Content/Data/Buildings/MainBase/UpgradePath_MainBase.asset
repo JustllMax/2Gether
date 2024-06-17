@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b3e054fa4bcce94684bdc93a62a070b, type: 3}
   m_Name: UpgradePath_MainBase
   m_EditorClassIdentifier: 
-  UpgradePairs: []
+  UpgradePairs:
+  - Level: 0
+    Statistics: {fileID: 11400000, guid: d546ec616d9711649a9fb4838ad0ab08, type: 2}
+  - Level: 1
+    Statistics: {fileID: 11400000, guid: d546ec616d9711649a9fb4838ad0ab08, type: 2}
+  - Level: 2
+    Statistics: {fileID: 11400000, guid: d546ec616d9711649a9fb4838ad0ab08, type: 2}

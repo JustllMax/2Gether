@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: MainBase_All
   m_EditorClassIdentifier: 
   CardType: 0
-  Rarity: 0
-  Name: 
-  Description: 
+  Rarity: 2
+  Name: MainBase
+  Description: Protect it at all cost
   BuildingType: 0
-  ActivationTime: 0
-  HealthPoints: 0
+  ActivationTime: 1
+  HealthPoints: 1000
   SellCost: 0
-  AttackDamage: 0
-  AttackRange: 0
-  AttackDelay: 0
-  slowModifier: 0
-  slowDuration: 0
+  AttackDamage: 5
+  AttackRange: 30
+  AttackDelay: 2
+  slowModifier: 0.4
+  slowDuration: 3
