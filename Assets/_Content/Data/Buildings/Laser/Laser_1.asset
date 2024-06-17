@@ -21,6 +21,6 @@ MonoBehaviour:
   HealthPoints: 100
   SellCost: 100
   AttackDamage: 10
-  AttackRange: 5
+  AttackRange: 18
   AttackDelay: 0
   laserDamageAmplification: 1

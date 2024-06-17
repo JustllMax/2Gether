@@ -5,23 +5,31 @@ using UnityEngine.Experimental.GlobalIllumination;
 
 public class LampLightManager : MonoBehaviour
 {
-    void OnEnable()
-    {   
-        DayNightCycleManager.NightEnd += TurnOffLampLight;
-        DayNightCycleManager.DayEnd += TurnOnLampLight;
-    }
-    void OnDisable()
+    [SerializeField] private float _intensity = 70f;
+    private float timeProgress = 0f;
+    [SerializeField, Range(0f, 100f)] private float lightChangingTime = 80f;
+    private Light lighting;
+    void Awake()
     {
-        DayNightCycleManager.DayBegin -= TurnOffLampLight;
-        DayNightCycleManager.NightBegin -= TurnOnLampLight;
+        lighting = gameObject.GetComponent<Light>();
     }
-    public void TurnOnLampLight()
+    private void FixedUpdate()
     {
-       
-        gameObject.SetActive(true);
-    }
-    public void TurnOffLampLight()
-    {
-        gameObject.SetActive(false);
+        if (!DayNightCycleManager.Instance.IsDay)
+        {
+            if (timeProgress < _intensity)
+            {
+                timeProgress += Time.deltaTime * lightChangingTime;
+                lighting.intensity = timeProgress;
+            }
+        }
+        if (DayNightCycleManager.Instance.IsDay)
+        {
+            if (timeProgress > 0)
+            {
+                timeProgress -= Time.deltaTime * lightChangingTime;
+                lighting.intensity = timeProgress;
+            }
+        }
     }
 }

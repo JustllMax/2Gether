@@ -46,7 +46,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 71.3
+  m_Intensity: 0
   m_Range: 18.6
   m_SpotAngle: 117.016914
   m_InnerSpotAngle: 66.91626
@@ -131,6 +131,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544c5eff04343e840a92d0d550b3cc29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _intensity: 70
+  tolerance: 81.3
 --- !u!1001 &5951903935331883557
 PrefabInstance:
   m_ObjectHideFlags: 0
