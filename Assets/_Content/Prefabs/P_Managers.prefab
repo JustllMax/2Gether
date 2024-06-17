@@ -296,7 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff0d1799936ec14290345c36bb9d81c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ticksPerSecond: 5
+  ticksPerSecond: 10
 --- !u!1 &6600926155088998670
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,6 +984,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6459217188130242328, guid: 0faadb98c6deb664d865705a56438039,
         type: 3}
+      propertyPath: _mapBarrier
+      value: 
+      objectReference: {fileID: 8282576789468679581, guid: 1f02a3b0b3b75964fa99358944d43e0d,
+        type: 3}
+    - target: {fileID: 6459217188130242328, guid: 0faadb98c6deb664d865705a56438039,
+        type: 3}
       propertyPath: _startPos.x
       value: 2
       objectReference: {fileID: 0}
@@ -992,6 +998,12 @@ PrefabInstance:
       propertyPath: _startPos.y
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6459217188130242328, guid: 0faadb98c6deb664d865705a56438039,
+        type: 3}
+      propertyPath: _mapBarrierCorener
+      value: 
+      objectReference: {fileID: 5401443954055599576, guid: 16aba1d411bf62542aa205d9729de807,
+        type: 3}
     - target: {fileID: 6459217188130242328, guid: 0faadb98c6deb664d865705a56438039,
         type: 3}
       propertyPath: _decorationSpawnRation
