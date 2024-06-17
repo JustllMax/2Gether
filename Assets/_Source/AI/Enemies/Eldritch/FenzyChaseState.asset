@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weight: 1
   relocateDamage: 40
-  minRelocateDistance: 30
-  maxRelocateDistance: 60
+  minRelocateDistance: 45
+  maxRelocateDistance: 80

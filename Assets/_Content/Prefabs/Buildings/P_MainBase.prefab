@@ -215,7 +215,7 @@ MonoBehaviour:
   m_GenerateLinks: 0
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
-  m_AffectedAgents: f46d2d58
+  m_AffectedAgents: ffffffff
 --- !u!1 &3227314822699503499
 GameObject:
   m_ObjectHideFlags: 0
