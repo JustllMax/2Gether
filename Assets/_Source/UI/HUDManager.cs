@@ -278,9 +278,12 @@ public class HUDManager : MonoBehaviour
 
     public void SetMainBaseCurrentHealth(float currentHealth)
     {
-        float slierVal = Mathf.Clamp(currentHealth, HealthBar.minValue, HealthBar.maxValue);
-        HealthBar.value = slierVal;
-        HealthCurrentText.text = currentHealth.ToString();
+       
+        float sliderVal = Mathf.Clamp(currentHealth, HealthBar.minValue, HealthBar.maxValue);
+        HealthBar.value = sliderVal;
+
+        HealthCurrentText.SetText(currentHealth.ToString());
+
     }
 
     #endregion MainBase
