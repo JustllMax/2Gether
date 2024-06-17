@@ -744,26 +744,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 8d6a648ff1a8fd142a81afe85196d688, type: 2}
-  _AIStates:
-  - {fileID: 11400000, guid: d40ebfaa723545d4bbbac4b28c6610d1, type: 2}
-  - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
-  - {fileID: 11400000, guid: cdbbc91e4a6186a408d77c3dd79f5214, type: 2}
-  - {fileID: 11400000, guid: 7ff79690d78f3c14ca44a75e4afcac18, type: 2}
   hurtSound: {fileID: 8300000, guid: 7e79a33e4296bb64bbd7b70bc26657cd, type: 3}
   attackSound: {fileID: 8300000, guid: 437ab1e9b4b8f304c9f8ff1bf00d7814, type: 3}
-  deathSound: {fileID: 0}
+  deathSound: {fileID: 8300000, guid: 2a695230adfcc7a4cbe51488296edbdb, type: 3}
   audioSource: {fileID: 0}
   DeathInvokeTime: 2
-  currentTarget:
+  _health: 0
+  currentState: {fileID: 0}
+  _currentTarget:
+    properties:
+      targetType: 0
+      weight: 0
+      maxSearchRange: 0
+      loseTargetRange: 0
+      movement:
+        movementSpeed: 0
+        turnSpeed: 0
+        acceleration: 0
+        extraRotationSpeed: 0
+      walkOnPath: 0
+      canAbandonTarget: 0
     transform: {fileID: 0}
-  hitboxColliders: []
+    positionOffset: {x: 0, y: 0, z: 0}
+  canChangeTarget: 0
   distanceToTarget: 0
+  _usesPathNavmesh: 0
+  isWalking: 0
   lastAttackTime: 0
   ammoCount: 0
   isReloading: 0
-  wanderTarget: {x: 0, y: 0, z: 0}
-  canSwitchTarget: 0
-  _health: 0
+  hitboxColliders: []
+  lastTickTime: 0
+  tickDeltaTime: 0
 --- !u!195 &8244053411383442607
 NavMeshAgent:
   m_ObjectHideFlags: 0

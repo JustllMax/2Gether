@@ -2220,26 +2220,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: a7c2e041215d4ac448a89f1d2c9b23f5, type: 2}
-  _AIStates:
-  - {fileID: 11400000, guid: d40ebfaa723545d4bbbac4b28c6610d1, type: 2}
-  - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
-  - {fileID: 11400000, guid: d7317b2390809ab40bd383fcda9bd2e6, type: 2}
-  - {fileID: 11400000, guid: 5e86318e4d1d92b4db74c429847a6db9, type: 2}
-  hurtSound: {fileID: 0}
+  hurtSound: {fileID: 8300000, guid: 7e79a33e4296bb64bbd7b70bc26657cd, type: 3}
   attackSound: {fileID: 0}
   deathSound: {fileID: 0}
   audioSource: {fileID: 0}
   DeathInvokeTime: 0.45
-  currentTarget:
+  _health: 0
+  currentState: {fileID: 0}
+  _currentTarget:
+    properties:
+      targetType: 0
+      weight: 0
+      maxSearchRange: 0
+      loseTargetRange: 0
+      movement:
+        movementSpeed: 0
+        turnSpeed: 0
+        acceleration: 0
+        extraRotationSpeed: 0
+      walkOnPath: 0
+      canAbandonTarget: 0
     transform: {fileID: 0}
-  hitboxColliders: []
+    positionOffset: {x: 0, y: 0, z: 0}
+  canChangeTarget: 0
   distanceToTarget: 0
+  _usesPathNavmesh: 0
+  isWalking: 0
   lastAttackTime: 0
   ammoCount: 0
   isReloading: 0
-  wanderTarget: {x: 0, y: 0, z: 0}
-  canSwitchTarget: 0
-  _health: 0
+  hitboxColliders: []
+  lastTickTime: 0
+  tickDeltaTime: 0
   explosionParticles: {fileID: 5985198733810873842, guid: 93efba87289fd6d448953bcccb7a1058,
     type: 3}
   explosionMask:
