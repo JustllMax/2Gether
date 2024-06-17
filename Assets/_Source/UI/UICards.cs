@@ -9,6 +9,7 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     private Vector3 upOffset = new Vector3(0f, 280f, 0f);
     private Vector3 originalScale;
     private bool isClicked = false;
+    bool isHovered = false;
     RectTransform rectTransform;
     private UIFlow _flowRef;
     float scaleModifier = 1.25f;
@@ -30,8 +31,8 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     {
         if (!isClicked && transform.parent != null && transform.parent.name == "cardsPanel")
         {
-            rectTransform.localScale = originalScale * scaleModifier;
-            rectTransform.localPosition += upOffset;
+            MaximizeCard();
+            isHovered = true;
         }
     }
 
@@ -40,8 +41,8 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
         if (!isClicked && transform.parent != null && transform.parent.name == "cardsPanel")
         {
-            rectTransform.localPosition -= upOffset;
-            rectTransform.localScale = originalScale;
+            MinimizeCard();
+            isHovered = false;
         }
     }
 
@@ -55,10 +56,10 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
         if (!isClicked && transform.parent != null && transform.parent.name == "cardsPanel")
         {
-            ResetPosition();    
+            ResetPosition();
+            isClicked = true;
             _flowRef.SetSelectedCard(this);
 
-            isClicked = true;
 
 
         }
@@ -67,16 +68,29 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     public void ResetPosition()
     {
         isClicked = false;
-        rectTransform.localScale = originalScale;
+        MinimizeCard();
+    }
 
+    public void MinimizeCard()
+    {
+        rectTransform.localScale = originalScale;
         rectTransform.localPosition -= upOffset;
     }
+
+    public void MaximizeCard()
+    {
+        rectTransform.localPosition += upOffset;
+        rectTransform.localScale = originalScale * scaleModifier;
+    }
+
 
     public void SelectCard()
     {
         isClicked = true;
-        rectTransform.localPosition += upOffset;
-        rectTransform.localScale = originalScale * scaleModifier;
+        if(isHovered == false)
+        {
+            MaximizeCard();
+        } 
     }
 
 }
