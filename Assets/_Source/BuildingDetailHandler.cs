@@ -13,6 +13,8 @@ public class BuildingDetailHandler : MonoBehaviour
     [SerializeField, ReadOnly]
     private bool _showingBuildingDetail;
 
+    LayerMask buildingMask;
+
     [Header("UI Assets")]
     [SerializeField] private GameObject _buildingDetailRoot;
     [SerializeField]
@@ -24,9 +26,11 @@ public class BuildingDetailHandler : MonoBehaviour
     [SerializeField]
     private Button _closeButton;
 
-    // Start is called before the first frame update
+
     void Awake()
     {
+        //Maska nie dziala idk czemu w tym Raycastcie
+        buildingMask = LayerMask.NameToLayer("Building") | LayerMask.NameToLayer("MainBuilding");
         _camera = Camera.main;
         _buildingDetailRoot.SetActive(false);
 
@@ -39,10 +43,10 @@ public class BuildingDetailHandler : MonoBehaviour
         _buildingDetailRoot.SetActive(false);
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        if (DayNightCycleManager.Instance.IsDay && !_showingBuildingDetail && !UIFlow.Instance.IsPlacingCard())
+        if (DayNightCycleManager.Instance.IsDay && !UIFlow.Instance.IsPlacingCard())
         {
             RaycastHit hit;
 
@@ -53,7 +57,12 @@ public class BuildingDetailHandler : MonoBehaviour
                     if (hit.collider.gameObject.CompareTag("Building"))
                     {
                         ShowBuildingDetail(hit.collider.gameObject.GetComponentInParent<Building>());
+                        return;
                     }
+                }
+                if(_showingBuildingDetail == true)
+                {
+                    CloseDetailPanel();
                 }
             }
         }
@@ -61,9 +70,7 @@ public class BuildingDetailHandler : MonoBehaviour
 
     public void ShowBuildingDetail(Building b)
     {
-        if (_showingBuildingDetail)
-            return;
-
+ 
         _showingBuildingDetail = true;
 
         _buildingDetailRoot.SetActive(true);
