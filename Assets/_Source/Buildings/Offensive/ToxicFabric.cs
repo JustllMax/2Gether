@@ -56,34 +56,10 @@ public class ToxicFabric : Building
         Health -= damage;
         if (Health <= 0)
         {
-            AudioManager.Instance.PlaySFXAtSource(createDestroySound, audioSource);
             Kill();
             return true;
         }
         return false;
-    }
-
-    public override void Kill()
-    {
-
-        IsTargetable = false;
-        Invoke("DestroyObj", DestroyObjectDelay);
-    }
-
-    void DestroyObj()
-    {
-        Destroy(gameObject);
-    }
-
-    public override void OnSell()
-    {
-        base.OnSell();
-
-        if (createDestroyParticles != null)
-            createDestroyParticles.Play();
-
-        AudioManager.Instance.PlaySFX(createDestroySound);
-        Kill();
     }
 
     #endregion ChildrenMethods

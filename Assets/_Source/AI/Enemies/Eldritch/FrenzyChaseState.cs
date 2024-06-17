@@ -16,14 +16,10 @@ public class FenzyChaseState : AIState
         (controller as EldritchController).receivedDamage = 0;
     }
 
-    public override void OnUpdate(AIController controller)
+    public override void OnTick(AIController controller)
     {
-        controller.ApplyDefaultMovement();
+        controller.ApplyTargetMovement();
         controller.RefreshTargetPos();    
-        if (controller.AllAnimationsComplete())
-        {
-            controller.PlayAnimation("WALK");
-        }
 
         EldritchController eldritchController = controller as EldritchController;
         if (eldritchController.receivedDamage >= relocateDamage)
@@ -48,6 +44,14 @@ public class FenzyChaseState : AIState
     }
 
     public override void OnLateUpdate(AIController controller)
+    {
+        if (controller.AllAnimationsComplete())
+        {
+            controller.PlayAnimation("WALK");
+        }
+    }
+
+    public override void OnTargetChanged(AIController controller)
     {
 
     }

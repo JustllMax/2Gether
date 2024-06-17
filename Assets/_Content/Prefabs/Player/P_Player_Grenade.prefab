@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7864420708836784183}
   - component: {fileID: 7644259142706186620}
   - component: {fileID: -1772213871409039155}
-  m_Layer: 7
+  m_Layer: 11
   m_Name: P_Player_Grenade
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -119,6 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5f6a9a561916b941878cec51d91f7f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  raycastBlacklist:
+    serializedVersion: 2
+    m_Bits: 67588
 --- !u!54 &-1772213871409039155
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -141,8 +144,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 3

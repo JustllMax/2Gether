@@ -19,7 +19,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - Player_Bullet
+  - PlayerHands
   - Enemy
   - Building
   - MainBuilding
@@ -28,7 +28,7 @@ TagManager:
   - Decoration
   - MainSurface
   - Way
-  - 
+  - MapBarrier
   - 
   - 
   - Guns

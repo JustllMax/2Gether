@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class GunSniper : Gun
 {
+    protected PlayerController playerController;
+    [SerializeField] private float recoilForce = 10;
+
+    public override void Start()
+    {
+        base.Start();
+        playerController = GetComponentInParent<PlayerController>();
+    }
 
     public override bool Fire(bool isSameButtonPress, Transform bulletSpawnPoint)
     {
@@ -15,6 +23,7 @@ public class GunSniper : Gun
             }
             ammoInMagazine -= 1;
             CalculateFire(bulletSpawnPoint);
+            playerController.Velocity = playerController.Velocity - playerController.transform.forward * recoilForce;
             AudioManager.Instance.PlaySFXAtSource(firingSound, audioSource);
             shootingSystem.Play();
             return true;

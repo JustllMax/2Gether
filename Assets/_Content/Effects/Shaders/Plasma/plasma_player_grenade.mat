@@ -47,5 +47,5 @@ Material:
     - _SurfaceSize: 10
     - _TimeScale: 1
     m_Colors:
-    - _ColorOverride: {r: 1, g: 0, b: 0.12919617, a: 1}
+    - _ColorOverride: {r: 1, g: 0, b: 0.12919614, a: 0.5019608}
   m_BuildTextureStacks: []

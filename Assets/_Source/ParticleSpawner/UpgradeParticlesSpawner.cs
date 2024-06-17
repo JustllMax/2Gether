@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class UpgradeParticlesSpawner
 {
-    public static UpgradeParticles SpawnExplosion(Vector3 position, float scaleModifier =1f)
+    public static UpgradeParticles SpawnParticles(Vector3 position, float scaleModifier =1f)
     {
         GameObject prefab = Resources.Load<GameObject>("P_UpgradeParticles");
 

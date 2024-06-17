@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using NaughtyAttributes;
 using System;
+using UnityEngine.PlayerLoop;
 
 public class UIFlow : MonoBehaviour
 {
@@ -54,6 +55,8 @@ public class UIFlow : MonoBehaviour
     {
         DayNightCycleManager.DayBegin -= OnDayStart;
     }
+
+    
 
     public void ShowPanel(List<Card> pd)
     {
@@ -179,6 +182,8 @@ public class UIFlow : MonoBehaviour
 
     private void Update()
     {
+        HandleInput();
+
         if (currentClickedCard != null)
         {
             if (Input.GetMouseButtonDown(1))
@@ -188,6 +193,8 @@ public class UIFlow : MonoBehaviour
                 currentClickedCard = null;
             }
         }
+
+        
     }
 
     void SpawnCards()
@@ -260,7 +267,13 @@ public class UIFlow : MonoBehaviour
 
     public void SetSelectedCard(UICards card)
     {
-        if (currentClickedCard == card) return;
+        
+
+        if (currentClickedCard == card)
+        {   
+            DeselectCurrentlyHeldCard();
+            return;
+        }
 
         _buildingDetailHandler.CloseDetailPanel();
 
@@ -271,7 +284,16 @@ public class UIFlow : MonoBehaviour
         }
 
         currentClickedCard = card;
+        currentClickedCard.SelectCard();
         currentClickedCard.CardData.Execute();
+    }
+
+    public void DeselectCurrentlyHeldCard()
+    {
+        currentClickedCard.ResetPosition();
+        currentClickedCard.CardData.EndExecute();
+        _buildingDetailHandler.CloseDetailPanel();
+        currentClickedCard = null;
     }
 
     public void DiscardCard(Card buildingCard)
@@ -305,6 +327,40 @@ public class UIFlow : MonoBehaviour
     void OnDayStart()
     {
         ShowPanel(UICardManager.Instance.GetRandomCards(5));
+    }
+
+    //THIS IS TEMP 
+    void HandleInput()
+    {
+       
+        
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                if (_cards[0] != null)
+                    SetSelectedCard(_cards[0]);
+                    
+            }
+            else if(Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                if (_cards[1] != null)
+                    SetSelectedCard(_cards[1]);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                if (_cards[2] != null)
+                    SetSelectedCard(_cards[2]);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                if (_cards[3] != null)
+                    SetSelectedCard(_cards[3]);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                if (_cards[4] != null)
+                    SetSelectedCard(_cards[4]);
+            }
+        
     }
 
 }

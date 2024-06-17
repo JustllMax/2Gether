@@ -17,13 +17,9 @@ MonoBehaviour:
   Name: Sniper
   Description: Sniper Rifle
   GunType: 3
-  P_Bullet: {fileID: 0}
-  BulletGroundHitSound: {fileID: 0}
-  BulletEnemyHitSound: {fileID: 0}
   IsAutomatic: 0
   MagazineSize: 5
   FireRate: 1
-  Range: 30
+  Range: 300
   ReloadTime: 1.5
   BulletDamage: 25
-  Zoom: 2

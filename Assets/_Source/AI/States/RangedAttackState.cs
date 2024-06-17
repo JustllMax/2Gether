@@ -47,7 +47,7 @@ public class RangedAttackState : AIState
         controller.isWalking = true;
     }
 
-    public override void OnUpdate(AIController controller)
+    public override void OnTick(AIController controller)
     {
         controller.ApplyDefaultMovement();
         if (controller.distanceToTarget >= 0.75 * AttackRange)
@@ -92,7 +92,7 @@ public class RangedAttackState : AIState
         controller.GetAnimator().SetBool("is_shooting", true);
 
         IShooterPoint shooter = controller.GetComponent<IShooterPoint>();
-        shooter.PositionShooter(controller.GetCurrentTarget().transform.position, out Vector3 direction, out Vector3 position);
+        shooter.PositionShooter(controller.CurrentTarget.transform.position, out Vector3 direction, out Vector3 position);
 
         if (controller.lastAttackTime >= ProjectileCooldown)
         {
@@ -135,6 +135,11 @@ public class RangedAttackState : AIState
         {
             controller.GetNavMeshAgent().SetDestination(surfacePoint);
         }
+    }
+
+    public override void OnTargetChanged(AIController controller)
+    {
+
     }
 }
     

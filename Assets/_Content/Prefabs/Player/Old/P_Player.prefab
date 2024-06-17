@@ -454,8 +454,12 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 63249
+  bulletHoleMask:
+    serializedVersion: 2
+    m_Bits: 62979
   weaponIKConfig: {fileID: 4369139910073079357}
   isAiming: 0
+  recoilForce: 10
 --- !u!1 &2155825730530370107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1226,6 +1230,9 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 33587991
+  bulletHoleMask:
+    serializedVersion: 2
+    m_Bits: 62979
   weaponIKConfig: {fileID: 5644884905906302487}
   isAiming: 0
   pelletsPerShot: 8
@@ -1394,17 +1401,20 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 63233
+  bulletHoleMask:
+    serializedVersion: 2
+    m_Bits: 62979
   weaponIKConfig: {fileID: 5345095839709660213}
   isAiming: 0
   playerEQ: {fileID: 3735655559337534896}
   P_PlayerGrenade: {fileID: 7727711388741772700, guid: 47a19d8904bdf854695ae983f3ec9cdb,
     type: 3}
-  projectileSpeed: 75
+  granadeSpeed: 30
   explosionDamage: 25
   explosionRadius: 5
   explosionMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 320
 --- !u!82 &3231617775913850226
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1618,6 +1628,9 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 33617687
+  bulletHoleMask:
+    serializedVersion: 2
+    m_Bits: 62979
   weaponIKConfig: {fileID: 4407775391698640000}
   isAiming: 0
 --- !u!82 &1404773847532706812
@@ -2264,7 +2277,7 @@ CharacterController:
   m_Height: 1.8
   m_Radius: 0.3
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0.35
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
@@ -2281,7 +2294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerModel: {fileID: 8889202465182205452}
-  _maxHealth: 100
+  _maxHealth: 10000
   invincibilityDuration: 0.4
   _nightCamera: {fileID: 823719554601124883}
   _gunCamera: {fileID: 5159281564673271810}
@@ -2291,10 +2304,10 @@ MonoBehaviour:
   _groundDrag: 0.3
   _groundControlFactor: 0.35
   _airControlFactor: 0.2
-  _movementSpeed: 6
+  _movementSpeed: 8
   _jumpHeight: 1.5
-  _dashSpeed: 20
-  _dashCooldown: 1.25
+  _dashSpeed: 26
+  _dashCooldown: 1
   _maxDashCount: 3
   _isMoving: 0
   _animator: {fileID: 5939401838147078560}
@@ -2336,11 +2349,11 @@ MonoBehaviour:
   - type: 0
     amount: 9999
   - type: 1
-    amount: 60
+    amount: 6000
   - type: 2
-    amount: 10
+    amount: 1000
   - type: 3
-    amount: 25
+    amount: 1500
   audioSource: {fileID: 5640860955456273650}
   _ikController: {fileID: 7159847689036973338}
   _currentGun: {fileID: 5425135659821295255}
@@ -3897,37 +3910,37 @@ PrefabInstance:
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 139.13556
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.6300001
+      value: 86.697
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -163.43553
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7858988
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0.4857124
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.32552993
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.20118867
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
