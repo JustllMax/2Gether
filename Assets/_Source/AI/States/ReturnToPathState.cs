@@ -37,8 +37,13 @@ public class ReturnToPathState : AIState
     {
         controller.canChangeTarget = true;
 
-        if (controller.CurrentTarget.properties.walkOnPath)
-            controller.WalksOnPath = true;
+        if (controller.CurrentTarget != null)
+        {
+            if (controller.CurrentTarget.properties.walkOnPath)
+                controller.WalksOnPath = true;
+        }
+        else
+            controller.WalksOnPath = controller.GetEnemyStats().walksOnPath;
     }
 
     public override bool CanExitState(AIController controller)
