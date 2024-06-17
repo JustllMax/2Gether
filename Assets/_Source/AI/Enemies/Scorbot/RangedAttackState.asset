@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5014b6606fc8904086fa78d61a1338d, type: 3}
   m_Name: RangedAttackState
   m_EditorClassIdentifier: 
-  weight: 2
-  AttackRange: 20
-  MinAttackRange: 6
-  ProjectileSpeed: 25
-  ProjectileDamage: 10
-  ProjectileCooldown: 0.1
-  BurstCooldown: 2
-  BurstCount: 8
+  weight: 3
+  AttackRange: 30
+  MinAttackRange: 0
+  ProjectileSpeed: 50
+  ProjectileDamage: 15
+  ProjectileCooldown: 0.5
+  BurstCooldown: 3
+  BurstCount: 2
   ProjectilePrefab: {fileID: 7727711388741772700, guid: 863f1f01d8597a942b50ea10505592e2,
     type: 3}
-  OnBurstRelocateChance: 0.5
-  ShootWhileMoving: 1
-  ShotSound: {fileID: 8300000, guid: bdce81c929d85b2459c986cd055f6508, type: 3}
+  OnBurstRelocateChance: 50
+  UseShootingStance: 1
+  ShotSound: {fileID: 8300000, guid: 5e427fbeb0d7f72419f7d8f84f7e0215, type: 3}

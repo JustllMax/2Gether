@@ -35,7 +35,7 @@ public class MeleeAttackState : AIState
         if (controller.AnimationComplete("ATTACK") && controller.lastAttackTime >= ComboDelay)
         {
             controller.PlayAnimation("ATTACK");
-            AudioManager.Instance.PlaySFXAtSource(controller.attackSound, controller.audioSource);
+            controller.PlaySound(controller.attackSound);
             controller.StartCoroutine(PerformAttack(controller));
             controller.StartCoroutine(ApplyMovementModifier(controller));
         }

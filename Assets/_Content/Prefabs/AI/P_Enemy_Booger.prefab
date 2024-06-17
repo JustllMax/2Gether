@@ -745,6 +745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 8d6a648ff1a8fd142a81afe85196d688, type: 2}
   hurtSound: {fileID: 8300000, guid: 7e79a33e4296bb64bbd7b70bc26657cd, type: 3}
+  attackImmuneSound: {fileID: 0}
   attackSound: {fileID: 8300000, guid: 437ab1e9b4b8f304c9f8ff1bf00d7814, type: 3}
   deathSound: {fileID: 8300000, guid: 2a695230adfcc7a4cbe51488296edbdb, type: 3}
   audioSource: {fileID: 0}
@@ -772,6 +773,7 @@ MonoBehaviour:
   isWalking: 0
   lastAttackTime: 0
   ammoCount: 0
+  isShooting: 0
   isReloading: 0
   hitboxColliders: []
   lastTickTime: 0
@@ -868,7 +870,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 3770938656964180798, guid: e36732c6242d4b04a974f76d36fb6d00,
     type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -878,9 +880,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 40
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -888,23 +890,23 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.025
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -2.4224992
+      outSlope: -2.4224992
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0.08653125
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -0.037199717
+      outSlope: -0.037199717
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0.27307528
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

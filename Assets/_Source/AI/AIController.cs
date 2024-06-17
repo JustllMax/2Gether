@@ -51,10 +51,12 @@ public class AIController : MonoBehaviour, IDamagable
     [SerializeField] EnemyStatistics stats;
 
     [Header("Audio")]
-    [SerializeField] protected AudioClip hurtSound;
+    public AudioClip hurtSound;
+    public AudioClip attackImmuneSound;
     public AudioClip attackSound;
-    [SerializeField] protected AudioClip deathSound;
-    [HideInInspector] public AudioSource audioSource;
+    public AudioClip deathSound;
+    public AudioSource audioSource;
+
     [SerializeField] protected float DeathInvokeTime = 2f;
     DisintegrationEffect _deathEffect;
     Animator _animator;
@@ -93,6 +95,9 @@ public class AIController : MonoBehaviour, IDamagable
 
     [Foldout("DEBUG INFO")]
     public uint ammoCount = 0;
+
+    [Foldout("DEBUG INFO")]
+    public bool isShooting;
 
     [Foldout("DEBUG INFO")]
     public bool isReloading;
@@ -421,7 +426,11 @@ public class AIController : MonoBehaviour, IDamagable
             return false;
 
         Health -= damage;
-        AudioManager.Instance.PlaySFXAtSource(hurtSound, audioSource);
+        if (damage > 0)
+            AudioManager.Instance.PlaySFXAtSource(hurtSound, audioSource);
+        else 
+            AudioManager.Instance.PlaySFXAtSource(attackImmuneSound, audioSource);
+
         if(Health <= 0)
         {
             AudioManager.Instance.PlaySFXAtSource(deathSound, audioSource);
@@ -469,6 +478,11 @@ public class AIController : MonoBehaviour, IDamagable
     }
 
     #endregion
+
+    public void PlaySound(AudioClip clip)
+    {
+        AudioManager.Instance.PlaySFXAtSource(clip, audioSource);
+    }
 
     #region Animation Control
     public bool AnimationComplete(string animName)

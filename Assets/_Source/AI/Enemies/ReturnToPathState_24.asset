@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c986549e49e9e854baf494b68defa8f7, type: 3}
-  m_Name: ReturnToPathState_15
+  m_Name: ReturnToPathState_24
   m_EditorClassIdentifier: 
   weight: 3
-  maxDistanceFromPath: 15
+  maxDistanceFromPath: 24

@@ -453,7 +453,7 @@ MonoBehaviour:
     type: 3}
   mask:
     serializedVersion: 2
-    m_Bits: 63249
+    m_Bits: 63251
   bulletHoleMask:
     serializedVersion: 2
     m_Bits: 62979
@@ -1229,7 +1229,7 @@ MonoBehaviour:
     type: 3}
   mask:
     serializedVersion: 2
-    m_Bits: 33587991
+    m_Bits: 33617683
   bulletHoleMask:
     serializedVersion: 2
     m_Bits: 62979
@@ -1400,7 +1400,7 @@ MonoBehaviour:
     type: 3}
   mask:
     serializedVersion: 2
-    m_Bits: 63233
+    m_Bits: 63251
   bulletHoleMask:
     serializedVersion: 2
     m_Bits: 62979
@@ -1627,7 +1627,7 @@ MonoBehaviour:
     type: 3}
   mask:
     serializedVersion: 2
-    m_Bits: 33617687
+    m_Bits: 33617683
   bulletHoleMask:
     serializedVersion: 2
     m_Bits: 62979
@@ -2293,6 +2293,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf41519b8b3551349bd88bb772b0fa03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dashSound: {fileID: 8300000, guid: 69c03972585c9154c8fcd96b9e54484c, type: 3}
+  jumpSound: {fileID: 8300000, guid: 197f10a21c4e5b847bece310c6fed9d0, type: 3}
+  doubleJumpSound: {fileID: 8300000, guid: 13db83b8678030940936d4cec4fdf943, type: 3}
+  dashReadySound: {fileID: 0}
+  dashEmptySound: {fileID: 0}
   playerModel: {fileID: 8889202465182205452}
   _maxHealth: 10000
   invincibilityDuration: 0.4
@@ -2426,7 +2431,8 @@ AudioSource:
   m_GameObject: {fileID: 8952495052658987910}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5396651500492878800, guid: e36732c6242d4b04a974f76d36fb6d00,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -3925,7 +3931,7 @@ PrefabInstance:
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7858988
+      value: 0.78589886
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
@@ -3935,12 +3941,12 @@ PrefabInstance:
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.32552993
+      value: -0.32552987
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.20118867
+      value: 0.20118861
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}

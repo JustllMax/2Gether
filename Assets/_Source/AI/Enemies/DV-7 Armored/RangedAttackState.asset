@@ -23,4 +23,5 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 7727711388741772700, guid: 863f1f01d8597a942b50ea10505592e2,
     type: 3}
   OnBurstRelocateChance: 0.33
-  ShootWhileMoving: 0
+  UseShootingStance: 1
+  ShotSound: {fileID: 8300000, guid: 8958798d256709a4b973f9ac3f5b5f88, type: 3}

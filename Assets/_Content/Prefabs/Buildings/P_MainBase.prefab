@@ -215,7 +215,7 @@ MonoBehaviour:
   m_GenerateLinks: 0
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
-  m_AffectedAgents: f46d2d58
+  m_AffectedAgents: ffffffff
 --- !u!82 &5786750180740318247
 AudioSource:
   m_ObjectHideFlags: 0

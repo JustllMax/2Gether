@@ -105,7 +105,10 @@ abstract public class Gun : MonoBehaviour
         if (MadeImpact)
         {
             if (makeBulletHole)
-                Instantiate(impactParticleSystem, HitPoint, Quaternion.LookRotation(HitNormal));
+            {
+                Instantiate(impactParticleSystem, HitPoint + HitNormal * 0.01f, Quaternion.LookRotation(HitNormal));
+            }
+                
             if (target != null)
                 target.TakeDamage(GetGunData().BulletDamage * damageModifier);
         }
