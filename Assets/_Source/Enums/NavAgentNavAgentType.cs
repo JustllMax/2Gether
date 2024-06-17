@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum NavAgentType
 {
-    Full_Default,
-    Path_Default
+    Small,
+    Medium,
+    Large
 }

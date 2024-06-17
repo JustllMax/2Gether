@@ -28,6 +28,8 @@ public class SlotPlacer : MonoBehaviour
 
     [SerializeField] private GameObject[] _slotPrefabs;
     [SerializeField] private GameObject[] _emptySlotPrefabs;
+    [SerializeField] private GameObject _mapBarrier;
+    [SerializeField] private GameObject _mapBarrierCorener;
     [SerializeField] private PathSlot _startingSlot;
     #endregion
 
@@ -94,6 +96,72 @@ public class SlotPlacer : MonoBehaviour
             _map = (int[,])_maps[_mapId].map.Clone();
 
         GenerateMap();
+        GenerateBarriers();
+    }
+
+    void GenerateBarriers()
+    {
+        //Top
+        int i = 0;
+        i = 0;
+        GameObject barrierCorner = Instantiate(_mapBarrierCorener);
+        barrierCorner.transform.position = new Vector3(i * 30 + 10, 0, _mapSize.y * 30 - 5f);
+        barrierCorner.transform.rotation = Quaternion.Euler(0, 0, 0);
+        barrierCorner.transform.SetParent(this.transform);
+        i++;
+        for (; i < _mapSize.x; i++)
+        {
+            GameObject barrier = Instantiate(_mapBarrier);
+            barrier.transform.position = new Vector3(i * 30 + 10, 0, _mapSize.y * 30 - 5f);
+            barrier.transform.rotation = Quaternion.Euler(0, 0, 0);
+            barrier.transform.SetParent(this.transform);
+        }
+
+
+        //Bottom
+        i = _mapSize.x - 1;
+        barrierCorner = Instantiate(_mapBarrierCorener);
+        barrierCorner.transform.position = new Vector3(i * 30 + 10, 0, 0 * 30 - 5f);
+        barrierCorner.transform.rotation = Quaternion.Euler(0, 180, 0);
+        barrierCorner.transform.SetParent(this.transform);
+        i--;
+        for (; i >= 0; i--)
+        {
+            GameObject barrier = Instantiate(_mapBarrier);
+            barrier.transform.position = new Vector3(i * 30 + 10, 0, 0 * 30 - 5f);
+            barrier.transform.rotation = Quaternion.Euler(0, 180, 0);
+            barrier.transform.SetParent(this.transform);
+        }
+
+        //Left
+        int j = 0;
+        barrierCorner = Instantiate(_mapBarrierCorener);
+        barrierCorner.transform.position = new Vector3(0 * 30 - 5f, 0, j * 30 + 10f);
+        barrierCorner.transform.rotation = Quaternion.Euler(0, -90, 0);
+        barrierCorner.transform.SetParent(this.transform);
+        j++;
+        for (; j < _mapSize.y; j++)
+        {
+            GameObject barrier = Instantiate(_mapBarrier);
+            barrier.transform.position = new Vector3(0 * 30 - 5f, 0, j * 30 + 10f);
+            barrier.transform.rotation = Quaternion.Euler(0, -90, 0);
+            barrier.transform.SetParent(this.transform);
+        }
+
+        //Right
+        j = _mapSize.y - 1;
+        barrierCorner = Instantiate(_mapBarrierCorener);
+        barrierCorner.transform.position = new Vector3(_mapSize.x * 30 - 5f, 0, j * 30 + 10f);
+        barrierCorner.transform.rotation = Quaternion.Euler(0, 90, 0);
+        barrierCorner.transform.SetParent(this.transform);
+        j--;
+        for (; j >= 0; j--)
+        {
+            GameObject barrier = Instantiate(_mapBarrier);
+            barrier.transform.position = new Vector3(_mapSize.x * 30 - 5f, 0, j * 30 + 10f);
+            barrier.transform.rotation = Quaternion.Euler(0, 90, 0);
+            barrier.transform.SetParent(this.transform);
+        }
     }
 
     void GenerateMap()

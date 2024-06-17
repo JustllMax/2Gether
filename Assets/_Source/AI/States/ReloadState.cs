@@ -12,7 +12,7 @@ public class ReloadState : AIState
         //controller.isReloading = true;
     }
 
-    public override void OnUpdate(AIController controller)
+    public override void OnTick(AIController controller)
     {
         //reloadTimer += Time.deltaTime;
         //if(reloadTimer >= controller.GetEnemyStats().attackCombo[0].Delay)
@@ -41,5 +41,10 @@ public class ReloadState : AIState
     public override void OnLateUpdate(AIController controller)
     {
         
+    }
+
+    public override void OnTargetChanged(AIController controller)
+    {
+
     }
 }

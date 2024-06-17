@@ -12,24 +12,24 @@ public class PlayerDeadState : AIState
     public override void OnStart(AIController controller)
     {
         
-        Debug.Log(this + " Started");
-        if (GameManager.Instance.GetMainBaseTransform() != null)
-        {
-            mainBase = GameManager.Instance.GetMainBaseTransform();
-            mainBaseTarget = new AITarget(mainBase, mainBase.GetComponent<ITargetable>());
-            controller.SetCurrentTarget(mainBaseTarget);
-            controller.canSwitchTarget = false;
-            Debug.Log(this + " Target set to " + mainBaseTarget.transform);
-
-            controller.GetNavMeshAgent().SetDestination(mainBase.position);
-
-        }
-
-
-        controller.PlayAnimation("WALK");
+        //Debug.Log(this + " Started");
+        //if (GameManager.Instance.GetMainBaseTransform() != null)
+        //{
+        //    mainBase = GameManager.Instance.GetMainBaseTransform();
+        //    mainBaseTarget = new AITarget(mainBase, mainBase.GetComponent<ITargetable>());
+        //    controller.SetCurrentTarget(mainBaseTarget);
+        //    controller.canSwitchTarget = false;
+        //    Debug.Log(this + " Target set to " + mainBaseTarget.transform);
+        //
+        //    controller.GetNavMeshAgent().SetDestination(mainBase.position);
+        //
+        //}
+        //
+        //
+        //controller.PlayAnimation("WALK");
     }
 
-    public override void OnUpdate(AIController controller)
+    public override void OnTick(AIController controller)
     {
 
     }
@@ -54,6 +54,11 @@ public class PlayerDeadState : AIState
     }
 
     public override void OnLateUpdate(AIController controller)
+    {
+
+    }
+
+    public override void OnTargetChanged(AIController controller)
     {
 
     }
