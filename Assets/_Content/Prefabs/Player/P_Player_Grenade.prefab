@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raycastBlacklist:
     serializedVersion: 2
-    m_Bits: 2052
+    m_Bits: 67588
 --- !u!54 &-1772213871409039155
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -454,6 +454,9 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 63249
+  bulletHoleMask:
+    serializedVersion: 2
+    m_Bits: 62979
   weaponIKConfig: {fileID: 4369139910073079357}
   isAiming: 0
   recoilForce: 10
@@ -1227,6 +1230,9 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 33587991
+  bulletHoleMask:
+    serializedVersion: 2
+    m_Bits: 62979
   weaponIKConfig: {fileID: 5644884905906302487}
   isAiming: 0
   pelletsPerShot: 8
@@ -1395,17 +1401,20 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 63233
+  bulletHoleMask:
+    serializedVersion: 2
+    m_Bits: 62979
   weaponIKConfig: {fileID: 5345095839709660213}
   isAiming: 0
   playerEQ: {fileID: 3735655559337534896}
   P_PlayerGrenade: {fileID: 7727711388741772700, guid: 47a19d8904bdf854695ae983f3ec9cdb,
     type: 3}
-  granadeSpeed: 0
+  granadeSpeed: 30
   explosionDamage: 25
   explosionRadius: 5
   explosionMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 320
 --- !u!82 &3231617775913850226
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1619,6 +1628,9 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 33617687
+  bulletHoleMask:
+    serializedVersion: 2
+    m_Bits: 62979
   weaponIKConfig: {fileID: 4407775391698640000}
   isAiming: 0
 --- !u!82 &1404773847532706812
@@ -3913,22 +3925,22 @@ PrefabInstance:
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7858987
+      value: 0.7858988
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.48571235
+      value: 0.4857124
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.32553002
+      value: -0.32552993
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.20118871
+      value: 0.20118867
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
