@@ -1709,14 +1709,7 @@ MonoBehaviour:
   weaponIKConfig: {fileID: 5345095839709660213}
   isAiming: 0
   playerEQ: {fileID: 3735655559337534896}
-  P_PlayerGrenade: {fileID: 7727711388741772700, guid: 47a19d8904bdf854695ae983f3ec9cdb,
-    type: 3}
-  granadeSpeed: 30
-  explosionDamage: 25
-  explosionRadius: 5
-  explosionMask:
-    serializedVersion: 2
-    m_Bits: 320
+  grenade: {fileID: 11400000, guid: 0ac78c541f0d0a7408b7c9fb33a9e878, type: 2}
 --- !u!82 &3231617775913850226
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2602,7 +2595,7 @@ MonoBehaviour:
   dashReadySound: {fileID: 0}
   dashEmptySound: {fileID: 0}
   playerModel: {fileID: 8889202465182205452}
-  _maxHealth: 10000
+  _maxHealth: 100
   invincibilityDuration: 0.4
   _nightCamera: {fileID: 823719554601124883}
   _gunCamera: {fileID: 5159281564673271810}
@@ -4005,7 +3998,7 @@ PrefabInstance:
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.4857124
+      value: 0.48571235
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
@@ -4015,7 +4008,7 @@ PrefabInstance:
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.20118867
+      value: 0.20118858
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}

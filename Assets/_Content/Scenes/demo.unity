@@ -524,7 +524,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73d7916ab5970c44c8c1856dc293fdfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  P_Projectile: {fileID: 0}
+  P_Projectile: {fileID: 7727711388741772700, guid: 863f1f01d8597a942b50ea10505592e2,
+    type: 3}
 --- !u!1001 &1018697384
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -714,16 +715,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.20118871
-      objectReference: {fileID: 0}
-    - target: {fileID: 2461275144498019277, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
-        type: 3}
-      propertyPath: granadeSpeed
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 2461275144498019277, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
-        type: 3}
-      propertyPath: explosionMask.m_Bits
-      value: 320
       objectReference: {fileID: 0}
     - target: {fileID: 7062071491655611484, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
