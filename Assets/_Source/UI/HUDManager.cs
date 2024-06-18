@@ -24,6 +24,8 @@ public class HUDManager : MonoBehaviour
     [Foldout("References")][SerializeField] GameObject NightUI;
     [Foldout("References")][SerializeField] Image HelmetOverlay;
     [Foldout("References")][SerializeField] TMP_Text NightEndText;
+    Color textOriginalColor;
+
     [Header("MainBase")]
     [Foldout("References")]public Slider MainbaseHPBar;
     [Foldout("References")][SerializeField] TMP_Text MainbaseHPText;
@@ -60,18 +62,22 @@ public class HUDManager : MonoBehaviour
         SetupIconsDictionary();
         SetupCrosshairsDictionary();
         originalHelmetColor = HelmetOverlay.color;
+        textOriginalColor = NightEndText.color;
     }
 
     private void OnEnable()
     {
         DayNightCycleManager.NightBegin += OnNightStart;
         DayNightCycleManager.NightEnd += OnNightEnd;
+        DayNightCycleManager.DayBegin += OnDayStart;
     }
 
     private void OnDisable()
     {
         DayNightCycleManager.NightBegin -= OnNightStart;
         DayNightCycleManager.NightEnd -= OnNightEnd;
+        DayNightCycleManager.DayBegin -= OnDayStart;
+
     }
 
     void OnNightStart()
@@ -86,7 +92,7 @@ public class HUDManager : MonoBehaviour
 
     void OnDayStart()
     {
-        Color transparent = Color.white;
+        Color transparent = textOriginalColor;
         transparent.a = 0f;
         NightEndText.color = transparent;
     }
