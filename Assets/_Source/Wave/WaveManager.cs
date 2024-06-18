@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public struct SingleWave
 {
@@ -153,6 +154,16 @@ public class WaveManager : MonoBehaviour
     public void EndNightCycle()
     {
         _waveSystem.isWaveActive = false;
+        _ = DeleteEnemies();
+        _waveSystem.enemyCount = 0;
+
+        if (WaveSystem.nightCount > 0)
+            NextNightWaveData();
+    }
+
+    public async UniTaskVoid DeleteEnemies()
+    {
+        await UniTask.WaitForSeconds(0.5f);
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         if (enemies.Length > 0)
         {
@@ -161,10 +172,6 @@ public class WaveManager : MonoBehaviour
                 Destroy(enemy);
             }
         }
-        _waveSystem.enemyCount = 0;
-
-        if (WaveSystem.nightCount > 0)
-            NextNightWaveData();
     }
     #endregion
     #endregion
