@@ -14,6 +14,7 @@ public class HUDManager : MonoBehaviour
     public static HUDManager Instance { get { return _instance; } }
 
     [SerializeField] float HUDAppearanceDelay = 2f;
+    [SerializeField] float endTextDelay = 1f;
     [SerializeField]List<Sprite> Icons;
     [SerializeField]List<Sprite> Crosshairs;
 
@@ -22,6 +23,7 @@ public class HUDManager : MonoBehaviour
     
     [Foldout("References")][SerializeField] GameObject NightUI;
     [Foldout("References")][SerializeField] Image HelmetOverlay;
+    [Foldout("References")][SerializeField] TMP_Text NightEndText;
     [Header("MainBase")]
     [Foldout("References")]public Slider MainbaseHPBar;
     [Foldout("References")][SerializeField] TMP_Text MainbaseHPText;
@@ -80,6 +82,13 @@ public class HUDManager : MonoBehaviour
     void OnNightEnd()
     {
         _ = SetNightUIActivation(false);
+    }
+
+    void OnDayStart()
+    {
+        Color transparent = Color.white;
+        transparent.a = 0f;
+        NightEndText.color = transparent;
     }
 
     async UniTaskVoid SetNightUIActivation(bool enabled)
@@ -287,4 +296,14 @@ public class HUDManager : MonoBehaviour
     }
 
     #endregion MainBase
+
+
+    #region 
+
+    public void ShowEndNightText()
+    {
+        NightEndText.DOFade(1f, endTextDelay);
+    }
+
+    #endregion
 }

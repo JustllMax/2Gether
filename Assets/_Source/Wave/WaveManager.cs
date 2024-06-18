@@ -21,6 +21,7 @@ public class WaveManager : MonoBehaviour
     #region variables
     private static WaveManager _instance;
     public static WaveManager Instance { get { return _instance; } }
+    [SerializeField] float nightEndDelay = 2f;
     [SerializeField] List<GameObject> _enemyFollowPrefabs;
     [SerializeField] List<GameObject> _enemyAttackPrefabs;
     [SerializeField] List<GameObject> _enemyBossPrefabs;
@@ -89,7 +90,7 @@ public class WaveManager : MonoBehaviour
 
         if (_waveSystem.enemyCount <= 0 && _waveSystem.isWaveActive && !_waveSystem.isSpawnActive)
         {
-            DayNightCycleManager.Instance.EndNightCycle();
+            _ = InvokeNightEnd();
         }
         waveClear = _waveSystem.elapsedTime;
     }
@@ -175,4 +176,11 @@ public class WaveManager : MonoBehaviour
     }
     #endregion
     #endregion
+
+    async UniTaskVoid InvokeNightEnd()
+    {
+        HUDManager.Instance.ShowEndNightText();
+        await UniTask.WaitForSeconds(nightEndDelay);
+        DayNightCycleManager.Instance.EndNightCycle();
+    }
 }
