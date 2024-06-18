@@ -16,3 +16,4 @@ MonoBehaviour:
   relocateDamage: 40
   minRelocateDistance: 45
   maxRelocateDistance: 80
+  ChaseStartSound: {fileID: 8300000, guid: 1139920079c18bc4f84953152d8cf1d8, type: 3}

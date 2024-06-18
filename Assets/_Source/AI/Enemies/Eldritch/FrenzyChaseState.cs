@@ -9,11 +9,13 @@ public class FenzyChaseState : AIState
     public float relocateDamage = 40;
     public float minRelocateDistance = 30;
     public float maxRelocateDistance = 60;
+    public AudioClip ChaseStartSound;
 
     public override void OnStart(AIController controller)
     {
         controller.PlayAnimation("WALK");
         (controller as EldritchController).receivedDamage = 0;
+        controller.PlaySound(ChaseStartSound);
     }
 
     public override void OnTick(AIController controller)
