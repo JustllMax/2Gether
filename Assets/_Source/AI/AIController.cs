@@ -7,38 +7,56 @@ using Random = UnityEngine.Random;
 using NaughtyAttributes;
 using UnityEngine.InputSystem.XR;
 using UnityEditor;
+using UnityEngine.UIElements;
 
 
+#region AITarget
 [Serializable]
-public struct AITarget
+public class AITarget
 {
+    public TargetProperties properties;
+
     public Transform transform;
     public ITargetable targetable;
+    public Vector3 positionOffset;
 
-    
-    public AITarget(Transform transform, ITargetable targetable)
+    public AITarget(in TargetProperties properties, Transform transform, ITargetable targetable, in Vector3 positionOffset)
     {
+        this.properties = properties;
         this.transform = transform;
         this.targetable = targetable;
+        this.positionOffset = positionOffset;
     }
+
+    public bool IsValid()
+    {
+        if (transform != null && targetable != null)
+        {
+            if (targetable.IsTargetable)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Vector3 Position => transform.position + positionOffset;
 };
+#endregion
 
 public class AIController : MonoBehaviour, IDamagable
 {
     [Header("Enemy Statistics")]
     [SerializeField] EnemyStatistics stats;
 
-    [Header("AI States")]
-    [SerializeField] List<AIState> _AIStates;
-    AIState previousState;
-    AIState nextState;
-    protected AIState currentState;
-
     [Header("Audio")]
-    [SerializeField] protected AudioClip hurtSound;
+    public AudioClip hurtSound;
+    public AudioClip attackImmuneSound;
     public AudioClip attackSound;
-    [SerializeField] protected AudioClip deathSound;
-    [HideInInspector] public AudioSource audioSource;
+    public AudioClip deathSound;
+    public AudioSource audioSource;
+
     [SerializeField] protected float DeathInvokeTime = 2f;
     DisintegrationEffect _deathEffect;
     Animator _animator;
@@ -46,17 +64,31 @@ public class AIController : MonoBehaviour, IDamagable
     protected bool isStunned = false;
     protected bool isDead = false;
     protected float attackTimer = 0f;
+    protected float _rotationSpeed;
+
+    private LinkedListNode<AIController> _node;
+
+    #region Debug info
+    [Foldout("DEBUG INFO")]
+    [SerializeField] private float _health;
 
     [Foldout("DEBUG INFO")]
-    [SerializeField] private AITarget currentTarget = new AITarget();
+    [SerializeField] protected AIState currentState;
 
     [Foldout("DEBUG INFO")]
-    [SerializeField] protected Collider[] hitboxColliders;
+    [SerializeField] private AITarget _currentTarget;
 
-    private static LayerMask[] targetMasks;
+    [Foldout("DEBUG INFO")]
+    public bool canChangeTarget;
 
     [Foldout("DEBUG INFO")]
     public float distanceToTarget;
+
+    [Foldout("DEBUG INFO")]
+    [SerializeField] private bool _usesPathNavmesh;
+
+    [Foldout("DEBUG INFO")]
+    public bool isWalking;
 
     [Foldout("DEBUG INFO")]
     public float lastAttackTime = 0f;
@@ -65,22 +97,23 @@ public class AIController : MonoBehaviour, IDamagable
     public uint ammoCount = 0;
 
     [Foldout("DEBUG INFO")]
+    public bool isShooting;
+
+    [Foldout("DEBUG INFO")]
     public bool isReloading;
 
     [Foldout("DEBUG INFO")]
-    public Vector3 wanderTarget;
+    [SerializeField] protected Collider[] hitboxColliders;
 
     [Foldout("DEBUG INFO")]
-    public bool canSwitchTarget;
+    public double lastTickTime = 0f;
 
     [Foldout("DEBUG INFO")]
-    [SerializeField] private float _health;
+    public float tickDeltaTime = 0f;
 
-    private float _rotationSpeed;
+    #endregion
 
-    public float Health { get => _health; set => _health = value; }
-    public bool IsAlive { get => !isDead; }
-
+    #region Initialization
     private void Awake()
     {
         if(audioSource == null)
@@ -91,98 +124,45 @@ public class AIController : MonoBehaviour, IDamagable
         hitboxColliders = GetComponentsInChildren<Collider>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
-        Health = stats.Health;
+        _currentTarget = null;
+        canChangeTarget = true;
+        distanceToTarget = float.MaxValue;
+        Health = stats.health;
         ApplyDefaultMovement();
-
-        canSwitchTarget = stats.PrimaryTarget != stats.SecondaryTarget;
-
-        if (targetMasks == null)
-        {
-            targetMasks = new LayerMask[3];
-            targetMasks[0] = LayerMask.GetMask("Building", "MainBuilding");
-            targetMasks[1] = LayerMask.GetMask("Player");
-            targetMasks[2] = LayerMask.GetMask("Player", "Building", "MainBuilding");
-        }
     }
 
     private void Start()
     {
-        SetNavMeshAgentType(stats.PrimaryTarget);
-        currentState = _AIStates[0];
-        currentState.OnStart(this);
+        _node = AIManager.Instance.RegisterEnemy(this);
+        WalksOnPath = stats.walksOnPath;
     }
 
-    void SetNavMeshAgentType(TargetType focus)
+    #endregion
+    private void OnDestroy()
     {
-        string agentTypeName = "";
-        if(focus == TargetType.Player)
-        {
-            agentTypeName = NavAgentTypeNames.PlayerChase.ToString();
-        }
-        else
-        {
-            agentTypeName = NavAgentTypeNames.BuildingChase.ToString();
-        }
-        int? agentType = GetNavMeshAgentID(agentTypeName);
-        if(agentType != null)
-        {
-            _navMeshAgent.agentTypeID = (int)agentType;
-        }
+        AIManager.Instance.UnregisterEnemy(_node);
     }
 
-    private int? GetNavMeshAgentID(string name)
+
+    public void OnTick(double time)
     {
-        for (int i = 0; i < NavMesh.GetSettingsCount(); i++)
-        {
-            NavMeshBuildSettings settings = NavMesh.GetSettingsByIndex(index: i);
-            if (name == NavMesh.GetSettingsNameFromID(agentTypeID: settings.agentTypeID))
-            {
-                return settings.agentTypeID;
-            }
-        }
-        return null;
-    }
-    public void Update()
-    {
+        tickDeltaTime = (float)(time - lastTickTime);
+        lastTickTime = time;
+
         if (isDead)
         {
             return;
         }
 
-        lastAttackTime += Time.deltaTime;
+        lastAttackTime += tickDeltaTime;
 
+        TryChangeTarget();
 
-        if (!HasTarget())
-        {
-            _navMeshAgent.ResetPath();
-            SearchForTarget();
-        }
-
-        if (currentTarget.transform != null)
-        {
-            distanceToTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
-
-            //Try to switch target
-            if (canSwitchTarget)
-            {
-                SwitchTarget();
-            }
-        }
-
+        TryChangeState();
         if (currentState != null)
         {
-            ChangeState();
-            currentState.OnUpdate(this);
+            currentState.OnTick(this);
         }
-
-        if (_rotationSpeed != 0)
-        {
-            Vector3 lookrotation = currentTarget.transform.position - transform.position;
-            lookrotation.y = 0;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), _rotationSpeed * Time.deltaTime);
-        }
-
-        _animator.SetFloat("walk_speed", _navMeshAgent.velocity.magnitude);
     }
 
     public void LateUpdate()
@@ -192,159 +172,265 @@ public class AIController : MonoBehaviour, IDamagable
             return;
         }
 
+        if (_rotationSpeed != 0)
+        {
+            Vector3 lookrotation = _currentTarget.transform.position - transform.position;
+            lookrotation.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), _rotationSpeed * Time.deltaTime);
+        }
+
+        _animator.SetFloat("walk_speed", _navMeshAgent.velocity.magnitude);
+
         if (currentState != null)
         {
             currentState.OnLateUpdate(this);
         }
     }
 
-    private void SwitchTarget()
+    #region Target Handling
+    public AITarget CurrentTarget
     {
-        if (currentTarget.targetable.TargetType != stats.SecondaryTarget)
+        get => _currentTarget;
+        set
         {
-            AITarget secondaryTarget = GetClosestTarget(stats.SwitchRange, targetMasks[(int)stats.SecondaryTarget]);
-            if (secondaryTarget.transform != null)
+            _currentTarget = value;
+
+            if (_currentTarget != null)
             {
-                SetCurrentTarget(secondaryTarget);
+                distanceToTarget = Vector3.Distance(_currentTarget.Position, transform.position);
+                SetMovementStats(_currentTarget.properties.movement);
+                if (!_currentTarget.properties.walkOnPath)
+                    WalksOnPath = false;
+            }
+            else
+            {
+                distanceToTarget = float.MaxValue;
+                ApplyDefaultMovement();
+                if (!stats.walksOnPath)
+                    WalksOnPath = false;
+            }
+                
+
+            if (currentState != null)
+            {
+                currentState.OnTargetChanged(this);
             }
         }
-        //Remove target if it is out of range
-        else if (distanceToTarget > stats.SwitchRange)
+    }
+
+    public void TryChangeTarget()
+    {
+        bool targetLost = false;
+
+        if (HasTarget())
         {
-            SetCurrentTarget(new AITarget());
+            distanceToTarget = Vector3.Distance(_currentTarget.Position, transform.position);
+
+            if (!canChangeTarget)
+                return;
+
+            //Lose target if out of range
+            if (distanceToTarget > _currentTarget.properties.loseTargetRange)
+            {
+                targetLost = true;
+                _currentTarget = null;
+            } 
+            else if (!_currentTarget.properties.canAbandonTarget) //In range and can't abandon, skip
+            {
+                return;
+            }
         }
+
+        if (!canChangeTarget)
+            return;
+
+        AITarget nextTarget = GetNextTarget();
+
+        if (nextTarget == null)
+        {
+            if (targetLost)
+                CurrentTarget = null;
+
+            return;
+        }
+
+        CurrentTarget = nextTarget;
+    }
+
+
+    private AITarget GetNextTarget()
+    {
+        WeightType targetWeight = WeightType.Lowest;
+        List<AITarget> possibleTargets = new List<AITarget>();
+
+        foreach (var targetStats in stats.targetProperties)
+        {
+            if (targetStats.weight < targetWeight)
+                break;
+
+            //Skip if current target has been chosen using the same properties
+            if (_currentTarget != null && _currentTarget.properties == targetStats)
+            {
+                targetWeight = targetStats.weight;
+                continue;
+            }
+
+
+            AITarget newTarget = GetClosestTarget(targetStats);
+
+            if (newTarget != null)
+            {
+                targetWeight = targetStats.weight;
+                possibleTargets.Add(newTarget);
+            }
+        }
+
+        //Random if same weight
+        if (possibleTargets.Count > 0)
+        {
+            int randomIndex = Random.Range(0, possibleTargets.Count);
+            return possibleTargets[randomIndex];
+        }
+
+        return null;
     }
 
     public bool HasTarget()
     {
-        //W Unity nie mo¿na robiæ (currentTarget.targetable != null && currentTarget.targetable) bo jak jest null to wywali b³¹d
-        if (currentTarget.transform != null && currentTarget.targetable != null)
-        {
-            if (currentTarget.targetable.IsTargetable)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return _currentTarget != null && _currentTarget.IsValid();
     }
 
-    private void SearchForTarget()
-    {
-        AITarget target = GetClosestTarget(stats.SearchRange, targetMasks[(int)stats.PrimaryTarget]);
-        if (target.transform != null)
-        {
-            SetCurrentTarget(target);
-        }
-    }
-
-    private AITarget GetClosestTarget(float range, LayerMask layer)
+    private AITarget GetClosestTarget(in TargetProperties properties)
     {
         Transform target = null;
         ITargetable targetable = null;
-
+        Vector3 closestPoint = Vector3.zero;
         float minDistance = float.MaxValue;
-        Collider[] hits = Physics.OverlapSphere(GetCurrentPosition(), range, layer);
+
+        //Check for targets in range
+        Collider[] hits = Physics.OverlapSphere(transform.position, properties.maxSearchRange, AIManager.Instance.GetLayerFromType(properties.targetType));
         foreach (Collider hit in hits)
         {
-            if (hit.TryGetComponent(out ITargetable t))
+            ITargetable newTarget;
+            Transform newTransform;
+
+            if (hit.attachedRigidbody != null)
             {
-                if (t.IsTargetable)
+                hit.attachedRigidbody.TryGetComponent<ITargetable>(out newTarget);
+                newTransform = hit.attachedRigidbody.transform;
+            } else
+            {
+                hit.TryGetComponent<ITargetable>(out newTarget);
+                newTransform = hit.transform;
+            }
+
+            if (newTarget != null && newTarget.IsTargetable)
+            {
+                Vector3 newClosestPoint = hit.ClosestPointOnBounds(transform.position);
+                float distanceToTarget = Vector3.Distance(newClosestPoint, transform.position);
+                if (distanceToTarget < properties.maxSearchRange && distanceToTarget < minDistance)
                 {
-                    float distanceToTarget = Vector3.Distance(hit.transform.position, transform.position);
-                    if (distanceToTarget < range && distanceToTarget < minDistance)
-                    {
-                        target = hit.transform;
-                        targetable = t;
-                        minDistance = distanceToTarget;
-                    }
+                    target = newTransform;
+                    targetable = newTarget;
+                    closestPoint = newClosestPoint;
+                    minDistance = distanceToTarget;
                 }
             }
         }
-        return new AITarget(target, targetable);
+
+        //Project hitpoint onto navmesh surface
+        if (target != null && AIManager.Instance.SampleNavSurface(closestPoint, 2.5f, stats.agentType, properties.walkOnPath, out var surfacePoint))
+        {
+            closestPoint = surfacePoint - target.position;
+            return new AITarget(properties, target, targetable, closestPoint);
+        }
+
+        return null;
     }
 
-    public void ChangeState()
+    public bool SampleNavSurface(in Vector3 point, out Vector3 pointOnSurface, float maxDistance = 2.5f)
     {
-        nextState = GetNextState();
-
-        if (nextState == null) { return; }
-
-        if (nextState == currentState)
+        if (NavMesh.SamplePosition(point, out NavMeshHit navhit, maxDistance, _navMeshAgent.areaMask))
         {
-            return;
+            pointOnSurface = navhit.position;
+            return true;
         }
 
+        pointOnSurface = Vector3.zero;
+        return false;
+    }
+    #endregion
+
+    #region States
+
+    private void TryChangeState()
+    {
         if (currentState != null && !currentState.CanExitState(this))
-        {
             return;
-        }
 
-        currentState.OnExit(this);
+        AIState nextState = GetNextState();
 
-        if (nextState != null && nextState != currentState)
-        {
-            previousState = currentState;
-            nextState.OnStart(this);
-            currentState = nextState;
+        if (nextState == null || nextState == currentState)
+            return;
 
-        }
+        if (currentState != null)
+            currentState.OnExit(this);
+        nextState.OnStart(this);
+        currentState = nextState;
     }
 
 
     private AIState GetNextState()
     {
-        List<AIState> states = new List<AIState>();
-        StateWeight highestWeight = StateWeight.Lowest;
+        WeightType stateWeight = WeightType.Lowest;
+        List<AIState> possibleStates = new List<AIState>();
 
-        foreach (var state in _AIStates)
+        foreach (var state in stats.AIStates)
         {
             if (state.CanChangeToState(this))
             {
-                if (state.weight > highestWeight)
+                if (state.weight < stateWeight)
+                    break;
+                else
                 {
-                    highestWeight = state.weight;
- 
+                    stateWeight = state.weight;
+                    possibleStates.Add(state);
                 }
             }
         }
 
-        foreach (var state in _AIStates)
+        //Random if same weight
+        if (possibleStates.Count > 0)
         {
-            if (state.CanChangeToState(this) && state.weight == highestWeight)
-            {
-                states.Add(state);
-                //Debug.Log(state.name);
-            }
-        }
-
-        if (states.Count > 0)
-        {
-            int randomIndex = Random.Range(0, states.Count);
-            return states[randomIndex];
+            int randomIndex = Random.Range(0, possibleStates.Count);
+            return possibleStates[randomIndex];
         }
 
         return null;
-
-
     }
 
-    public void RangedAttackPerformed()
-    {
-        attackTimer = 0f;
-    }
+    #endregion
+
     public bool CanAttack()
     {
         return !isDead && HasTarget();
     }
 
+    #region Damage
+
+    public float Health { get => _health; set => _health = value; }
+    public bool IsAlive { get => !isDead; }
     public virtual bool TakeDamage(float damage)
     {
         if(isDead)
             return false;
 
         Health -= damage;
-        AudioManager.Instance.PlaySFXAtSource(hurtSound, audioSource);
+        if (damage > 0)
+            AudioManager.Instance.PlaySFXAtSource(hurtSound, audioSource);
+        else 
+            AudioManager.Instance.PlaySFXAtSource(attackImmuneSound, audioSource);
+
         if(Health <= 0)
         {
             AudioManager.Instance.PlaySFXAtSource(deathSound, audioSource);
@@ -382,10 +468,23 @@ public class AIController : MonoBehaviour, IDamagable
     {
 
         Health += amount;
-        Health = Mathf.Clamp(Health, 0f, stats.Health);
+        Health = Mathf.Clamp(Health, 0f, stats.health);
         return true;
     }
 
+    public bool IsDead()
+    {
+        return isDead;
+    }
+
+    #endregion
+
+    public void PlaySound(AudioClip clip)
+    {
+        AudioManager.Instance.PlaySFXAtSource(clip, audioSource);
+    }
+
+    #region Animation Control
     public bool AnimationComplete(string animName)
     {
         AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
@@ -414,37 +513,66 @@ public class AIController : MonoBehaviour, IDamagable
         }
     }
 
+    #endregion
+
+    #region Movement
+    public bool WalksOnPath 
+    { 
+        get => _usesPathNavmesh;
+        set
+        {
+            _usesPathNavmesh = value;
+            int id = AIManager.Instance.GetAgentIDFromType(stats.agentType, value);
+            if (_navMeshAgent.agentTypeID != id)
+            {
+                _navMeshAgent.agentTypeID = id;
+            }
+        }
+    }
+
+
     public void SetMovementStats(in EnemyMovement enemyMovement)
     {
-        _navMeshAgent.speed = enemyMovement.MovementSpeed;
-        _navMeshAgent.angularSpeed = enemyMovement.TurnSpeed;
-        _navMeshAgent.acceleration = enemyMovement.Acceleration;
-        _rotationSpeed = enemyMovement.ExtraRotationSpeed;
+        _navMeshAgent.speed = enemyMovement.movementSpeed;
+        _navMeshAgent.angularSpeed = enemyMovement.turnSpeed;
+        _navMeshAgent.acceleration = enemyMovement.acceleration;
+        _rotationSpeed = enemyMovement.extraRotationSpeed;
     }
 
     public void ApplyDefaultMovement()
     {
-        SetMovementStats(stats.Movement);
+        SetMovementStats(stats.defaultMovement);
+    }
+
+    public void ApplyTargetMovement()
+    {
+        if (HasTarget())
+            SetMovementStats(_currentTarget.properties.movement);
+        else
+            SetMovementStats(stats.defaultMovement);
     }
 
     public void RefreshTargetPos()
     {
+        if (!_navMeshAgent.isOnNavMesh)
+            return;
+
         if (HasTarget())
-            _navMeshAgent.SetDestination(currentTarget.transform.position);
+        {
+            _navMeshAgent.SetDestination(_currentTarget.Position);
+        }
         else 
             _navMeshAgent.ResetPath();
     }
 
-    public GameObject InstantiateGameObject(GameObject obj, Transform parent)
+    public bool ShouldChangePath()
     {
-        return Instantiate(obj, parent);
+        return !_navMeshAgent.hasPath || !_navMeshAgent.pathPending && (_navMeshAgent.remainingDistance <= 1f || _navMeshAgent.isPathStale);
     }
-    #region GetSet
 
-    public bool IsDead()
-    {
-        return isDead;
-    }
+    #endregion
+
+    #region GetSet
 
     public EnemyStatistics GetEnemyStats()
     {
@@ -465,17 +593,6 @@ public class AIController : MonoBehaviour, IDamagable
         isStunned = val;
     }
 
-    public void SetCurrentTarget(AITarget target)
-    {
-        currentTarget = target;
-        RefreshTargetPos();
-    }
-
-    public AITarget GetCurrentTarget()
-    {
-        return currentTarget;
-    }
-
     public Vector3 GetCurrentPosition()
     {
         return transform.position;
@@ -490,5 +607,8 @@ public class AIController : MonoBehaviour, IDamagable
     #endregion GetSet
 
 
-
+    public GameObject InstantiateGameObject(GameObject obj, Transform parent)
+    {
+        return Instantiate(obj, parent);
+    }
 }

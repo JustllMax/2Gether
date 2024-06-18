@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.Android;
 
 [CreateAssetMenu(fileName = "MeleeAttackState", menuName = ("2Gether/AI/States/MeleeAttack"))]
 public class MeleeAttackState : AIState
@@ -28,14 +27,15 @@ public class MeleeAttackState : AIState
     }
 
 
-    public override void OnUpdate(AIController controller)
+    public override void OnTick(AIController controller)
     {
+        controller.RefreshTargetPos();
         Debug.Log(this + " AnimationComplete(controller) " + controller.AnimationComplete("ATTACK"));
 
         if (controller.AnimationComplete("ATTACK") && controller.lastAttackTime >= ComboDelay)
         {
             controller.PlayAnimation("ATTACK");
-            AudioManager.Instance.PlaySFXAtSource(controller.attackSound, controller.audioSource);
+            controller.PlaySound(controller.attackSound);
             controller.StartCoroutine(PerformAttack(controller));
             controller.StartCoroutine(ApplyMovementModifier(controller));
         }
@@ -88,7 +88,7 @@ public class MeleeAttackState : AIState
                     if (hit.GetComponent<IDamagable>().TakeDamage(attack.Damage) == true)
                     {
                         controller.distanceToTarget = 100000f;
-                        controller.SetCurrentTarget(new AITarget(null, null));
+                        controller.CurrentTarget = null;
                         Debug.Log(this + "Target died");
 
                     }
@@ -127,6 +127,11 @@ public class MeleeAttackState : AIState
     }
 
     public override void OnLateUpdate(AIController controller)
+    {
+
+    }
+
+    public override void OnTargetChanged(AIController controller)
     {
 
     }

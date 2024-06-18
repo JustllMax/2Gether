@@ -86,26 +86,6 @@ public class HospitalBuilding : Building
         return false;
     }
 
-    public override void Kill()
-    {
-        IsTargetable = false;
-        if(createDestroyParticles != null)
-            createDestroyParticles.Play();
-        Invoke("DestroyObj", DestroyObjectDelay);
-    }
-
-    void DestroyObj()
-    {
-        Destroy(gameObject);
-    }
-
-    public override void OnSell()
-    {
-        base.OnSell();
-        AudioManager.Instance.PlaySFX(createDestroySound);
-
-        Kill();
-    }
 
     #endregion ChildrenMethods
 

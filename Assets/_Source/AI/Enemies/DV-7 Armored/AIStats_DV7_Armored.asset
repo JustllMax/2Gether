@@ -12,10 +12,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0141a3b9c5960364fa1c0d12baf7cfae, type: 3}
   m_Name: AIStats_DV7_Armored
   m_EditorClassIdentifier: 
-  Health: 80
-  Movement:
-    MovementSpeed: 2.5
-    TurnSpeed: 120
-    Acceleration: 8
-    ExtraRotationSpeed: 0
-  SearchRange: 50
+  health: 75
+  defaultMovement:
+    movementSpeed: 2
+    turnSpeed: 120
+    acceleration: 8
+    extraRotationSpeed: 0
+  targetProperties:
+  - targetType: 1
+    weight: 4
+    maxSearchRange: 10
+    loseTargetRange: 10
+    movement:
+      movementSpeed: 3.5
+      turnSpeed: 120
+      acceleration: 8
+      extraRotationSpeed: 0
+    walkOnPath: 0
+    canAbandonTarget: 0
+  - targetType: 2
+    weight: 3
+    maxSearchRange: 20
+    loseTargetRange: 20
+    movement:
+      movementSpeed: 3.5
+      turnSpeed: 120
+      acceleration: 8
+      extraRotationSpeed: 0
+    walkOnPath: 0
+    canAbandonTarget: 1
+  - targetType: 1
+    weight: 2
+    maxSearchRange: 50
+    loseTargetRange: 65
+    movement:
+      movementSpeed: 3.5
+      turnSpeed: 120
+      acceleration: 8
+      extraRotationSpeed: 0
+    walkOnPath: 0
+    canAbandonTarget: 1
+  agentType: 0
+  walksOnPath: 0
+  AIStates:
+  - {fileID: 11400000, guid: ce0aaed74f85d7d48b72310b8bd8aec4, type: 2}
+  - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
+  - {fileID: 11400000, guid: d40ebfaa723545d4bbbac4b28c6610d1, type: 2}

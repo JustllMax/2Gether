@@ -14,6 +14,7 @@ public class DayNightCycleManager : MonoBehaviour
     {
         if (_instance != null && _instance != this)
         {
+            
             Destroy(this);
             return;
         }
@@ -37,11 +38,13 @@ public class DayNightCycleManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
+
             EndNightCycle();
         }
 
         if (Input.GetKeyDown(KeyCode.J))
         {
+
             EndDayCycle();
         }
     }
@@ -51,6 +54,8 @@ public class DayNightCycleManager : MonoBehaviour
         IsDay = false;
         DayEnd?.Invoke();
         NightBegin?.Invoke();
+        AudioManager.Instance.OnStartNight();
+
     }
 
     public void EndNightCycle()
@@ -58,5 +63,6 @@ public class DayNightCycleManager : MonoBehaviour
         IsDay = true;
         NightEnd?.Invoke();
         DayBegin?.Invoke();
+        AudioManager.Instance.OnStartDay();
     }
 }

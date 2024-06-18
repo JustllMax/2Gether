@@ -10,20 +10,13 @@ public class SearchForPlayerState : AIState
 
     public override void OnStart(AIController controller)
     {
-        controller.SetMovementStats(controller.GetEnemyStats().Movement * 0.5f);
+        controller.ApplyDefaultMovement();
         controller.PlayAnimation("WALK");
     }
 
-    public override void OnUpdate(AIController controller)
-    { 
-        if (controller.AllAnimationsComplete())
-        {
-            controller.PlayAnimation("WALK");
-        }
-
-        controller.GetNavMeshAgent().SetDestination(controller.wanderTarget);
-
-        if (controller.GetNavMeshAgent().remainingDistance <= 1f)
+    public override void OnTick(AIController controller)
+    {
+        if (controller.ShouldChangePath())
         {
             RelocateWanderTarget(controller);
         }
@@ -31,7 +24,6 @@ public class SearchForPlayerState : AIState
 
     public override void OnExit(AIController controller)
     {
-
     }
 
     public override bool CanExitState(AIController controller)
@@ -46,7 +38,10 @@ public class SearchForPlayerState : AIState
 
     public override void OnLateUpdate(AIController controller)
     {
-
+        if (controller.AllAnimationsComplete())
+        {
+            controller.PlayAnimation("WALK");
+        }
     }
 
     void RelocateWanderTarget(AIController controller)
@@ -63,7 +58,16 @@ public class SearchForPlayerState : AIState
         float angle = Random.Range(0f, Mathf.PI * 2);
         float x = Mathf.Cos(angle) * wanderRadius;
         float z = Mathf.Sin(angle) * wanderRadius;
-        controller.wanderTarget = new Vector3(center.x + x, center.y, center.z + z);
+
+        if (controller.SampleNavSurface(new Vector3(center.x + x, center.y, center.z + z), out var surfacePoint))
+        {
+            controller.GetNavMeshAgent().SetDestination(surfacePoint);
+        }
+    }
+
+    public override void OnTargetChanged(AIController controller)
+    {
+
     }
 }
     

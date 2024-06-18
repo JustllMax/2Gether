@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.Android;
 using UnityEngine.InputSystem.XR;
 
 [CreateAssetMenu(fileName = "GrabAttackState", menuName = ("2Gether/AI/States/GrabAttack"))]
@@ -31,7 +30,7 @@ public class GrabAttackState : AIState
         }
     }
 
-    public override void OnUpdate(AIController controller)
+    public override void OnTick(AIController controller)
     {
 
     }
@@ -99,6 +98,7 @@ public class GrabAttackState : AIState
             if (controller.IsDead())
             {
                 AttackFailed(controller, grabController);
+                player.IsTargetable = true;
                 yield break;
             }
 
@@ -107,6 +107,7 @@ public class GrabAttackState : AIState
             {
                 yield return new WaitForSeconds(ReleaseDelay);
                 AttackFailed(controller, grabController);
+                player.IsTargetable = true;
             } else {
                 //Player survived
                 yield return new WaitForSeconds(ReleaseDelay);
@@ -126,10 +127,15 @@ public class GrabAttackState : AIState
             grabController.Player = null;
 
         controller.distanceToTarget = 100000f;
-        controller.SetCurrentTarget(new AITarget(null, null));
+        controller.CurrentTarget = null;
     }
 
     public override void OnLateUpdate(AIController controller)
+    {
+
+    }
+
+    public override void OnTargetChanged(AIController controller)
     {
 
     }

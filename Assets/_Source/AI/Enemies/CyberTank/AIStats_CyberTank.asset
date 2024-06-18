@@ -12,10 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0141a3b9c5960364fa1c0d12baf7cfae, type: 3}
   m_Name: AIStats_CyberTank
   m_EditorClassIdentifier: 
-  Health: 250
-  Movement:
-    MovementSpeed: 3
-    TurnSpeed: 120
-    Acceleration: 8
-    ExtraRotationSpeed: 0
-  SearchRange: 40
+  health: 250
+  defaultMovement:
+    movementSpeed: 1.5
+    turnSpeed: 120
+    acceleration: 8
+    extraRotationSpeed: 0
+  targetProperties:
+  - targetType: 1
+    weight: 3
+    maxSearchRange: 12
+    minSearchRange: 0
+    loseTargetRange: 12
+    movement:
+      movementSpeed: 4
+      turnSpeed: 120
+      acceleration: 8
+      extraRotationSpeed: 0
+    walkOnPath: 0
+    canAbandonTarget: 0
+  - targetType: 2
+    weight: 2
+    maxSearchRange: 500
+    minSearchRange: 0
+    loseTargetRange: 500
+    movement:
+      movementSpeed: 1.5
+      turnSpeed: 120
+      acceleration: 8
+      extraRotationSpeed: 0
+    walkOnPath: 1
+    canAbandonTarget: 1
+  agentType: 1
+  walksOnPath: 1
+  AIStates:
+  - {fileID: 11400000, guid: 2f748463af1f41f48a05ce128cee2f4e, type: 2}
+  - {fileID: 11400000, guid: 288e84275e567594dbb8a89471d8ee21, type: 2}
+  - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
+  - {fileID: 11400000, guid: d40ebfaa723545d4bbbac4b28c6610d1, type: 2}

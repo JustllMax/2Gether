@@ -2004,26 +2004,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 69e20364e44e3cb4a83ca8375cfa4009, type: 2}
-  _AIStates:
-  - {fileID: 11400000, guid: d40ebfaa723545d4bbbac4b28c6610d1, type: 2}
-  - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
-  - {fileID: 11400000, guid: 2f748463af1f41f48a05ce128cee2f4e, type: 2}
-  - {fileID: 11400000, guid: 7ff79690d78f3c14ca44a75e4afcac18, type: 2}
-  AITargetFocus: 1
-  hurtSound: {fileID: 0}
+  hurtSound: {fileID: 8300000, guid: 977744f402828ab48aaf83b0711ab2a4, type: 3}
+  attackImmuneSound: {fileID: 0}
   attackSound: {fileID: 8300000, guid: 0e2e58df257e7b54fbe9b2efc40a9224, type: 3}
   deathSound: {fileID: 8300000, guid: 88000d726d86da74fad10ec71e0dc153, type: 3}
   audioSource: {fileID: 0}
   DeathInvokeTime: 2
-  currentTarget:
+  _health: 0
+  currentState: {fileID: 0}
+  _currentTarget:
+    properties:
+      targetType: 0
+      weight: 0
+      maxSearchRange: 0
+      loseTargetRange: 0
+      movement:
+        movementSpeed: 0
+        turnSpeed: 0
+        acceleration: 0
+        extraRotationSpeed: 0
+      walkOnPath: 0
+      canAbandonTarget: 0
     transform: {fileID: 0}
-  hitboxColliders: []
+    positionOffset: {x: 0, y: 0, z: 0}
+  canChangeTarget: 0
   distanceToTarget: 0
+  _usesPathNavmesh: 0
+  isWalking: 0
   lastAttackTime: 0
   ammoCount: 0
+  isShooting: 0
   isReloading: 0
-  wanderTarget: {x: 0, y: 0, z: 0}
-  _health: 0
+  hitboxColliders: []
+  lastTickTime: 0
+  tickDeltaTime: 0
 --- !u!195 &4612321007652048329
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2116,7 +2130,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -8224973491739232306, guid: e36732c6242d4b04a974f76d36fb6d00,
     type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -2124,7 +2138,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 0.52
+  DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 40
   Pan2D: 0
@@ -2138,29 +2152,20 @@ AudioSource:
     - serializedVersion: 3
       time: 0.025
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -2.4224992
+      outSlope: -2.4224992
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.23042521
-      value: 0.36702913
-      inSlope: -1.0256408
-      outSlope: -1.0256408
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.08653125
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -1.0256411
-      outSlope: -1.0256411
+      inSlope: -0.037199717
+      outSlope: -0.037199717
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.27307528
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -2185,7 +2190,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2200,7 +2205,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.5
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

@@ -45,7 +45,6 @@ public class LaserBuilding : Building
 
     public override void Start()
     {
-        Debug.Log(this + " jebany start");
         base.Start();
     }
 
@@ -116,18 +115,8 @@ public class LaserBuilding : Building
         return false;
     }
 
-    public override void Kill()
-    {
-        IsTargetable = false;
-        if(createDestroyParticles != null)
-            createDestroyParticles.Play();
-        Invoke("DestroyObj", DestroyObjectDelay);
-    }
 
-    void DestroyObj()
-    {
-        Destroy(gameObject);
-    }
+   
 
     public override void OnSell()
     {

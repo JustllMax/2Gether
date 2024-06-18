@@ -64790,12 +64790,12 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 204
+  Priority: 256
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 1000
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -64803,23 +64803,23 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.025
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -2.4224992
+      outSlope: -2.4224992
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0.08653125
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -0.037199717
+      outSlope: -0.037199717
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0.27307528
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -64828,7 +64828,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -64895,25 +64895,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: fbb60b542b4324d40980a67c6327a059, type: 2}
-  _AIStates:
-  - {fileID: 11400000, guid: d40ebfaa723545d4bbbac4b28c6610d1, type: 2}
-  - {fileID: 11400000, guid: 95a1f67cad4fdab4bafef6da3a074790, type: 2}
-  - {fileID: 11400000, guid: 6bfc2566e3d2c5941abf5ab0d28ac86b, type: 2}
-  AITargetFocus: 1
   hurtSound: {fileID: 8300000, guid: 977744f402828ab48aaf83b0711ab2a4, type: 3}
+  attackImmuneSound: {fileID: 0}
   attackSound: {fileID: 8300000, guid: 30c8b1904830a3046a00ffb74c6f9d7e, type: 3}
   deathSound: {fileID: 8300000, guid: 86757ea04bdd614458912c7772153bad, type: 3}
   audioSource: {fileID: 0}
   DeathInvokeTime: 2.5
-  currentTarget:
+  _health: 0
+  currentState: {fileID: 0}
+  _currentTarget:
+    properties:
+      targetType: 0
+      weight: 0
+      maxSearchRange: 0
+      loseTargetRange: 0
+      movement:
+        movementSpeed: 0
+        turnSpeed: 0
+        acceleration: 0
+        extraRotationSpeed: 0
+      walkOnPath: 0
+      canAbandonTarget: 0
     transform: {fileID: 0}
-  hitboxColliders: []
+    positionOffset: {x: 0, y: 0, z: 0}
+  canChangeTarget: 0
   distanceToTarget: 0
+  _usesPathNavmesh: 0
+  isWalking: 0
   lastAttackTime: 0
   ammoCount: 0
+  isShooting: 0
   isReloading: 0
-  wanderTarget: {x: 0, y: 0, z: 0}
-  _health: 0
+  hitboxColliders: []
+  lastTickTime: 0
+  tickDeltaTime: 0
   receivedDamage: 0
   teleportSound: {fileID: 8300000, guid: a34799feb063ba747b23b1bcf0a20ef3, type: 3}
 --- !u!1 &8790776985832679250

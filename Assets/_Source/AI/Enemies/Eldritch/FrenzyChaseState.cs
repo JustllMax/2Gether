@@ -9,21 +9,19 @@ public class FenzyChaseState : AIState
     public float relocateDamage = 40;
     public float minRelocateDistance = 30;
     public float maxRelocateDistance = 60;
+    public AudioClip ChaseStartSound;
 
     public override void OnStart(AIController controller)
     {
         controller.PlayAnimation("WALK");
         (controller as EldritchController).receivedDamage = 0;
+        controller.PlaySound(ChaseStartSound);
     }
 
-    public override void OnUpdate(AIController controller)
+    public override void OnTick(AIController controller)
     {
-        controller.ApplyDefaultMovement();
+        controller.ApplyTargetMovement();
         controller.RefreshTargetPos();    
-        if (controller.AllAnimationsComplete())
-        {
-            controller.PlayAnimation("WALK");
-        }
 
         EldritchController eldritchController = controller as EldritchController;
         if (eldritchController.receivedDamage >= relocateDamage)
@@ -48,6 +46,14 @@ public class FenzyChaseState : AIState
     }
 
     public override void OnLateUpdate(AIController controller)
+    {
+        if (controller.AllAnimationsComplete())
+        {
+            controller.PlayAnimation("WALK");
+        }
+    }
+
+    public override void OnTargetChanged(AIController controller)
     {
 
     }

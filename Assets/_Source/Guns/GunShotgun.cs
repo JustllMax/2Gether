@@ -80,6 +80,7 @@ public class GunShotgun : Gun
     protected override void CalculateFire(Transform bulletSpawnPoint)
     {
         AudioManager.Instance.PlaySFXAtSource(firingSound, audioSource);
+        muzzleFlash.Spawn();
 
 
         for (int i = 0; i < pelletsPerShot; i++)

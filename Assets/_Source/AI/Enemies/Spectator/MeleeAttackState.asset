@@ -25,30 +25,30 @@ MonoBehaviour:
     DamagerOffset: {x: 0, y: 0.5, z: 1.5}
   MovementModifier:
   - Movement:
-      MovementSpeed: 0
-      TurnSpeed: 0
-      Acceleration: 0
-      ExtraRotationSpeed: 20
+      movementSpeed: 0
+      turnSpeed: 0
+      acceleration: 0
+      extraRotationSpeed: 20
     Delay: 0
     ResetMomentum: 1
   - Movement:
-      MovementSpeed: 50
-      TurnSpeed: 0
-      Acceleration: 100
-      ExtraRotationSpeed: 0
+      movementSpeed: 100
+      turnSpeed: 0
+      acceleration: 200
+      extraRotationSpeed: 0
     Delay: 0.4
     ResetMomentum: 0
   - Movement:
-      MovementSpeed: 0
-      TurnSpeed: 0
-      Acceleration: 0
-      ExtraRotationSpeed: 0
+      movementSpeed: 0
+      turnSpeed: 0
+      acceleration: 0
+      extraRotationSpeed: 0
     Delay: 0.2
     ResetMomentum: 1
   - Movement:
-      MovementSpeed: 0
-      TurnSpeed: 0
-      Acceleration: 0
-      ExtraRotationSpeed: 10
+      movementSpeed: 0
+      turnSpeed: 0
+      acceleration: 0
+      extraRotationSpeed: 10
     Delay: 0.3
     ResetMomentum: 1

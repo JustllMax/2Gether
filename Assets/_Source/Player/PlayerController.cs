@@ -2,17 +2,24 @@ using System.Collections;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 {
+    [SerializeField] AudioClip dashSound;
+    [SerializeField] AudioClip jumpSound;
+    [SerializeField] AudioClip doubleJumpSound;
+    [SerializeField] AudioClip dashReadySound;
+    [SerializeField] AudioClip dashEmptySound;
+
     [SerializeField]
     GameObject playerModel;
     [SerializeField]
     float _maxHealth = 100f;
     [SerializeField]
     [Range(0.1f, 3f)]
-    float invincibilityDuration = 1;
+    float invincibilityDuration = 0.4f;
 
     [SerializeField]
     private Transform _nightCamera;
@@ -177,12 +184,13 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
             if (_dashCooldownTimer >= _dashCooldown)
             {
+                AudioManager.Instance.PlaySFXAtSource(dashReadySound, _audioSource);
                 _dashCount++;
                 _dashCooldownTimer = 0.0f;
             }
         }
 
-        if (FPSController.Dash.IsPressed())
+        if (FPSController.Dash.WasPressedThisFrame())
             OnDash();
 
         if (!_isDashing)
@@ -237,18 +245,17 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     {
         if (_onGround)
         {
-            _doubleJump = true;
-        }
-
-        if (_doubleJump)
+            AudioManager.Instance.PlaySFXAtSource(jumpSound, _audioSource);
+        } else if (_doubleJump)
         {
-            _doubleJump = false;
+            AudioManager.Instance.PlaySFXAtSource(doubleJumpSound, _audioSource);
         }
         else
         {
             return;
         }
 
+        _doubleJump = false;
         float jumpSpeed = Mathf.Sqrt(2 * Mathf.Abs(_gravityAcceleration.magnitude) * _jumpHeight);
         _velocity.y = 0;
         _velocity += _gravityAcceleration.normalized * -1 * jumpSpeed;
@@ -256,13 +263,20 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
     private void OnDash()
     {
-        if (_dashCount > 0 && !_isDashing)
+        if (_dashCount > 0)
         {
-            Dash();
-            //_dashCooldownTimer = 0f;
-            _dashCount--;
-            HUDManager.Instance.SetDashCurrentTimer(_dashCount, _dashCooldownTimer);
-
+            if (!_isDashing)
+            {
+                Dash();
+                //_dashCooldownTimer = 0f;
+                _dashCount--;
+                HUDManager.Instance.SetDashCurrentTimer(_dashCount, _dashCooldownTimer);
+                AudioManager.Instance.PlaySFXAtSource(dashSound, _audioSource);
+            }
+        } 
+        else
+        {
+            AudioManager.Instance.PlaySFXAtSource(dashEmptySound, _audioSource);
         }
     }
 
@@ -291,7 +305,8 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         }
 
         _velocity = lastVelocity;
-        _velocity.y = 0;
+        if (_velocity.y < 0f)
+            _velocity.y = 0;
 
         time = Time.time + 0.05f;
         while (Time.time < time)

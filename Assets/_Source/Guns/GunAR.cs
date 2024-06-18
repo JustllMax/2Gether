@@ -1,4 +1,4 @@
-using System.Collections;
+  using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -8,7 +8,7 @@ public class GunAR : Gun
 
     [Header("Grenade Launcher")]
     [SerializeField] GameObject P_PlayerGrenade;
-    [SerializeField] float projectileSpeed;
+    [SerializeField] float granadeSpeed;
     [SerializeField] float explosionDamage;
     [SerializeField] float explosionRadius;
     [SerializeField] LayerMask explosionMask;
@@ -22,7 +22,7 @@ public class GunAR : Gun
             ammoInMagazine -= 1;
             CalculateFire(bulletSpawnPoint);
             AudioManager.Instance.PlaySFXAtSource(firingSound, audioSource);
-            shootingSystem.Play();
+            muzzleFlash.Spawn();
             return true;
         }
         return false;
@@ -77,7 +77,7 @@ public class GunAR : Gun
         
         if (Physics.Raycast(bulletSpawnPoint.position, direction, out hit, GetGunData().Range, mask))
         {
-            endPoint = hit.transform.position;
+            endPoint = hit.point;
             direction = (endPoint - trailSpawnPoint.position).normalized;
         }
         else{
@@ -86,7 +86,7 @@ public class GunAR : Gun
             direction = (endPoint - trailSpawnPoint.position).normalized;
         }
         PlayerGrenade grenade = Instantiate(P_PlayerGrenade, trailSpawnPoint.position, Quaternion.identity).GetComponent<PlayerGrenade>();
-        grenade.SetUp(projectileSpeed, direction, GetGunData().Range, explosionDamage, explosionRadius, mask);
+        grenade.SetUp(granadeSpeed, direction, 12.0f, explosionDamage, explosionRadius, explosionMask);
     }
 
 }

@@ -89,7 +89,6 @@ public class BombBuilding : Building
     {
         IsTargetable = false;
         audioSource.PlayOneShot(createDestroySound);
-        createDestroyParticles.Play();
         Invoke("DestroyObj", DestroyObjectDelay);
     }
 

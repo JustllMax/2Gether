@@ -22,8 +22,9 @@ public class BlasterController : MonoBehaviour, IShooterPoint
     }
 
 
-    public void PositionShooter(in Vector3 targetPosition, out Vector3 direction, out Vector3 position)
+    public void PositionShooter(Transform target, float projectileSpeed, out Vector3 direction, out Vector3 position)
     {
+        Vector3 targetPosition = target.position;
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
 
         Vector3 dir = (targetPosition - transform.position).normalized;

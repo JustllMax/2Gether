@@ -12,10 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0141a3b9c5960364fa1c0d12baf7cfae, type: 3}
   m_Name: AIStats_Eldritch
   m_EditorClassIdentifier: 
-  Health: 400
-  Movement:
-    MovementSpeed: 9
-    TurnSpeed: 720
-    Acceleration: 24
-    ExtraRotationSpeed: 0
-  SearchRange: 20
+  health: 400
+  defaultMovement:
+    movementSpeed: 6
+    turnSpeed: 240
+    acceleration: 24
+    extraRotationSpeed: 0
+  targetProperties:
+  - targetType: 1
+    weight: 2
+    maxSearchRange: 25
+    loseTargetRange: 30
+    movement:
+      movementSpeed: 12
+      turnSpeed: 720
+      acceleration: 32
+      extraRotationSpeed: 0
+    walkOnPath: 0
+    canAbandonTarget: 0
+  agentType: 2
+  walksOnPath: 0
+  AIStates:
+  - {fileID: 11400000, guid: 6bfc2566e3d2c5941abf5ab0d28ac86b, type: 2}
+  - {fileID: 11400000, guid: 95a1f67cad4fdab4bafef6da3a074790, type: 2}
+  - {fileID: 11400000, guid: d40ebfaa723545d4bbbac4b28c6610d1, type: 2}

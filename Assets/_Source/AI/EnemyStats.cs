@@ -7,18 +7,38 @@ using NaughtyAttributes;
 [CreateAssetMenu(fileName = "AIStats_", menuName = "2Gether/AI/Data/Statistics")]
 public class EnemyStatistics : ScriptableObject
 {
-    public float Health;
-    public EnemyMovement Movement;
+    public float health;
 
-    public TargetType PrimaryTarget;
+    [Tooltip("Movement of the enemy when it doesn't have a target")]
+    public EnemyMovement defaultMovement;
 
-    [Tooltip("Range to detect a primary target")]
-    [Range(5f, 200f)]
-    public float SearchRange;
+    public TargetProperties[] targetProperties;
 
-    public TargetType SecondaryTarget;
+    [Tooltip("Agent type defines the size of the agent")]
+    public NavAgentType agentType;
 
-    [Tooltip("Range to switch to a secondary target")]
-    [Range(1f, 100f)]
-    public float SwitchRange;
+    [Tooltip("Defines if the enemy walks on paths when it doesn't have a target")]
+    public bool walksOnPath;
+
+    [SerializeField]
+    public AIState[] AIStates;
+
+
+
+    private void OnValidate()
+    {
+        if (targetProperties != null)
+        {
+            System.Array.Sort(targetProperties, (x, y) => y.weight.CompareTo(x.weight));
+
+            for (int i = 0; i < targetProperties.Length; i++)
+            {
+                if (targetProperties[i].loseTargetRange < targetProperties[i].maxSearchRange)
+                    targetProperties[i].loseTargetRange = targetProperties[i].maxSearchRange;
+            }
+        }
+
+        if (AIStates != null)
+            System.Array.Sort(AIStates, (x, y) => y.weight.CompareTo(x.weight));
+    }
 }

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2889d181158509a41a773f9670474471, type: 3}
+  m_Name: MainBase_All
+  m_EditorClassIdentifier: 
+  CardType: 0
+  Rarity: 2
+  Name: MainBase
+  Description: Protect it at all cost
+  BuildingType: 0
+  ActivationTime: 1
+  HealthPoints: 1000
+  SellCost: 0
+  AttackDamage: 5
+  AttackRange: 30
+  AttackDelay: 2
+  slowModifier: 0.4
+  slowDuration: 3

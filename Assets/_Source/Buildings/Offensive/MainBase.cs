@@ -10,9 +10,17 @@ public class MainBase : Building
     public Transform playerSpawnPoint;
     public override void Awake()
     {
-        attackTimer = GetStatistics().AttackDelay;
         base.Awake();
+
+        attackTimer = GetStatistics().AttackDelay;
         lineRenderer = GetComponent<LineRenderer>();
+    }
+
+    public override void Start()
+    {
+        base.Start();
+        HUDManager.Instance.SetMainBasesMaxHealth(GetBaseStatistics().HealthPoints);
+        HUDManager.Instance.SetMainBaseCurrentHealth(Health);
     }
 
     private void Update()
@@ -60,6 +68,7 @@ public class MainBase : Building
         AudioManager.Instance.PlaySFXAtSource(takeHitSound, audioSource);
 
         Health -= damage;
+        HUDManager.Instance.SetMainBaseCurrentHealth(Health);
         if (Health <= 0)
         {
             AudioManager.Instance.PlaySFXAtSource(createDestroySound, audioSource);
@@ -83,13 +92,7 @@ public class MainBase : Building
 
     public override void OnSell()
     {
-        base.OnSell();
-
-        if (createDestroyParticles != null)
-            createDestroyParticles.Play();
-
-        AudioManager.Instance.PlaySFX(createDestroySound);
-        Kill();
+        return;
     }
 
     #endregion ChildrenMethods
@@ -125,9 +128,9 @@ public class MainBase : Building
             }
         }
     }
-    public SmiteRodBuildingStatistics GetStatistics()
+    public MainBaseStatistics GetStatistics()
     {
-        return GetBaseStatistics() as SmiteRodBuildingStatistics;
+        return GetBaseStatistics() as MainBaseStatistics;
 
     }
 

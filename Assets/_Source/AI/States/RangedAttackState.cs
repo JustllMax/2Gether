@@ -12,7 +12,7 @@ public class RangedAttackState : AIState
     public float AttackRange;
 
     [Tooltip("Range to exit attack state")]
-    [Range(1.5f, 20f)]
+    [Range(0f, 20f)]
     public float MinAttackRange;
 
     [SerializeField]
@@ -37,25 +37,76 @@ public class RangedAttackState : AIState
     private float OnBurstRelocateChance;
 
     [SerializeField]
-    private bool ShootWhileMoving;
+    private bool UseShootingStance;
+
+    [SerializeField]
+    private AudioClip ShotSound;
 
 
     public override void OnStart(AIController controller)
     {
         controller.PlayAnimation("WALK");
         controller.ammoCount = BurstCount;
+        controller.isWalking = true;
     }
 
-    public override void OnUpdate(AIController controller)
+    public override void OnTick(AIController controller)
     {
         controller.ApplyDefaultMovement();
         if (controller.distanceToTarget >= 0.75 * AttackRange)
         {
+            controller.isWalking = true;
             controller.RefreshTargetPos();
-            controller.wanderTarget = controller.transform.position;
-        } else
+        } else if (controller.isWalking)
         {
-            controller.GetNavMeshAgent().SetDestination(controller.wanderTarget);
+            controller.GetNavMeshAgent().ResetPath();
+            controller.isWalking = false;
+        }
+
+        controller.isShooting = false;
+        controller.GetAnimator().SetBool("is_shooting", false);
+
+        if (!controller.CanAttack())
+        {
+            return;
+        }
+
+        if (UseShootingStance && !controller.ShouldChangePath())
+        {
+            return;
+        }
+        controller.GetAnimator().SetBool("is_shooting", true);
+
+        if (UseShootingStance && (!controller.AnimationComplete("ATTACK_START") || !controller.GetAnimator().GetCurrentAnimatorStateInfo(0).IsName("ATTACK_START")))
+        {
+            return;
+        }
+        controller.isShooting = true;
+
+        if (controller.lastAttackTime >= ProjectileCooldown)
+        {
+            IShooterPoint shooter;
+            if (!controller.TryGetComponent<IShooterPoint>(out shooter))
+                return;
+
+            shooter.PositionShooter(controller.CurrentTarget.transform, ProjectileSpeed, out Vector3 direction, out Vector3 position);
+
+            controller.lastAttackTime = 0;
+            controller.ammoCount--;
+            if (controller.ammoCount <= 0)
+            {
+                controller.ammoCount = BurstCount;
+                controller.lastAttackTime -= BurstCooldown;
+
+                if (Random.Range(0.0f, 1.0f) <= OnBurstRelocateChance)
+                {
+                    RelocateWanderTarget(controller);
+                }
+            }
+
+            shooter.OnFire();
+            controller.PlaySound(ShotSound);
+            OnFire(direction, position);
         }
     }
 
@@ -71,46 +122,18 @@ public class RangedAttackState : AIState
 
     public override bool CanChangeToState(AIController controller)
     {
-        return controller.distanceToTarget > MinAttackRange && controller.distanceToTarget <= AttackRange && controller.CanAttack();
+        return controller.distanceToTarget >= MinAttackRange && controller.distanceToTarget <= AttackRange && controller.CanAttack();
     }
 
     public override void OnLateUpdate(AIController controller)
     {
-        controller.GetAnimator().SetBool("is_shooting", false);
-
-        if (!controller.CanAttack())
+        if (controller.isShooting && controller.TryGetComponent<IShooterPoint>(out var shooter))
         {
-            return;
+            shooter.PositionShooter(controller.CurrentTarget.transform, ProjectileSpeed, out Vector3 direction, out Vector3 position);
         }
-
-        if (controller.GetNavMeshAgent().remainingDistance > 0.5 && !ShootWhileMoving)
-        {
-            return;
-        }
-        controller.GetAnimator().SetBool("is_shooting", true);
-
-        IShooterPoint shooter = controller.GetComponent<IShooterPoint>();
-        shooter.PositionShooter(controller.GetCurrentTarget().transform.position, out Vector3 direction, out Vector3 position);
-
-        if (controller.lastAttackTime >= ProjectileCooldown)
-        {
-            controller.lastAttackTime = 0;
-            controller.ammoCount--;
-            if (controller.ammoCount <= 0)
-            {
-                controller.ammoCount = BurstCount;
-                controller.lastAttackTime -= BurstCooldown;
-
-                if (Random.Range(0.0f, 1.0f) <= OnBurstRelocateChance)
-                {
-                    RelocateWanderTarget(controller);
-                }
-            }
-
-            shooter.OnFire();
-            OnFire(direction, position);
-        }
+            
     }
+
     void OnFire(in Vector3 dir, in Vector3 pos)
     {
         AIBullet bullet = AIBulletManager.Instance.Pool.Get();
@@ -126,8 +149,18 @@ public class RangedAttackState : AIState
         float x = Mathf.Cos(angle) * controller.distanceToTarget;
         float z = Mathf.Sin(angle) * controller.distanceToTarget;
 
+        controller.isWalking = false;
         Vector3 center = controller.transform.position;
-        controller.wanderTarget = new Vector3(center.x + x, center.y, center.z + z);
+
+        if (controller.SampleNavSurface(new Vector3(center.x + x, center.y, center.z + z), out var surfacePoint))
+        {
+            controller.GetNavMeshAgent().SetDestination(surfacePoint);
+        }
+    }
+
+    public override void OnTargetChanged(AIController controller)
+    {
+
     }
 }
     
