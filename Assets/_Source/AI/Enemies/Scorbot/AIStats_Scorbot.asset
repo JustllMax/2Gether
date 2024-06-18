@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0141a3b9c5960364fa1c0d12baf7cfae, type: 3}
+  m_Name: AIStats_Scorbot
+  m_EditorClassIdentifier: 
+  health: 100
+  defaultMovement:
+    movementSpeed: 2.5
+    turnSpeed: 240
+    acceleration: 24
+    extraRotationSpeed: 0
+  targetProperties:
+  - targetType: 1
+    weight: 3
+    maxSearchRange: 24
+    loseTargetRange: 24
+    movement:
+      movementSpeed: 5
+      turnSpeed: 240
+      acceleration: 24
+      extraRotationSpeed: 0
+    walkOnPath: 0
+    canAbandonTarget: 0
+  - targetType: 2
+    weight: 2
+    maxSearchRange: 500
+    loseTargetRange: 500
+    movement:
+      movementSpeed: 2.5
+      turnSpeed: 240
+      acceleration: 24
+      extraRotationSpeed: 0
+    walkOnPath: 1
+    canAbandonTarget: 1
+  agentType: 1
+  walksOnPath: 1
+  AIStates:
+  - {fileID: 11400000, guid: 22ecaac7ff83c2c45b259eafcf5bd388, type: 2}
+  - {fileID: 11400000, guid: b56641a302ee48246b7ddc7308a26371, type: 2}
+  - {fileID: 11400000, guid: e196e388a3e10a04e9a330b95996933e, type: 2}
+  - {fileID: 11400000, guid: d40ebfaa723545d4bbbac4b28c6610d1, type: 2}

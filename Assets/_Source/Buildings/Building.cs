@@ -18,9 +18,8 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
     [SerializeField] protected AudioClip activationSound; // Played when attacking / activating
     [SerializeField] protected AudioClip takeHitSound; // Played when receiving damage
     protected AudioSource audioSource;
-    [Header("Particles")] 
-    [SerializeField] protected ParticleSystem createDestroyParticles;
-    [SerializeField] protected ParticleSystem upgradeParticles;
+    [Header("Particles")]
+    [SerializeField] float particlesScaleModifier = 1;
 
     private BuildingStatistics _buildingStatistics;
     private int currentLevel = 0;
@@ -58,7 +57,14 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
 
 
     public abstract bool TakeDamage(float damage);
-    public abstract void Kill();
+
+    public virtual void Kill()
+    {
+        IsTargetable = false;
+        AudioManager.Instance.PlaySFX(createDestroySound);
+        DustSpawner.SpawnDust(transform.position, particlesScaleModifier);
+        Invoke("DestroyObj", DestroyObjectDelay);
+    }
 
     public bool Heal(float amount)
     {
@@ -74,13 +80,16 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
     public void OnCreate()
     {
         AudioManager.Instance.PlaySFX(createDestroySound);
-        if (createDestroyParticles != null)
-            createDestroyParticles.Play();
+        DustSpawner.SpawnDust(transform.position, particlesScaleModifier);
+        
     }
     public abstract void OnAttack();
     public virtual void OnSell()
     {
+        AudioManager.Instance.PlaySFX(createDestroySound);
         GoldManager.Instance.GoldAdd(GetSellCost());
+        DustSpawner.SpawnDust(transform.position, particlesScaleModifier);
+
     }
 
     public virtual void OnUpgrage()
@@ -117,8 +126,7 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
 
         if(upgradeCounter == UPGRADE_COUNTER_LIMIT)
         {
-            if (upgradeParticles != null)
-                upgradeParticles.Play();
+            UpgradeParticlesSpawner.SpawnParticles(transform.position, 2f);
             currentLevel++;
             _buildingStatistics = _upgradeTiers.GetStatsForLevel(currentLevel);
             upgradeCounter = 0;
@@ -168,4 +176,9 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
 
     #endregion  GetSet
 
+
+    void DestroyObj()
+    {
+        Destroy(gameObject);
+    }
 }

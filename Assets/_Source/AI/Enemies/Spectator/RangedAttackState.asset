@@ -24,3 +24,4 @@ MonoBehaviour:
     type: 3}
   OnBurstRelocateChance: 0.5
   ShootWhileMoving: 1
+  ShotSound: {fileID: 8300000, guid: bdce81c929d85b2459c986cd055f6508, type: 3}

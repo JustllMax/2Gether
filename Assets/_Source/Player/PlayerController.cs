@@ -2,10 +2,17 @@ using System.Collections;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 {
+    [SerializeField] AudioClip dashSound;
+    [SerializeField] AudioClip jumpSound;
+    [SerializeField] AudioClip doubleJumpSound;
+    [SerializeField] AudioClip dashReadySound;
+    [SerializeField] AudioClip dashEmptySound;
+
     [SerializeField]
     GameObject playerModel;
     [SerializeField]
@@ -177,6 +184,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
             if (_dashCooldownTimer >= _dashCooldown)
             {
+                AudioManager.Instance.PlaySFXAtSource(dashReadySound, _audioSource);
                 _dashCount++;
                 _dashCooldownTimer = 0.0f;
             }
@@ -237,18 +245,17 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     {
         if (_onGround)
         {
-            _doubleJump = true;
-        }
-
-        if (_doubleJump)
+            AudioManager.Instance.PlaySFXAtSource(jumpSound, _audioSource);
+        } else if (_doubleJump)
         {
-            _doubleJump = false;
+            AudioManager.Instance.PlaySFXAtSource(doubleJumpSound, _audioSource);
         }
         else
         {
             return;
         }
 
+        _doubleJump = false;
         float jumpSpeed = Mathf.Sqrt(2 * Mathf.Abs(_gravityAcceleration.magnitude) * _jumpHeight);
         _velocity.y = 0;
         _velocity += _gravityAcceleration.normalized * -1 * jumpSpeed;
@@ -256,13 +263,20 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
     private void OnDash()
     {
-        if (_dashCount > 0 && !_isDashing)
+        if (_dashCount > 0)
         {
-            Dash();
-            //_dashCooldownTimer = 0f;
-            _dashCount--;
-            HUDManager.Instance.SetDashCurrentTimer(_dashCount, _dashCooldownTimer);
-
+            if (!_isDashing)
+            {
+                Dash();
+                //_dashCooldownTimer = 0f;
+                _dashCount--;
+                HUDManager.Instance.SetDashCurrentTimer(_dashCount, _dashCooldownTimer);
+                AudioManager.Instance.PlaySFXAtSource(dashSound, _audioSource);
+            }
+        } 
+        else
+        {
+            AudioManager.Instance.PlaySFXAtSource(dashEmptySound, _audioSource);
         }
     }
 

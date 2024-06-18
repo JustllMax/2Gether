@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class PoisonDOTComponent : MonoBehaviour
 {
-    float originalSpeed;
+    [SerializeField]ParticleSystem particles;
     float effectDuration;
     float effectTimer = 0f;
     float tickTimer = 1f;
@@ -27,11 +27,28 @@ public class PoisonDOTComponent : MonoBehaviour
         }
     }
 
-    public void SetUpPoisonEffect(float damagePerTick, float tickDelay, float duration)
+    public void SetUpPoisonEffect(float damagePerTick, float tickDelay, float duration, float particlesScaleModifier=1f)
     {
 
         this.enabled = true;
 
+
+        if(particles == null)
+        {
+            GameObject poisonPartcilesPrefab = Resources.Load<GameObject>("P_PoisonEffectParticles");
+            if (poisonPartcilesPrefab == null)
+            {
+                Debug.LogError($"Prefab 'P_PoisonEffectParticles' not found in Resources folder.");
+            }
+            particles = Instantiate(poisonPartcilesPrefab, transform).GetComponent<ParticleSystem>();
+            particles.transform.localScale *= particlesScaleModifier;
+            particles.Play();
+        }
+        else
+        {
+            particles.Play();
+        }
+        
         if (target == null && TryGetComponent(out IDamagable damagable))
         {
             target = damagable;
@@ -46,6 +63,10 @@ public class PoisonDOTComponent : MonoBehaviour
     {
         tickTimer = 1f;
         effectTimer = 0f;
+        if (particles != null)
+        {
+            particles.Stop();
+        }
         this.enabled = false;
     }
 }

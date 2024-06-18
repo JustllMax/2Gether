@@ -17,7 +17,7 @@ public class Dust : MonoBehaviour
 
     void Update()
     {
-        if(particles.isEmitting == false)
+        if(particles.isEmitting == false && particles.particleCount == 0)
         {
             source.Stop();
             Destroy(gameObject);

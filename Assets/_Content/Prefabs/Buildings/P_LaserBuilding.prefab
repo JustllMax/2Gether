@@ -324,8 +324,7 @@ MonoBehaviour:
   upgradeSound: {fileID: 8300000, guid: 3c69e4e5834fed747a1cecd10a45743d, type: 3}
   activationSound: {fileID: 0}
   takeHitSound: {fileID: 8300000, guid: 37e8deef3569f64458306968fc3c237a, type: 3}
-  createDestroyParticles: {fileID: 0}
-  upgradeParticles: {fileID: 0}
+  particlesScaleModifier: 1
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -510,7 +509,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.4196434
         inSlope: 0
         outSlope: 0
         tangentMode: 0

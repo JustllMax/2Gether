@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IShooterPoint
 {
-    public void PositionShooter(in Vector3 targetPosition, out Vector3 direction, out Vector3 position);
+    public void PositionShooter(Transform target, float projectileSpeed, out Vector3 direction, out Vector3 position);
     public void OnFire();
 }

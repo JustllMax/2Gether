@@ -21,6 +21,7 @@ abstract public class Gun : MonoBehaviour
     [SerializeField] protected ParticleSystem impactParticleSystem;
     [SerializeField] protected TrailRenderer bulletTrail;
     [SerializeField] protected LayerMask mask;
+    [SerializeField] protected LayerMask bulletHoleMask;
     [SerializeField] protected WeaponIKConfig weaponIKConfig;
     protected float shootDelay;
     protected float lastShootTime;
@@ -84,7 +85,7 @@ abstract public class Gun : MonoBehaviour
         return noAmmoSound;
     }
 
-    protected IEnumerator SpawnTrail(TrailRenderer Trail, Vector3 HitPoint, Vector3 HitNormal, bool MadeImpact, IDamagable target, float damageModifier)
+    protected IEnumerator SpawnTrail(TrailRenderer Trail, Vector3 HitPoint, Vector3 HitNormal, bool MadeImpact, bool makeBulletHole, IDamagable target, float damageModifier)
     {
 
         Vector3 startPosition = Trail.transform.position;
@@ -103,7 +104,11 @@ abstract public class Gun : MonoBehaviour
         Trail.transform.position = HitPoint;
         if (MadeImpact)
         {
-            Instantiate(impactParticleSystem, HitPoint, Quaternion.LookRotation(HitNormal));
+            if (makeBulletHole)
+            {
+                Instantiate(impactParticleSystem, HitPoint + HitNormal * 0.01f, Quaternion.LookRotation(HitNormal));
+            }
+                
             if (target != null)
                 target.TakeDamage(GetGunData().BulletDamage * damageModifier);
         }
@@ -149,7 +154,8 @@ abstract public class Gun : MonoBehaviour
                     damageModifier = modifier.damageModifier;
                 }
             }
-            StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true, target, damageModifier));
+            bool leaveBulletHole = (hit.collider.gameObject.layer & bulletHoleMask.value) > 0;
+            StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true, leaveBulletHole, target, damageModifier));
 
             lastShootTime = Time.time;
         }
@@ -157,7 +163,7 @@ abstract public class Gun : MonoBehaviour
         {
             TrailRenderer trail = Instantiate(bulletTrail, trailSpawnPoint.position, Quaternion.identity);
 
-            StartCoroutine(SpawnTrail(trail, bulletSpawnPoint.position + GetDirection() * 100, Vector3.zero, false, null, 1));
+            StartCoroutine(SpawnTrail(trail, bulletSpawnPoint.position + GetDirection() * 100, Vector3.zero, false, false, null, 1));
 
             lastShootTime = Time.time;
         }

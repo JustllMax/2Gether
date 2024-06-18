@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0141a3b9c5960364fa1c0d12baf7cfae, type: 3}
   m_Name: AIStats_DV7_Armored
   m_EditorClassIdentifier: 
-  health: 80
+  health: 75
   defaultMovement:
     movementSpeed: 2
     turnSpeed: 120

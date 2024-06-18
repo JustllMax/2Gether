@@ -50,28 +50,6 @@ public class Minefield : Building
         return false;
     }
 
-    public override void Kill()
-    {
-
-        IsTargetable = false;
-        Invoke("DestroyObj", DestroyObjectDelay);
-    }
-
-    void DestroyObj()
-    {
-        Destroy(gameObject);
-    }
-
-    public override void OnSell()
-    {
-        base.OnSell();
-
-        if (createDestroyParticles != null)
-            createDestroyParticles.Play();
-
-        AudioManager.Instance.PlaySFX(createDestroySound);
-        Kill();
-    }
 
     #endregion ChildrenMethods
 

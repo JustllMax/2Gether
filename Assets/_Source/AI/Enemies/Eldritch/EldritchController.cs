@@ -31,7 +31,8 @@ public class EldritchController : AIController
 
         PlayAnimation("DEATH");
 
-        WaveManager.Instance.waveSystem.enemyCount--;
+        if (WaveManager.Instance != null)
+            WaveManager.Instance.waveSystem.enemyCount--;
         StartCoroutine(KillEffects());
     }
 
