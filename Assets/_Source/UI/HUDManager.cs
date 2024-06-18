@@ -23,7 +23,7 @@ public class HUDManager : MonoBehaviour
     [Foldout("References")][SerializeField] GameObject NightUI;
     [Foldout("References")][SerializeField] Image HelmetOverlay;
     [Header("MainBase")]
-    [Foldout("References")][SerializeField] Slider MainbaseHPBar;
+    [Foldout("References")]public Slider MainbaseHPBar;
     [Foldout("References")][SerializeField] TMP_Text MainbaseHPText;
 
     [Header("Character")]
@@ -87,6 +87,7 @@ public class HUDManager : MonoBehaviour
         if(enabled)
             await UniTask.WaitForSeconds(HUDAppearanceDelay);
         NightUI.SetActive(enabled);
+        MainbaseHPBar.transform.parent.gameObject.SetActive(enabled);
     }
 
     public void StartSpectatorMode()
@@ -273,16 +274,15 @@ public class HUDManager : MonoBehaviour
 
     public void SetMainBasesMaxHealth(float maxHealth)
     {
-        HealthBar.maxValue = maxHealth;
+        MainbaseHPBar.maxValue = maxHealth;
     }
 
     public void SetMainBaseCurrentHealth(float currentHealth)
     {
        
-        float sliderVal = Mathf.Clamp(currentHealth, HealthBar.minValue, HealthBar.maxValue);
-        HealthBar.value = sliderVal;
-
-        HealthCurrentText.SetText(currentHealth.ToString());
+        float sliderVal = Mathf.Clamp(currentHealth, MainbaseHPBar.minValue, MainbaseHPBar.maxValue);
+        MainbaseHPBar.value = sliderVal;
+        MainbaseHPText.SetText(currentHealth.ToString());
 
     }
 

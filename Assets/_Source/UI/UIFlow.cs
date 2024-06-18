@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using NaughtyAttributes;
 using System;
-using UnityEngine.PlayerLoop;
+using Cysharp.Threading.Tasks;
+
 
 public class UIFlow : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class UIFlow : MonoBehaviour
     public GameObject cardpackOpenPanel;
     public GameObject gamePanel;
     public GameObject cardsPanel;
+
+    [SerializeField] 
+    float appearanceDelay = 2f;
 
     [SerializeField]
     private UICards currentClickedCard = null;
@@ -322,11 +326,23 @@ public class UIFlow : MonoBehaviour
         cardpackPanel.SetActive(false);
         rerollButton.gameObject.SetActive(false);
         continueButton.gameObject.SetActive(false);
+        HUDManager.Instance.MainbaseHPBar.transform.parent.gameObject.SetActive(false);
+
     }
+
+
 
     void OnDayStart()
     {
-        ShowPanel(UICardManager.Instance.GetRandomCards(5));
+        _ = SetDayUIActivation();
+    }
+
+    async UniTaskVoid SetDayUIActivation()
+    {
+        
+        await UniTask.WaitForSeconds(appearanceDelay);
+        ShowPanel(UICardManager.Instance.GetRandomCards(5));       
+        HUDManager.Instance.MainbaseHPBar.transform.parent.gameObject.SetActive(true);
     }
 
     //THIS IS TEMP 
