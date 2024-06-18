@@ -1154,8 +1154,7 @@ MonoBehaviour:
   upgradeSound: {fileID: 8300000, guid: 3c69e4e5834fed747a1cecd10a45743d, type: 3}
   activationSound: {fileID: 8300000, guid: 33f0088ab88dc6743bf77fa756457138, type: 3}
   takeHitSound: {fileID: 8300000, guid: 37e8deef3569f64458306968fc3c237a, type: 3}
-  createDestroyParticles: {fileID: 0}
-  upgradeParticles: {fileID: 0}
+  particlesScaleModifier: 1
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 576
@@ -1641,6 +1640,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -3660653046356411250, guid: f008bcc514a9676458ff37fa5b8f532f,
         type: 3}
+      propertyPath: m_TagString
+      value: Building
+      objectReference: {fileID: 0}
+    - target: {fileID: -3660653046356411250, guid: f008bcc514a9676458ff37fa5b8f532f,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -1678,6 +1682,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7953606483559150473, guid: f008bcc514a9676458ff37fa5b8f532f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Building
       objectReference: {fileID: 0}
     - target: {fileID: 7953606483559150473, guid: f008bcc514a9676458ff37fa5b8f532f,
         type: 3}
