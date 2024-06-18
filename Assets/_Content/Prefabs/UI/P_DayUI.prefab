@@ -1846,6 +1846,7 @@ MonoBehaviour:
   boosterPackButton: {fileID: 2175976558209788210}
   rerollButton: {fileID: 3832832940327610517}
   continueButton: {fileID: 2862104906397663195}
+  _startNightButton: {fileID: 6013190369577318239}
   cardPrefab: {fileID: 3048448612468561270}
   cardpackPanel: {fileID: 7467013490132672560}
   cardpackOpenPanel: {fileID: 8176097838261698671}
@@ -2350,7 +2351,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 19.770874, y: 61}
+  m_AnchoredPosition: {x: 19.770996, y: 61}
   m_SizeDelta: {x: -588.7295, y: -640.578}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4771326080578992411
@@ -2455,7 +2456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1333.4565, y: 53.986633}
+  m_AnchoredPosition: {x: -1333.4565, y: 53.986572}
   m_SizeDelta: {x: -941.3824, y: -239.2209}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3038642140463748511

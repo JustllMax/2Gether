@@ -60,8 +60,4 @@ public class GoldManager : MonoBehaviour
     {
         this.FixGain = fixGain;
     }
-
-   
-
-
 }

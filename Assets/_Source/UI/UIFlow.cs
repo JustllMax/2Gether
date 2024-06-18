@@ -14,6 +14,10 @@ public class UIFlow : MonoBehaviour
     public Button boosterPackButton;
     public Button rerollButton;
     public Button continueButton;
+
+    [SerializeField]
+    private Button _startNightButton;
+
     public GameObject cardPrefab;
     public GameObject cardpackPanel;
     public GameObject cardpackOpenPanel;
@@ -188,8 +192,8 @@ public class UIFlow : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(1))
             {
-                currentClickedCard.ResetPosition();
                 currentClickedCard.CardData.EndExecute();
+                currentClickedCard.ResetPosition();
                 currentClickedCard = null;
             }
         }
@@ -267,7 +271,10 @@ public class UIFlow : MonoBehaviour
 
     public void SetSelectedCard(UICards card)
     {
-        
+        _startNightButton.interactable = false;
+
+        if (card == null)
+            _startNightButton.interactable = true;
 
         if (currentClickedCard == card)
         {   
@@ -290,6 +297,8 @@ public class UIFlow : MonoBehaviour
 
     public void DeselectCurrentlyHeldCard()
     {
+        _startNightButton.interactable = true;
+
         currentClickedCard.ResetPosition();
         currentClickedCard.CardData.EndExecute();
         _buildingDetailHandler.CloseDetailPanel();
@@ -298,6 +307,8 @@ public class UIFlow : MonoBehaviour
 
     public void DiscardCard(Card buildingCard)
     {
+        _startNightButton.interactable = true;
+
         Destroy(currentClickedCard.gameObject);
         currentClickedCard = null;
     }
