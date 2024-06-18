@@ -30,7 +30,8 @@ public class WaveManager : MonoBehaviour
     public WaveSystem waveSystem { get { return _waveSystem; } }
     private float waveClearExpected = 240;
     private float waveClear = 0;
-
+    int[] _weightsFollow;
+    int[] _weightsAttack;
     #endregion
 
     #region On start 
@@ -45,6 +46,10 @@ public class WaveManager : MonoBehaviour
         _instance = this;
         _waveSystem = GetComponent<WaveSystem>();
         WaveSystem.nightCount = 0;
+        
+        _weightsFollow = SplitNumber(_enemyFollowPrefabs.Count*30, _enemyFollowPrefabs.Count);
+        _weightsAttack = SplitNumber(_enemyAttackPrefabs.Count*30, _enemyAttackPrefabs.Count);
+
         WaveData waveData = Resources.Load<WaveData>("Waves/wave_data");
 
         foreach (var wave in waveData.Waves)
@@ -52,6 +57,9 @@ public class WaveManager : MonoBehaviour
             waves.Add(new SingleWave(new List<GameObject>(wave.Enemies), wave.EnemySpawnInterval, wave.Cooldown));
             waveClearExpected += wave.Cooldown;
         }
+
+        Debug.LogErrorFormat("Generated follow elements: " + string.Join(", ", _weightsFollow));
+        Debug.LogErrorFormat("Generated attack elements: " + string.Join(", ", _weightsAttack));
     }
     void OnEnable()
     {
@@ -98,6 +106,37 @@ public class WaveManager : MonoBehaviour
     #region Wave 
 
     #region Next Wave
+    int[] SplitNumber(int total, int count)
+    {
+        int[] result = new int[count];
+        float[] weights = new float[count];
+
+        float weightSum = 0;
+        for (int i = 0; i < count; i++)
+        {
+            weights[i] = 1.0f / (i + 1);
+            weightSum += weights[i];
+        }
+
+        float totalWeight = 0;
+        for (int i = 0; i < count; i++)
+        {
+            weights[i] = weights[i] / weightSum * total;
+            totalWeight += weights[i];
+        }
+
+        int intTotalWeight = Mathf.RoundToInt(totalWeight);
+        int sum = 0;
+        for (int i = 0; i < count; i++)
+        {
+            result[i] = Mathf.RoundToInt(weights[i]);
+            sum += result[i];
+        }
+
+        result[count - 1] += total - sum;
+
+        return result;
+    }
     public void NextNightWaveData()
     {
         int followEnemiesNumberToAdd = UnityEngine.Random.Range(0, 5);
@@ -120,13 +159,13 @@ public class WaveManager : MonoBehaviour
                 waveClearExpected += wave.Cooldown;
                 for (int followCount = 0; followCount < followEnemiesNumberToAdd; followCount++)
                 {
-                    followToAdd = UnityEngine.Random.Range(0, _enemyFollowPrefabs.Count);
+                    followToAdd = DetermineEnemyIndex(UnityEngine.Random.Range(0, _enemyFollowPrefabs.Count*20), _weightsFollow);
                     wave.EnemyPool.Add(_enemyFollowPrefabs[followToAdd]);
                 }
 
                 for (int followCount = 0; followCount < attackEnemiesNumberToAdd; followCount++)
                 {
-                    attackToAdd = UnityEngine.Random.Range(0, _enemyAttackPrefabs.Count);
+                    attackToAdd = DetermineEnemyIndex(UnityEngine.Random.Range(0, _enemyFollowPrefabs.Count*20), _weightsAttack);
                     wave.EnemyPool.Add(_enemyAttackPrefabs[attackToAdd]);
                 }
             }
@@ -138,6 +177,22 @@ public class WaveManager : MonoBehaviour
             waves[waves.Count - 1].EnemyPool.Add(_enemyBossPrefabs[bossToAdd]);
         }
         waveClearExpected += followEnemiesNumberToAdd + attackEnemiesNumberToAdd;
+    }
+
+    int DetermineEnemyIndex(int randomNumber, int[] elements)
+    {
+        int cumulativeSum = 0;
+        for (int i = 0; i < elements.Length; i++)
+        {
+            cumulativeSum += elements[i];
+            if (randomNumber >= (100 - cumulativeSum))
+            {
+                return i;
+            }
+        }
+
+        // На случай если что-то пойдет не так, возвращаем последний тип врага
+        return elements.Length - 1;
     }
     #endregion
 

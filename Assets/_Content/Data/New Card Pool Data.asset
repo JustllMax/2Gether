@@ -13,10 +13,16 @@ MonoBehaviour:
   m_Name: New Card Pool Data
   m_EditorClassIdentifier: 
   Cards:
-  - {fileID: 11400000, guid: 8ff8eef9b2f8a0d44bae429afde33bc4, type: 2}
-  - {fileID: 11400000, guid: 04b5e3373e67e864ea20ec0b24e7ef56, type: 2}
   - {fileID: 11400000, guid: c812aee891815ce4baa4c3f34dcc9688, type: 2}
+  - {fileID: 11400000, guid: 8ff8eef9b2f8a0d44bae429afde33bc4, type: 2}
+  - {fileID: 11400000, guid: b66f9ffd4b9057a4ab50fe7e32719de8, type: 2}
+  - {fileID: 11400000, guid: 59cfe79c2c0d7a44581c395b6f9f1360, type: 2}
+  - {fileID: 11400000, guid: 0beb15ad2b500ae4292ca802d811d0a7, type: 2}
+  - {fileID: 11400000, guid: ef7a4040050a81e47a654ecd77347e97, type: 2}
+  - {fileID: 11400000, guid: b9fea88fbdb68924285904ed8c55c3d5, type: 2}
   - {fileID: 11400000, guid: a06cb6aaa1c088e40a564db3cdd6763e, type: 2}
-  - {fileID: 11400000, guid: 0beb15ad2b500ae4292ca802d811d0a7, type: 2}
-  - {fileID: 11400000, guid: 0beb15ad2b500ae4292ca802d811d0a7, type: 2}
-  - {fileID: 11400000, guid: 0beb15ad2b500ae4292ca802d811d0a7, type: 2}
+  - {fileID: 11400000, guid: aea10a02ef3e80949a75b92fea802423, type: 2}
+  - {fileID: 11400000, guid: f7a5ae56b291cb44e82138bb1d322bad, type: 2}
+  - {fileID: 11400000, guid: 04b5e3373e67e864ea20ec0b24e7ef56, type: 2}
+  - {fileID: 11400000, guid: ecf646ed3fe50544795904651613bbff, type: 2}
+  - {fileID: 11400000, guid: 8b9d7c4793ff9294da6260416604026d, type: 2}

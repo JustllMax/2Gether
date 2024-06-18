@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 348d1c825f36b1e41b692c8e6b142b4d, type: 3}
-  m_Name: Card_Building_MineBuilding
+  m_Name: Card_Building_SmiteRod_Enchanced
   m_EditorClassIdentifier: 
-  CardName: Mine
-  CardSprite: {fileID: 21300000, guid: fd60ac914f431da4fa96fb1feedb2fee, type: 3}
+  CardName: Smite Rod
+  CardSprite: {fileID: 21300000, guid: 2069b2ab01b39d140a64335bfaeb55a4, type: 3}
   CardDescription: Shoots a laser at near enemies
-  CardStatisticsData: {fileID: 11400000, guid: ce731129948942741bbdc7a7d52271b0, type: 2}
-  BuildingPrefab: {fileID: 227704562741578186, guid: 38a205b375903984faaf05367604f11e,
+  CardStatisticsData: {fileID: 11400000, guid: 3a74726630fb6cb4da51ae5346cd1924, type: 2}
+  BuildingPrefab: {fileID: 5821364103949504362, guid: 1c75e84739fb6c94c9b67ae3a3f24527,
     type: 3}

@@ -22,6 +22,9 @@ public class CardObject : MonoBehaviour
     [SerializeField]
     private CardStatDisplay _statDisplay;
 
+    [SerializeField]
+    private Image _activeBorder;
+
     public void Execute()
     {
         GameContext ctx = new GameContext();
@@ -44,7 +47,26 @@ public class CardObject : MonoBehaviour
         _title.text = card.CardName;
         _description.text = card.CardDescription;
         _thumbnail.sprite = card.CardSprite;
+        _activeBorder.color = GetColorForRarity(card.CardStatisticsData.Rarity);
 
         _statDisplay.Display(card.CardStatisticsData.GetStatistics());
     }
+
+    private Color GetColorForRarity(Rarity r)
+    {
+        switch (r)
+        {
+            case Rarity.Generic:
+                return Color.white;
+                break;
+            case Rarity.Enhanced:
+                return Color.blue;
+                break;
+            case Rarity.Prototype:
+                return Color.red;
+                break;
+            default: return Color.white;
+        }
+    }
+
 }

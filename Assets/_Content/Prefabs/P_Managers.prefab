@@ -96,6 +96,50 @@ MonoBehaviour:
   m_Center: {x: 0, y: 20, z: 0}
   m_Area: 1
   m_AffectedAgents: ffffffff
+--- !u!1 &2257020601976940232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3973529261030288304}
+  - component: {fileID: 6480417207272459623}
+  m_Layer: 0
+  m_Name: GoldManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3973529261030288304
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2257020601976940232}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1104214513903706894}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6480417207272459623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2257020601976940232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9984ff9c567f2b34987e4b32bd034303, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4153037244321473514
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,6 +493,7 @@ Transform:
   - {fileID: 5044210679133221173}
   - {fileID: 4201162022653436447}
   - {fileID: 1924602500278399243}
+  - {fileID: 3973529261030288304}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7598142301166890447
@@ -728,9 +773,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
         type: 3}
-      propertyPath: _enemyFollowPrefabs.Array.data[4]
+      propertyPath: _enemyAttackPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 6219354284539619549, guid: 427d3b5163b521946ad782cdf25aacc2,
+        type: 3}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyAttackPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1,
+        type: 3}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyFollowPrefabs.Array.data[2]
       value: 
       objectReference: {fileID: 7469077900276144290, guid: 4f9a9cbf63ab1ff4f8089bd56df2fc49,
+        type: 3}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyFollowPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 8116058673664128778, guid: d6259ac63592f4d4eb306f8c21dd3269,
+        type: 3}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyFollowPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 7685304744681281529, guid: 1dcb145c753befd4fbc21ef919f64b61,
         type: 3}
     - target: {fileID: 7674151515446551936, guid: 3459d3a53b0830e4090ae9a21648628f,
         type: 3}
