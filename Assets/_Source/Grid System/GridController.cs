@@ -34,6 +34,7 @@ public class GridController : MonoBehaviour
         }
 
         _grid = new GridSlot[_gridSize.x, _gridSize.y];
+
         for (int x = 0; x < _gridSize.x; x++)
         {
             for (int y = 0; y < _gridSize.y; y++)
@@ -84,12 +85,24 @@ public class GridController : MonoBehaviour
         Vector2Int rayPosition = new Vector2Int();
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.collider.gameObject.CompareTag("Terrain"))
+            if (hit.collider.gameObject.CompareTag("Terrain") || hit.collider.gameObject.CompareTag("Building"))
             {
                 rayPosition.x = Mathf.RoundToInt(hit.point.x/10);
                 rayPosition.y = Mathf.RoundToInt(hit.point.z/10);
             }
         }
         return rayPosition;
+    }
+
+    public Building GetBuilding(Vector2Int pos)
+    {
+        return _grid[math.abs(pos.x), math.abs(pos.y)].gridBuilding;
+    }
+
+    public void RemoveBuilding(Vector2Int pos)
+    {
+        if(_grid[math.abs(pos.x), math.abs(pos.y)].gridBuilding != null)
+            Destroy(_grid[math.abs(pos.x), math.abs(pos.y)].gridBuilding.gameObject);
+        _grid[math.abs(pos.x), math.abs(pos.y)] = new GridSlot();
     }
 }
