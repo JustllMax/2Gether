@@ -57,9 +57,6 @@ public class WaveManager : MonoBehaviour
             waves.Add(new SingleWave(new List<GameObject>(wave.Enemies), wave.EnemySpawnInterval, wave.Cooldown));
             waveClearExpected += wave.Cooldown;
         }
-
-        Debug.LogErrorFormat("Generated follow elements: " + string.Join(", ", _weightsFollow));
-        Debug.LogErrorFormat("Generated attack elements: " + string.Join(", ", _weightsAttack));
     }
     void OnEnable()
     {
