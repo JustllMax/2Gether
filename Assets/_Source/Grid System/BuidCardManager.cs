@@ -101,6 +101,7 @@ public class BuildCardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, 
             Vector2Int pos = new Vector2Int((int)_draggingBuilding.transform.position.x / gridOffset, (int)_draggingBuilding.transform.position.z / gridOffset);
             _draggingBuilding.GetComponent<GridBuilding>().ResetColor();
             _gridController.SetGridSlot(pos, _terrain);
+            _draggingBuilding.GetComponent<GridBuilding>().gridPos = pos;
             _gridController.TryPlace(pos, _draggingBuilding.GetComponent<Building>());
 
         }

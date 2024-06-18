@@ -829,42 +829,6 @@ PrefabInstance:
       propertyPath: dirLight
       value: 
       objectReference: {fileID: 203844588}
-    - target: {fileID: 4518140258518824868, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
-        type: 3}
-      propertyPath: _enemyAttackPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 6219354284539619549, guid: 427d3b5163b521946ad782cdf25aacc2,
-        type: 3}
-    - target: {fileID: 4518140258518824868, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
-        type: 3}
-      propertyPath: _enemyAttackPrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1,
-        type: 3}
-    - target: {fileID: 4518140258518824868, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
-        type: 3}
-      propertyPath: _enemyFollowPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 2303781138697332408, guid: 7ce58ef33dd26454e94930b8ca7a424b,
-        type: 3}
-    - target: {fileID: 4518140258518824868, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
-        type: 3}
-      propertyPath: _enemyFollowPrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 4084334784099707750, guid: 14d53d09db65d4045a34b3885ac33f06,
-        type: 3}
-    - target: {fileID: 4518140258518824868, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
-        type: 3}
-      propertyPath: _enemyFollowPrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 7469077900276144290, guid: 4f9a9cbf63ab1ff4f8089bd56df2fc49,
-        type: 3}
-    - target: {fileID: 4518140258518824868, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
-        type: 3}
-      propertyPath: _enemyFollowPrefabs.Array.data[3]
-      value: 
-      objectReference: {fileID: 8116058673664128778, guid: d6259ac63592f4d4eb306f8c21dd3269,
-        type: 3}
     - target: {fileID: 5922677963036534157, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
         type: 3}
       propertyPath: dayCamera

@@ -215,8 +215,6 @@ public class SlotPlacer : MonoBehaviour
                     path.slot.pos = new Vector2Int(x, y);
                     path.slot.value = _map[x, y];
 
-                    #region parent   
-
                     if (path.slot.value == 1)
                     {
                         path.name = "spawn " + i++;
@@ -228,7 +226,6 @@ public class SlotPlacer : MonoBehaviour
                     {
                         path.gameObject.transform.SetParent(this.transform.GetChild(0));
                     }
-                    #endregion
                 }
                 RotatePath(x, y, path);
                 _spawnedSlots[x, y] = path;

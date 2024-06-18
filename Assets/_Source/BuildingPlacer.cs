@@ -109,6 +109,7 @@ public class BuildingPlacer : MonoBehaviour
                 {
                     Vector2Int pos = new Vector2Int((int)_draggingBuilding.transform.position.x / gridOffset, (int)_draggingBuilding.transform.position.z / gridOffset);
                     _draggingBuilding.GetComponent<GridBuilding>().ResetColor();
+                    _draggingBuilding.GetComponent<GridBuilding>().gridPos = pos;
                     _gridController.SetGridSlot(pos, _terrain);
                     if (_gridController.TryPlace(pos, _draggingBuilding.GetComponent<Building>()))
                     {

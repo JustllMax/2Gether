@@ -6,7 +6,10 @@ public class GridBuilding : MonoBehaviour
 {
     [SerializeField] private Vector3 _buildingSize;
     [SerializeField] private List<Renderer> _renderers;
-    [SerializeField] public bool isCanBePlacedOnRoad = false;
+    [SerializeField] private bool _isCanBePlacedOnRoad = false;
+    public bool isCanBePlacedOnRoad {get{ return _isCanBePlacedOnRoad; } set { _isCanBePlacedOnRoad = value; } }
+    private Vector2Int _gridPos;
+    public Vector2Int gridPos{get{return _gridPos;} set{_gridPos = value;} }
     private List<Color> _rootColor; 
     private bool _isDecorationCollision;
     public bool IsDecorationCollision
