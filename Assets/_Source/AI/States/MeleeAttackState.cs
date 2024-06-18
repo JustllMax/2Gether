@@ -81,11 +81,16 @@ public class MeleeAttackState : AIState
             bool wasHit = false;
             foreach (var hit in hits)
             {
-                if (hit.TryGetComponent(out ITargetable targetable))
+                IDamagable damagable = null;
+                if (hit.attachedRigidbody != null)
+                    hit.attachedRigidbody.TryGetComponent<IDamagable>(out damagable);
+                else
+                    hit.TryGetComponent<IDamagable>(out damagable);
+
+                if (damagable != null)
                 {
                     wasHit = true;
-
-                    if (hit.GetComponent<IDamagable>().TakeDamage(attack.Damage) == true)
+                    if (damagable.TakeDamage(attack.Damage) == true)
                     {
                         controller.distanceToTarget = 100000f;
                         controller.CurrentTarget = null;

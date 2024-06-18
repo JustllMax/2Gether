@@ -891,6 +891,57 @@ MonoBehaviour:
   bobExaggeration: 0
   multiplier: {x: 0, y: 0, z: 0}
   _rotationOffsetEuler: {x: 0, y: 0, z: 0}
+--- !u!1 &2921326546699124874
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2189225047344275402}
+  - component: {fileID: 2105664030088359610}
+  m_Layer: 0
+  m_Name: MuzzleFlashSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2189225047344275402
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2921326546699124874}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.27122772, y: -0.5456241, z: 0.6047227, w: 0.51287466}
+  m_LocalPosition: {x: -0.332, y: -0.0149, z: 0.6613}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 2809922108548333934}
+  m_LocalEulerAnglesHint: {x: 69.737, y: -41.978, z: 69.464}
+--- !u!114 &2105664030088359610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2921326546699124874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41c48c2bf731de45a2bf737e55daadb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fps: 20
+  frames:
+  - {fileID: 2800000, guid: 62407dc477dc69e428a47291867fce4f, type: 3}
+  - {fileID: 2800000, guid: b9a9a6caeb647f34c999ec406ad3f8b0, type: 3}
+  - {fileID: 2800000, guid: 52f56ea75c9552e4cb9cf914977d02cd, type: 3}
+  muzzleFlashPrefab: {fileID: 1743301284569550, guid: b8a72f7fbf1681f4f9addad757f5c160,
+    type: 3}
 --- !u!1 &3141879893231158031
 GameObject:
   m_ObjectHideFlags: 0
@@ -1582,57 +1633,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &5864590242792172323
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1204952489028603806}
-  - component: {fileID: 6863527149345033515}
-  m_Layer: 0
-  m_Name: MuzzleFlashSpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1204952489028603806
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5864590242792172323}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.27122772, y: -0.5456241, z: 0.6047227, w: 0.51287466}
-  m_LocalPosition: {x: -0.332, y: -0.0149, z: 0.6613}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 2809922108548333934}
-  m_LocalEulerAnglesHint: {x: 69.737, y: -41.978, z: 69.464}
---- !u!114 &6863527149345033515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5864590242792172323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e41c48c2bf731de45a2bf737e55daadb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fps: 20
-  frames:
-  - {fileID: 2800000, guid: 62407dc477dc69e428a47291867fce4f, type: 3}
-  - {fileID: 2800000, guid: b9a9a6caeb647f34c999ec406ad3f8b0, type: 3}
-  - {fileID: 2800000, guid: 52f56ea75c9552e4cb9cf914977d02cd, type: 3}
-  muzzleFlashPrefab: {fileID: 1743301284569550, guid: b8a72f7fbf1681f4f9addad757f5c160,
-    type: 3}
 --- !u!1 &5996681186342680069
 GameObject:
   m_ObjectHideFlags: 0
@@ -1667,7 +1667,7 @@ Transform:
   - {fileID: 7109481303142244506}
   - {fileID: 7824991519978390221}
   - {fileID: 8432939535508400536}
-  - {fileID: 1204952489028603806}
+  - {fileID: 2189225047344275402}
   m_Father: {fileID: 5201468828159829458}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2461275144498019277
@@ -1692,7 +1692,7 @@ MonoBehaviour:
   bulletSpeed: 100
   addBulletSpread: 1
   bulletSpreadVariance: {x: 0.05, y: 0.05, z: 0.05}
-  muzzleFlash: {fileID: 6863527149345033515}
+  muzzleFlash: {fileID: 2105664030088359610}
   bulletSpawnPoint: {fileID: 5376599401585661262}
   trailSpawnPoint: {fileID: 8432939535508400536}
   impactParticleSystem: {fileID: 9064919875212695174, guid: a5e1e2c4d2cd81f4abed6272a2b8187a,

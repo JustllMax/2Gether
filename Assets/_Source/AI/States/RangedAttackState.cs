@@ -16,12 +16,6 @@ public class RangedAttackState : AIState
     public float MinAttackRange;
 
     [SerializeField]
-    private float ProjectileSpeed;
-
-    [SerializeField]
-    private float ProjectileDamage;
-
-    [SerializeField]
     private float ProjectileCooldown;
 
     [SerializeField]
@@ -31,7 +25,7 @@ public class RangedAttackState : AIState
     private uint BurstCount;
 
     [SerializeField]
-    private GameObject ProjectilePrefab;
+    private ProjectileProperties Projectile;
 
     [SerializeField]
     private float OnBurstRelocateChance;
@@ -89,7 +83,7 @@ public class RangedAttackState : AIState
             if (!controller.TryGetComponent<IShooterPoint>(out shooter))
                 return;
 
-            shooter.PositionShooter(controller.CurrentTarget.transform, ProjectileSpeed, out Vector3 direction, out Vector3 position);
+            shooter.PositionShooter(controller.CurrentTarget.transform, Projectile.speed, out Vector3 direction, out Vector3 position);
 
             controller.lastAttackTime = 0;
             controller.ammoCount--;
@@ -129,18 +123,14 @@ public class RangedAttackState : AIState
     {
         if (controller.isShooting && controller.TryGetComponent<IShooterPoint>(out var shooter))
         {
-            shooter.PositionShooter(controller.CurrentTarget.transform, ProjectileSpeed, out Vector3 direction, out Vector3 position);
+            shooter.PositionShooter(controller.CurrentTarget.transform, Projectile.speed, out Vector3 direction, out Vector3 position);
         }
             
     }
 
     void OnFire(in Vector3 dir, in Vector3 pos)
     {
-        AIBullet bullet = AIBulletManager.Instance.Pool.Get();
-        bullet.SetDirection(dir);
-        bullet.SetDamage(ProjectileDamage);
-        bullet.transform.position = pos;
-        bullet.SetSpeed(ProjectileSpeed);
+        Projectile bullet = ProjectileManager.Instance.SpawnProjectile(pos, dir, Projectile);
     }
 
     void RelocateWanderTarget(AIController controller)

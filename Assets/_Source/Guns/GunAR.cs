@@ -7,11 +7,7 @@ public class GunAR : Gun
     [SerializeField] PlayerEquipment playerEQ;
 
     [Header("Grenade Launcher")]
-    [SerializeField] GameObject P_PlayerGrenade;
-    [SerializeField] float granadeSpeed;
-    [SerializeField] float explosionDamage;
-    [SerializeField] float explosionRadius;
-    [SerializeField] LayerMask explosionMask;
+    [SerializeField] ProjectileProperties grenade;
 
 
     
@@ -85,8 +81,7 @@ public class GunAR : Gun
             endPoint = bulletSpawnPoint.position + direction * 100;
             direction = (endPoint - trailSpawnPoint.position).normalized;
         }
-        PlayerGrenade grenade = Instantiate(P_PlayerGrenade, trailSpawnPoint.position, Quaternion.identity).GetComponent<PlayerGrenade>();
-        grenade.SetUp(granadeSpeed, direction, 12.0f, explosionDamage, explosionRadius, explosionMask);
+        Projectile p = ProjectileManager.Instance.SpawnProjectile(trailSpawnPoint.position, direction, grenade);
     }
 
 }

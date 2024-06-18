@@ -15,13 +15,10 @@ MonoBehaviour:
   weight: 3
   AttackRange: 25
   MinAttackRange: 0
-  ProjectileSpeed: 40
-  ProjectileDamage: 10
   ProjectileCooldown: 0.15
   BurstCooldown: 3
   BurstCount: 5
-  ProjectilePrefab: {fileID: 7727711388741772700, guid: 863f1f01d8597a942b50ea10505592e2,
-    type: 3}
+  Projectile: {fileID: 11400000, guid: 9c2524eac2990b946b49ee0c1f75a084, type: 2}
   OnBurstRelocateChance: 0.33
   UseShootingStance: 1
   ShotSound: {fileID: 8300000, guid: 8958798d256709a4b973f9ac3f5b5f88, type: 3}

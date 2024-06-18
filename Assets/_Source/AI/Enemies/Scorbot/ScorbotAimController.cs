@@ -32,7 +32,7 @@ public class ScorboatAimController : MonoBehaviour, IShooterPoint
         }
         else
         {
-            direction = -dir;
+            direction = dir;
         }
         
         position = transform.TransformPoint(new Vector3(0.0f, 1.5f, 0.0f));
