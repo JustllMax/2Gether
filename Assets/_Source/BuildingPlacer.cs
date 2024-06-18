@@ -111,7 +111,7 @@ public class BuildingPlacer : MonoBehaviour
                     _draggingBuilding.GetComponent<GridBuilding>().ResetColor();
                     _draggingBuilding.GetComponent<GridBuilding>().gridPos = pos;
                     _gridController.SetGridSlot(pos, _terrain);
-                    if (_gridController.TryPlace(pos, _draggingBuilding.GetComponent<Building>()))
+                    if (_gridController.TryPlace(pos, _draggingBuilding.GetComponent<Building>(), out _))
                     {
                         Debug.Log("Place ok");
                         _selectedBuildingCard.OnCardSubmitted(_gameContext);

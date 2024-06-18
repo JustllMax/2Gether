@@ -89,7 +89,9 @@ public class BuildingDetailHandler : MonoBehaviour
         if (_currentBuilding == null)
             return;
 
+        
         _currentBuilding.OnSell();
+        GridController.Instance.RemoveBuilding(_currentBuilding.GetComponent<GridBuilding>().gridPos);
         _currentBuilding = null;
         CloseDetailPanel();
     }

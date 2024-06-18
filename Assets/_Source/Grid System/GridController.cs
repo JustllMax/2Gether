@@ -52,7 +52,7 @@ public class GridController : MonoBehaviour
             Debug.Log($"{GetGridPos().x} {GetGridPos().y}");
         }
     }
-    public bool TryPlace(Vector2Int pos, Building building)
+    public bool TryPlace(Vector2Int pos, Building building, out Building? existingBuilding)
     {
         if (!IsPlaceTaken(pos.x, pos.y))
         {
@@ -61,9 +61,14 @@ public class GridController : MonoBehaviour
             _grid[math.abs(pos.x), math.abs(pos.y)].gridBuilding = newBuilding.GetComponent<Building>();
 
             NavMeshSurfaceManager.Instance.BakeAllNavMeshes();
+            existingBuilding = null;
             return true;
         }
-        return false;
+        else
+        {
+            existingBuilding = GetBuilding(pos);        
+            return false;
+        }
     }
     public void SetGridSlot(Vector2Int position, GameObject terrain)
     {

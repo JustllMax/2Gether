@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class GridBuilding : MonoBehaviour
     [SerializeField] private List<Renderer> _renderers;
     [SerializeField] private bool _isCanBePlacedOnRoad = false;
     public bool isCanBePlacedOnRoad {get{ return _isCanBePlacedOnRoad; } set { _isCanBePlacedOnRoad = value; } }
+
+    [SerializeField, ReadOnly]
     private Vector2Int _gridPos;
     public Vector2Int gridPos{get{return _gridPos;} set{_gridPos = value;} }
     private List<Color> _rootColor; 

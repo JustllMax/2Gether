@@ -102,7 +102,7 @@ public class BuildCardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, 
             _draggingBuilding.GetComponent<GridBuilding>().ResetColor();
             _gridController.SetGridSlot(pos, _terrain);
             _draggingBuilding.GetComponent<GridBuilding>().gridPos = pos;
-            _gridController.TryPlace(pos, _draggingBuilding.GetComponent<Building>());
+            _gridController.TryPlace(pos, _draggingBuilding.GetComponent<Building>(), out _);
 
         }
         Destroy(_draggingBuilding);
