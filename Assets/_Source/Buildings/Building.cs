@@ -89,7 +89,6 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
         AudioManager.Instance.PlaySFX(createDestroySound);
         GoldManager.Instance.GoldAdd(GetSellCost());
         DustSpawner.SpawnDust(transform.position, particlesScaleModifier);
-
     }
 
     public virtual void OnUpgrage()

@@ -13,6 +13,8 @@ public class BuildingDetailHandler : MonoBehaviour
     [SerializeField, ReadOnly]
     private bool _showingBuildingDetail;
 
+    private Building _currentBuilding;
+
     LayerMask buildingMask;
 
     [Header("UI Assets")]
@@ -35,12 +37,14 @@ public class BuildingDetailHandler : MonoBehaviour
         _buildingDetailRoot.SetActive(false);
 
         _closeButton.onClick.AddListener(CloseDetailPanel);
+        _sellButton.onClick.AddListener(SellBuilding);
     }
 
     public void CloseDetailPanel()
     {
         _showingBuildingDetail = false;
         _buildingDetailRoot.SetActive(false);
+        _currentBuilding = null;
     }
 
 
@@ -60,16 +64,17 @@ public class BuildingDetailHandler : MonoBehaviour
                         return;
                     }
                 }
-                if(_showingBuildingDetail == true)
-                {
-                    CloseDetailPanel();
-                }
+                //if(_showingBuildingDetail == true)
+                //{
+                //    CloseDetailPanel();
+                //}
             }
         }
     }
 
     public void ShowBuildingDetail(Building b)
     {
+        _currentBuilding = b;
  
         _showingBuildingDetail = true;
 
@@ -77,5 +82,17 @@ public class BuildingDetailHandler : MonoBehaviour
 
         _title.text = b.GetBaseStatistics().Name;
         _cardStatDisplay.Display(b.GetBaseStatistics().GetStatistics());
+    }
+
+    public void SellBuilding()
+    {
+        if (_currentBuilding == null)
+            return;
+
+        
+        _currentBuilding.OnSell();
+        GridController.Instance.RemoveBuilding(_currentBuilding.GetComponent<GridBuilding>().gridPos);
+        _currentBuilding = null;
+        CloseDetailPanel();
     }
 }

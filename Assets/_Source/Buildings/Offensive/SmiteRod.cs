@@ -54,6 +54,13 @@ public class SmiteRod : Building
         ApplySlowAndDamage(controllers);
     }
 
+    public override void OnSell()
+    {
+        base.OnSell();
+
+        Kill();
+    }
+
     public override bool TakeDamage(float damage)
     {
         AudioManager.Instance.PlaySFXAtSource(takeHitSound, audioSource);

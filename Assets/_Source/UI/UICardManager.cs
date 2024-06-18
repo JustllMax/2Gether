@@ -80,7 +80,7 @@ public class UICardManager : MonoBehaviour
             a++;
             randomCardIndex = Random.Range(0, deck.Count - 1);
             card = deck[randomCardIndex];
-            if (a > 100)
+            if (a > 1000)
             {
                 // we cant find rarity we wanted, so just give up
                 card = deck[randomCardIndex];

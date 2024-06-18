@@ -45,6 +45,14 @@ public class Minefield : Building
             mine.SetMineUp();
         }
     }
+
+    public override void OnSell()
+    {
+        base.OnSell();
+        Kill();
+    }
+
+
     public override bool TakeDamage(float damage)
     {
         return false;

@@ -59,6 +59,7 @@ MonoBehaviour:
   _description: {fileID: 2652202199552574029}
   _thumbnail: {fileID: 6609463295309404592}
   _statDisplay: {fileID: 6096906222485787645}
+  _activeBorder: {fileID: 8902769733517589928}
 --- !u!114 &8079599990683293868
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using NaughtyAttributes;
 using System;
-using UnityEngine.PlayerLoop;
+using Cysharp.Threading.Tasks;
+
 
 public class UIFlow : MonoBehaviour
 {
@@ -14,11 +15,18 @@ public class UIFlow : MonoBehaviour
     public Button boosterPackButton;
     public Button rerollButton;
     public Button continueButton;
+
+    [SerializeField]
+    private Button _startNightButton;
+
     public GameObject cardPrefab;
     public GameObject cardpackPanel;
     public GameObject cardpackOpenPanel;
     public GameObject gamePanel;
     public GameObject cardsPanel;
+
+    [SerializeField] 
+    float appearanceDelay = 2f;
 
     [SerializeField]
     private UICards currentClickedCard = null;
@@ -188,8 +196,8 @@ public class UIFlow : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(1))
             {
-                currentClickedCard.ResetPosition();
                 currentClickedCard.CardData.EndExecute();
+                currentClickedCard.ResetPosition();
                 currentClickedCard = null;
             }
         }
@@ -267,7 +275,10 @@ public class UIFlow : MonoBehaviour
 
     public void SetSelectedCard(UICards card)
     {
-        
+        _startNightButton.interactable = false;
+
+        if (card == null)
+            _startNightButton.interactable = true;
 
         if (currentClickedCard == card)
         {   
@@ -290,6 +301,8 @@ public class UIFlow : MonoBehaviour
 
     public void DeselectCurrentlyHeldCard()
     {
+        _startNightButton.interactable = true;
+
         currentClickedCard.ResetPosition();
         currentClickedCard.CardData.EndExecute();
         _buildingDetailHandler.CloseDetailPanel();
@@ -298,6 +311,8 @@ public class UIFlow : MonoBehaviour
 
     public void DiscardCard(Card buildingCard)
     {
+        _startNightButton.interactable = true;
+
         Destroy(currentClickedCard.gameObject);
         currentClickedCard = null;
     }
@@ -322,11 +337,23 @@ public class UIFlow : MonoBehaviour
         cardpackPanel.SetActive(false);
         rerollButton.gameObject.SetActive(false);
         continueButton.gameObject.SetActive(false);
+        HUDManager.Instance.MainbaseHPBar.transform.parent.gameObject.SetActive(false);
+
     }
+
+
 
     void OnDayStart()
     {
-        ShowPanel(UICardManager.Instance.GetRandomCards(5));
+        _ = SetDayUIActivation();
+    }
+
+    async UniTaskVoid SetDayUIActivation()
+    {
+        
+        await UniTask.WaitForSeconds(appearanceDelay);
+        ShowPanel(UICardManager.Instance.GetRandomCards(5));       
+        HUDManager.Instance.MainbaseHPBar.transform.parent.gameObject.SetActive(true);
     }
 
     //THIS IS TEMP 

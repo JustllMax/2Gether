@@ -62,6 +62,13 @@ public class ToxicFabric : Building
         return false;
     }
 
+    public override void OnSell()
+    {
+        base.OnSell();
+
+        Kill();
+    }
+
     #endregion ChildrenMethods
 
 

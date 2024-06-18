@@ -8,7 +8,16 @@ public class PathSlot : MonoBehaviour
     public void RotateWays(Vector3 axis, float rotationAngle)
     {
         pos = slot.pos;
-        gameObject.transform.GetChild(0).Rotate(axis, rotationAngle); ;
+        var slotWays = gameObject.transform.GetChild(0);
+        slotWays.Rotate(axis, rotationAngle);
+        for(int i = 0; i < slotWays.transform.childCount; i++)
+        {
+            if(slotWays.transform.GetChild(i).tag == "Terrain")
+            {
+                slotWays.transform.GetChild(i).Rotate(axis, rotationAngle*(-1));
+            }
+        }
+        
     }
     public void RotateSlot(Vector3 axis, float rotationAngle)
     {
