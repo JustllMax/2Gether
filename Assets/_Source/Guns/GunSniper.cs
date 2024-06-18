@@ -25,7 +25,7 @@ public class GunSniper : Gun
             CalculateFire(bulletSpawnPoint);
             playerController.Velocity = playerController.Velocity - playerController.transform.forward * recoilForce;
             AudioManager.Instance.PlaySFXAtSource(firingSound, audioSource);
-            shootingSystem.Play();
+            muzzleFlash.Spawn();
             return true;
         }
         return false;

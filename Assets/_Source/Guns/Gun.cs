@@ -15,7 +15,7 @@ abstract public class Gun : MonoBehaviour
     [SerializeField] protected float bulletSpeed = 100;
     [SerializeField] protected bool addBulletSpread = true;
     [SerializeField] protected Vector3 bulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
-    [SerializeField] protected ParticleSystem shootingSystem;
+    [SerializeField] protected MuzzleFlashSpawner muzzleFlash;
     [SerializeField] protected Transform bulletSpawnPoint;
     [SerializeField] protected Transform trailSpawnPoint;
     [SerializeField] protected ParticleSystem impactParticleSystem;

@@ -22,7 +22,7 @@ public class GunAR : Gun
             ammoInMagazine -= 1;
             CalculateFire(bulletSpawnPoint);
             AudioManager.Instance.PlaySFXAtSource(firingSound, audioSource);
-            shootingSystem.Play();
+            muzzleFlash.Spawn();
             return true;
         }
         return false;
