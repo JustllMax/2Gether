@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics;
 using TMPro;
+using UnityEditor.PackageManager;
+using UnityEngine.EventSystems;
 
 
 
@@ -60,7 +62,9 @@ public class BuildingPlacer : MonoBehaviour
             
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~layerMask) && !EventSystem.current.IsPointerOverGameObject())
             {
                 if (hit.collider.gameObject.CompareTag("Terrain") || hit.collider.gameObject.CompareTag("Way"))
                 {
@@ -101,24 +105,24 @@ public class BuildingPlacer : MonoBehaviour
                     _draggingBuilding.transform.position = new Vector3(_terrain.gameObject.transform.position.x, y, _terrain.gameObject.transform.position.z);
                     _draggingBuilding.GetComponent<GridBuilding>().SetColor(_isAvailableToBuild);
                 }
-            }
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (_isAvailableToBuild)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    Vector2Int pos = new Vector2Int((int)_draggingBuilding.transform.position.x / gridOffset, (int)_draggingBuilding.transform.position.z / gridOffset);
-                    _draggingBuilding.GetComponent<GridBuilding>().ResetColor();
-                    _draggingBuilding.GetComponent<GridBuilding>().gridPos = pos;
-                    _gridController.SetGridSlot(pos, _terrain);
-                    if (_gridController.TryPlace(pos, _draggingBuilding.GetComponent<Building>(), out _))
+                    if (_isAvailableToBuild)
                     {
-                        Debug.Log("Place ok");
-                        _selectedBuildingCard.OnCardSubmitted(_gameContext);
-                        EndPlaceMode();
+                        Vector2Int pos = new Vector2Int((int)_draggingBuilding.transform.position.x / gridOffset, (int)_draggingBuilding.transform.position.z / gridOffset);
+                        _draggingBuilding.GetComponent<GridBuilding>().ResetColor();
+                        _draggingBuilding.GetComponent<GridBuilding>().gridPos = pos;
+                        _gridController.SetGridSlot(pos, _terrain);
+                        if (_gridController.TryPlace(pos, _draggingBuilding.GetComponent<Building>(), out _))
+                        {
+                            Debug.Log("Place ok");
+                            _selectedBuildingCard.OnCardSubmitted(_gameContext);
+                            EndPlaceMode();
+                        }
                     }
                 }
             }
+
         }
     }
 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -13,6 +14,9 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     RectTransform rectTransform;
     private UIFlow _flowRef;
     float scaleModifier = 1.25f;
+
+    private float originalY;
+
     public void SetUIFlowRef(UIFlow flowRef)
         { this._flowRef = flowRef; }
 
@@ -74,7 +78,7 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     public void MinimizeCard()
     {
         rectTransform.localScale = originalScale;
-        rectTransform.localPosition -= upOffset;
+        rectTransform.localPosition = new Vector3(rectTransform.localPosition.x,originalY, rectTransform.localPosition.z);
     }
 
     public void MaximizeCard()
@@ -93,4 +97,9 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         } 
     }
 
+    public void SetInitialYPosition()
+    {
+        originalY = transform.localPosition.y;
+        MinimizeCard();
+    }
 }
