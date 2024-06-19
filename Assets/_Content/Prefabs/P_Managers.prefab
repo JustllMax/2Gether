@@ -413,6 +413,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1792657969967687894}
+  - component: {fileID: 6389655528546179269}
   m_Layer: 0
   m_Name: ProjectileManager
   m_TagString: Untagged
@@ -435,6 +436,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1104214513903706894}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6389655528546179269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6708875757452078617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73d7916ab5970c44c8c1856dc293fdfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  P_Projectile: {fileID: 7727711388741772700, guid: 863f1f01d8597a942b50ea10505592e2,
+    type: 3}
 --- !u!1 &6744767929022954880
 GameObject:
   m_ObjectHideFlags: 0
@@ -753,8 +768,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
         type: 3}
+      propertyPath: _enemyBoss.enemies.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
       propertyPath: _enemyFollowPrefabs.Array.size
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyAttack.enemies.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyFollow.enemies.Array.size
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
         type: 3}
@@ -786,6 +816,94 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7685304744681281529, guid: 1dcb145c753befd4fbc21ef919f64b61,
         type: 3}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyBoss.enemies.Array.data[0].enemy
+      value: 
+      objectReference: {fileID: 8669766861633451264, guid: 542eff3b07a894f4bb5cb0369776e87b,
+        type: 3}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyBoss.enemies.Array.data[0].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyAttack.enemies.Array.data[0].enemy
+      value: 
+      objectReference: {fileID: 6219354284539619549, guid: 427d3b5163b521946ad782cdf25aacc2,
+        type: 3}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyAttack.enemies.Array.data[1].enemy
+      value: 
+      objectReference: {fileID: 9029036811985243743, guid: c06c68b77dc061b40a9b37d6138b9fe1,
+        type: 3}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyAttack.enemies.Array.data[2].enemy
+      value: 
+      objectReference: {fileID: 4084334784099707750, guid: 14d53d09db65d4045a34b3885ac33f06,
+        type: 3}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyFollow.enemies.Array.data[0].enemy
+      value: 
+      objectReference: {fileID: 2303781138697332408, guid: 7ce58ef33dd26454e94930b8ca7a424b,
+        type: 3}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyFollow.enemies.Array.data[1].enemy
+      value: 
+      objectReference: {fileID: 7469077900276144290, guid: 4f9a9cbf63ab1ff4f8089bd56df2fc49,
+        type: 3}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyFollow.enemies.Array.data[2].enemy
+      value: 
+      objectReference: {fileID: 8116058673664128778, guid: d6259ac63592f4d4eb306f8c21dd3269,
+        type: 3}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyFollow.enemies.Array.data[3].enemy
+      value: 
+      objectReference: {fileID: 7685304744681281529, guid: 1dcb145c753befd4fbc21ef919f64b61,
+        type: 3}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyAttack.enemies.Array.data[0].weight
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyAttack.enemies.Array.data[1].weight
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyAttack.enemies.Array.data[2].weight
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyFollow.enemies.Array.data[0].weight
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyFollow.enemies.Array.data[1].weight
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyFollow.enemies.Array.data[2].weight
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685199055020228951, guid: 3459d3a53b0830e4090ae9a21648628f,
+        type: 3}
+      propertyPath: _enemyFollow.enemies.Array.data[3].weight
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7674151515446551936, guid: 3459d3a53b0830e4090ae9a21648628f,
         type: 3}
       propertyPath: m_LocalPosition.x

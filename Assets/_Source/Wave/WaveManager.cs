@@ -2,6 +2,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
+[System.Serializable]
+public struct EnemyWeight
+{
+    public GameObject enemy;
+    public int weight;
+}
+
+[System.Serializable]
+public class EnemyWeightPool //: UnityEngine.Object
+{
+    public EnemyWeight[] enemies;
+    int totalWeight;
+
+    public void Init()
+    {
+        totalWeight = 0;
+        foreach (EnemyWeight enemy in enemies)
+            totalWeight += enemy.weight;
+    }
+
+    public GameObject GetRandomEnemy()
+    {
+        int weight = UnityEngine.Random.Range(0, totalWeight);
+        int iterWeight = 0;
+
+        foreach (EnemyWeight enemy in enemies)
+        {
+            iterWeight += enemy.weight;
+            if (iterWeight >= weight)
+                return enemy.enemy;
+        }
+        return null;
+    }
+
+}
+
+
+[System.Serializable]
 public struct SingleWave
 {
     public List<GameObject> EnemyPool;
@@ -22,16 +60,16 @@ public class WaveManager : MonoBehaviour
     private static WaveManager _instance;
     public static WaveManager Instance { get { return _instance; } }
     [SerializeField] float nightEndDelay = 2f;
-    [SerializeField] List<GameObject> _enemyFollowPrefabs;
-    [SerializeField] List<GameObject> _enemyAttackPrefabs;
-    [SerializeField] List<GameObject> _enemyBossPrefabs;
-    List<SingleWave> waves = new List<SingleWave>();
+    [SerializeField] EnemyWeightPool _enemyFollow;
+    [SerializeField] EnemyWeightPool _enemyAttack;
+    [SerializeField] EnemyWeightPool _enemyBoss;
+    [SerializeField] List<SingleWave> waves = new List<SingleWave>();
     private WaveSystem _waveSystem;
     public WaveSystem waveSystem { get { return _waveSystem; } }
     private float waveClearExpected = 240;
     private float waveClear = 0;
-    int[] _weightsFollow;
-    int[] _weightsAttack;
+    //[SerializeField] int[] _weightsFollow;
+    //[SerializeField] int[] _weightsAttack;
     #endregion
 
     #region On start 
@@ -46,9 +84,13 @@ public class WaveManager : MonoBehaviour
         _instance = this;
         _waveSystem = GetComponent<WaveSystem>();
         WaveSystem.nightCount = 0;
-        
-        _weightsFollow = SplitNumber(_enemyFollowPrefabs.Count*30, _enemyFollowPrefabs.Count);
-        _weightsAttack = SplitNumber(_enemyAttackPrefabs.Count*30, _enemyAttackPrefabs.Count);
+
+        _enemyFollow.Init();
+        _enemyAttack.Init();
+        _enemyBoss.Init();
+
+        //_weightsFollow = SplitNumber(_enemyFollowPrefabs.Count*30, _enemyFollowPrefabs.Count);
+        //_weightsAttack = SplitNumber(_enemyAttackPrefabs.Count*30, _enemyAttackPrefabs.Count);
 
         WaveData waveData = Resources.Load<WaveData>("Waves/wave_data");
 
@@ -95,6 +137,7 @@ public class WaveManager : MonoBehaviour
 
         if (_waveSystem.enemyCount <= 0 && _waveSystem.isWaveActive && !_waveSystem.isSpawnActive)
         {
+            _waveSystem.isWaveActive = false;
             _ = InvokeNightEnd();
         }
         waveClear = _waveSystem.elapsedTime;
@@ -103,41 +146,42 @@ public class WaveManager : MonoBehaviour
     #region Wave 
 
     #region Next Wave
-    int[] SplitNumber(int total, int count)
-    {
-        int[] result = new int[count];
-        float[] weights = new float[count];
 
-        float weightSum = 0;
-        for (int i = 0; i < count; i++)
-        {
-            weights[i] = 1.0f / (i + 1);
-            weightSum += weights[i];
-        }
-
-        float totalWeight = 0;
-        for (int i = 0; i < count; i++)
-        {
-            weights[i] = weights[i] / weightSum * total;
-            totalWeight += weights[i];
-        }
-
-        int intTotalWeight = Mathf.RoundToInt(totalWeight);
-        int sum = 0;
-        for (int i = 0; i < count; i++)
-        {
-            result[i] = Mathf.RoundToInt(weights[i]);
-            sum += result[i];
-        }
-
-        result[count - 1] += total - sum;
-
-        return result;
-    }
+    //int[] SplitNumber(int total, int count)
+    //{
+    //    int[] result = new int[count];
+    //    float[] weights = new float[count];
+    //
+    //    float weightSum = 0;
+    //    for (int i = 0; i < count; i++)
+    //    {
+    //        weights[i] = 1.0f / (i + 1);
+    //        weightSum += weights[i];
+    //    }
+    //
+    //    float totalWeight = 0;
+    //    for (int i = 0; i < count; i++)
+    //    {
+    //        weights[i] = weights[i] / weightSum * total;
+    //        totalWeight += weights[i];
+    //    }
+    //
+    //    int intTotalWeight = Mathf.RoundToInt(totalWeight);
+    //    int sum = 0;
+    //    for (int i = 0; i < count; i++)
+    //    {
+    //        result[i] = Mathf.RoundToInt(weights[i]);
+    //        sum += result[i];
+    //    }
+    //
+    //    result[count - 1] += total - sum;
+    //
+    //    return result;
+    //}
     public void NextNightWaveData()
     {
         int followEnemiesNumberToAdd = UnityEngine.Random.Range(0, 5);
-        int attackEnemiesNumberToAdd = UnityEngine.Random.Range(0, 5);
+        int attackEnemiesNumberToAdd = UnityEngine.Random.Range(0, 4);
         int followToAdd;
         int attackToAdd;
         int bossToAdd;
@@ -156,22 +200,19 @@ public class WaveManager : MonoBehaviour
                 waveClearExpected += wave.Cooldown;
                 for (int followCount = 0; followCount < followEnemiesNumberToAdd; followCount++)
                 {
-                    followToAdd = DetermineEnemyIndex(UnityEngine.Random.Range(0, _enemyFollowPrefabs.Count*20), _weightsFollow);
-                    wave.EnemyPool.Add(_enemyFollowPrefabs[followToAdd]);
+                    wave.EnemyPool.Add(_enemyFollow.GetRandomEnemy());
                 }
 
                 for (int followCount = 0; followCount < attackEnemiesNumberToAdd; followCount++)
                 {
-                    attackToAdd = DetermineEnemyIndex(UnityEngine.Random.Range(0, _enemyFollowPrefabs.Count*20), _weightsAttack);
-                    wave.EnemyPool.Add(_enemyAttackPrefabs[attackToAdd]);
+                    wave.EnemyPool.Add(_enemyAttack.GetRandomEnemy());
                 }
             }
             waveClearExpected += followEnemiesNumberToAdd + attackEnemiesNumberToAdd;
         }
         if (WaveSystem.nightCount % 5 == 0)
         {
-            bossToAdd = UnityEngine.Random.Range(0, _enemyBossPrefabs.Count);
-            waves[waves.Count - 1].EnemyPool.Add(_enemyBossPrefabs[bossToAdd]);
+            waves[waves.Count - 1].EnemyPool.Add(_enemyBoss.GetRandomEnemy());
         }
         waveClearExpected += followEnemiesNumberToAdd + attackEnemiesNumberToAdd;
     }

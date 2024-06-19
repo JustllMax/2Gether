@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     [SerializeField]
     float _maxHealth = 100f;
     [SerializeField]
+    float _health;
+    [SerializeField]
     [Range(0.1f, 3f)]
     float invincibilityDuration = 0.4f;
 
@@ -82,7 +84,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     public bool CanMove { get; set; } = true;
     public bool IsTargetable { get; set; }
     public TargetType TargetType { get; set; }
-    public float Health { get; set; }
+    public float Health { get => _health; set => _health = value; }
 
     public Vector3 Velocity { get => _velocity; set => _velocity = value; }
 

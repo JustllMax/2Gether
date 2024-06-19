@@ -2260,7 +2260,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 832
   explosionRadius: 5
-  explosionDamage: 75
+  explosionDamage: 60
   particlesScale: 3
 --- !u!195 &1600096481173909209
 NavMeshAgent:
