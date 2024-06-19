@@ -60,6 +60,6 @@ public class DayTime : MonoBehaviour
         dirLight.color = directLightGradient.Evaluate(timeProgress);
         RenderSettings.ambientLight = ambientLightGradient.Evaluate(timeProgress);
 
-        dirLight.transform.localEulerAngles = new Vector3(360f * timeProgress - 90, _defaultAngles.x, _defaultAngles.y);
+        dirLight.transform.localEulerAngles = new Vector3(360f * timeProgress - 45, _defaultAngles.y, _defaultAngles.z);
     }
 }

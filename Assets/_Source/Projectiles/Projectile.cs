@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] float activeDelay = 0.02f;
     [SerializeField] Vector3 lastPos;
     [SerializeField] float lifetime;
+    [SerializeField] float visualLifetime;
 
     ObjectPool<Projectile> pool;
     Collider collider;
@@ -26,6 +27,7 @@ public class Projectile : MonoBehaviour
     {
         transform.localScale = Vector3.zero;
         lifetime = 0;
+        visualLifetime = 0;
         collider.enabled = false;
     }
 
@@ -44,24 +46,21 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        lifetime += Time.deltaTime;
+        visualLifetime += Time.deltaTime;
 
-        if (!collider.enabled)
-        {
-            if (lifetime >= activeDelay) 
-            {
-                collider.enabled = true;
-            }
-
-            transform.localScale = new Vector3(0.25f, 0.25f, 0.25f) * (lifetime / activeDelay);
-        } else
+        if (collider.enabled)
         {
             transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+        } else
+        {
+            transform.localScale = new Vector3(0.25f, 0.25f, 0.25f) * Mathf.Min(visualLifetime / activeDelay, 1f);
         }
     }
 
     void FixedUpdate()
     {
+        lifetime += Time.fixedDeltaTime;
+
         if (collider.enabled)
         {
             Vector3 offset = transform.position - lastPos;
@@ -70,6 +69,9 @@ public class Projectile : MonoBehaviour
                  transform.position = hit.point;
                 OnTriggerEnter(hit.collider);
             }
+        } else if (lifetime >= activeDelay)
+        {
+            collider.enabled = true;
         }
         lastPos = transform.position;
 
