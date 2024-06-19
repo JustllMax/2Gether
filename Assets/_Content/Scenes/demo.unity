@@ -23,9 +23,9 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 0.25
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
+  m_SubtractiveShadowColor: {r: 0.08149823, g: 0.08513258, b: 0.09433961, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 50bf15468c19e0e40b5bf26662770a34, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -35,10 +35,10 @@ RenderSettings:
   m_DefaultReflectionMode: 0
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
-  m_ReflectionIntensity: 1
+  m_ReflectionIntensity: 0.5
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.35702324, g: 0.6970393, b: 0.7235334, a: 1}
+  m_IndirectSpecularColor: {r: 0.17851162, g: 0.34851965, b: 0.3617667, a: 0.5}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -472,17 +472,17 @@ PrefabInstance:
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.48571238
+      value: 0.48571235
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.32552993
+      value: 0.32553
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.20118867
+      value: -0.20118871
       objectReference: {fileID: 0}
     - target: {fileID: 5830323962992596256, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
@@ -728,7 +728,7 @@ PrefabInstance:
     - target: {fileID: 899579016727927919, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7858988
+      value: 0.78589886
       objectReference: {fileID: 0}
     - target: {fileID: 899579016727927919, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
@@ -738,12 +738,12 @@ PrefabInstance:
     - target: {fileID: 899579016727927919, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.32552993
+      value: -0.32552987
       objectReference: {fileID: 0}
     - target: {fileID: 899579016727927919, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.20118867
+      value: 0.20118861
       objectReference: {fileID: 0}
     - target: {fileID: 7062071491655611484, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
@@ -868,6 +868,146 @@ PrefabInstance:
       propertyPath: dirLight
       value: 
       objectReference: {fileID: 203844588}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: daySkybox
+      value: 
+      objectReference: {fileID: 2100000, guid: 50bf15468c19e0e40b5bf26662770a34, type: 2}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: nightSkybox
+      value: 
+      objectReference: {fileID: 2100000, guid: cde27d19e15815c41a916069dcd3e381, type: 2}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.ctime1
+      value: 8867
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.ctime2
+      value: 26600
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.ctime3
+      value: 41441
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.ctime4
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.ctime5
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key0.b
+      value: 0.49056602
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key0.g
+      value: 0.1966892
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key0.r
+      value: 0.2160471
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key1.b
+      value: 0.5069726
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key1.g
+      value: 0.21921068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key1.r
+      value: 0.23494624
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key2.b
+      value: 0.7169812
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key2.g
+      value: 0.50749135
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key2.r
+      value: 0.47686014
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key3.b
+      value: 0.6886792
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key3.g
+      value: 0.37998974
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key3.r
+      value: 0.33459416
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key4.b
+      value: 0.31132078
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key4.g
+      value: 0.057271283
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key4.r
+      value: 0.06718395
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key5.b
+      value: 0.31132078
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key5.g
+      value: 0.057271283
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.key5.r
+      value: 0.06718395
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467322825745117814, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
+        type: 3}
+      propertyPath: ambientLightGradient.m_NumColorKeys
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5922677963036534157, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
         type: 3}
       propertyPath: dayCamera

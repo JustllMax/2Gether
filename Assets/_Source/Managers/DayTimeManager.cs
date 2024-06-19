@@ -5,6 +5,9 @@ using UnityEngine;
 //[ExecuteInEditMode]
 public class DayTime : MonoBehaviour
 {
+    [SerializeField] Material daySkybox;
+    [SerializeField] Material nightSkybox;
+
     [SerializeField] private Gradient directLightGradient;
     [SerializeField] private Gradient ambientLightGradient;
     [SerializeField, Range(1, 3600)] private float timeDayInSeconds = 60;
@@ -37,11 +40,13 @@ public class DayTime : MonoBehaviour
     public void SetNightLight()
     {
         _currDayTime = _nightTime;
+        RenderSettings.skybox = nightSkybox;
     }
 
     public void SetDayLight()
     {
         _currDayTime = _dayTime;
+        RenderSettings.skybox = daySkybox;
     }
 
     // Update is called once per frame

@@ -5,6 +5,7 @@ using UnityEngine.Experimental.GlobalIllumination;
 
 public class LampLightManager : MonoBehaviour
 {
+    [SerializeField] private float _shadowDistance = 30f;
     [SerializeField] private float _intensity = 70f;
     private float timeProgress = 0f;
     [SerializeField, Range(0f, 100f)] private float lightChangingTime = 80f;
@@ -31,5 +32,18 @@ public class LampLightManager : MonoBehaviour
                 lighting.intensity = timeProgress;
             }
         }
+
+
+        if (Vector3.Distance(Camera.main.transform.position, transform.position) < _shadowDistance)
+        {
+            if (lighting.shadows != LightShadows.Soft)
+                lighting.shadows = LightShadows.Soft;
+        }
+        else
+        {
+            if (lighting.shadows != LightShadows.None)
+                lighting.shadows = LightShadows.None;
+        }
+
     }
 }
