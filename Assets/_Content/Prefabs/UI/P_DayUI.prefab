@@ -1369,6 +1369,7 @@ GameObject:
   - component: {fileID: 5233606180634100361}
   - component: {fileID: 1071042460937852575}
   - component: {fileID: 5467958461247569151}
+  - component: {fileID: 7666276329873095103}
   m_Layer: 5
   m_Name: cardsPanel
   m_TagString: Untagged
@@ -1457,6 +1458,18 @@ MonoBehaviour:
   m_Spacing: {x: 160, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 8
+--- !u!225 &7666276329873095103
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4194653210181819695}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4618734153210671174
 GameObject:
   m_ObjectHideFlags: 0
@@ -1852,6 +1865,7 @@ MonoBehaviour:
   cardpackOpenPanel: {fileID: 8176097838261698671}
   gamePanel: {fileID: 8487038027572920808}
   cardsPanel: {fileID: 4194653210181819695}
+  appearanceDelay: 2
   currentClickedCard: {fileID: 0}
   _currentCardPool: []
   _cards: []
@@ -2595,7 +2609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

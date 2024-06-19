@@ -162,6 +162,7 @@ public class UIFlow : MonoBehaviour
                     if (card.transform != cardpackOpenPanel.transform)
                     {
                         card.transform.SetParent(cardsPanel.transform, false);
+                        card.SetInitialYPosition();
                         //  card.SetUIFlowRef(this);
                     }
                 }
@@ -359,7 +360,8 @@ public class UIFlow : MonoBehaviour
     //THIS IS TEMP 
     void HandleInput()
     {
-       
+        if (!DayNightCycleManager.Instance.IsDay)
+            return;
         
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
