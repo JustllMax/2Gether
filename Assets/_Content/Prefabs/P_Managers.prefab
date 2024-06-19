@@ -413,6 +413,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1792657969967687894}
+  - component: {fileID: 8293384754208926211}
   m_Layer: 0
   m_Name: ProjectileManager
   m_TagString: Untagged
@@ -435,6 +436,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1104214513903706894}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8293384754208926211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6708875757452078617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73d7916ab5970c44c8c1856dc293fdfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  P_Projectile: {fileID: 7727711388741772700, guid: 863f1f01d8597a942b50ea10505592e2,
+    type: 3}
 --- !u!1 &6744767929022954880
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,6 +1173,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1104214513903706894}
     m_Modifications:
+    - target: {fileID: 4892460281932970682, guid: 3d78f52b6270dde49a6a58246b945cc1,
+        type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 32
+      objectReference: {fileID: 0}
     - target: {fileID: 5122096375321475592, guid: 3d78f52b6270dde49a6a58246b945cc1,
         type: 3}
       propertyPath: m_Name
