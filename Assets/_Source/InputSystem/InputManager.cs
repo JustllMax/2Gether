@@ -23,6 +23,7 @@ public class InputManager : MonoBehaviour
 
         }
         playerInputAction = new PlayerInputAction();
+        playerInputAction.AllTime.Enable();
     }
 
 

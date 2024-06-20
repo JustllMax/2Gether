@@ -31,13 +31,31 @@ public class PauseManager : MonoBehaviour
 
     void Start()
     {
-        //InputManager.Instance.GetPlayerInputAction().AllTime.Pause.performed += PauseGameInput;
+        InputManager.Instance.GetPlayerInputAction().AllTime.Pause.performed += PauseGameInput ;
     }
 
     private void Update()
     {
         //TODO: DELETE AFTER INPUT MANAGER FIX
+        /*
         if (Input.GetKeyDown(KeyCode.Escape) && !DeathScreenManager.Instance.IsScreenActive)
+        {
+            if (isInSettingsMenu)
+            {
+                CloseSettings();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }*/
+        
+    }
+
+    void PauseGameInput(InputAction.CallbackContext context)
+    {
+        Debug.Log(" i am here");
+        if (DeathScreenManager.Instance.IsScreenActive == false)
         {
             if (isInSettingsMenu)
             {
@@ -50,13 +68,9 @@ public class PauseManager : MonoBehaviour
         }
     }
 
-    void PauseGameInput(InputAction.CallbackContext context)
-    {
-        PauseGame();
-    }
-
     public void PauseGame()
     {
+        
         // Pause
         if (isGamePaused == false)
         {

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardName: Mine
   CardSprite: {fileID: 21300000, guid: fd60ac914f431da4fa96fb1feedb2fee, type: 3}
-  CardDescription: Shoots a laser at near enemies
+  CardDescription: Explodes on touch
   CardStatisticsData: {fileID: 11400000, guid: b183983f19c56e14f96d4f5514ff8b70, type: 2}
   BuildingPrefab: {fileID: 227704562741578186, guid: 38a205b375903984faaf05367604f11e,
     type: 3}
