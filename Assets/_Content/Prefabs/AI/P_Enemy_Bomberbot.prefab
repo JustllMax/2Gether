@@ -2258,7 +2258,7 @@ MonoBehaviour:
     type: 3}
   explosionMask:
     serializedVersion: 2
-    m_Bits: 832
+    m_Bits: 1856
   explosionRadius: 5
   explosionDamage: 45
   particlesScale: 3

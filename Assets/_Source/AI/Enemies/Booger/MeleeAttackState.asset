@@ -17,7 +17,7 @@ MonoBehaviour:
   ComboDelay: 0.5
   AttackMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1088
   AttackCombo:
   - Damage: 12
     Delay: 0.1

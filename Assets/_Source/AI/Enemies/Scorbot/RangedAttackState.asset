@@ -16,9 +16,10 @@ MonoBehaviour:
   AttackRange: 30
   MinAttackRange: 0
   ProjectileCooldown: 0.5
-  BurstCooldown: 3
+  BurstCooldown: 4
   BurstCount: 2
   Projectile: {fileID: 11400000, guid: 8a7b960dd2627264f973c1050acd4855, type: 2}
   OnBurstRelocateChance: 50
   UseShootingStance: 1
+  StanceWait: 2
   ShotSound: {fileID: 8300000, guid: 5e427fbeb0d7f72419f7d8f84f7e0215, type: 3}

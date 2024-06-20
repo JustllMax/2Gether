@@ -97,10 +97,10 @@ public class AIController : MonoBehaviour, IDamagable
     public uint ammoCount = 0;
 
     [Foldout("DEBUG INFO")]
-    public bool isShooting;
+    public bool isInShootingStance;
 
     [Foldout("DEBUG INFO")]
-    public bool isReloading;
+    public bool burstReady;
 
     [Foldout("DEBUG INFO")]
     [SerializeField] protected Collider[] hitboxColliders;
@@ -225,20 +225,21 @@ public class AIController : MonoBehaviour, IDamagable
     {
         bool targetLost = false;
 
-        if (HasTarget())
+        if (_currentTarget != null)
         {
-            distanceToTarget = Vector3.Distance(_currentTarget.Position, transform.position);
+            if (HasTarget())
+                distanceToTarget = Vector3.Distance(_currentTarget.Position, transform.position);
 
             if (!canChangeTarget)
                 return;
 
-            //Lose target if out of range
-            if (distanceToTarget > _currentTarget.properties.loseTargetRange)
+            //Lose target if invalid or out of range
+            if (!HasTarget() || distanceToTarget > _currentTarget.properties.loseTargetRange)
             {
                 targetLost = true;
                 _currentTarget = null;
             } 
-            else if (!_currentTarget.properties.canAbandonTarget) //In range and can't abandon, skip
+            else if (!_currentTarget.properties.canAbandonTarget) //In range and can't abandon, skip selecting new
             {
                 return;
             }
@@ -303,7 +304,7 @@ public class AIController : MonoBehaviour, IDamagable
         return _currentTarget != null && _currentTarget.IsValid();
     }
 
-    private AITarget GetClosestTarget(in TargetProperties properties)
+    public AITarget GetClosestTarget(in TargetProperties properties)
     {
         Transform target = null;
         ITargetable targetable = null;

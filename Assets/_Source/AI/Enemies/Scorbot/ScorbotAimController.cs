@@ -21,20 +21,19 @@ public class ScorboatAimController : MonoBehaviour, IShooterPoint
         Vector3 targetPosition = target.position;
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
 
-        Vector3 dir = (targetPosition - transform.position).normalized;
-        Vector3 lookAngles = Quaternion.LookRotation(dir).eulerAngles;
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, lookAngles.y, 0), 8f * Time.deltaTime);
-
-
         if (target.TryGetComponent(out PlayerController playerController))
         {
-            direction = PredictiveAim(new Vector3(targetPosition.x,1f,targetPosition.z), new Vector3(transform.position.x,1.5f,transform.position.z), playerController.Velocity, projectileSpeed);
+            direction = PredictiveAim(new Vector3(targetPosition.x, 1f, targetPosition.z), new Vector3(transform.position.x, 1.5f, transform.position.z), playerController.Velocity, projectileSpeed);
         }
         else
         {
-            direction = dir;
+            direction = (targetPosition - transform.position).normalized;
         }
-        
+
+        Vector3 lookAngles = Quaternion.LookRotation(direction).eulerAngles;
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, lookAngles.y, 0), 8f * Time.deltaTime);
+
+
         position = transform.TransformPoint(new Vector3(0.0f, 1.5f, 0.0f));
     }
 

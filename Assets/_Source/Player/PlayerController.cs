@@ -144,10 +144,9 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         }
     }
 
-   
+
 
     #endregion
-
     private void FixedUpdate()
     {
         _onGround = _characterController.isGrounded;
@@ -401,5 +400,18 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         playerModel.SetActive(true);
     }
 
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.collider.attachedRigidbody != null && hit.collider.attachedRigidbody.CompareTag("Enemy"))
+        {
+            Vector3 normal = hit.normal;
+            if (Vector3.Dot(normal, Vector3.up) > 0.5f)
+            {
+                Vector3 offset = hit.point - hit.collider.attachedRigidbody.transform.position;
+                Vector3 velocity = new Vector3(Mathf.Clamp(1.5f/offset.x, -5, 5), 0, Mathf.Clamp(1.5f / offset.z, -5, 5));
 
+                _velocity = Vector3.Lerp(_velocity, velocity, Time.fixedDeltaTime * 50 * _groundControlFactor);
+            }
+        }
+    }
 }

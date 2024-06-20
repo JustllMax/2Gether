@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4572543d8e6e5940badeca60ab45b2c, type: 3}
   m_Name: Projectile_Scorbot
   m_EditorClassIdentifier: 
-  speed: 60
+  speed: 50
   damage: 20
   lifetime: 4
   surfaceMask:
@@ -21,7 +21,7 @@ MonoBehaviour:
   damageMask:
     serializedVersion: 2
     m_Bits: 1600
-  material: {fileID: 2100000, guid: bfa861af791b10c41a3d4684ed734e3b, type: 2}
+  material: {fileID: 2100000, guid: b8a28f14f0b473f41b1461644e947365, type: 2}
   hasGravity: 0
   explodes: 1
   explosionRadius: 2

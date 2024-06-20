@@ -15,12 +15,15 @@ public class RangedAttackState : AIState
     [Range(0f, 20f)]
     public float MinAttackRange;
 
+    [Tooltip("Time between shots in a burst")]
     [SerializeField]
     private float ProjectileCooldown;
 
+    [Tooltip("Time between bursts")]
     [SerializeField]
     private float BurstCooldown;
 
+    [Tooltip("Projectiles in a single bursts")]
     [SerializeField]
     private uint BurstCount;
 
@@ -30,8 +33,13 @@ public class RangedAttackState : AIState
     [SerializeField]
     private float OnBurstRelocateChance;
 
+    [Tooltip("Use shooting stance before firing")]
     [SerializeField]
     private bool UseShootingStance;
+
+    [Tooltip("How long to wait in shooting stance before firing")]
+    [SerializeField]
+    private float StanceWait;
 
     [SerializeField]
     private AudioClip ShotSound;
@@ -42,6 +50,7 @@ public class RangedAttackState : AIState
         controller.PlayAnimation("WALK");
         controller.ammoCount = BurstCount;
         controller.isWalking = true;
+        controller.burstReady = true;
     }
 
     public override void OnTick(AIController controller)
@@ -57,7 +66,7 @@ public class RangedAttackState : AIState
             controller.isWalking = false;
         }
 
-        controller.isShooting = false;
+        controller.isInShootingStance = false;
         controller.GetAnimator().SetBool("is_shooting", false);
 
         if (!controller.CanAttack())
@@ -75,10 +84,19 @@ public class RangedAttackState : AIState
         {
             return;
         }
-        controller.isShooting = true;
+        controller.isInShootingStance = true;
 
         if (controller.lastAttackTime >= ProjectileCooldown)
         {
+            //First shot, wait instead of shooting
+            if (controller.burstReady && StanceWait > 0)
+            {
+                controller.lastAttackTime = ProjectileCooldown - StanceWait;
+                controller.burstReady = false;
+                return;
+            }
+
+
             IShooterPoint shooter;
             if (!controller.TryGetComponent<IShooterPoint>(out shooter))
                 return;
@@ -91,6 +109,7 @@ public class RangedAttackState : AIState
             {
                 controller.ammoCount = BurstCount;
                 controller.lastAttackTime -= BurstCooldown;
+                controller.burstReady = true;
 
                 if (Random.Range(0.0f, 1.0f) <= OnBurstRelocateChance)
                 {
@@ -121,7 +140,7 @@ public class RangedAttackState : AIState
 
     public override void OnLateUpdate(AIController controller)
     {
-        if (controller.isShooting && controller.TryGetComponent<IShooterPoint>(out var shooter))
+        if (controller.isInShootingStance && controller.TryGetComponent<IShooterPoint>(out var shooter))
         {
             shooter.PositionShooter(controller.CurrentTarget.transform, Projectile.speed, out Vector3 direction, out Vector3 position);
         }

@@ -176,8 +176,8 @@ public class WaveManager : MonoBehaviour
     //}
     public void NextNightWaveData()
     {
-        int followEnemiesNumberToAdd = UnityEngine.Random.Range(0, 5);
-        int attackEnemiesNumberToAdd = UnityEngine.Random.Range(0, 4);
+        int followEnemiesNumberToAdd = UnityEngine.Random.Range(1, 5);
+        int attackEnemiesNumberToAdd = UnityEngine.Random.Range(1, 4);
         int followToAdd;
         int attackToAdd;
         int bossToAdd;

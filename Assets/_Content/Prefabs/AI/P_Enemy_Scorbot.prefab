@@ -2368,8 +2368,8 @@ MonoBehaviour:
   isWalking: 0
   lastAttackTime: 0
   ammoCount: 0
-  isShooting: 0
-  isReloading: 0
+  isInShootingStance: 0
+  burstReady: 0
   hitboxColliders: []
   lastTickTime: 0
   tickDeltaTime: 0

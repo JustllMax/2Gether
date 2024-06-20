@@ -12,6 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa57ced62cbb9242a1e007494f26e9e, type: 3}
   m_Name: PlayerDeadState
   m_EditorClassIdentifier: 
-  weight: 2
-  animName: 0
-  AnimDelay: 0
+  weight: 4
+  mainBaseTarget:
+    targetType: 2
+    weight: 4
+    maxSearchRange: 500
+    loseTargetRange: 500
+    movement:
+      movementSpeed: 2
+      turnSpeed: 120
+      acceleration: 8
+      extraRotationSpeed: 0
+    walkOnPath: 0
+    canAbandonTarget: 0
