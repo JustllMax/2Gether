@@ -15,12 +15,19 @@ public class CardObject : MonoBehaviour
     private TMP_Text _title;
     [SerializeField]
     private TMP_Text _description;
-
+    [SerializeField]
+    List<Image> levelMarks;
     [SerializeField]
     private Image _thumbnail;
     [SerializeField]
     private Image _backgroundRaycastTarget;
 
+    [SerializeField]
+    Color whiteColor;
+    [SerializeField]
+    Color blueColor;
+    [SerializeField]
+    Color redColor;
 
     [SerializeField]
     private CardStatDisplay _statDisplay;
@@ -51,7 +58,7 @@ public class CardObject : MonoBehaviour
         _description.text = card.CardDescription;
         _thumbnail.sprite = card.CardSprite;
         _activeBorder.color = GetColorForRarity(card.CardStatisticsData.Rarity);
-
+        EnableLevelMarks(card.CardStatisticsData.Rarity);
         _statDisplay.Display(card.CardStatisticsData.GetStatistics());
     }
 
@@ -60,15 +67,27 @@ public class CardObject : MonoBehaviour
         switch (r)
         {
             case Rarity.Generic:
-                return Color.white;
+                return whiteColor;
                 break;
             case Rarity.Enhanced:
-                return Color.blue;
+                return blueColor;
                 break;
             case Rarity.Prototype:
-                return Color.red;
+                return redColor;
                 break;
-            default: return Color.white;
+            default: return whiteColor;
+        }
+        
+    }
+
+    void EnableLevelMarks(Rarity r)
+    {
+        int level = (int)r;
+        //base level is 0
+        for(int i = 0; i <= level; i++)
+        {
+            levelMarks[i].gameObject.SetActive(true);
+            levelMarks[i].color = _activeBorder.color;
         }
     }
 
