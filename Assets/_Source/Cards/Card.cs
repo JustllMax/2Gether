@@ -6,7 +6,7 @@ using UnityEngine;
 abstract public class Card : ScriptableObject
 {
     public CardType Type { get; protected set; }
-
+    public CardTypeSymbol cardTypeSymbol;
     public string CardName;
 
     public Sprite CardSprite;

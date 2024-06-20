@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b2ae8633cb9ec4fb55712b00759d31, type: 3}
   m_Name: ARAmmoCard
   m_EditorClassIdentifier: 
+  cardTypeSymbol: 3
   CardName: AR Ammunition
-  CardSprite: {fileID: 0}
+  CardSprite: {fileID: 21300000, guid: 640542d8c230b2c45bd2b8fac2dd46cd, type: 3}
   CardDescription: 
   CardStatisticsData: {fileID: 1895904027584428612}
   GunType: 1

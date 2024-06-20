@@ -35,6 +35,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b2ae8633cb9ec4fb55712b00759d31, type: 3}
   m_Name: SniperAmmoCard
   m_EditorClassIdentifier: 
+  cardTypeSymbol: 3
   CardName: sniper ammo
   CardSprite: {fileID: 0}
   CardDescription: 

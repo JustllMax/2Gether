@@ -21,20 +21,24 @@ public class CardObject : MonoBehaviour
     private Image _thumbnail;
     [SerializeField]
     private Image _backgroundRaycastTarget;
-
+   
     [SerializeField]
     Color whiteColor;
     [SerializeField]
     Color blueColor;
     [SerializeField]
     Color redColor;
-
+    
     [SerializeField]
     private CardStatDisplay _statDisplay;
 
     [SerializeField]
     private Image _activeBorder;
 
+    [SerializeField]
+    private Image _typeIcon;
+    [SerializeField]
+    List<Sprite> symbolTypeIcons;
     public void Execute()
     {
         GameContext ctx = new GameContext();
@@ -58,6 +62,7 @@ public class CardObject : MonoBehaviour
         _description.text = card.CardDescription;
         _thumbnail.sprite = card.CardSprite;
         _activeBorder.color = GetColorForRarity(card.CardStatisticsData.Rarity);
+        SetTypeIcon(card.cardTypeSymbol);
         EnableLevelMarks(card.CardStatisticsData.Rarity);
         _statDisplay.Display(card.CardStatisticsData.GetStatistics());
     }
@@ -78,6 +83,10 @@ public class CardObject : MonoBehaviour
             default: return whiteColor;
         }
         
+    }
+    void SetTypeIcon(CardTypeSymbol type)
+    {
+        _typeIcon.sprite = symbolTypeIcons[(int)type];
     }
 
     void EnableLevelMarks(Rarity r)
