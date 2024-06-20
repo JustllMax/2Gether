@@ -18,7 +18,7 @@ MonoBehaviour:
   Description: Protect it at all cost
   BuildingType: 0
   ActivationTime: 1
-  HealthPoints: 1000
+  HealthPoints: 2000
   SellCost: 0
   AttackDamage: 5
   AttackRange: 30
