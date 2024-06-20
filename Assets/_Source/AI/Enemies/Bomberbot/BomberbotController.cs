@@ -17,24 +17,29 @@ public class  BomberbotController : AIController
     public override void Kill() 
     {
         isDead = true;
-        foreach (Collider col in hitboxColliders)
-        {
-            col.enabled = false;
-        }
         GetNavMeshAgent().enabled = false;
 
+        StartExploding();
+    }
+
+    public void StartExploding()
+    {
         PlayAnimation("DEATH");
         Invoke("Explode", DeathInvokeTime);
     }
 
     private void Explode()
     {
+        isDead = true;
+        GetNavMeshAgent().enabled = false;
+        foreach (Collider col in hitboxColliders)
+        {
+            col.enabled = false;
+        }
+
         ExplosionSpawner.SpawnExplosion(transform.position).SetUpExplosion(explosionDamage, explosionRadius, explosionMask, particlesScale);
         Destroy(gameObject);
         WaveManager.Instance.waveSystem.enemyCount--;
-
     }
-
-
 }
 

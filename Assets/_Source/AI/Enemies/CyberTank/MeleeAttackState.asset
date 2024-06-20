@@ -19,7 +19,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1600
   AttackCombo:
-  - Damage: 80
+  - Damage: 60
     Delay: 0.6
     DamagerRadius: 2
     DamagerOffset: {x: 0, y: 1, z: 2}
