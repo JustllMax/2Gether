@@ -2592,8 +2592,8 @@ MonoBehaviour:
   dashSound: {fileID: 8300000, guid: 69c03972585c9154c8fcd96b9e54484c, type: 3}
   jumpSound: {fileID: 8300000, guid: 197f10a21c4e5b847bece310c6fed9d0, type: 3}
   doubleJumpSound: {fileID: 8300000, guid: 13db83b8678030940936d4cec4fdf943, type: 3}
-  dashReadySound: {fileID: 0}
-  dashEmptySound: {fileID: 0}
+  dashReadySound: {fileID: 8300000, guid: cf4723f5d3a95f246942edde877f4c42, type: 3}
+  dashEmptySound: {fileID: 8300000, guid: 65d3d8ce700c8ba45a93864e349fc230, type: 3}
   playerModel: {fileID: 8889202465182205452}
   _maxHealth: 100
   _health: 0
@@ -3994,22 +3994,22 @@ PrefabInstance:
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7858988
+      value: 0.7858987
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.4857124
+      value: 0.48571235
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.32552993
+      value: -0.32553002
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.20118867
+      value: 0.20118871
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}

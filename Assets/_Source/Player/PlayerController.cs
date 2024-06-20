@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
 
             if (_dashCooldownTimer >= _dashCooldown)
             {
-                AudioManager.Instance.PlaySFXAtSource(dashReadySound, _audioSource);
+                AudioManager.Instance.PlaySFXAtSource(dashReadySound, _audioSource, 1f + (((float)_dashCount-1)/_maxDashCount) * 0.25f);
                 _dashCount++;
                 _dashCooldownTimer = 0.0f;
             }

@@ -111,9 +111,10 @@ public class AudioManager : MonoBehaviour
         sfxSource.PlayOneShot(clip);
         
     }
-    public void PlaySFXAtSource(AudioClip clip, AudioSource source)
+    public void PlaySFXAtSource(AudioClip clip, AudioSource source, float pitch = 1f)
     {
         source.volume = sfxSource.volume;
+        source.pitch = pitch;
         source.PlayOneShot(clip);
 
     }
