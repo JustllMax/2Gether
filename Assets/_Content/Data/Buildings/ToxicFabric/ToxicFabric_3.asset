@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ToxicFabric_3
   m_EditorClassIdentifier: 
   CardType: 0
-  Rarity: 0
+  Rarity: 2
   Name: ToxicFabric
   Description: Poison enemies around with Damage Over Time
   BuildingType: 0

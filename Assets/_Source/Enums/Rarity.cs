@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum Rarity 
 {
-    Generic, // White
-    Enhanced, // Blue
-    Prototype // Red
+    Generic = 0, // White
+    Enhanced = 1, // Blue
+    Prototype = 2 // Red
 }

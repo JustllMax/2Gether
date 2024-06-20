@@ -19,7 +19,7 @@ public class UpgradeParticles : MonoBehaviour
     {
         if (particles.isEmitting == false)
         {
-            source.Stop();
+            //source.Stop();
             Destroy(gameObject);
         }
     }
@@ -35,7 +35,7 @@ public class UpgradeParticles : MonoBehaviour
             particles.Play();
         }
 
-        AudioManager.Instance.PlaySFXAtSource(source.clip, source);
+        //AudioManager.Instance.PlaySFXAtSource(source.clip, source);
     }
 
 }

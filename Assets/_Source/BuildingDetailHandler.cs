@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -21,6 +22,8 @@ public class BuildingDetailHandler : MonoBehaviour
     [SerializeField] private GameObject _buildingDetailRoot;
     [SerializeField]
     private TextMeshProUGUI _title;
+    [SerializeField]
+    private TextMeshProUGUI _levelDisplay;
     [SerializeField]
     private CardStatDisplay _cardStatDisplay;
     [SerializeField]
@@ -81,6 +84,7 @@ public class BuildingDetailHandler : MonoBehaviour
         _buildingDetailRoot.SetActive(true);
 
         _title.text = b.GetBaseStatistics().Name;
+        _levelDisplay.text = "Level: " + b.GetBaseStatistics().Rarity.ToString();
         _cardStatDisplay.Display(b.GetBaseStatistics().GetStatistics());
     }
 

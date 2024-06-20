@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics;
 using UnityEngine.EventSystems;
+using Cysharp.Threading.Tasks;
 
 
 
@@ -90,12 +91,12 @@ public class BuildingPlacer : MonoBehaviour
                         )
                         _isAvailableToBuild = false;
 
-                    else if (
-                        _gridController.IsPlaceTaken(
-                        (int)_draggingBuilding.transform.position.x / gridOffset,
-                        (int)_draggingBuilding.transform.position.z / gridOffset)
-                        )
-                        _isAvailableToBuild = false;
+                    //else if (
+                    //    _gridController.IsPlaceTaken(
+                    //    (int)_draggingBuilding.transform.position.x / gridOffset,
+                    //    (int)_draggingBuilding.transform.position.z / gridOffset)
+                    //    )
+                    //    _isAvailableToBuild = false;
 
                     else
                         _isAvailableToBuild = true;
@@ -111,11 +112,41 @@ public class BuildingPlacer : MonoBehaviour
                         _draggingBuilding.GetComponent<GridBuilding>().ResetColor();
                         _draggingBuilding.GetComponent<GridBuilding>().gridPos = pos;
                         _gridController.SetGridSlot(pos, _terrain);
-                        if (_gridController.TryPlace(pos, _draggingBuilding.GetComponent<Building>(), out _))
+
+
+                        if (_gridController.TryPlace(pos, _draggingBuilding.GetComponent<Building>(), out Building alreadyPlacedBuilding))
                         {
                             Debug.Log("Place ok");
                             _selectedBuildingCard.OnCardSubmitted(_gameContext);
                             EndPlaceMode();
+                        }
+                        else
+                        {
+                            var newBuilding = _draggingBuilding.GetComponent<Building>();
+
+                            Debug.Log("Place taken, checking upgrade conditions");
+
+                            // check if we try to place the same building type
+                            if (newBuilding.GetBaseStatistics().GetType() == alreadyPlacedBuilding.GetBaseStatistics().GetType())
+                            {
+                                if (newBuilding.GetBaseStatistics().Rarity > alreadyPlacedBuilding.GetBaseStatistics().Rarity)
+                                {
+                                    // better rarity, replace
+                                    _gridController.RemoveBuilding(pos);
+                                    _gridController.TryPlace(pos, newBuilding, out _);
+
+                                    _selectedBuildingCard.OnCardSubmitted(_gameContext);
+                                    EndPlaceMode();
+                                }
+                                else if (newBuilding.GetBaseStatistics().Rarity == alreadyPlacedBuilding.GetBaseStatistics().Rarity)
+                                {
+                                    // upgrade
+                                    alreadyPlacedBuilding.TryUpgrading(alreadyPlacedBuilding.GetBaseStatistics());
+
+                                    _selectedBuildingCard.OnCardSubmitted(_gameContext);
+                                    EndPlaceMode();
+                                }
+                            }
                         }
                     }
                 }
@@ -124,12 +155,19 @@ public class BuildingPlacer : MonoBehaviour
         }
     }
 
+    GameObject SpawnBuildingWithLevel(GameObject prefab, Rarity r)
+    {
+        var go = Instantiate(prefab);
+        go.GetComponent<Building>().Init((int)r);
+        return go;
+    }
+
     public void StartPlaceMode(BuildingCard bc, GameContext ctx)
     {
         _selectedBuildingCard = bc;
         _gameContext = ctx;
         _isPlacing = true;
-        _draggingBuilding = Instantiate(bc.BuildingPrefab);
+        _draggingBuilding = SpawnBuildingWithLevel(bc.BuildingPrefab, bc.CardStatisticsData.Rarity);
     }
 
     public void EndPlaceMode()

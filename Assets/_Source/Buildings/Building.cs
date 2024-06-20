@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,8 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
     [SerializeField] float particlesScaleModifier = 1;
 
     private BuildingStatistics _buildingStatistics;
+
+    [SerializeField, ReadOnly]
     private int currentLevel = 0;
     private int upgradeCounter = 0;
     protected float AttackCoolDownTimer = 5f;
@@ -47,6 +50,12 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
         Health = maxHealth;
         audioSource = GetComponent<AudioSource>();
 
+    }
+
+    public void Init(int level)
+    {
+        currentLevel = level;
+        //_buildingStatistics = _upgradeTiers.GetStatsForLevel(currentLevel);
     }
 
     public virtual void Start()
@@ -123,7 +132,7 @@ public abstract class Building : MonoBehaviour, ITargetable, IDamagable
         AudioManager.Instance.PlaySFX(upgradeSound);
         upgradeCounter++;
 
-        if(upgradeCounter == UPGRADE_COUNTER_LIMIT)
+        if(upgradeCounter <= UPGRADE_COUNTER_LIMIT)
         {
             UpgradeParticlesSpawner.SpawnParticles(transform.position, 2f);
             currentLevel++;

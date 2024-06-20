@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1995003553715436181}
   - component: {fileID: 3316945329460787115}
   - component: {fileID: 7189597526390380324}
+  - component: {fileID: 6071418875773739768}
   m_Layer: 0
   m_Name: P_UpgradeParticles
   m_TagString: Untagged
@@ -48,7 +49,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -4889,3 +4890,15 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &6071418875773739768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2652978378134079377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717b2ad1990581a48a2c6b0b6fb7f394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
