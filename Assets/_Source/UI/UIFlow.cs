@@ -209,16 +209,18 @@ public class UIFlow : MonoBehaviour
 
     void DestroyCards()
     {
-        Transform[] cards = cardpackOpenPanel.GetComponentsInChildren<Transform>();
+        // not requried since all cards have been moved to gamepanel by this time
+        //Transform[] cards = cardpackOpenPanel.GetComponentsInChildren<Transform>();
 
-        for (int i = 0; i < cards.Length; i++)
-        {
-            Destroy(cards[i].gameObject);
-        }
+        //for (int i = 0; i < cards.Length; i++)
+        //{
+        //    Destroy(cards[i].gameObject);
+        //}
 
-        cards = cardsPanel.GetComponentsInChildren<Transform>();
+        Transform[] cards = cardsPanel.GetComponentsInChildren<Transform>();
 
-        for (int i = 0; i < cards.Length; i++)
+        // start fron 1 since cards[0] is the parent object
+        for (int i = 1; i < cards.Length; i++)
         {
             Destroy(cards[i].gameObject);
         }
