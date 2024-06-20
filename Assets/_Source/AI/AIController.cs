@@ -341,8 +341,8 @@ public class AIController : MonoBehaviour, IDamagable
         //Project hitpoint onto navmesh surface
         if (target != null && AIManager.Instance.SampleNavSurface(closestPoint, 2.5f, stats.agentType, properties.walkOnPath, out var surfacePoint))
         {
-            closestPoint = surfacePoint - target.position;
-            return new AITarget(properties, target, targetable, closestPoint);
+            Vector3 finalOffset = surfacePoint - target.position;
+            return new AITarget(properties, target, targetable, finalOffset);
         }
 
         return null;
