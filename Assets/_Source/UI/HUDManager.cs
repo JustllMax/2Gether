@@ -24,7 +24,14 @@ public class HUDManager : MonoBehaviour
     [Foldout("References")][SerializeField] GameObject NightUI;
     [Foldout("References")][SerializeField] Image HelmetOverlay;
     [Foldout("References")][SerializeField] TMP_Text NightEndText;
-    Color textOriginalColor;
+
+    [Header("EnemyCounter")]
+    [Foldout("References")][SerializeField] Image enemyIcon;
+    [Foldout("References")][SerializeField] TMP_Text textEnemyCounter;
+    [Foldout("References")][SerializeField] float appearDelay = 1f;
+    [Foldout("References")][SerializeField] float timeUntilDisappear = 2f;
+
+
 
     [Header("MainBase")]
     [Foldout("References")]public Slider MainbaseHPBar;
@@ -46,6 +53,7 @@ public class HUDManager : MonoBehaviour
     [Foldout("References")] [SerializeField] GameObject GunCameraDisplay;
 
     private Color originalHelmetColor;
+    Color textOriginalColor;
 
     #endregion Variables
     private void Awake()
@@ -304,11 +312,27 @@ public class HUDManager : MonoBehaviour
     #endregion MainBase
 
 
-    #region 
+    #region Other
 
     public void ShowEndNightText()
     {
         NightEndText.DOFade(1f, endTextDelay);
+    }
+
+    public void SetEnemyCounter(int amount)
+    {
+        textEnemyCounter.SetText(amount.ToString() + " x");
+        _ = ShowEnemyCounter();
+    }
+
+    async UniTaskVoid ShowEnemyCounter()
+    {
+        enemyIcon.DOFade(1f, appearDelay);
+        textEnemyCounter.DOFade(1f, appearDelay);
+        await UniTask.WaitForSeconds(timeUntilDisappear);
+        textEnemyCounter.DOFade(0f, appearDelay);
+        enemyIcon.DOFade(0f, appearDelay);
+
     }
 
     #endregion
