@@ -16,7 +16,14 @@ public class Explode : AIState
 
     public override void OnTick(AIController controller)
     {
-        controller.Kill();
+        BomberbotController bc = controller as BomberbotController;
+        if (bc == null)
+        {
+            controller.Kill();
+        } else
+        {
+            bc.StartExploding();
+        }
     }
 
     public override void OnExit(AIController controller)

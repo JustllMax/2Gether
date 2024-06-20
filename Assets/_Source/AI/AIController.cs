@@ -111,6 +111,9 @@ public class AIController : MonoBehaviour, IDamagable
     [Foldout("DEBUG INFO")]
     public float tickDeltaTime = 0f;
 
+    public delegate void MovementChanged(ref EnemyMovement newMovement);
+    public event MovementChanged OnMovementStatsChanged;
+
     #endregion
 
     #region Initialization
@@ -341,8 +344,8 @@ public class AIController : MonoBehaviour, IDamagable
         //Project hitpoint onto navmesh surface
         if (target != null && AIManager.Instance.SampleNavSurface(closestPoint, 2.5f, stats.agentType, properties.walkOnPath, out var surfacePoint))
         {
-            closestPoint = surfacePoint - target.position;
-            return new AITarget(properties, target, targetable, closestPoint);
+            Vector3 finalOffset = surfacePoint - target.position;
+            return new AITarget(properties, target, targetable, finalOffset);
         }
 
         return null;
@@ -530,9 +533,18 @@ public class AIController : MonoBehaviour, IDamagable
         }
     }
 
-
-    public void SetMovementStats(in EnemyMovement enemyMovement)
+    public EnemyMovement GetDesiredMovementStats()
     {
+        if (CurrentTarget != null)
+            return CurrentTarget.properties.movement;
+        else
+            return stats.defaultMovement;
+    }
+
+    public void SetMovementStats(EnemyMovement enemyMovement)
+    {
+        if (OnMovementStatsChanged != null)
+            OnMovementStatsChanged.Invoke(ref enemyMovement);
         _navMeshAgent.speed = enemyMovement.movementSpeed;
         _navMeshAgent.angularSpeed = enemyMovement.turnSpeed;
         _navMeshAgent.acceleration = enemyMovement.acceleration;

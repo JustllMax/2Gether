@@ -6,23 +6,34 @@ using static UnityEngine.ParticleSystem;
 
 public class SlowDownComponent : MonoBehaviour
 {
-    [SerializeField]ParticleSystem particles;
-    NavMeshAgent agent;
-    float originalSpeed;
+    [SerializeField] ParticleSystem particles;
+    float slowAmount;
     float effectDuration;
     float effectTimer = 0f;
+    AIController ai;
 
     private void Awake()
     {
-        if (TryGetComponent(out NavMeshAgent a))
-        {
-            agent = a;
-            originalSpeed = agent.speed;
-            Debug.Log(this + "Got nav mesh agent");
-        }
-  
+        ai = GetComponent<AIController>();
+        this.enabled = false;
     }
 
+    private void OnDestroy()
+    {
+        if (ai == null)
+        {
+            return;
+        }
+        ai.OnMovementStatsChanged -= ApplySlowEffect;
+    }
+
+    void ApplySlowEffect(ref EnemyMovement newMovement)
+    {
+        newMovement.acceleration *= slowAmount;
+        newMovement.turnSpeed *= slowAmount;
+        newMovement.movementSpeed *= slowAmount;
+        newMovement.extraRotationSpeed *= slowAmount;
+    }
 
     private void Update()
     {
@@ -35,6 +46,18 @@ public class SlowDownComponent : MonoBehaviour
 
     public void SetUpSlowEffect(float speedModifier, float duration, float particlesScaleModifier = 1f)
     {
+        if (speedModifier >= 100)
+        {
+            speedModifier /= 100;
+        }
+        slowAmount = 1 - speedModifier;
+
+        if (!enabled && ai != null)
+        {
+            ai.OnMovementStatsChanged += ApplySlowEffect;
+            ai.ApplyTargetMovement();
+        }
+
         this.enabled = true;
         if (particles == null)
         {
@@ -53,18 +76,6 @@ public class SlowDownComponent : MonoBehaviour
         }
         effectDuration = duration;
         effectTimer = 0f;
-        if (speedModifier >= 100)
-        {
-            speedModifier /= 100;
-        }
-        
-        float slowAmount = 1 - speedModifier;
-        if(agent != null)
-        {
-            Debug.Log(this + "Applied slow down effect");
-            agent.speed = originalSpeed;
-            agent.speed *= slowAmount;
-        }
     }
     void DeactivateEffect()
     {
@@ -73,9 +84,10 @@ public class SlowDownComponent : MonoBehaviour
             particles.Stop();
         }
         effectTimer = 0f;
-        if(agent != null)
+        if(ai != null)
         {
-            agent.speed = originalSpeed;
+            ai.OnMovementStatsChanged -= ApplySlowEffect;
+            ai.ApplyTargetMovement();
         }
         this.enabled = false;
     }

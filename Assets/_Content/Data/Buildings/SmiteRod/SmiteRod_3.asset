@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SmiteRod_3
   m_EditorClassIdentifier: 
   CardType: 0
-  Rarity: 0
+  Rarity: 2
   Name: Smite Rod
   Description: Damages and slows enemies
   BuildingType: 0
