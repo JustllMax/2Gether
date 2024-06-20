@@ -6,25 +6,38 @@ using TMPro;
 using NaughtyAttributes;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class LostScreenManager : MonoBehaviour
 {
+
+    private static LostScreenManager _instance;
+    public static LostScreenManager Instance { get { return _instance; } }
+
     [Foldout("References")]
     [SerializeField]
-    TMP_Text text_Timer;
+    GameObject lostScreenGameObject;
 
     float timer;
-
-
-    void Start()
+    bool isBaseDead = false;
+    private void Awake()
     {
-        
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this);
+            return;
+
+        }
+        _instance = this;
     }
 
-    void Update()
+    public void EnableLostScreen()
     {
-        
-    }
+        lostScreenGameObject.SetActive(true);
+        Time.timeScale = 0f;
+        InputManager.Instance.DisableAllTimeController();
+        InputManager.Instance.DisableControllers();
 
+    }
 
 }

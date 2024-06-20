@@ -90,4 +90,9 @@ public class InputManager : MonoBehaviour
     {
         playerInputAction.BuilderController.Disable();
     }
+
+    public void DisableAllTimeController()
+    {
+        playerInputAction.AllTime.Disable();
+    }
 }

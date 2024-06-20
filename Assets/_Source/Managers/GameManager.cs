@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
 	//TODO: Change to event 
     public bool isPlayerAlive = true;
+    public bool isMainBaseAlive = true;
     public static Action OnPlayerDeath;
     public delegate void GameManagerReadyHandler();
     public static event GameManagerReadyHandler OnGameManagerReady;

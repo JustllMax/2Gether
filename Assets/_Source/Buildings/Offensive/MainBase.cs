@@ -82,13 +82,10 @@ public class MainBase : Building
     {
 
         IsTargetable = false;
-        Invoke("DestroyObj", DestroyObjectDelay);
+        LostScreenManager.Instance.EnableLostScreen();
+        
     }
 
-    void DestroyObj()
-    {
-        Destroy(gameObject);
-    }
 
     public override void OnSell()
     {
