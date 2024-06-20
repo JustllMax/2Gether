@@ -88,8 +88,6 @@ public class UIFlow : MonoBehaviour
 
     }
 
-
-
     public void ShowPanel(List<Card> pd)
     {
         _currentCardPool = new List<Card>();
