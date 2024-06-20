@@ -12,9 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b2ae8633cb9ec4fb55712b00759d31, type: 3}
   m_Name: ARAmmoCard
   m_EditorClassIdentifier: 
-  CardName: 
+  CardName: AR Ammunition
   CardSprite: {fileID: 0}
   CardDescription: 
-  CardStatisticsData: {fileID: 0}
+  CardStatisticsData: {fileID: 1895904027584428612}
   GunType: 1
   Amount: 50
+--- !u!114 &1895904027584428612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5776c4013dbffd84a86b007fb9111baa, type: 3}
+  m_Name: CardStatisticsData
+  m_EditorClassIdentifier: 
+  CardType: 1
+  Rarity: 0
+  Name: 
+  Description: 
+  GunType: 0
+  IsAutomatic: 0
+  MagazineSize: 0
+  FireRate: 0
+  Range: 0
+  ReloadTime: 0
+  BulletDamage: 0
