@@ -58,6 +58,7 @@ MonoBehaviour:
   activationSound: {fileID: 0}
   takeHitSound: {fileID: 8300000, guid: 37e8deef3569f64458306968fc3c237a, type: 3}
   particlesScaleModifier: 1
+  currentLevel: 0
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -87,7 +88,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 130b5849f6ac6a74c9f9de065bdc4f11, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -326,6 +326,7 @@ MonoBehaviour:
   activationSound: {fileID: 0}
   takeHitSound: {fileID: 8300000, guid: 37e8deef3569f64458306968fc3c237a, type: 3}
   particlesScaleModifier: 1
+  currentLevel: 0
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -354,7 +355,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 130b5849f6ac6a74c9f9de065bdc4f11, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -452,7 +453,8 @@ MonoBehaviour:
   _buildingSize: {x: 0, y: 0, z: 0}
   _renderers:
   - {fileID: 2947358096965970394}
-  isCanBePlacedOnRoad: 0
+  _isCanBePlacedOnRoad: 0
+  _gridPos: {x: 0, y: 0}
 --- !u!54 &1285753149908093754
 Rigidbody:
   m_ObjectHideFlags: 0
