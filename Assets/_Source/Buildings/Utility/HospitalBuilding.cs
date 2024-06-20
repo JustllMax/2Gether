@@ -8,8 +8,6 @@ public class HospitalBuilding : Building
 
     float activationTimer = 0f;
     float healingTimer = 0f;
-
-    bool isPlayerInRange = false;
     bool healOnce;
     public override void Start()
     {
@@ -19,11 +17,15 @@ public class HospitalBuilding : Building
 
     public void Update()
     {
-        if (isPlayerInRange)
+        PlayerController player = GameManager.Instance.GetPlayerController();
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        bool hasMaxHP = player.Health >= player._maxHealth;
+
+        if (distance < GetStatistics().AttackRange && !hasMaxHP)
         {
             if (activationTimer < GetStatistics().ActivationTime)
             {
-                activationTimer += Time.time;
+                activationTimer += Time.deltaTime;
             }
             else
             {
@@ -33,7 +35,7 @@ public class HospitalBuilding : Building
                     healOnce = false;
                     OnAttack();
                 }
-                healingTimer += Time.time;
+                healingTimer += Time.deltaTime;
                 if (healingTimer > GetStatistics().delayBetweenActivation)
                 {
                     healingTimer = 0f;

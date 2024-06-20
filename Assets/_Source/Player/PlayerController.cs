@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     [SerializeField]
     GameObject playerModel;
     [SerializeField]
-    float _maxHealth = 100f;
+    public float _maxHealth = 100f;
     [SerializeField]
     float _health;
     [SerializeField]
