@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MeleeAttackState
   m_EditorClassIdentifier: 
   weight: 3
-  AttackRange: 2
+  AttackRange: 2.5
   ComboDelay: 0.5
   AttackMask:
     serializedVersion: 2

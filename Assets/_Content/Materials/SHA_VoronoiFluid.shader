@@ -1,4 +1,4 @@
-Shader "Custom/SHADER_VoronoiFluid"
+Shader "Custom/SHADER_VoronoiFluid_PixelArt"
 {
 	Properties
 	{
@@ -16,15 +16,18 @@ Shader "Custom/SHADER_VoronoiFluid"
 		_Size3 ("Color 3 Size", Float) = 4.0
 		_Jiggle3 ("Color 3 Jiggle", Float) = 0.1
 		_Ease3 ("Color 3 Ease", Float) = 6.0
+		_PixelSize ("Pixel Size", Float) = 10.0
 	}
 	SubShader
 	{
 		Tags { "RenderType"="Transparent" "Queue"="Transparent" }
-		Blend SrcAlpha OneMinusSrcAlpha
-		//Cull Off
+        Blend SrcAlpha OneMinusSrcAlpha
+        ZTest Less
+		Cull Off
 
 		Pass
 		{
+
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
@@ -58,121 +61,117 @@ Shader "Custom/SHADER_VoronoiFluid"
 			float _Size3;
 			float _Jiggle3;
 			float _Ease3;
+			float _PixelSize;
 
 			v2f vert(appdata v)
 			{
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
-				o.uv = v.uv + float2( _Time.z * _ScrollSpeed.x, _Time.z * _ScrollSpeed.y);
+				o.uv = v.uv + float2(_Time.z * _ScrollSpeed.x, _Time.z * _ScrollSpeed.y);
 				return o;
 			}
 
 			float2 random2(float2 p)
 			{
-				return frac(sin(float2(dot(p,float2(117.12,341.7)),dot(p,float2(269.5,123.3))))*43458.5453);
+				return frac(sin(float2(dot(p, float2(117.12, 341.7)), dot(p, float2(269.5, 123.3)))) * 43458.5453);
 			}
 
 			fixed4 frag(v2f i) : SV_Target
 			{
+				// Pixelate UV coordinates
+				i.uv = float2(floor(i.uv.x * _PixelSize) / _PixelSize, floor(i.uv.y * _PixelSize * 0.5) / _PixelSize);
+
 				fixed4 outputColor = _Color0;
 
 				fixed4 col = _Color1;
 				float2 uv = i.uv;
-				uv *= _Size1;	// Skalowanie diagramu
+				uv *= _Size1; // Scale the diagram
 				float2 iuv = floor(uv);
 				float2 fuv = frac(uv);
-				float minDist = 1.0; // Najkr�tszy dystans od punktu kom�rki
+				float minDist = 1.0; // Shortest distance from the cell point
 				for (int y = -1; y <= 1; y++)
 				{
 					for (int x = -1; x <= 1; x++)
 					{
-						// Szukamy pozycji s�siedniego punktu kom�rki na siatce
+						// Find the position of the neighboring cell point on the grid
 						float2 neighbour = float2(float(x), float(y));
-						// Wyznaczamy losowo pozycj� tego punktu
+						// Randomly determine the position of this point
 						float2 pointv = random2(iuv + neighbour);
-						// Poruszamy punktami w czasie
-						pointv = 0.5 + 0.5*sin(_Time.z * _Jiggle1 + 6.2236*pointv);
-						// Wyznaczamy wektor pomi�dzy pikselem a punktem
+						// Move points in time
+						pointv = 0.5 + 0.5 * sin(_Time.z * _Jiggle1 + 6.2236 * pointv);
+						// Determine the vector between the pixel and the point
 						float2 diff = neighbour + pointv - fuv;
-						// Obliczamy odleg�o��
+						// Calculate the distance
 						float dist = length(diff);
-						// Je�eli odleg�o�� jest mniejsza ni� dotychczasowa najmniejsza, zapisujemy j�
+						// If the distance is less than the current minimum, save it
 						minDist = min(minDist, dist);
 					}
 				}
 
 				col.a += pow(minDist, _Ease1);
-
 				outputColor.rgb = outputColor.rgb * (1.0 - col.a) + col.rgb * col.a;
-
 
 				col = _Color2;
 				uv = i.uv;
-				uv *= _Size2; // Skalowanie diagramu
+				uv *= _Size2; // Scale the diagram
 				iuv = floor(uv);
 				fuv = frac(uv);
-				minDist = 1.0;	// Najkr�tszy dystans od punktu kom�rki
+				minDist = 1.0; // Shortest distance from the cell point
 				for (int y = -1; y <= 1; y++)
 				{
 					for (int x = -1; x <= 1; x++)
 					{
-						// Szukamy pozycji s�siedniego punktu kom�rki na siatce
+						// Find the position of the neighboring cell point on the grid
 						float2 neighbour = float2(float(x), float(y));
-						// Wyznaczamy losowo pozycj� tego punktu
+						// Randomly determine the position of this point
 						float2 pointv = random2(iuv + neighbour);
-						// Poruszamy punktami w czasie
-						pointv = 0.5 + 0.5*sin(_Time.z * _Jiggle2 + 4.2236*pointv);
-						// Wyznaczamy wektor pomi�dzy pikselem a punktem
+						// Move points in time
+						pointv = 0.5 + 0.5 * sin(_Time.z * _Jiggle2 + 4.2236 * pointv);
+						// Determine the vector between the pixel and the point
 						float2 diff = neighbour + pointv - fuv;
-						// Obliczamy odleg�o��
+						// Calculate the distance
 						float dist = length(diff);
-						// Je�eli odleg�o�� jest mniejsza ni� dotychczasowa najmniejsza, zapisujemy j�
+						// If the distance is less than the current minimum, save it
 						minDist = min(minDist, dist);
 					}
 				}
 
 				col.a += pow(minDist, _Ease2);
-
 				outputColor.rgb = outputColor.rgb * (1.0 - col.a) + col.rgb * col.a;
-
 
 				col = _Color3;
 				uv = i.uv;
-				uv *= _Size3; // Skalowanie diagramu
+				uv *= _Size3; // Scale the diagram
 				iuv = floor(uv);
 				fuv = frac(uv);
-				minDist = 1.0;  // Najkr�tszy dystans od punktu kom�rki
+				minDist = 1.0; // Shortest distance from the cell point
 				for (int y = -1; y <= 1; y++)
 				{
 					for (int x = -1; x <= 1; x++)
 					{
-						// Szukamy pozycji s�siedniego punktu kom�rki na siatce
+						// Find the position of the neighboring cell point on the grid
 						float2 neighbour = float2(float(x), float(y));
-						// Wyznaczamy losowo pozycj� tego punktu
+						// Randomly determine the position of this point
 						float2 pointv = random2(iuv + neighbour);
-						// Poruszamy punktami w czasie
-						pointv = 0.5 + 0.5*sin(_Time.z * _Jiggle3 + 4.2236*pointv);
-						// Wyznaczamy wektor pomi�dzy pikselem a punktem
+						// Move points in time
+						pointv = 0.5 + 0.5 * sin(_Time.z * _Jiggle3 + 4.2236 * pointv);
+						// Determine the vector between the pixel and the point
 						float2 diff = neighbour + pointv - fuv;
-						// Obliczamy odleg�o��
+						// Calculate the distance
 						float dist = length(diff);
-						// Je�eli odleg�o�� jest mniejsza ni� dotychczasowa najmniejsza, zapisujemy j�
+						// If the distance is less than the current minimum, save it
 						minDist = min(minDist, dist);
 					}
 				}
 
 				// Draw the min distance (distance field)
 				col.a += pow(minDist, _Ease3);
-
-				outputColor.rgb = outputColor.rgb * (1.0-col.a) + col.rgb * col.a;
-
-
-
+				outputColor.rgb = outputColor.rgb * (1.0 - col.a) + col.rgb * col.a;
 
 				return outputColor;
 			}
 
-		ENDCG
+			ENDCG
 		}
 	}
 }

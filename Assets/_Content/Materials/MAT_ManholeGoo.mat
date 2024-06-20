@@ -31,6 +31,7 @@ Material:
     - _Jiggle1: 0.49
     - _Jiggle2: 1.17
     - _Jiggle3: 0.2
+    - _PixelSize: 64
     - _Size1: 10.09
     - _Size2: 4.61
     - _Size3: 2.26
