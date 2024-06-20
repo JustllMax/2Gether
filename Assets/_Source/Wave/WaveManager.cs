@@ -266,6 +266,12 @@ public class WaveManager : MonoBehaviour
     #endregion
     #endregion
 
+    public void EnemyHasBeenKilled()
+    {
+        waveSystem.enemyCount--;
+        HUDManager.Instance.SetEnemyCounter(waveSystem.enemyCount);
+    }
+
     async UniTaskVoid InvokeNightEnd()
     {
         HUDManager.Instance.ShowEndNightText();

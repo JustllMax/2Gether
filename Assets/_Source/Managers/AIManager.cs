@@ -76,7 +76,6 @@ public class AIManager : MonoBehaviour
             currentNode = currentNode.Next ?? enemies.First;
 
         enemies.Remove(enemyNode);
-        HUDManager.Instance.SetEnemyCounter(enemies.Count);
     }
 
     public LayerMask GetLayerFromType(TargetType type)

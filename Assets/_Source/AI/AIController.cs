@@ -437,7 +437,6 @@ public class AIController : MonoBehaviour, IDamagable
 
         if(Health <= 0)
         {
-            AudioManager.Instance.PlaySFXAtSource(deathSound, audioSource);
             Kill();
             return true;
         }
@@ -446,6 +445,9 @@ public class AIController : MonoBehaviour, IDamagable
 
     public virtual void Kill()
     {
+        if (isDead)
+            return;
+
         isDead = true;
         foreach (Collider col in hitboxColliders)
         {
@@ -456,13 +458,14 @@ public class AIController : MonoBehaviour, IDamagable
             currentState.OnExit(this);
 
         GetNavMeshAgent().enabled = false;
-
+        WaveManager.Instance.EnemyHasBeenKilled();
+        AudioManager.Instance.PlaySFXAtSource(deathSound, audioSource);
         PlayAnimation("DEATH");
         Invoke("Desintegrate", DeathInvokeTime);
 
-        WaveManager.Instance.waveSystem.enemyCount--;
+
     }
-    
+
     void Desintegrate()
     {
         _deathEffect.Execute();

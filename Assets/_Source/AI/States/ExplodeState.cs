@@ -22,7 +22,7 @@ public class Explode : AIState
             controller.Kill();
         } else
         {
-            bc.StartExploding();
+            bc.Kill();
         }
     }
 

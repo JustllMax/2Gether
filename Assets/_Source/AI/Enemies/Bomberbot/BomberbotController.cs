@@ -16,7 +16,12 @@ public class  BomberbotController : AIController
     [SerializeField] float particlesScale = 3f;
     public override void Kill() 
     {
+        if (isDead)
+            return;
+
         isDead = true;
+        WaveManager.Instance.EnemyHasBeenKilled();
+
         GetNavMeshAgent().enabled = false;
 
         StartExploding();

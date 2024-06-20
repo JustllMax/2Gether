@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -54,7 +55,7 @@ public class HUDManager : MonoBehaviour
 
     private Color originalHelmetColor;
     Color textOriginalColor;
-
+    Coroutine coroutine;
     #endregion Variables
     private void Awake()
     {
@@ -322,18 +323,21 @@ public class HUDManager : MonoBehaviour
     public void SetEnemyCounter(int amount)
     {
         textEnemyCounter.SetText(amount.ToString() + " x");
-        _ = ShowEnemyCounter();
-    }
 
-    async UniTaskVoid ShowEnemyCounter()
+        StartCoroutine(ShowEnemyCounter());
+    } 
+
+    private IEnumerator ShowEnemyCounter()
     {
         enemyIcon.DOFade(1f, appearDelay);
         textEnemyCounter.DOFade(1f, appearDelay);
-        await UniTask.WaitForSeconds(timeUntilDisappear);
+
+        yield return new WaitForSeconds(timeUntilDisappear);
+
         textEnemyCounter.DOFade(0f, appearDelay);
         enemyIcon.DOFade(0f, appearDelay);
-
     }
+
 
     #endregion
 }
