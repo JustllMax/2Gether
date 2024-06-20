@@ -144,7 +144,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Height: 0.5
+    - _Height: 1.07
     - _HeightAmount: 2.3
     - _MakeRedDistance: 1.5
     - _Metallic: 0
@@ -166,9 +166,9 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BotomColor: {r: 0.6981132, g: 0.48190144, b: 0.29307583, a: 0}
+    - _BotomColor: {r: 0.5377358, g: 0.36572242, b: 0.21560162, a: 0}
     - _BottomColor: {r: 0.3224012, g: 0.3224012, b: 0.990566, a: 1}
-    - _Color: {r: 0.4339623, g: 0.3104472, b: 0.20265219, a: 1}
+    - _Color: {r: 0.69803923, g: 0.48235297, b: 0.29411766, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SurfaceSize: {r: 0, g: 0, b: 0, a: 0}
