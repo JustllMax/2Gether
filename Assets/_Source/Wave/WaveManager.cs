@@ -129,13 +129,9 @@ public class WaveManager : MonoBehaviour
     #endregion
 
 
-    void FixedUpdate()
+    private void LateUpdate()
     {
-
-        //TEMP, bo co chwile wywala
-        //return;
-
-        if (_waveSystem.enemyCount <= 0 && _waveSystem.isWaveActive && !_waveSystem.isSpawnActive)
+        if (_waveSystem.enemyCount <= 0 && _waveSystem.isWaveActive && !_waveSystem.isSpawnActive && GameManager.Instance.IsPlayerAlive() == true)
         {
             _waveSystem.isWaveActive = false;
             _ = InvokeNightEnd();

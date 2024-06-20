@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardName: Smite Rod
   CardSprite: {fileID: 21300000, guid: 2069b2ab01b39d140a64335bfaeb55a4, type: 3}
-  CardDescription: Shoots a laser at near enemies
+  CardDescription: Slows down nearby enemies
   CardStatisticsData: {fileID: 11400000, guid: c1e886028061a7145b41626112ff4c84, type: 2}
   BuildingPrefab: {fileID: 5821364103949504362, guid: 1c75e84739fb6c94c9b67ae3a3f24527,
     type: 3}

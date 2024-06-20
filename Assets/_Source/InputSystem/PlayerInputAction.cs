@@ -37,6 +37,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""CardSwitch"",
+                    ""type"": ""Button"",
+                    ""id"": ""4eda0fe2-be07-4b1c-9a48-7bbe8444241b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Movement"",
                     ""type"": ""Value"",
                     ""id"": ""2e28542a-2221-4b4c-9bf4-7beb3ed31ba0"",
@@ -176,6 +185,61 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e71478bd-afa5-4847-b4f5-a05bb9f879f2"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale"",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""CardSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dfa3800f-1246-41d0-a00e-e258faf56243"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""CardSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""364250c0-029c-4871-8178-3566f05e9d24"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=3)"",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""CardSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""40b574e1-1a3b-4d08-98b5-ac39b7289f8a"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=4)"",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""CardSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""af0a64d1-3ad8-43be-a1e9-882826b35195"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=5)"",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""CardSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -527,7 +591,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Keyboard"",
+                    ""groups"": """",
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -563,6 +627,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         // BuilderController
         m_BuilderController = asset.FindActionMap("BuilderController", throwIfNotFound: true);
         m_BuilderController_Rotate = m_BuilderController.FindAction("Rotate", throwIfNotFound: true);
+        m_BuilderController_CardSwitch = m_BuilderController.FindAction("CardSwitch", throwIfNotFound: true);
         m_BuilderController_Movement = m_BuilderController.FindAction("Movement", throwIfNotFound: true);
         m_BuilderController_Zoom = m_BuilderController.FindAction("Zoom", throwIfNotFound: true);
         // FPSController
@@ -643,6 +708,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_BuilderController;
     private List<IBuilderControllerActions> m_BuilderControllerActionsCallbackInterfaces = new List<IBuilderControllerActions>();
     private readonly InputAction m_BuilderController_Rotate;
+    private readonly InputAction m_BuilderController_CardSwitch;
     private readonly InputAction m_BuilderController_Movement;
     private readonly InputAction m_BuilderController_Zoom;
     public struct BuilderControllerActions
@@ -650,6 +716,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         private @PlayerInputAction m_Wrapper;
         public BuilderControllerActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @Rotate => m_Wrapper.m_BuilderController_Rotate;
+        public InputAction @CardSwitch => m_Wrapper.m_BuilderController_CardSwitch;
         public InputAction @Movement => m_Wrapper.m_BuilderController_Movement;
         public InputAction @Zoom => m_Wrapper.m_BuilderController_Zoom;
         public InputActionMap Get() { return m_Wrapper.m_BuilderController; }
@@ -664,6 +731,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Rotate.started += instance.OnRotate;
             @Rotate.performed += instance.OnRotate;
             @Rotate.canceled += instance.OnRotate;
+            @CardSwitch.started += instance.OnCardSwitch;
+            @CardSwitch.performed += instance.OnCardSwitch;
+            @CardSwitch.canceled += instance.OnCardSwitch;
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
@@ -677,6 +747,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Rotate.started -= instance.OnRotate;
             @Rotate.performed -= instance.OnRotate;
             @Rotate.canceled -= instance.OnRotate;
+            @CardSwitch.started -= instance.OnCardSwitch;
+            @CardSwitch.performed -= instance.OnCardSwitch;
+            @CardSwitch.canceled -= instance.OnCardSwitch;
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
@@ -893,6 +966,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     public interface IBuilderControllerActions
     {
         void OnRotate(InputAction.CallbackContext context);
+        void OnCardSwitch(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
     }

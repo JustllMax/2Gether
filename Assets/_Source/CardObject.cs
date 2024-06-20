@@ -12,12 +12,15 @@ public class CardObject : MonoBehaviour
 
     //ui stuff
     [SerializeField]
-    private TextMeshProUGUI _title;
+    private TMP_Text _title;
     [SerializeField]
-    private TextMeshProUGUI _description;
+    private TMP_Text _description;
 
     [SerializeField]
     private Image _thumbnail;
+    [SerializeField]
+    private Image _backgroundRaycastTarget;
+
 
     [SerializeField]
     private CardStatDisplay _statDisplay;
@@ -69,4 +72,13 @@ public class CardObject : MonoBehaviour
         }
     }
 
+    public Image GetRaycastableBackground()
+    {
+        return _backgroundRaycastTarget;
+    }
+
+    public void SetRaycastable(bool value)
+    {
+        _backgroundRaycastTarget.raycastTarget = value;
+    }
 }

@@ -6,16 +6,20 @@ using System;
 public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public CardObject CardData;
-
-    private Vector3 upOffset = new Vector3(0f, 280f, 0f);
-    private Vector3 originalScale;
-    private bool isClicked = false;
+    [SerializeField]
+    private Vector2 upOffset = new Vector2(0f, 200f);
+    [SerializeField]
+    private bool isSelected = false;
+    [SerializeField]
     bool isHovered = false;
+    [SerializeField]
+    private float originalY;
+    private Vector3 originalScale;
     RectTransform rectTransform;
     private UIFlow _flowRef;
     float scaleModifier = 1.25f;
 
-    private float originalY;
+
 
     public void SetUIFlowRef(UIFlow flowRef)
         { this._flowRef = flowRef; }
@@ -33,35 +37,45 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!isClicked && transform.parent != null && transform.parent.name == "cardsPanel")
+        if (!isSelected && transform.parent != null && transform.parent.name == "cardsPanel")
         {
             MaximizeCard();
-            isHovered = true;
+            
         }
+        isHovered = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
 
-        if (!isClicked && transform.parent != null && transform.parent.name == "cardsPanel")
+        if (!isSelected && transform.parent != null && transform.parent.name == "cardsPanel")
         {
             MinimizeCard();
-            isHovered = false;
+            
         }
+        isHovered = false;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
+
+
         if (_flowRef.HasCardSelected() && eventData.button == PointerEventData.InputButton.Left)
         {
+            if (_flowRef.GetCurrentlyHeldCard() == this)
+            {
+                _flowRef.DeselectCurrentlyHeldCard();
+                return;
+            }
             _flowRef.DeselectCurrentlyHeldCard();
+
         }
 
 
-        if (!isClicked && transform.parent != null && transform.parent.name == "cardsPanel")
+        if (!isSelected && transform.parent != null && transform.parent.name == "cardsPanel")
         {
-            ResetPosition();
-            isClicked = true;
+            Debug.Log(this + " was selected");
+            isSelected = true;
             _flowRef.SetSelectedCard(this);
 
 
@@ -71,26 +85,27 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     public void ResetPosition()
     {
-        isClicked = false;
-        MinimizeCard();
+        isSelected = false;
+        if(isHovered == false)
+            MinimizeCard();
     }
 
     public void MinimizeCard()
     {
+        rectTransform.anchoredPosition -= upOffset;
         rectTransform.localScale = originalScale;
-        rectTransform.localPosition = new Vector3(rectTransform.localPosition.x,originalY, rectTransform.localPosition.z);
     }
 
     public void MaximizeCard()
     {
-        rectTransform.localPosition += upOffset;
         rectTransform.localScale = originalScale * scaleModifier;
+        rectTransform.anchoredPosition += upOffset;
     }
 
 
     public void SelectCard()
     {
-        isClicked = true;
+        isSelected = true;
         if(isHovered == false)
         {
             MaximizeCard();
@@ -99,7 +114,6 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     public void SetInitialYPosition()
     {
-        originalY = transform.localPosition.y;
-        MinimizeCard();
+        originalY = rectTransform.anchoredPosition.y;
     }
 }

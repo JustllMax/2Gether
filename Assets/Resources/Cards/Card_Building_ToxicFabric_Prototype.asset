@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardName: Toxic fabric
   CardSprite: {fileID: 21300000, guid: 4cda3a24b0952244fa8fd5425a3a5089, type: 3}
-  CardDescription: Shoots a laser at near enemies
+  CardDescription: Poisons nearby enemies
   CardStatisticsData: {fileID: 11400000, guid: b8c91ed41ef08454aafed7751a2997aa, type: 2}
   BuildingPrefab: {fileID: 1651284217529460685, guid: 4b4dfc550c4414c4c84cfcd3054b76ea,
     type: 3}

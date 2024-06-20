@@ -6,6 +6,7 @@ using DG.Tweening;
 using NaughtyAttributes;
 using System;
 using Cysharp.Threading.Tasks;
+using UnityEngine.InputSystem;
 
 
 public class UIFlow : MonoBehaviour
@@ -31,7 +32,7 @@ public class UIFlow : MonoBehaviour
     [SerializeField]
     private UICards currentClickedCard = null;
 
-    [SerializeField, ReadOnly]
+    [SerializeField]
     private List<Card> _currentCardPool;
 
     [SerializeField, ReadOnly]
@@ -54,6 +55,7 @@ public class UIFlow : MonoBehaviour
         continueButton.onClick.AddListener(Continue);
     }
 
+
     private void OnEnable()
     {
         DayNightCycleManager.DayBegin += OnDayStart;
@@ -64,7 +66,29 @@ public class UIFlow : MonoBehaviour
         DayNightCycleManager.DayBegin -= OnDayStart;
     }
 
-    
+    private void Start()
+    {
+        var builderController = InputManager.Instance.GetPlayerInputAction().BuilderController;
+        builderController.CardSwitch.performed += SwitchCardsByHotkeys;
+    }
+
+    private void Update()
+    {
+
+        if (currentClickedCard != null)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                currentClickedCard.CardData.EndExecute();
+                currentClickedCard.ResetPosition();
+                currentClickedCard = null;
+            }
+        }
+
+
+    }
+
+
 
     public void ShowPanel(List<Card> pd)
     {
@@ -102,6 +126,28 @@ public class UIFlow : MonoBehaviour
         //continueButton.transform.DOScale(1, 1);
     }
 
+
+    void SpawnCards()
+    {
+        foreach (var card in _currentCardPool)
+        {
+            GameObject gocard = Instantiate(cardPrefab, cardpackOpenPanel.transform);
+            var cardObject = gocard.GetComponent<CardObject>();
+            cardObject.PopulateCard(card);
+            cardObject.SetRaycastable(false);
+            gocard.name = "Card " + card.CardName;
+            Debug.Log(this + " card descrip " + card.CardDescription);
+            _cards.Add(gocard.GetComponent<UICards>());
+            _cards[_cards.Count - 1].SetUIFlowRef(this);
+        }
+
+        HorizontalLayoutGroup layoutGroup = cardpackOpenPanel.GetComponent<HorizontalLayoutGroup>();
+        if (layoutGroup != null)
+        {
+            layoutGroup.enabled = true;
+        }
+    }
+
     void Reroll()
     {
         FadeOutCards();
@@ -131,113 +177,48 @@ public class UIFlow : MonoBehaviour
 
     void Continue()
     {
-    //    DOTween.Sequence()
-    //        .AppendInterval(1f)
-    //        .OnComplete(() =>
-    //        {
-    //            //FadeOutCards();
-    //            rerollButton.interactable = false;
-    //            continueButton.interactable = false;
-    //            UnityEngine.UI.Image rerollButtonImage = rerollButton.GetComponent<UnityEngine.UI.Image>();
-    //            UnityEngine.UI.Image continueButtonImage = continueButton.GetComponent<UnityEngine.UI.Image>();
-    //            rerollButtonImage.gameObject.SetActive(false);
-    //            continueButtonImage.gameObject.SetActive(false);
-    //        });
+
 
         rerollButton.interactable = false;
         continueButton.interactable = false;
-        UnityEngine.UI.Image rerollButtonImage = rerollButton.GetComponent<UnityEngine.UI.Image>();
-        UnityEngine.UI.Image continueButtonImage = continueButton.GetComponent<UnityEngine.UI.Image>();
+        Image rerollButtonImage = rerollButton.GetComponent<Image>();
+        Image continueButtonImage = continueButton.GetComponent<Image>();
         rerollButtonImage.gameObject.SetActive(false);
         continueButtonImage.gameObject.SetActive(false);
 
-        DOTween.Sequence()
-            .AppendInterval(3f)
-            .OnComplete(() =>
-            {
-                UICards[] cards = cardpackOpenPanel.GetComponentsInChildren<UICards>();
+        UICards[] cards = cardpackOpenPanel.GetComponentsInChildren<UICards>();
 
-                foreach (var card in cards)
-                {
-                    if (card.transform != cardpackOpenPanel.transform)
-                    {
-                        card.transform.SetParent(cardsPanel.transform, false);
-                        card.SetInitialYPosition();
-                        //  card.SetUIFlowRef(this);
-                    }
-                }
-                cardpackPanel.SetActive(false);
-
-                foreach (var card in cards)
-                {
-                    if (card.transform != cardsPanel.transform)
-                    {
-                        //UnityEngine.UI.Image cardImage = card.GetComponent<UnityEngine.UI.Image>();
-                        //cardImage.color = new Color(cardImage.color.r, cardImage.color.g, cardImage.color.b, 0f);
-                        //cardImage.DOFade(1f, 1f).SetDelay(0.5f);
-                    }
-                }
-            });
-
-        DOTween.Sequence()
-            .AppendInterval(1f)
-            .OnComplete(() =>
-            {
-                gamePanel.SetActive(true);
-            });
-
-        
-    }
-
-    private void Update()
-    {
-        HandleInput();
-
-        if (currentClickedCard != null)
+        foreach (var card in cards)
         {
-            if (Input.GetMouseButtonDown(1))
+            if (card.transform != cardpackOpenPanel.transform)
             {
-                currentClickedCard.CardData.EndExecute();
-                currentClickedCard.ResetPosition();
-                currentClickedCard = null;
+                card.transform.SetParent(cardsPanel.transform);
+                card.CardData.SetRaycastable(true);
             }
         }
+        cardpackPanel.SetActive(false);
+
+        foreach (var card in cards)
+        {
+            ;
+        }
+        gamePanel.SetActive(true);
 
         
-    }
-
-    void SpawnCards()
-    {
-        foreach (var card in _currentCardPool)
-        {
-            GameObject gocard = Instantiate(cardPrefab, cardpackOpenPanel.transform);
-            var cardObject = gocard.GetComponent<CardObject>();
-            cardObject.PopulateCard(card);
-            gocard.name = "Card " + card.CardName;
-
-            _cards.Add(gocard.GetComponent<UICards>());
-            _cards[_cards.Count - 1].SetUIFlowRef(this);
-        }
-
-        HorizontalLayoutGroup layoutGroup = cardpackOpenPanel.GetComponent<HorizontalLayoutGroup>();
-        if (layoutGroup != null)
-        {
-            layoutGroup.enabled = true;
-        }
     }
 
     void DestroyCards()
     {
         Transform[] cards = cardpackOpenPanel.GetComponentsInChildren<Transform>();
 
-        for (int i = 1; i < cards.Length; i++)
+        for (int i = 0; i < cards.Length; i++)
         {
             Destroy(cards[i].gameObject);
         }
 
         cards = cardsPanel.GetComponentsInChildren<Transform>();
 
-        for (int i = 1; i < cards.Length; i++)
+        for (int i = 0; i < cards.Length; i++)
         {
             Destroy(cards[i].gameObject);
         }
@@ -313,7 +294,7 @@ public class UIFlow : MonoBehaviour
     public void DiscardCard(Card buildingCard)
     {
         _startNightButton.interactable = true;
-
+        _cards.Remove(currentClickedCard);
         Destroy(currentClickedCard.gameObject);
         currentClickedCard = null;
     }
@@ -357,39 +338,24 @@ public class UIFlow : MonoBehaviour
         HUDManager.Instance.MainbaseHPBar.transform.parent.gameObject.SetActive(true);
     }
 
-    //THIS IS TEMP 
-    void HandleInput()
+    void SwitchCardsByHotkeys(InputAction.CallbackContext context)
     {
-        if (!DayNightCycleManager.Instance.IsDay)
+        int index = (int)context.ReadValue<float>() - 1;
+
+        if (index > _cards.Count - 1)
             return;
-        
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                if (_cards[0] != null)
-                    SetSelectedCard(_cards[0]);
-                    
-            }
-            else if(Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                if (_cards[1] != null)
-                    SetSelectedCard(_cards[1]);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                if (_cards[2] != null)
-                    SetSelectedCard(_cards[2]);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                if (_cards[3] != null)
-                    SetSelectedCard(_cards[3]);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha5))
-            {
-                if (_cards[4] != null)
-                    SetSelectedCard(_cards[4]);
-            }
-        
+        if(_cards[index] != null)
+        {
+            SetSelectedCard(_cards[index]);
+        }
+
+        return;
+
+    }
+
+    public UICards GetCurrentlyHeldCard()
+    {
+        return currentClickedCard;
     }
 
 }
