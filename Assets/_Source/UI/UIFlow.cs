@@ -108,6 +108,8 @@ public class UIFlow : MonoBehaviour
 
     void OpenBoosterPack()
     {
+        AudioManager.Instance.PlaySFX("A_DayUI_Open_Booster");
+
         boosterPackButton.gameObject.SetActive(false);
 
         SpawnCards();
@@ -175,7 +177,7 @@ public class UIFlow : MonoBehaviour
 
     void Continue()
     {
-
+        AudioManager.Instance.PlaySFX("A_UI_Correct_Button_Down");
 
         rerollButton.interactable = false;
         continueButton.interactable = false;
@@ -306,6 +308,8 @@ public class UIFlow : MonoBehaviour
 
     public void ContinueToNight()
     {
+        AudioManager.Instance.PlaySFX("A_UI_Correct_Button_Down");
+
         DayNightCycleManager.Instance.EndDayCycle();
         Cleanup();
     }

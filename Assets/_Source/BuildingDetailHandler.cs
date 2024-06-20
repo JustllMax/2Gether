@@ -93,6 +93,8 @@ public class BuildingDetailHandler : MonoBehaviour
         if (_currentBuilding == null)
             return;
 
+
+        AudioManager.Instance.PlaySFX("A_DayUI_Sell_Cards");
         
         _currentBuilding.OnSell();
         GridController.Instance.RemoveBuilding(_currentBuilding.GetComponent<GridBuilding>().gridPos);

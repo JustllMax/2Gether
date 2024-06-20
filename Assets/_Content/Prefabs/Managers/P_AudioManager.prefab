@@ -68,6 +68,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: a5049ffdea203974589f7583ca145236, type: 3}
   - name: A_DayUI_Open_Booster
     clip: {fileID: 8300000, guid: 3731a770ff974dd49b900efef08e9497, type: 3}
+  - name: A_DayUI_Set_Building
+    clip: {fileID: 8300000, guid: 54834c16e4a48ae4a9cf51067216015d, type: 3}
+  - name: A_DayUI_Upgrade_Building
+    clip: {fileID: 8300000, guid: 3c69e4e5834fed747a1cecd10a45743d, type: 3}
   ambientSounds:
   - name: A_DayUI_Ambient
     clip: {fileID: 8300000, guid: 111233378ce0c194d9566268a7009bf8, type: 3}

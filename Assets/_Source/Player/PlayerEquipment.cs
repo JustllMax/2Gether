@@ -160,7 +160,7 @@ public class PlayerEquipment : MonoBehaviour
             AmmoStorage[_currentGun.GetGunData().GunType], _currentGun.GetGunData().GunType);
 
         //Reload on weapon change
-        Reload();
+        //Reload();
     }
 
     public void SwitchUpStartAnimEvent()
