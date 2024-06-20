@@ -13,9 +13,20 @@ public class LampLightManager : MonoBehaviour
     void Awake()
     {
         lighting = gameObject.GetComponent<Light>();
+
     }
+    private void Start()
+    {
+        Debug.Log(this + " is turned off until it gets optimised, game is unplayable because of lag");
+    }
+
     private void FixedUpdate()
     {
+        if(DayNightCycleManager.Instance == null)
+        {
+            return;
+        }
+
         if (!DayNightCycleManager.Instance.IsDay)
         {
             if (timeProgress < _intensity)
