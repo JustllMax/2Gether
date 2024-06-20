@@ -117,6 +117,9 @@ public class BuildingPlacer : MonoBehaviour
                         if (_gridController.TryPlace(pos, _draggingBuilding.GetComponent<Building>(), out Building alreadyPlacedBuilding))
                         {
                             Debug.Log("Place ok");
+
+                            AudioManager.Instance.PlaySFX("A_DayUI_Set_Building");
+
                             _selectedBuildingCard.OnCardSubmitted(_gameContext);
                             EndPlaceMode();
                         }
@@ -135,6 +138,8 @@ public class BuildingPlacer : MonoBehaviour
                                     _gridController.RemoveBuilding(pos);
                                     _gridController.TryPlace(pos, newBuilding, out _);
 
+                                    AudioManager.Instance.PlaySFX("A_DayUI_Upgrade_Building");
+
                                     _selectedBuildingCard.OnCardSubmitted(_gameContext);
                                     EndPlaceMode();
                                 }
@@ -142,6 +147,8 @@ public class BuildingPlacer : MonoBehaviour
                                 {
                                     // upgrade
                                     alreadyPlacedBuilding.TryUpgrading(alreadyPlacedBuilding.GetBaseStatistics());
+
+                                    AudioManager.Instance.PlaySFX("A_DayUI_Upgrade_Building");
 
                                     _selectedBuildingCard.OnCardSubmitted(_gameContext);
                                     EndPlaceMode();
