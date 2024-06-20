@@ -325,6 +325,7 @@ MonoBehaviour:
   activationSound: {fileID: 0}
   takeHitSound: {fileID: 8300000, guid: 37e8deef3569f64458306968fc3c237a, type: 3}
   particlesScaleModifier: 1
+  currentLevel: 0
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -577,7 +578,8 @@ MonoBehaviour:
   - {fileID: 3048985565780657907}
   - {fileID: 307733216681969375}
   - {fileID: 4242394767602882454}
-  isCanBePlacedOnRoad: 0
+  _isCanBePlacedOnRoad: 0
+  _gridPos: {x: 0, y: 0}
 --- !u!1001 &4618130151828716683
 PrefabInstance:
   m_ObjectHideFlags: 0
