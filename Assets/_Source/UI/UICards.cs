@@ -20,7 +20,7 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     RectTransform rectTransform;
     private UIFlow _flowRef;
     float scaleModifier = 1.25f;
-
+    int originalOrder;
 
 
     public void SetUIFlowRef(UIFlow flowRef)
@@ -96,7 +96,7 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     {
         rectTransform.anchoredPosition -= upOffset;
         rectTransform.localScale = originalScale;
-        canvas.sortingOrder = 0;
+        canvas.sortingOrder -= 10;
 
     }
 
@@ -104,7 +104,7 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     {
         rectTransform.localScale = originalScale * scaleModifier;
         rectTransform.anchoredPosition += upOffset;
-        canvas.sortingOrder = 10;
+        canvas.sortingOrder += 10;
     }
 
 
@@ -120,5 +120,10 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     public void SetInitialYPosition()
     {
         originalY = rectTransform.anchoredPosition.y;
+    }
+    public void SetOriginalSortingOrder(int value)
+    {
+        originalOrder = value;
+        canvas.sortingOrder = originalOrder;
     }
 }

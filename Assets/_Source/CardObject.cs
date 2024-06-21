@@ -57,14 +57,13 @@ public class CardObject : MonoBehaviour
     public void PopulateCard(Card card)
     {
         _card = card;
-
+        _activeBorder.color = GetColorForRarity(card.CardStatisticsData.Rarity);
         _title.text = card.CardName;
         _description.text = card.CardDescription;
         _thumbnail.sprite = card.CardSprite;
-        _activeBorder.color = GetColorForRarity(card.CardStatisticsData.Rarity);
         SetTypeIcon(card.cardTypeSymbol);
         EnableLevelMarks(card.CardStatisticsData.Rarity);
-        _statDisplay.Display(card.CardStatisticsData.GetStatistics());
+        _statDisplay.SetUpDisplay(card.CardStatisticsData.GetStatistics());
     }
 
     private Color GetColorForRarity(Rarity r)
@@ -109,4 +108,6 @@ public class CardObject : MonoBehaviour
     {
         _backgroundRaycastTarget.raycastTarget = value;
     }
+
+ 
 }

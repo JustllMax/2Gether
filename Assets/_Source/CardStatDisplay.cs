@@ -2,22 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
+using System.Linq;
 public class CardStatDisplay : MonoBehaviour
 {
-    private List<TextMeshProUGUI> _pool = new List<TextMeshProUGUI>();
-
+    private List<GameObject> _pool = new List<GameObject>();
+    private List<(TMP_Text, TMP_Text)> statTextPair = new List<(TMP_Text, TMP_Text)>(); 
     [SerializeField]
     private GameObject _template;
-
-    private void OnEnable()
-    {
-        for (int i = 0; i < 15; i++) {
-            _pool.Add(Instantiate(_template, transform).GetComponent<TextMeshProUGUI>());
-            _pool[_pool.Count - 1].gameObject.SetActive(false);
-        }
-    }
-
 
     public void Display(List<(string, string)> data)
     {
@@ -25,8 +16,10 @@ public class CardStatDisplay : MonoBehaviour
         {
             var pair = data[i];
 
-            _pool[i].gameObject.SetActive(true);
-            _pool[i].text = pair.Item1 + ": " + pair.Item2;
+            //_pool[i].text = pair.Item1 + ": " + pair.Item2;
+            
+            statTextPair[i].Item1.SetText(pair.Item1);
+            statTextPair[i].Item2.SetText(pair.Item2);
         }
     }
 
@@ -37,4 +30,45 @@ public class CardStatDisplay : MonoBehaviour
             pair.gameObject.SetActive(false);
         }
     }
+
+    public void SetUpDisplay(List<(string, string)> data)
+    {
+        if(data.Count <= 0)
+        {
+            return;
+        }
+
+      
+        int rowsToSpawn = data.Count == 1 ? 1 : (int)Mathf.Ceil(data.Count / 2.0f);
+
+        Debug.Log(this + " rows to spawn: " + rowsToSpawn);
+        //Spawn X rows, each row has 2 TMP_Text components
+        for (int i = 0; i < rowsToSpawn; i++)
+        {   
+            _pool.Add(Instantiate(_template, transform));
+
+            List<TMP_Text> textComponents = _pool[_pool.Count - 1].GetComponentsInChildren<TMP_Text>().ToList();
+            Debug.Log("Lista ");
+
+            foreach (var t in textComponents)
+            {
+                Debug.Log(t.name);
+            }
+            Debug.Log("Pary ");
+
+            foreach (var e in statTextPair)
+            {
+                Debug.Log(e.Item1);
+                Debug.Log(e.Item2);
+            }
+            statTextPair.Add((textComponents[0], textComponents[1]));
+            statTextPair.Add((textComponents[2], textComponents[3]));
+
+        }
+
+        Display(data);
+    }
+    
+
+    
 }
