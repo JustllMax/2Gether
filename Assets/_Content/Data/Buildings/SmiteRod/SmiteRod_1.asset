@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SmiteRod_1
   m_EditorClassIdentifier: 
   CardType: 0
+  Thumbnail: {fileID: 21300000, guid: 2069b2ab01b39d140a64335bfaeb55a4, type: 3}
   Rarity: 0
   Name: Smite Rod
   Description: Damages and slows enemies

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Hospital_3
   m_EditorClassIdentifier: 
   CardType: 0
+  Thumbnail: {fileID: 21300000, guid: 77a1710480d9b794ea34080c52168bc0, type: 3}
   Rarity: 2
   Name: Hospital
   Description: Heals player if nearby

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 abstract public class Card : ScriptableObject
@@ -13,10 +14,11 @@ abstract public class Card : ScriptableObject
     public string CardDescription;
 
     public CardStatistics CardStatisticsData;
-
+    protected List<(string, string)> statistics = new List<(string, string)>();
     public abstract void OnCardSubmitted(GameContext ctx);
 
     public abstract void OnBeginUseCard(GameContext ctx);
     public abstract void OnEndUseCard(GameContext ctx);
+
 
 }

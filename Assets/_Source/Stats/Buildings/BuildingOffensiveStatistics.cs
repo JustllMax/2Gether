@@ -18,7 +18,7 @@ public class BuildingOffensiveStatistics : BuildingStatistics
     public override List<(string, string)> GetStatistics()
     {
         statistics = base.GetStatistics();
-        if(AttackDamage != 0)
+        if(AttackDamage > 0)
             addStat("Damage", ((int)AttackDamage).ToString());
         
         return collectStat();

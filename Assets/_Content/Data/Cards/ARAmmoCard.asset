@@ -15,10 +15,10 @@ MonoBehaviour:
   cardTypeSymbol: 3
   CardName: AR Ammunition
   CardSprite: {fileID: 21300000, guid: 640542d8c230b2c45bd2b8fac2dd46cd, type: 3}
-  CardDescription: 
+  CardDescription: Ammunition for automatic rifle
   CardStatisticsData: {fileID: 1895904027584428612}
   GunType: 1
-  Amount: 50
+  Amount: 150
 --- !u!114 &1895904027584428612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32,6 +32,7 @@ MonoBehaviour:
   m_Name: CardStatisticsData
   m_EditorClassIdentifier: 
   CardType: 1
+  Thumbnail: {fileID: 0}
   Rarity: 0
   Name: 
   Description: 
@@ -42,3 +43,4 @@ MonoBehaviour:
   Range: 0
   ReloadTime: 0
   BulletDamage: 0
+  amountToRestore: 150

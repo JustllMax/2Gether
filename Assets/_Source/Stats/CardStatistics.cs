@@ -10,6 +10,7 @@ abstract public class CardStatistics : ScriptableObject
 
     [SerializeField]
     CardType CardType;
+    public Sprite Thumbnail;
     public Rarity Rarity;
     public string Name;
     public string Description;

@@ -10,7 +10,7 @@ public class CardStatDisplay : MonoBehaviour
     [SerializeField]
     private GameObject _template;
 
-    public void Display(List<(string, string)> data)
+    void Display(List<(string, string)> data)
     {
         for (int i = 0; i < data.Count; i++)
         {
@@ -27,12 +27,15 @@ public class CardStatDisplay : MonoBehaviour
     {
         foreach (var pair in _pool)
         {
-            pair.gameObject.SetActive(false);
+            Destroy(pair);
         }
+        _pool.Clear();
+        statTextPair.Clear();
     }
 
     public void SetUpDisplay(List<(string, string)> data)
     {
+        Clean();
         if(data.Count <= 0)
         {
             return;

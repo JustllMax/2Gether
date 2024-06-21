@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a69b3fbae3b91a4380fe5d1f8e74a38, type: 3}
-  m_Name: New Card Pool Data
+  m_Name: Card_Pool_Data
   m_EditorClassIdentifier: 
   Cards:
   - {fileID: 11400000, guid: 0beb15ad2b500ae4292ca802d811d0a7, type: 2}
@@ -26,3 +26,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 04b5e3373e67e864ea20ec0b24e7ef56, type: 2}
   - {fileID: 11400000, guid: ecf646ed3fe50544795904651613bbff, type: 2}
   - {fileID: 11400000, guid: 8b9d7c4793ff9294da6260416604026d, type: 2}
+  - {fileID: 11400000, guid: 3f5db6717ef2e9845ba720c5f7cc2a89, type: 2}
+  - {fileID: 11400000, guid: cdf80bd416f9d4c41b6d916f8bd36e4b, type: 2}
+  - {fileID: 11400000, guid: 11cc21d8945f31349ac309fd89e6d33d, type: 2}

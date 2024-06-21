@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Mine_1
   m_EditorClassIdentifier: 
   CardType: 0
+  Thumbnail: {fileID: 21300000, guid: fd60ac914f431da4fa96fb1feedb2fee, type: 3}
   Rarity: 0
   Name: Mine
   Description: Explodes on touch
@@ -22,4 +23,4 @@ MonoBehaviour:
   SellCost: 5
   AttackDamage: 100
   AttackRange: 3
-  AttackFireRate: 0
+  AttackDelay: 0

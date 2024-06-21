@@ -20,5 +20,16 @@ public abstract class GunData : CardStatistics
     public float ReloadTime;
     public float BulletDamage;
 
+    public float amountToRestore;
+
+    public override List<(string, string)> GetStatistics()
+    {
+        var s = base.GetStatistics();
+        if(amountToRestore > 0)
+        {
+            addStat("Amount", amountToRestore.ToString());
+        }
+        return collectStat();
+    }
 
 }

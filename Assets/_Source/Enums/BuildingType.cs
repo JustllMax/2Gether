@@ -4,8 +4,8 @@ using UnityEngine;
 
 public enum BuildingType
 {
-    Offensive,
-    Defensive,
-    Utility,
+    Offensive =0,
+    Defensive =1,
+    Support =2,
     Economy
 }

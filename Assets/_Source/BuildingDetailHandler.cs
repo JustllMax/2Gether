@@ -16,26 +16,49 @@ public class BuildingDetailHandler : MonoBehaviour
 
     private Building _currentBuilding;
 
-    LayerMask buildingMask;
-
     [Header("UI Assets")]
     [SerializeField] private GameObject _buildingDetailRoot;
+    //ui stuff
     [SerializeField]
-    private TextMeshProUGUI _title;
+    private TMP_Text _title;
     [SerializeField]
-    private TextMeshProUGUI _levelDisplay;
+    private TMP_Text _description;
+    [SerializeField]
+    List<Image> levelMarks;
+    [SerializeField]
+    private Image _thumbnail;
+    [SerializeField]
+    private Image _backgroundRaycastTarget;
+
+    [SerializeField]
+    Color whiteColor;
+    [SerializeField]
+    Color blueColor;
+    [SerializeField]
+    Color redColor;
+
     [SerializeField]
     private CardStatDisplay _cardStatDisplay;
+
+    [SerializeField]
+    private Image _activeBorder;
+
+    [SerializeField]
+    private Image _typeIcon;
+    [SerializeField]
+    List<Sprite> symbolTypeIcons;
     [SerializeField]
     private Button _sellButton;
     [SerializeField]
+    private Image _sellButtonBackground;
+    [SerializeField]
     private Button _closeButton;
-
+    [SerializeField]
+    private Image _closeButtonBackground;
 
     void Awake()
     {
-        //Maska nie dziala idk czemu w tym Raycastcie
-        buildingMask = LayerMask.NameToLayer("Building") | LayerMask.NameToLayer("MainBuilding");
+        
         _camera = Camera.main;
         _buildingDetailRoot.SetActive(false);
 
@@ -47,6 +70,7 @@ public class BuildingDetailHandler : MonoBehaviour
     {
         _showingBuildingDetail = false;
         _buildingDetailRoot.SetActive(false);
+        _cardStatDisplay.Clean();
         _currentBuilding = null;
     }
 
@@ -67,10 +91,10 @@ public class BuildingDetailHandler : MonoBehaviour
                         return;
                     }
                 }
-                //if(_showingBuildingDetail == true)
-                //{
-                //    CloseDetailPanel();
-                //}
+                if(_showingBuildingDetail == true)
+                {
+                   CloseDetailPanel();
+                }
             }
         }
     }
@@ -78,14 +102,22 @@ public class BuildingDetailHandler : MonoBehaviour
     public void ShowBuildingDetail(Building b)
     {
         _currentBuilding = b;
- 
+        var stats = b.GetBaseStatistics();
         _showingBuildingDetail = true;
 
         _buildingDetailRoot.SetActive(true);
 
         _title.text = b.GetBaseStatistics().Name;
-        _levelDisplay.text = "Level: " + b.GetBaseStatistics().Rarity.ToString();
-        _cardStatDisplay.Display(b.GetBaseStatistics().GetStatistics());
+        _activeBorder.color = GetColorForRarity(stats.Rarity);
+        _title.text = stats.Name;
+        _description.text = stats.Description;
+        _thumbnail.sprite = stats.Thumbnail;
+        _backgroundRaycastTarget.color = _activeBorder.color;
+        EnableLevelMarks(stats.Rarity);
+        SetTypeIcon(stats.BuildingType);
+        _cardStatDisplay.SetUpDisplay(stats.GetStatistics());
+        _closeButtonBackground.color = _activeBorder.color;
+        _sellButtonBackground.color = _activeBorder.color;
     }
 
     public void SellBuilding()
@@ -100,5 +132,44 @@ public class BuildingDetailHandler : MonoBehaviour
         GridController.Instance.RemoveBuilding(_currentBuilding.GetComponent<GridBuilding>().gridPos);
         _currentBuilding = null;
         CloseDetailPanel();
+    }
+
+    void SetTypeIcon(BuildingType type)
+    {
+        _typeIcon.sprite = symbolTypeIcons[(int)type];
+    }
+
+    void EnableLevelMarks(Rarity r)
+    {
+
+        for (int i = 0; i < levelMarks.Count; i++)
+        {
+            levelMarks[i].gameObject.SetActive(false);
+        }
+        int level = (int)r;
+        //base level is 0
+        for (int i = 0; i <= level; i++)
+        {
+            levelMarks[i].gameObject.SetActive(true);
+            levelMarks[i].color = _activeBorder.color;
+        }
+    }
+
+    private Color GetColorForRarity(Rarity r)
+    {
+        switch (r)
+        {
+            case Rarity.Generic:
+                return whiteColor;
+                break;
+            case Rarity.Enhanced:
+                return blueColor;
+                break;
+            case Rarity.Prototype:
+                return redColor;
+                break;
+            default: return whiteColor;
+        }
+
     }
 }

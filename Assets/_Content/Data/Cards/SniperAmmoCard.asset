@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CardStatisticsData
   m_EditorClassIdentifier: 
   CardType: 1
+  Thumbnail: {fileID: 0}
   Rarity: 0
   Name: 
   Description: 
@@ -23,6 +24,7 @@ MonoBehaviour:
   Range: 0
   ReloadTime: 0
   BulletDamage: 0
+  amountToRestore: 30
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37,8 +39,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardTypeSymbol: 3
   CardName: sniper ammo
-  CardSprite: {fileID: 0}
-  CardDescription: 
+  CardSprite: {fileID: 21300000, guid: 22c217e7f1900ef419718ad1668dc1f5, type: 3}
+  CardDescription: Ammunition for SniperRifle
   CardStatisticsData: {fileID: -4049537410291398565}
   GunType: 3
-  Amount: 50
+  Amount: 30

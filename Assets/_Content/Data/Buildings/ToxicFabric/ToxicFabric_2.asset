@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: ToxicFabric_2
   m_EditorClassIdentifier: 
   CardType: 0
+  Thumbnail: {fileID: 21300000, guid: 4cda3a24b0952244fa8fd5425a3a5089, type: 3}
   Rarity: 1
   Name: ToxicFabric
-  Description: Poison enemies around with Damage Over Time
+  Description: Poisons enemies around with Damage Over Time
   BuildingType: 0
   ActivationTime: 0
   HealthPoints: 150
