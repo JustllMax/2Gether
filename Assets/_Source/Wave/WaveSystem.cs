@@ -95,7 +95,7 @@ public class WaveSystem : MonoBehaviour
         isWaveActive = true;
 
         _ = handleWave(waveData);
-
+        
         nightCount++;
     }
 
@@ -122,12 +122,14 @@ public class WaveSystem : MonoBehaviour
                         isSpawnActive = false;
                         return;
                     }
-                    Instantiate(wave.EnemyPool[i], spawnPoint.transform.position + new Vector3(10, 1, 10), Quaternion.identity);
+                    if(Instantiate(wave.EnemyPool[i], spawnPoint.transform.position + new Vector3(10, 1, 10), Quaternion.identity) == true)
+                    {
+                        enemyCount++;
+                    }
                     if (wave.EnemyPool[i].name == "P_Enemy_Eldritch")
                     {
                         wave.EnemyPool.Remove(wave.EnemyPool[i]);
                     }
-                    enemyCount++;
                 }
                 //await UniTask.WaitForSeconds(wave.EnemySpawnInterval);
             }
@@ -139,6 +141,16 @@ public class WaveSystem : MonoBehaviour
             } while (_elapsedTime < wave.Cooldown);
         }
         isSpawnActive = false;
+    }
+
+    public int GetEnemyForNightCount(List<SingleWave> data)
+    {
+        int count = 0;
+        foreach(var wave in data)
+        {
+            count += wave.EnemyPool.Count;
+        }
+        return count;
     }
     #endregion
 
