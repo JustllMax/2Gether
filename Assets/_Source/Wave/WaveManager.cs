@@ -68,6 +68,9 @@ public class WaveManager : MonoBehaviour
     public WaveSystem waveSystem { get { return _waveSystem; } }
     private float waveClearExpected = 240;
     private float waveClear = 0;
+
+    private int _enemyLeftForNight = 0;
+    public int enemyLeftForNight { get{ return _enemyLeftForNight;}}
     //[SerializeField] int[] _weightsFollow;
     //[SerializeField] int[] _weightsAttack;
     #endregion
@@ -131,7 +134,8 @@ public class WaveManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_waveSystem.enemyCount <= 0 && _waveSystem.isWaveActive && !_waveSystem.isSpawnActive && GameManager.Instance.IsPlayerAlive() == true)
+
+        if (_waveSystem.enemyCount <= 0 && _waveSystem.isWaveActive && !_waveSystem.isSpawnActive)
         {
             _waveSystem.isWaveActive = false;
             _ = InvokeNightEnd();
@@ -178,9 +182,6 @@ public class WaveManager : MonoBehaviour
     {
         int followEnemiesNumberToAdd = UnityEngine.Random.Range(1, 5);
         int attackEnemiesNumberToAdd = UnityEngine.Random.Range(1, 4);
-        int followToAdd;
-        int attackToAdd;
-        int bossToAdd;
 
         if (waveClear >= waveClearExpected)
         {
@@ -234,6 +235,7 @@ public class WaveManager : MonoBehaviour
 
     private void NightBeginCycle()
     {
+        _enemyLeftForNight = _waveSystem.GetEnemyForNightCount(waves);
         StartWave();
     }
     public void StartWave()
@@ -244,16 +246,15 @@ public class WaveManager : MonoBehaviour
     public void EndNightCycle()
     {
         _waveSystem.isWaveActive = false;
-        _ = DeleteEnemies();
-        _waveSystem.enemyCount = 0;
+        //DeleteEnemies();
+        //_waveSystem.enemyCount = 0;
 
         if (WaveSystem.nightCount > 0)
             NextNightWaveData();
     }
 
-    public async UniTaskVoid DeleteEnemies()
+    public void DeleteEnemies()
     {
-        await UniTask.WaitForSeconds(0.5f);
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         if (enemies.Length > 0)
         {
@@ -268,8 +269,10 @@ public class WaveManager : MonoBehaviour
 
     public void EnemyHasBeenKilled()
     {
+        _enemyLeftForNight--;
         waveSystem.enemyCount--;
-        HUDManager.Instance.SetEnemyCounter(waveSystem.enemyCount);
+        Debug.LogErrorFormat("Enemy count: " + _waveSystem.enemyCount);
+        HUDManager.Instance.SetEnemyCounter(_enemyLeftForNight);
     }
 
     async UniTaskVoid InvokeNightEnd()

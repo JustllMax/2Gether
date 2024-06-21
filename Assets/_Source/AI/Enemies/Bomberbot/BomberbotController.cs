@@ -20,7 +20,6 @@ public class  BomberbotController : AIController
             return;
 
         isDead = true;
-        WaveManager.Instance.EnemyHasBeenKilled();
 
         GetNavMeshAgent().enabled = false;
 
@@ -44,7 +43,7 @@ public class  BomberbotController : AIController
 
         ExplosionSpawner.SpawnExplosion(transform.position).SetUpExplosion(explosionDamage, explosionRadius, explosionMask, particlesScale);
         Destroy(gameObject);
-        WaveManager.Instance.waveSystem.enemyCount--;
+        WaveManager.Instance.EnemyHasBeenKilled();
     }
 }
 
