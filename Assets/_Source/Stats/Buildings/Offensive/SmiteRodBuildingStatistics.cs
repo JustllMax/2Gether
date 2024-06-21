@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -14,5 +15,15 @@ public class SmiteRodBuildingStatistics : BuildingOffensiveStatistics
     [Tooltip("In seconds, for exampled: Slowed down for 3 seconds")]
     public float slowDuration;
 
+    public override List<(string, string)> GetStatistics()
+    {
+        statistics = base.GetStatistics();
+        int strPercent = (int)slowModifier * 10;
+        int durPercent = (int)slowDuration * 10;
+
+        addStat("Slow Str", strPercent.ToString());
+        addStat("Slow Dur", durPercent.ToString());
+        return collectStat();
+    }
 }
 

@@ -7,6 +7,8 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 {
     public CardObject CardData;
     [SerializeField]
+    private Canvas canvas;
+    [SerializeField]
     private Vector2 upOffset = new Vector2(0f, 200f);
     [SerializeField]
     private bool isSelected = false;
@@ -94,12 +96,15 @@ public class UICards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     {
         rectTransform.anchoredPosition -= upOffset;
         rectTransform.localScale = originalScale;
+        canvas.sortingOrder = 0;
+
     }
 
     public void MaximizeCard()
     {
         rectTransform.localScale = originalScale * scaleModifier;
         rectTransform.anchoredPosition += upOffset;
+        canvas.sortingOrder = 10;
     }
 
 

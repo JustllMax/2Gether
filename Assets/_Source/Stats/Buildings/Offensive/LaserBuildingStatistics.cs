@@ -17,7 +17,7 @@ public class LaserBuildingStatistics : BuildingOffensiveStatistics
     {
         statistics = base.GetStatistics();
 
-        addStat("Laser Amp", laserDamageAmplification.ToString());
+        addStat("Damage Amp", laserDamageAmplification.ToString());
         return collectStat();
     }
 

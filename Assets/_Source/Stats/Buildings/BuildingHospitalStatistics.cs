@@ -7,4 +7,12 @@ public class BuildingHospitalStatistics : BuildingOffensiveStatistics
 {
     public float healAmount;
     public float delayBetweenActivation;
+
+    public override List<(string, string)> GetStatistics()
+    {
+        statistics = base.GetStatistics();
+
+        addStat("Heal", healAmount.ToString());
+        return collectStat();
+    }
 }

@@ -21,7 +21,7 @@ public class CardObject : MonoBehaviour
     private Image _thumbnail;
     [SerializeField]
     private Image _backgroundRaycastTarget;
-   
+
     [SerializeField]
     Color whiteColor;
     [SerializeField]

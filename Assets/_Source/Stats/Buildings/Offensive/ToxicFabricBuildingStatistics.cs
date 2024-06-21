@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -17,6 +18,17 @@ public class ToxicFabricBuildingStatistics : BuildingOffensiveStatistics
     [Range(0, 120f)]
     [Tooltip("In seconds, for example: Poisoned for 15 seconds")]
     public float effectDuration;
+
+    public override List<(string, string)> GetStatistics()
+    {
+        statistics = base.GetStatistics();
+        int strPercent = (int)damagePerTick;
+        int durPercent = (int)effectDuration;
+
+        addStat("Poison Dmg", strPercent.ToString());
+        addStat("Poison Dur", durPercent.ToString());
+        return collectStat();
+    }
 
 }
 
