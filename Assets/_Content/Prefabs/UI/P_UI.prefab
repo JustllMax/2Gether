@@ -1659,7 +1659,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 21
   m_TargetDisplay: 0
 --- !u!114 &3394964245268559673
 MonoBehaviour:
@@ -1848,7 +1848,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 67, y: 13.362}
+  m_AnchoredPosition: {x: 67, y: -2}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &402602303319827723
@@ -1872,14 +1872,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 2e911fdaf6363d94ca242bdd5f21296d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2891,8 +2891,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 136.9837, y: -80.282715}
-  m_SizeDelta: {x: 273.9677, y: 160.5654}
+  m_AnchoredPosition: {x: 128.65985, y: -67.99057}
+  m_SizeDelta: {x: 257.32, y: 135.9811}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3612781054272709865
 GameObject:
@@ -3107,8 +3107,8 @@ MonoBehaviour:
   NightUI: {fileID: 7227938878733523434}
   HelmetOverlay: {fileID: 492267381951234775}
   NightEndText: {fileID: 2482683892935302552}
-  enemyIcon: {fileID: 0}
-  textEnemyCounter: {fileID: 0}
+  enemyIcon: {fileID: 1380990420166241864}
+  textEnemyCounter: {fileID: 2936073614927840902}
   appearDelay: 1
   timeUntilDisappear: 2
   MainbaseHPBar: {fileID: 9084860205338771509}
@@ -4817,8 +4817,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -64.143, y: 13.3625}
-  m_SizeDelta: {x: 100, y: 75}
+  m_AnchoredPosition: {x: -48.572, y: 5}
+  m_SizeDelta: {x: 131.14, y: 82.1594}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7829351578142411475
 CanvasRenderer:
@@ -4858,8 +4858,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 16777215
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4876,13 +4876,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 43.35
-  m_fontSizeBase: 36
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 16
+  m_fontStyle: 17
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

@@ -2031,7 +2031,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!114 &2553250818686713250
 MonoBehaviour:
@@ -2089,7 +2089,7 @@ MonoBehaviour:
   rerollButton: {fileID: 3832832940327610517}
   continueButton: {fileID: 2862104906397663195}
   _startNightButton: {fileID: 6013190369577318239}
-  cardPrefab: {fileID: 1449427771172642560, guid: c19927f43c0ea4e469fca00a49316f15,
+  cardPrefab: {fileID: 6555447696062703478, guid: acb42ce0395667d46bf3a2b10e6405d9,
     type: 3}
   cardpackPanel: {fileID: 7467013490132672560}
   cardpackOpenPanel: {fileID: 8176097838261698671}
@@ -2668,10 +2668,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5722718235821393852}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 19.770996, y: 61}
-  m_SizeDelta: {x: -588.7295, y: -640.578}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -72, y: 0}
+  m_SizeDelta: {x: 1331.2705, y: 439.422}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4771326080578992411
 CanvasRenderer:
