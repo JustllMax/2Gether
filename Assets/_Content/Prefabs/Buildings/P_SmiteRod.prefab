@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 179174886043907103}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.11, y: 3.2, z: -0.2}
+  m_LocalPosition: {x: 0, y: 3.612, z: -0.001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -332,7 +332,7 @@ MonoBehaviour:
     m_Bits: 256
   obstructionMask:
     serializedVersion: 2
-    m_Bits: 62976
+    m_Bits: 62464
   firePoint: {fileID: 5721141180015762087}
 --- !u!120 &7737263179810947440
 LineRenderer:

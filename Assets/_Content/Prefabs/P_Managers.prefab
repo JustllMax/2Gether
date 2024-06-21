@@ -189,6 +189,7 @@ MonoBehaviour:
   _cardManager: {fileID: 0}
   InitialCardPool: {fileID: 11400000, guid: fb854cbca87ab514084056523bea7b0d, type: 2}
   isPlayerAlive: 1
+  isMainBaseAlive: 1
 --- !u!1 &4955880584038924254
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,8 +650,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPoolData: {fileID: 11400000, guid: fb854cbca87ab514084056523bea7b0d, type: 2}
-  chanceForEnhanced: 13.6
-  chanceForPrototype: 11.2
+  chanceForEnhanced: 30
+  chanceForPrototype: 10
 --- !u!1 &8759359775791035565
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,13 +1086,23 @@ PrefabInstance:
     - target: {fileID: 132020417113982229, guid: 8eaff3ad0e012614883c97bb00e1788f,
         type: 3}
       propertyPath: _dayTime
-      value: 0.578
+      value: 0.543
       objectReference: {fileID: 0}
+    - target: {fileID: 132020417113982229, guid: 8eaff3ad0e012614883c97bb00e1788f,
+        type: 3}
+      propertyPath: daySkybox
+      value: 
+      objectReference: {fileID: 2100000, guid: 50bf15468c19e0e40b5bf26662770a34, type: 2}
     - target: {fileID: 132020417113982229, guid: 8eaff3ad0e012614883c97bb00e1788f,
         type: 3}
       propertyPath: tolerance
       value: 0.0595
       objectReference: {fileID: 0}
+    - target: {fileID: 132020417113982229, guid: 8eaff3ad0e012614883c97bb00e1788f,
+        type: 3}
+      propertyPath: nightSkybox
+      value: 
+      objectReference: {fileID: 2100000, guid: cde27d19e15815c41a916069dcd3e381, type: 2}
     - target: {fileID: 132020417113982229, guid: 8eaff3ad0e012614883c97bb00e1788f,
         type: 3}
       propertyPath: directLightGradient.ctime2
@@ -1196,6 +1207,26 @@ PrefabInstance:
         type: 3}
       propertyPath: directLightGradient.key7.r
       value: 0.013120796
+      objectReference: {fileID: 0}
+    - target: {fileID: 132020417113982229, guid: 8eaff3ad0e012614883c97bb00e1788f,
+        type: 3}
+      propertyPath: ambientLightGradient.ctime5
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 132020417113982229, guid: 8eaff3ad0e012614883c97bb00e1788f,
+        type: 3}
+      propertyPath: ambientLightGradient.key5.b
+      value: 0.31132078
+      objectReference: {fileID: 0}
+    - target: {fileID: 132020417113982229, guid: 8eaff3ad0e012614883c97bb00e1788f,
+        type: 3}
+      propertyPath: ambientLightGradient.key5.g
+      value: 0.057271283
+      objectReference: {fileID: 0}
+    - target: {fileID: 132020417113982229, guid: 8eaff3ad0e012614883c97bb00e1788f,
+        type: 3}
+      propertyPath: ambientLightGradient.key5.r
+      value: 0.06718395
       objectReference: {fileID: 0}
     - target: {fileID: 132020417113982229, guid: 8eaff3ad0e012614883c97bb00e1788f,
         type: 3}
