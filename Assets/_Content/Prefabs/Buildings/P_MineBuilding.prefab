@@ -123,7 +123,7 @@ MonoBehaviour:
   - {fileID: 3265716609935964952}
   - {fileID: 5320017753310845051}
   - {fileID: 9151712634885575207}
-  _isCanBePlacedOnRoad: 0
+  _isCanBePlacedOnRoad: 1
   _gridPos: {x: 0, y: 0}
 --- !u!65 &5639105648598285417
 BoxCollider:

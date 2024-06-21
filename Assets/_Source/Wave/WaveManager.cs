@@ -271,7 +271,6 @@ public class WaveManager : MonoBehaviour
     {
         _enemyLeftForNight--;
         waveSystem.enemyCount--;
-        Debug.LogErrorFormat("Enemy count: " + _waveSystem.enemyCount);
         HUDManager.Instance.SetEnemyCounter(_enemyLeftForNight);
     }
 
