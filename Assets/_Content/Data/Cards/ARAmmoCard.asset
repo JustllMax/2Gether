@@ -19,6 +19,7 @@ MonoBehaviour:
   CardStatisticsData: {fileID: 1895904027584428612}
   GunType: 1
   Amount: 150
+  UseSfx: {fileID: 8300000, guid: a1ed22c88dbaf284e8974d5013d8d275, type: 3}
 --- !u!114 &1895904027584428612
 MonoBehaviour:
   m_ObjectHideFlags: 0

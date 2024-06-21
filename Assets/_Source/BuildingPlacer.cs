@@ -46,13 +46,24 @@ public class BuildingPlacer : MonoBehaviour
         _rangeIndicatorInstance.transform.position = Vector3.up * 1000;
     }
 
+    public void SummonRangeCircle(Vector3 position, float range)
+    {
+        _rangeIndicatorInstance.transform.position = position;
+        _rangeIndicatorInstance.transform.localScale = Vector3.one * range;
+    }
+
+    public void DisperseRangeCircle()
+    {
+        _rangeIndicatorInstance.transform.position = Vector3.up * 1000;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (_isPlacing)
         {
-            _rangeIndicatorInstance.transform.position = _draggingBuilding.transform.position;
-            _rangeIndicatorInstance.transform.localScale = Vector3.one * ((BuildingOffensiveStatistics)_selectedBuildingCard.CardStatisticsData).AttackRange;
+
+            SummonRangeCircle(_draggingBuilding.transform.position, ((BuildingOffensiveStatistics)_selectedBuildingCard.CardStatisticsData).AttackRange);
 
             if(Input.GetKeyUp(KeyCode.R))
             {
@@ -180,7 +191,7 @@ public class BuildingPlacer : MonoBehaviour
     public void EndPlaceMode()
     {
         _isPlacing = false;
-        _rangeIndicatorInstance.transform.position = Vector3.up * 1000;
+        DisperseRangeCircle();
         Destroy( _draggingBuilding );
     }
 }

@@ -8,6 +8,9 @@ public class AmmoCard : Card
     public GunType GunType;
     public int Amount;
 
+    [SerializeField]
+    public AudioClip UseSfx;
+
     public override void OnBeginUseCard(GameContext ctx)
     {
         GameManager.Instance.GetPlayerController().GetComponent<PlayerEquipment>()
@@ -17,6 +20,7 @@ public class AmmoCard : Card
 
     public override void OnCardSubmitted(GameContext ctx)
     {
+        AudioManager.Instance.PlaySFX(UseSfx);
     }
 
     public override void OnEndUseCard(GameContext ctx)

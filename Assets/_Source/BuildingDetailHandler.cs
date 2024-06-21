@@ -68,6 +68,7 @@ public class BuildingDetailHandler : MonoBehaviour
 
     public void CloseDetailPanel()
     {
+        BuildingPlacer.Instance.DisperseRangeCircle();
         _showingBuildingDetail = false;
         _buildingDetailRoot.SetActive(false);
         _cardStatDisplay.Clean();
@@ -96,6 +97,11 @@ public class BuildingDetailHandler : MonoBehaviour
                    CloseDetailPanel();
                 }
             }
+        }
+
+        if (_showingBuildingDetail)
+        {
+            BuildingPlacer.Instance.SummonRangeCircle(_currentBuilding.transform.position, ((BuildingOffensiveStatistics)_currentBuilding.GetBaseStatistics()).AttackRange);
         }
     }
 
