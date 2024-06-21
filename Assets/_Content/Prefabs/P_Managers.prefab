@@ -1312,6 +1312,12 @@ PrefabInstance:
       propertyPath: layerMask.m_Bits
       value: 32
       objectReference: {fileID: 0}
+    - target: {fileID: 4892460281932970682, guid: 3d78f52b6270dde49a6a58246b945cc1,
+        type: 3}
+      propertyPath: _rangeIndicatorPrefab
+      value: 
+      objectReference: {fileID: 3434899910171501307, guid: f0c629e883c645848b3658626c242a24,
+        type: 3}
     - target: {fileID: 5122096375321475592, guid: 3d78f52b6270dde49a6a58246b945cc1,
         type: 3}
       propertyPath: m_Name

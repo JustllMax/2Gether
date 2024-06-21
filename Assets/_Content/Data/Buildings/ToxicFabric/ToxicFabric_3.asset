@@ -23,6 +23,6 @@ MonoBehaviour:
   AttackDamage: 0
   AttackRange: 25
   AttackDelay: 2.5
-  damagePerTick: 3
-  tickDelay: 0.5
+  damagePerTick: 4
+  tickDelay: 0.75
   effectDuration: 8
