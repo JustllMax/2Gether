@@ -33,6 +33,8 @@ public class LostScreenManager : MonoBehaviour
 
     public void EnableLostScreen()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         lostScreenGameObject.SetActive(true);
         Time.timeScale = 0f;
         InputManager.Instance.DisableAllTimeController();
