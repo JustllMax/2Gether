@@ -19,11 +19,11 @@ MonoBehaviour:
   Description: Poisons enemies around with Damage Over Time
   BuildingType: 0
   ActivationTime: 0
-  HealthPoints: 200
+  HealthPoints: 250
   SellCost: 140
   AttackDamage: 0
   AttackRange: 25
   AttackDelay: 2.5
-  damagePerTick: 6
-  tickDelay: 0.3
+  damagePerTick: 4
+  tickDelay: 0.75
   effectDuration: 8

@@ -182,7 +182,9 @@ RaycastHit hitInfo;
         foreach (var hit in hits)
         {
             Debug.Log(" find " + hit.name);
-            if (hit.TryGetComponent(out AIController controller))
+            AIController controller = hit.GetComponentInParent<AIController>();
+
+            if (controller != null)
             {
                 if (controller.IsDead() == false)
                 {

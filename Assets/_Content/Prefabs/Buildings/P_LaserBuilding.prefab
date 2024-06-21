@@ -127,7 +127,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 419791127169620577}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: FirePoint
   m_TagString: Building
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ Transform:
   m_GameObject: {fileID: 5250021397927268807}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9, y: 410, z: -486}
+  m_LocalPosition: {x: -2, y: 40.4, z: -198}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -478,7 +478,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 130b5849f6ac6a74c9f9de065bdc4f11, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -510,7 +510,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.4196434
+        value: 0.5178566
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -661,7 +661,7 @@ PrefabInstance:
     - target: {fileID: -8231169563273807594, guid: b1f67dde7f67c8448afb9d2b8a680031,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8231169563273807594, guid: b1f67dde7f67c8448afb9d2b8a680031,
         type: 3}
@@ -736,7 +736,7 @@ PrefabInstance:
     - target: {fileID: 2708701501940623456, guid: b1f67dde7f67c8448afb9d2b8a680031,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2708701501940623456, guid: b1f67dde7f67c8448afb9d2b8a680031,
         type: 3}

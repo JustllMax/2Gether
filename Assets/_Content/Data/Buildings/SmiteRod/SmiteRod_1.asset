@@ -19,10 +19,10 @@ MonoBehaviour:
   Description: Damages and slows enemies
   BuildingType: 0
   ActivationTime: 1
-  HealthPoints: 120
+  HealthPoints: 240
   SellCost: 80
-  AttackDamage: 3
-  AttackRange: 30
+  AttackDamage: 4
+  AttackRange: 15
   AttackDelay: 2
   slowModifier: 0.25
   slowDuration: 2

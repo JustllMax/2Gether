@@ -19,8 +19,8 @@ MonoBehaviour:
   Description: Explodes on touch
   BuildingType: 0
   ActivationTime: 0
-  HealthPoints: 150
+  HealthPoints: 1
   SellCost: 15
-  AttackDamage: 150
+  AttackDamage: 80
   AttackRange: 3.5
   AttackDelay: 0

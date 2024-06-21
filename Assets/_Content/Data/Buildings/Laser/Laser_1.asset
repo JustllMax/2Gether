@@ -19,7 +19,7 @@ MonoBehaviour:
   Description: Shoots laser at enemies
   BuildingType: 0
   ActivationTime: 1.5
-  HealthPoints: 100
+  HealthPoints: 200
   SellCost: 100
   AttackDamage: 10
   AttackRange: 18

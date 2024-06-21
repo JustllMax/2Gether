@@ -25,4 +25,4 @@ MonoBehaviour:
   AttackRange: 15
   AttackDelay: 0
   healAmount: 15
-  delayBetweenActivation: 2
+  delayBetweenActivation: 3
