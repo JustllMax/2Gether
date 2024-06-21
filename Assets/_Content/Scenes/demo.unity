@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.3
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.10710697, g: 0.2091118, b: 0.21706003, a: 0.3}
+  m_IndirectSpecularColor: {r: 0.107101075, g: 0.20910648, b: 0.21706028, a: 0.3}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -263,7 +263,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 04c9dde75b3dd5440aef29af2e15cafb,
+      objectReference: {fileID: 21300000, guid: 2e911fdaf6363d94ca242bdd5f21296d,
         type: 3}
     - target: {fileID: 1380990420166241864, guid: 293efeebfd6a48c43b33fde8d7a3329f,
         type: 3}
@@ -547,7 +547,7 @@ PrefabInstance:
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7858988
+      value: 0.78589875
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
@@ -557,12 +557,12 @@ PrefabInstance:
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.32552996
+      value: 0.32553
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.2011887
+      value: -0.20118871
       objectReference: {fileID: 0}
     - target: {fileID: 5830323962992596256, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
@@ -727,7 +727,7 @@ PrefabInstance:
     - target: {fileID: 2967229447417094884, guid: 643bf3e221cf92e489c93813c3df74cd,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 20
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5994749668661794720, guid: 643bf3e221cf92e489c93813c3df74cd,
         type: 3}
@@ -894,22 +894,22 @@ PrefabInstance:
     - target: {fileID: 899579016727927919, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7858988
+      value: 0.78589886
       objectReference: {fileID: 0}
     - target: {fileID: 899579016727927919, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.48571235
+      value: 0.4857124
       objectReference: {fileID: 0}
     - target: {fileID: 899579016727927919, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.32552993
+      value: -0.32552987
       objectReference: {fileID: 0}
     - target: {fileID: 899579016727927919, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.20118858
+      value: 0.20118861
       objectReference: {fileID: 0}
     - target: {fileID: 7062071491655611484, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
@@ -1182,12 +1182,12 @@ PrefabInstance:
     - target: {fileID: 2986673060109572695, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
         type: 3}
       propertyPath: chanceForEnhanced
-      value: 65.7
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2986673060109572695, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
         type: 3}
       propertyPath: chanceForPrototype
-      value: 51.2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5922677963036534157, guid: c4841f2dc5c8dfa44b22a9be92ed8690,
         type: 3}
