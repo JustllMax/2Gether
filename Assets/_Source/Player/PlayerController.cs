@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     [SerializeField]
     private float _cameraSensitivity = 0.1f;
 
+    public float CurrentSensitivity;
+
     [SerializeField]
     private Vector3 _velocity;
 
@@ -84,6 +86,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     public bool CanMove { get; set; } = true;
     public bool IsTargetable { get; set; }
     public TargetType TargetType { get; set; }
+    public float DesiredSensivity { get => _cameraSensitivity; }
     public float Health { get => _health; set => _health = value; }
 
     public Vector3 Velocity { get => _velocity; set => _velocity = value; }
@@ -95,7 +98,7 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
         SetUpPlayer();
         _characterController = GetComponent<CharacterController>();
         _audioSource = GetComponent<AudioSource>();
-        
+        CurrentSensitivity = _cameraSensitivity;
     }
 
     private void OnEnable()
@@ -227,9 +230,9 @@ public class PlayerController : MonoBehaviour, ITargetable, IDamagable
     {
 
         var mouseInput = FPSController.Look.ReadValue<Vector2>();
-        transform.Rotate(new Vector3(0, mouseInput.x * _cameraSensitivity, 0));
+        transform.Rotate(new Vector3(0, mouseInput.x * CurrentSensitivity, 0));
 
-        _cameraAngleX += mouseInput.y * _cameraSensitivity;
+        _cameraAngleX += mouseInput.y * CurrentSensitivity;
         _cameraAngleX = Mathf.Clamp(_cameraAngleX, -90, 90);
 
         _nightCamera.localRotation = Quaternion.Euler(new Vector3(-_cameraAngleX, 0, 0));

@@ -2601,6 +2601,7 @@ MonoBehaviour:
   _nightCamera: {fileID: 823719554601124883}
   _gunCamera: {fileID: 5159281564673271810}
   _cameraSensitivity: 0.1
+  CurrentSensitivity: 0
   _velocity: {x: 0, y: 0, z: 0}
   _gravityAcceleration: {x: 0, y: -13, z: 0}
   _groundDrag: 0.3
@@ -2626,6 +2627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ec65d2338f4234a8834bebdaa59923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 644348365738038138}
   nightCamera: {fileID: 1292074062964654143}
   FirePoint: {fileID: 5376599401585661262}
   _animator: {fileID: 5939401838147078560}
@@ -3999,7 +4001,7 @@ PrefabInstance:
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.48571235
+      value: 0.48571247
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
@@ -4009,7 +4011,7 @@ PrefabInstance:
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.20118858
+      value: 0.20118867
       objectReference: {fileID: 0}
     - target: {fileID: 8122580478265103823, guid: 002545678bee4264fbe68d9229d73128,
         type: 3}

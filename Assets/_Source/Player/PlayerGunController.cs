@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 public class PlayerGunController : MonoBehaviour
 {
+    [SerializeField] PlayerController playerController;
     [SerializeField] CinemachineVirtualCamera nightCamera;
     [SerializeField] Transform FirePoint;
     PlayerInputAction.FPSControllerActions _FPScontroller;
@@ -189,6 +190,7 @@ public class PlayerGunController : MonoBehaviour
     {
         HUDManager.Instance.Scope();
         nightCamera.m_Lens.FieldOfView = 30;
+        playerController.CurrentSensitivity = playerController.DesiredSensivity / 2;
     }
 
     //Called by event and eq
@@ -196,5 +198,6 @@ public class PlayerGunController : MonoBehaviour
     {
         nightCamera.m_Lens.FieldOfView = 90;
         HUDManager.Instance.UnScope();
+        playerController.CurrentSensitivity = playerController.DesiredSensivity;
     }
 }

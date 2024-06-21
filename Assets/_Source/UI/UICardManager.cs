@@ -71,14 +71,14 @@ public class UICardManager : MonoBehaviour
             rarity = Rarity.Enhanced;
         }
 
-        int randomCardIndex = Random.Range(0, deck.Count-1);
+        int randomCardIndex = Random.Range(0, deck.Count);
         card = deck[randomCardIndex];
 
         int a = 0;
         while(card.CardStatisticsData.Rarity != rarity)
         {
             a++;
-            randomCardIndex = Random.Range(0, deck.Count - 1);
+            randomCardIndex = Random.Range(0, deck.Count);
             card = deck[randomCardIndex];
             if (a > 1000)
             {
