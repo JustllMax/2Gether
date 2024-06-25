@@ -18,7 +18,7 @@ MonoBehaviour:
   CardDescription: Ammunition for automatic rifle
   CardStatisticsData: {fileID: 1895904027584428612}
   GunType: 1
-  Amount: 150
+  Amount: 240
   UseSfx: {fileID: 8300000, guid: a1ed22c88dbaf284e8974d5013d8d275, type: 3}
 --- !u!114 &1895904027584428612
 MonoBehaviour:
@@ -44,4 +44,4 @@ MonoBehaviour:
   Range: 0
   ReloadTime: 0
   BulletDamage: 0
-  amountToRestore: 150
+  amountToRestore: 240

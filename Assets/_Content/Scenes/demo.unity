@@ -547,7 +547,7 @@ PrefabInstance:
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.48571238
+      value: 0.4857124
       objectReference: {fileID: 0}
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
@@ -557,7 +557,7 @@ PrefabInstance:
     - target: {fileID: 2361129016226001743, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.20118867
+      value: -0.2011887
       objectReference: {fileID: 0}
     - target: {fileID: 5830323962992596256, guid: 4b0bea8fbbe3ca8478b09dd9dd9edb6d,
         type: 3}
@@ -800,7 +800,7 @@ PrefabInstance:
     - target: {fileID: 899579016727927919, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.4857124
+      value: 0.48571247
       objectReference: {fileID: 0}
     - target: {fileID: 899579016727927919, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
@@ -815,17 +815,17 @@ PrefabInstance:
     - target: {fileID: 3735655559337534896, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
       propertyPath: AmmoStore.Array.data[1].amount
-      value: 150
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 3735655559337534896, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
       propertyPath: AmmoStore.Array.data[2].amount
-      value: 36
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 3735655559337534896, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
       propertyPath: AmmoStore.Array.data[3].amount
-      value: 25
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7062071491655611484, guid: 33dd6f69cb5b19d4fb0951517a8412d0,
         type: 3}
