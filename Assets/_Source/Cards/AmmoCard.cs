@@ -15,12 +15,12 @@ public class AmmoCard : Card
     {
         GameManager.Instance.GetPlayerController().GetComponent<PlayerEquipment>()
             .AddAmmoToAmmoStorage(GunType, Amount);
+        AudioManager.Instance.PlaySFX(UseSfx);
         ctx.cardUi.DiscardCard(this);
     }
 
     public override void OnCardSubmitted(GameContext ctx)
     {
-        AudioManager.Instance.PlaySFX(UseSfx);
     }
 
     public override void OnEndUseCard(GameContext ctx)

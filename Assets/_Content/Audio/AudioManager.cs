@@ -179,6 +179,12 @@ public class AudioManager : MonoBehaviour
 
             AudioMixer.SetFloat("MasterVolume", volume);
         }
+        else
+        {
+            float volume = Mathf.Lerp(MinDB, MaxDB, -1f / 10f);
+            AudioMixer.SetFloat("MasterVolume", volume);
+
+        }
 
         if (PlayerPrefs.HasKey("SFXVolume"))
         {
@@ -190,6 +196,12 @@ public class AudioManager : MonoBehaviour
 
             AudioMixer.SetFloat("SFXVolume", volume);
         }
+        else
+        {
+            float volume = Mathf.Lerp(MinDB, MaxDB, -1f / 10f);
+            AudioMixer.SetFloat("SFXVolume", volume);
+
+        }
 
         if (PlayerPrefs.HasKey("MusicVolume"))
         {
@@ -200,6 +212,12 @@ public class AudioManager : MonoBehaviour
                 volume = Mathf.Lerp(MinDB, MaxDB, PlayerPrefs.GetFloat("MusicVolume") / 10f);
 
             AudioMixer.SetFloat("MusicVolume", volume);
+        }
+        else
+        {
+            float volume = Mathf.Lerp(MinDB, MaxDB, -1f / 10f);
+            AudioMixer.SetFloat("MusicVolume", volume);
+
         }
     }
 

@@ -37,22 +37,16 @@ public class GameManager : MonoBehaviour
 
     void OnEnable()
     {
-        DayNightCycleManager.NightEnd += OnNightEnd;
         SlotPlacer.OnMapGenerated += OnMapGenerated;
         NavMeshSurfaceManager.OnNavMeshGenerated += OnNavMeshGenerated;
-
         _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-
-
     }
     private void Start()
     {
         Application.targetFrameRate = 300;
-
     }
     void OnDisable()
     {
-        
         SlotPlacer.OnMapGenerated -= OnMapGenerated;
         NavMeshSurfaceManager.OnNavMeshGenerated -= OnNavMeshGenerated;
     }
@@ -84,6 +78,8 @@ public class GameManager : MonoBehaviour
     public void SetMainBaseTransform(Transform mainBase) { mainBaseTransform = mainBase; }
     public bool IsPlayerAlive() { return isPlayerAlive; }
 
+
+
     public void OnPlayerDeathInvoke()
     {
         isPlayerAlive = false;
@@ -91,9 +87,5 @@ public class GameManager : MonoBehaviour
         {
             OnPlayerDeath();
         }
-    }
-    void OnNightEnd()
-    {
-        Time.timeScale = 1f;
     }
 }

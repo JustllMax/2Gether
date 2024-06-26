@@ -44,26 +44,13 @@ public class CardStatDisplay : MonoBehaviour
       
         int rowsToSpawn = data.Count == 1 ? 1 : (int)Mathf.Ceil(data.Count / 2.0f);
 
-        Debug.Log(this + " rows to spawn: " + rowsToSpawn);
         //Spawn X rows, each row has 2 TMP_Text components
         for (int i = 0; i < rowsToSpawn; i++)
         {   
             _pool.Add(Instantiate(_template, transform));
 
             List<TMP_Text> textComponents = _pool[_pool.Count - 1].GetComponentsInChildren<TMP_Text>().ToList();
-            Debug.Log("Lista ");
 
-            foreach (var t in textComponents)
-            {
-                Debug.Log(t.name);
-            }
-            Debug.Log("Pary ");
-
-            foreach (var e in statTextPair)
-            {
-                Debug.Log(e.Item1);
-                Debug.Log(e.Item2);
-            }
             statTextPair.Add((textComponents[0], textComponents[1]));
             statTextPair.Add((textComponents[2], textComponents[3]));
 

@@ -276,6 +276,7 @@ public class WaveManager : MonoBehaviour
 
     async UniTaskVoid InvokeNightEnd()
     {
+        SpectatorModeManager.Instance.EndSpectatorMode();
         HUDManager.Instance.ShowEndNightText();
         await UniTask.WaitForSeconds(nightEndDelay);
         DayNightCycleManager.Instance.EndNightCycle();

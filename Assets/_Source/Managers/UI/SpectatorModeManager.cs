@@ -27,4 +27,9 @@ public class SpectatorModeManager : MonoBehaviour
         player.GetPlayerModel().SetActive(false);
         Time.timeScale = 2f;
     }
+
+    public void EndSpectatorMode()
+    {
+        Time.timeScale = 1f;
+    }
 }

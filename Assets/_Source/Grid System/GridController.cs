@@ -45,13 +45,13 @@ public class GridController : MonoBehaviour
         }
     }
 
-    void Update()
+    /*void Update()
     {
         if(Input.GetMouseButtonDown(0))
         {
             Debug.Log($"{GetGridPos().x} {GetGridPos().y}");
         }
-    }
+    }*/
     public bool TryPlace(Vector2Int pos, Building building, out Building? existingBuilding)
     {
         if (!IsPlaceTaken(pos.x, pos.y))

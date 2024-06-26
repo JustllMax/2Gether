@@ -11,6 +11,7 @@ TagManager:
   - MainBase
   - Enemy
   - Building
+  - DetailsWindow
   layers:
   - Default
   - TransparentFX

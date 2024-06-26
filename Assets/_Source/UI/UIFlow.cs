@@ -137,7 +137,6 @@ public class UIFlow : MonoBehaviour
             cardObject.SetRaycastable(false);
             cardObject.GetComponent<UICards>().SetOriginalSortingOrder(_cards.Count);
             gocard.name = "Card " + card.CardName;
-            Debug.Log(this + " card descrip " + card.CardDescription);
             _cards.Add(gocard.GetComponent<UICards>());
             _cards[_cards.Count - 1].SetUIFlowRef(this);
             _cards[_cards.Count - 1].SetOriginalSortingOrder(_cards.Count);

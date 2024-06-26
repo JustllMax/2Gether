@@ -6,7 +6,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.EventSystems;
 public class BuildingDetailHandler : MonoBehaviour
 {
     private Camera _camera;
@@ -56,6 +56,7 @@ public class BuildingDetailHandler : MonoBehaviour
     [SerializeField]
     private Image _closeButtonBackground;
 
+    private GraphicRaycaster uiRaycaster;
     void Awake()
     {
         
@@ -64,6 +65,7 @@ public class BuildingDetailHandler : MonoBehaviour
 
         _closeButton.onClick.AddListener(CloseDetailPanel);
         _sellButton.onClick.AddListener(SellBuilding);
+        uiRaycaster = GetComponent<GraphicRaycaster>();
     }
 
     public void CloseDetailPanel()
@@ -80,10 +82,24 @@ public class BuildingDetailHandler : MonoBehaviour
     {
         if (DayNightCycleManager.Instance.IsDay && !UIFlow.Instance.IsPlacingCard())
         {
-            RaycastHit hit;
 
             if (Input.GetMouseButtonDown(0))
             {
+
+
+                List<RaycastResult> results = new List<RaycastResult>();
+
+                RaycastUI(results);
+                foreach (RaycastResult result in results)
+                {
+                    if (result.gameObject.CompareTag("DetailsWindow"))
+                    {
+                        return;
+                    }
+                }
+
+                RaycastHit hit;
+
                 if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out hit, 9999.0f))
                 {
                     if (hit.collider.gameObject.CompareTag("Building"))
@@ -92,10 +108,7 @@ public class BuildingDetailHandler : MonoBehaviour
                         return;
                     }
                 }
-                if(_showingBuildingDetail == true)
-                {
-                   CloseDetailPanel();
-                }
+                CloseDetailPanel();
             }
         }
 
@@ -177,5 +190,16 @@ public class BuildingDetailHandler : MonoBehaviour
             default: return whiteColor;
         }
 
+    }
+
+    private void RaycastUI(List<RaycastResult> results)
+    {
+
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current)
+        {
+            position = Input.mousePosition
+        };
+
+        uiRaycaster.Raycast(pointerEventData, results);
     }
 }

@@ -113,10 +113,16 @@ public class HUDManager : MonoBehaviour
         NightUI.SetActive(enabled);
         MainbaseHPBar.transform.parent.gameObject.SetActive(enabled);
     }
+    async UniTaskVoid ShowBaseHP()
+    {
+        await UniTask.WaitForSeconds(HUDAppearanceDelay);
+        MainbaseHPBar.transform.parent.gameObject.SetActive(true);
+    }
 
     public void StartSpectatorMode()
     {
         _ = SetNightUIActivation(false);
+        _ = ShowBaseHP();
     }
 
     #region Setup
